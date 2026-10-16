@@ -5,7 +5,7 @@ A pasta precisa ter: narracao.mp3, palavras.json e cenas.py (com CENAS, CREDITO,
 """
 import importlib.util, json, os, subprocess, sys
 
-W, H, FPS, FIM = 1080, 1920, 30, 61.0
+W, H, FPS = 1080, 1920, 30
 BASE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(BASE, "src")
 FONTS = os.path.join(BASE, "fonts")
@@ -13,6 +13,7 @@ FONTS = os.path.join(BASE, "fonts")
 pasta = os.path.abspath(sys.argv[1])
 spec = importlib.util.spec_from_file_location("cenas", os.path.join(pasta, "cenas.py"))
 cfg = importlib.util.module_from_spec(spec); spec.loader.exec_module(cfg)
+FIM = getattr(cfg, "FIM", 61.0)  # duração padrão 61 s; o cenas.py pode mudar
 CENAS = cfg.CENAS
 os.makedirs(os.path.join(pasta, "tmp"), exist_ok=True)
 

@@ -15,6 +15,7 @@ Este é o manual que a tarefa agendada de domingo segue. Ele também serve para 
    - Inspirado no estilo de divulgação científica brasileira, **sem copiar frases nem imitar pessoas reais**. Não use a voz nem o nome de nenhum divulgador.
 3. **Narração:** `pipeline/narrar.py` (pt-BR-AntonioNeural). Shorts com alvo de ~59,4 s e longos de ~596 s. Se a velocidade passar de +20%, enxugue o roteiro em vez de acelerar.
 4. **Material:** NASA (domínio público, sem sugerir endosso), ESA/Hubble, ESA/Webb e ESO (CC BY 4.0, com crédito) e as animações de `pipeline/anim/`. Nada de material de terceiros sem licença.
+   - **Openverse** (`pipeline/openverse.py busca|baixa`): use só CC0, domínio público, CC BY e CC BY-SA. **Nunca NC nem ND.** Prefira fontes institucionais (por exemplo, `nasa` = Flickr da NASA Goddard, CC BY 2.0). O Openverse não confere licenças, então abra a página de origem em caso de dúvida. Os créditos ficam em `src/creditos_openverse.json` e precisam entrar no vídeo (CREDITO) e na descrição. As imagens costumam ter só 1024 px: evite zoom acima de ~1,5x e corte carimbos de data (por exemplo, "SDO/AIA … UT").
 5. **Montagem:** `pipeline/motor.py` (Shorts) e `pipeline/motor_h.py` (longos). Use etiquetas honestas (IMAGEM REAL, SIMULAÇÃO, ANIMAÇÃO ou ILUSTRAÇÃO) e créditos no vídeo.
 6. **Checagem antes de entregar:**
    - Duração exata (61,000 s ou 600,000 s), volume em -14 LUFS e pico abaixo de -1 dB.
