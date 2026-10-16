@@ -31,6 +31,8 @@ python3 baixar_img.py <nasa_id> src/nome.jpg
 # 2. Roteiro e narração (ajusta a velocidade sozinho para caber em ~60 s)
 mkdir -p ../videos/v4_tema && $EDITOR ../videos/v4_tema/roteiro.txt
 python3 narrar.py ../videos/v4_tema 60.2 15
+# voz mais natural e fala contínua (fica gravado em voz.txt):
+# python3 narrar.py ../videos/v4_tema 59.4 0 --voz fr-FR-RemyMultilingualNeural --pausa 0.25
 
 # 3. Cenas: copie um cenas.py existente e ajuste tempos e trechos,
 #    usando palavras.json (tempo de cada palavra da narração)

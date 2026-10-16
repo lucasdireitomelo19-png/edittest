@@ -3,7 +3,7 @@
 **Arquivo final:** `short_estrela_neutrons_61s.mp4` · 1080x1920 · 61,0 s · voz + efeitos sonoros originais
 **Pasta:** `videos/s8_estrela_neutrons/`
 **Fontes visuais:** NASA Goddard (SVS e Conceptual Image Lab: supernova com pulsar, magnetar, pulsar no vento estelar do XRISM; simulação de pulsar do Fermi), Pixabay/Kanenori (Via Láctea), Pixabay/D-GM (cidade), Pixabay/adege (timelapse de estrelas)
-**Som:** voz pt-BR-AntonioNeural (+15%) e um ambiente grave bem baixo (-22 dB, gerado por `pipeline/sfx.py`). Sem efeitos sonoros nos cortes e sem música.
+**Som:** voz fr-FR-RemyMultilingualNeural lendo em português (-6%, pausas entre frases encurtadas para 0,25 s) e um ambiente grave bem baixo (-22 dB, gerado por `pipeline/sfx.py`). Sem efeitos sonoros nos cortes e sem música.
 **Edição:** cortes secos com zoom lento. A primeira versão tinha zoom de impacto, tremor, glitch e efeitos sonoros, e foi refeita por ficar exagerada.
 
 ---
@@ -59,7 +59,7 @@ Segue o perfil, porque o universo ainda tem muito mais para te assustar.
 
 ## 5. CHECAGEM TÉCNICA
 
-- Duração 61,000 s, -14,0 LUFS, pico -1,5 dBFS. ✔
+- Duração 61,000 s, -14,1 LUFS, pico -1,5 dBFS. ✔
 - Folha de quadros revisada: sem texto em inglês das fontes e sem tela preta (os inícios escuros do clipe do pulsar foram trocados). ✔
 - Etiquetas: SIMULAÇÃO NASA (Fermi), ANIMAÇÃO (CIL/SVS) e IMAGEM REAL (Pixabay). ✔
 
