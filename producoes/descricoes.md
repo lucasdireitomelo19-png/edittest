@@ -164,3 +164,32 @@ E em 2024 o telescópio James Webb descobriu o detalhe mais bizarro: o planeta m
 - **Capa:** escolha um quadro com o texto grande na tela (por exemplo "12,8 SEGUNDOS" ou "7.000 KM/H"). Ele aparece na grade do perfil.
 - **Áudio:** os vídeos são só voz. Não adicione música em alta por cima da narração, para não competir com ela.
 - **Postagem:** publique primeiro no Reels e no TikTok (mesmo vídeo) e depois no YouTube Shorts, com horas de diferença. Evite reposts com marca d'água de outra plataforma.
+
+---
+
+# Bio do perfil
+
+## Instagram (até 150 caracteres)
+```
+🕳️ Os segredos mais sombrios do cosmos
+🔭 Buracos negros, alienígenas e mistérios do universo
+📌 Fatos reais, explicados sem enrolação
+```
+
+## TikTok (até 80 caracteres)
+```
+🕳️ Os segredos mais sombrios do cosmos. Fatos reais do universo 🔭
+```
+
+## YouTube (aba "Sobre")
+```
+O universo é muito mais estranho do que parece.
+
+No Lado Sombrio do Universo você descobre os segredos mais sombrios do cosmos: buracos negros, planetas impossíveis, sinais misteriosos, teorias sobre alienígenas e as descobertas mais impressionantes da NASA, do James Webb e do Hubble.
+
+Tudo baseado em ciência real, com fontes checadas, imagens oficiais das agências espaciais e uma linguagem simples, direto ao ponto.
+
+🎬 Shorts com curiosidades rápidas e documentários completos sobre os grandes mistérios do espaço.
+
+Se você já olhou para o céu e se perguntou "o que existe lá fora?", este canal é pra você. Inscreva-se e ative o sininho 🔔
+```
