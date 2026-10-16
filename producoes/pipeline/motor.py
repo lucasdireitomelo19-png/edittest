@@ -182,7 +182,7 @@ if AMBIENTE:
     entradas += ["-i", os.path.join(SFX, f"{AMBIENTE}.wav")]
     na = len(sons) + 2
     voz += ",asplit[voz][chave];"
-    mix += (f"[{na}:a]atrim=0:{FIM},volume=-10dB[amb0];"
+    mix += (f"[{na}:a]atrim=0:{FIM},volume={getattr(cfg, 'AMBIENTE_DB', -10)}dB[amb0];"
             "[amb0][chave]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=400[amb];")
     rotulos = "[voz][amb]" + "".join(f"[s{k}]" for k in range(len(sons)))
     audio = voz + mix + f"{rotulos}amix=inputs={len(sons) + 2}:normalize=0:duration=first"

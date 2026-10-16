@@ -61,7 +61,7 @@ Em ambientes com proxy, rode `narrar.py` com `SSL_CERT_FILE` apontando para o ce
 | `rgb=1` | glitch de aberração cromática nos primeiros 0,35 s do corte |
 | `som` | efeito sonoro no corte: `"whoosh"`, `"boom"`, `"hit"`, `"riser"`, `"pulsar"`, `"tick"` ou `(nome, ganho_dB)` |
 
-No topo do `cenas.py`, `AMBIENTE = "drone"` põe um fundo grave que abaixa sozinho sob a voz. Os sons são originais, sintetizados por `pipeline/sfx.py` (gerados na primeira montagem).
+No topo do `cenas.py`, `AMBIENTE = "drone"` põe um fundo grave que abaixa sozinho sob a voz (volume em `AMBIENTE_DB`, padrão -10; use bem baixo, como -22). Os sons são originais, sintetizados por `pipeline/sfx.py` (gerados na primeira montagem). Use com moderação: efeito em todo corte soa amador.
 
 ### Padrão do canal
 

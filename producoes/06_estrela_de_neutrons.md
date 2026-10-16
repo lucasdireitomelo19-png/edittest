@@ -3,7 +3,8 @@
 **Arquivo final:** `short_estrela_neutrons_61s.mp4` · 1080x1920 · 61,0 s · voz + efeitos sonoros originais
 **Pasta:** `videos/s8_estrela_neutrons/`
 **Fontes visuais:** NASA Goddard (SVS e Conceptual Image Lab: supernova com pulsar, magnetar, pulsar no vento estelar do XRISM; simulação de pulsar do Fermi), Pixabay/Kanenori (Via Láctea), Pixabay/D-GM (cidade), Pixabay/adege (timelapse de estrelas)
-**Som:** voz pt-BR-AntonioNeural (+15%), ambiente grave e efeitos (whoosh, boom, hit, riser, pulsar, tick) gerados por `pipeline/sfx.py`. Nada de música ou som de terceiros.
+**Som:** voz pt-BR-AntonioNeural (+15%) e um ambiente grave bem baixo (-22 dB, gerado por `pipeline/sfx.py`). Sem efeitos sonoros nos cortes e sem música.
+**Edição:** cortes secos com zoom lento. A primeira versão tinha zoom de impacto, tremor, glitch e efeitos sonoros, e foi refeita por ficar exagerada.
 
 ---
 
@@ -19,7 +20,7 @@ Alternativas:
 
 > "Um pedaço do tamanho de um cubo de açúcar. Pesando um bilhão de toneladas."
 
-Visual: pulsar com feixe girando, zoom de impacto e glitch RGB (texto **1 CUBO DE AÇÚCAR**) → corte com flash, tremor e boom (texto **1 BILHÃO DE TONELADAS**).
+Visual: pulsar com feixe girando em zoom lento (texto **1 CUBO DE AÇÚCAR**) → corte seco (texto **1 BILHÃO DE TONELADAS**).
 
 ## 3. ROTEIRO COMPLETO (61 s)
 
@@ -44,21 +45,21 @@ Segue o perfil, porque o universo ainda tem muito mais para te assustar.
 
 ## 4. DIVISÃO POR CENAS (resumo)
 
-| Tempo | Visual | Efeito |
-|---|---|---|
-| 0–5 s | pulsar (SIMULAÇÃO NASA) com textos do gancho | punch, glitch RGB, flash, tremor · hit + boom |
-| 5–9 s | magnetar → Via Láctea real | whoosh |
-| 9–16 s | estrela → explosão → nuvem (ANIMAÇÃO) | riser → boom, flash, tremor forte |
-| 16–25 s | núcleo → pulsar → magnetar (**~20 KM**) → cidade real | whoosh, hit |
-| 25–34 s | campo magnético → **SÓ NÊUTRONS** → **ESTRELA DE NÊUTRONS** | hit, boom, glitch |
-| 34–41 s | pulsar acelerado 2–3x (**+700 VOLTAS**, **POR SEGUNDO**) | zumbido de pulsar, tick, hit |
-| 41–50 s | campo magnético → magnetares (**×1000**) | riser → boom, glitch, tremor |
-| 50–54 s | retomada do gancho | whoosh, boom |
-| 54–61 s | Via Láctea e estrelas reais, **SIGA O PERFIL** → **SIGA PARA MAIS** | whoosh |
+| Tempo | Visual |
+|---|---|
+| 0–5 s | pulsar (SIMULAÇÃO NASA) com os textos do gancho |
+| 5–9 s | magnetar → Via Láctea real |
+| 9–16 s | estrela → explosão → nuvem (ANIMAÇÃO) |
+| 16–25 s | núcleo → pulsar → magnetar (**~20 KM**) → cidade real |
+| 25–34 s | campo magnético → **SÓ NÊUTRONS** → **ESTRELA DE NÊUTRONS** |
+| 34–41 s | pulsar em 1,3–1,5x (**+700 VOLTAS**, **POR SEGUNDO**) |
+| 41–50 s | campo magnético → magnetares (**×1000**) |
+| 50–54 s | retomada do gancho |
+| 54–61 s | Via Láctea e estrelas reais, **SIGA O PERFIL** → **SIGA PARA MAIS** |
 
 ## 5. CHECAGEM TÉCNICA
 
-- Duração 61,000 s, -14,1 LUFS, pico -1,3 dBFS. ✔
+- Duração 61,000 s, -14,0 LUFS, pico -1,5 dBFS. ✔
 - Folha de quadros revisada: sem texto em inglês das fontes e sem tela preta (os inícios escuros do clipe do pulsar foram trocados). ✔
 - Etiquetas: SIMULAÇÃO NASA (Fermi), ANIMAÇÃO (CIL/SVS) e IMAGEM REAL (Pixabay). ✔
 
