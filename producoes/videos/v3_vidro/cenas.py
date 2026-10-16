@@ -1,0 +1,33 @@
+SAIDA = "planeta_vidro_61s.mp4"
+CREDITO = "Imagens: NASA, ESA/Hubble, M. Kornmesser, STScI"
+FINAL = "OVO PODRE."
+CENAS = [
+    dict(t=0.0,  src="hd_blue.mp4",       ss=14.0, tag="anim", punch=1, shake=3),
+    dict(t=1.5,  src="hdi_earth.jpg",     tag="real", zoom=(1.0, 1.2)),
+    dict(t=3.2,  src="hd_blue.mp4",       ss=17.0, tag="anim", shake=6, flash=1),
+    dict(t=4.6,  src="hd_flare.mp4",      ss=11.0, tag="anim", shake=10),
+    dict(t=6.4,  src="hd_zoom.mp4",       ss=31.0, tag="anim"),
+    dict(t=8.6,  src="hd_zoom.mp4",       ss=37.5, tag="anim", texto="HD 189733 b"),
+    dict(t=10.7, src="hd_zoom.mp4",       ss=47.5, tag="anim", texto="63 ANOS-LUZ"),
+    dict(t=12.6, src="hd_hubblecast.mp4", ss=79.5, tag="anim", texto="MAIOR QUE JÚPITER"),
+    dict(t=15.1, src="hd_transit.mp4",    ss=11.0, tag="anim"),
+    dict(t=16.9, src="hd_transit.mp4",    ss=14.0, tag="anim", vel=3.0, texto="1 ANO = 2,2 DIAS"),
+    dict(t=19.6, src="hd_hubblecast.mp4", ss=88.5, tag="anim", shake=5, texto="+1.000 °C"),
+    dict(t=22.2, src="hd_blue.mp4",       ss=12.0, tag="anim"),
+    dict(t=24.0, src="hdi_earth.jpg",     tag="real", zoom=(1.4, 1.7), pan=(0.4, 0.6)),
+    dict(t=25.9, src="hd_blue.mp4",       ss=15.3, tag="anim", zoom=(1.4, 1.8)),
+    dict(t=28.8, src="hd_blue.mp4",       ss=10.5, tag="anim", texto="SILICATO = VIDRO"),
+    dict(t=30.7, src="hd_blue.mp4",       ss=16.0, tag="ilus", chuva=1, zoom=(1.5, 1.7)),
+    dict(t=32.8, src="hd_blue.mp4",       ss=13.0, tag="ilus", chuva=1, zoom=(1.8, 2.0), shake=4),
+    dict(t=35.0, src="hd_blue.mp4",       ss=15.0, tag="ilus", chuva=1, zoom=(2.0, 2.3), shake=10, texto="7.000 KM/H"),
+    dict(t=38.1, src="hd_blue.mp4",       ss=17.5, tag="ilus", chuva=1, zoom=(1.6, 1.9), shake=14),
+    dict(t=40.4, src="hd_flare.mp4",      ss=10.5, tag="anim", flash=1, shake=12),
+    dict(t=42.0, src="hd_flare.mp4",      ss=12.0, tag="anim", shake=6),
+    dict(t=43.8, src="hd_hubblecast.mp4", ss=141.4, tag="anim"),
+    dict(t=45.2, src="hd_hubblecast.mp4", ss=123.8, tag="anim", texto="1.000 TONELADAS/S"),
+    dict(t=47.6, src="hd_hubblecast.mp4", ss=203.5, tag="anim", texto="2024"),
+    dict(t=50.9, src="hd_webb.mp4",       ss=219.0, zoom=(1.0, 1.15)),
+    dict(t=52.6, src="hd_webb.mp4",       ss=33.0, tag="ilus", texto="SULFETO DE HIDROGÊNIO"),
+    dict(t=55.9, src="hd_blue.mp4",       ss=13.5, tag="anim", zoom=(1.1, 1.3)),
+    dict(t=58.2, src="hd_blue.mp4",       ss=19.0, tag="anim", zoom=(1.3, 1.1)),
+]

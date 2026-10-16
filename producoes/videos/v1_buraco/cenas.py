@@ -1,0 +1,32 @@
+SAIDA = "buraco_negro_61s.mp4"
+CREDITO = "Simulações: NASA Goddard / J. Schnittman e B. Powell"
+FINAL = "PARA SEMPRE."
+CENAS = [
+    dict(t=0.0,  src="bh_explainer.mp4", ss=21.0,  tag="sim", punch=1, shake=4),
+    dict(t=1.6,  src="bh_plunge.mp4",    ss=14.5,  tag="sim"),
+    dict(t=3.1,  src="bh_explainer.mp4", ss=14.4,  tag="sim", zoom=(1.05, 1.4)),
+    dict(t=4.5,  src="bh_explainer.mp4", ss=36.0,  tag="sim", flash=1, shake=5),
+    dict(t=6.5,  src="bh_plunge.mp4",    ss=11.4,  tag="sim", zoom=(1.05, 1.5)),
+    dict(t=9.9,  src="bh_flyby.mp4",     ss=11.0,  tag="sim", texto="4 MILHÕES DE SÓIS"),
+    dict(t=12.9, src="bh_orbit.mp4",     ss=3.0,   tag="sim", texto="25.000.000 KM"),
+    dict(t=16.5, src="bh_explainer.mp4", ss=28.8,  tag="sim", zoom=(1.1, 1.4)),
+    dict(t=19.4, src="bh_plunge.mp4",    ss=16.3,  tag="sim"),
+    dict(t=21.2, src="bh_flyby.mp4",     ss=20.0,  tag="sim", shake=3),
+    dict(t=23.2, src="bh_explainer.mp4", ss=151.4, tag="sim"),
+    dict(t=26.0, src="bh_explainer.mp4", ss=40.0,  tag="sim"),
+    dict(t=29.9, src="bh_flyby.mp4",     ss=29.0,  tag="sim"),
+    dict(t=31.4, src="bh_flyby.mp4",     ss=34.5,  tag="sim", texto="1 VOLTA"),
+    dict(t=32.8, src="bh_flyby.mp4",     ss=43.5,  tag="sim", texto="QUASE 2"),
+    dict(t=34.3, src="bh_plunge.mp4",    ss=44.0,  tag="sim", punch=1, flash=1, shake=14),
+    dict(t=35.9, src="bh_explainer.mp4", ss=158.0, tag="sim", shake=6, texto="12,8 SEGUNDOS"),
+    dict(t=38.0, src="bh_plunge.mp4",    ss=47.0,  tag="sim", shake=8, texto="12,8 SEGUNDOS"),
+    dict(t=40.2, src="bh_tidal.mp4",     ss=6.5,   tag="sim", zoom=(1.2, 1.5), pan=(0.6, 0.5)),
+    dict(t=42.6, src="bh_shred.mp4",     ss=13.5,  tag="anim", shake=4),
+    dict(t=44.5, src="bh_plunge.mp4",    ss=22.8,  tag="sim", flash=1),
+    dict(t=46.8, src="bh_orbit.mp4",     ss=8.0,   tag="sim"),
+    dict(t=48.6, src="bh_approach.mp4",  ss=1.0,   tag="sim", zoom=(1.3, 1.05)),
+    dict(t=50.6, src="bh_flyby.mp4",     ss=9.0,   tag="sim", vel=0.5, sat=0.55, zoom=(1.4, 1.05)),
+    dict(t=52.9, src="bh_plunge.mp4",    ss=56.0,  tag="sim", vel=0.5, sat=0.6),
+    dict(t=55.1, src="bh_plunge.mp4",    ss=50.0,  tag="sim"),
+    dict(t=57.1, src="bh_explainer.mp4", ss=194.7, tag="sim", zoom=(1.5, 1.05)),
+]
