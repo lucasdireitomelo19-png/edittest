@@ -124,7 +124,8 @@ function capitulo(t, dur, p) {
   const a = fade(t, dur, 0.6), s = 1 + t * 0.02;
   ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(s, s); ctx.translate(-W / 2, -H / 2);
   texto(p.num, W / 2, H / 2 - 120, 40, LARANJA, 'MX', 'center', a, 18);
-  texto(p.titulo, W / 2, H / 2, 110, '#fff', 'MX', 'center', a, 3);
+  ctx.font = '110px MX'; const tam = Math.min(110, 110 * 1720 / (ctx.measureText(p.titulo).width + 3 * p.titulo.length));
+  texto(p.titulo, W / 2, H / 2, tam, '#fff', 'MX', 'center', a, 3);
   ctx.globalAlpha = a; ctx.fillStyle = LARANJA; ctx.fillRect(W / 2 - 60, H / 2 + 85, 120 * ease(t / 0.8), 5); ctx.restore();
 }
 function citacao(t, dur, p) {
@@ -255,7 +256,145 @@ function wow(t, dur, p) {
   const g = ctx.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.7)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 }
 
-const CENAS = { floresta, apagando, capitulo, citacao, axioma, drake, galaxia, filtro, sinal, suspeita, explosao, bolha, binario, wow };
+// ---------- buraco negro desenhado (sombra + anel de luz) ----------
+function bn(x, y, R, t, brilho = 1) {
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  for (let k = 0; k < 3; k++) { const g = ctx.createRadialGradient(x, y, R * 0.95, x, y, R * (1.6 + k * 0.5));
+    g.addColorStop(0, `rgba(255,${170 - k * 30},70,${(0.55 - k * 0.15) * brilho})`); g.addColorStop(1, 'rgba(255,90,20,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, R * (1.6 + k * 0.5), 0, 6.283); ctx.fill(); }
+  ctx.strokeStyle = `rgba(255,225,170,${0.9 * brilho})`; ctx.lineWidth = Math.max(2, R * 0.05);
+  ctx.beginPath(); ctx.arc(x, y, R * 1.02, 0, 6.283); ctx.stroke(); ctx.restore();
+  ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(x, y, R, 0, 6.283); ctx.fill();
+}
+
+// ---------- colapso de uma estrela -> supernova -> buraco negro ----------
+function colapso(t, dur, p) {
+  fundo('#03030a', '#000'); estrelas(t, t * 4, 0.6);
+  const cx = W / 2, cy = H / 2, k = t / dur, tc = 0.42, te = 0.5;
+  if (k < te) {
+    const enc = k < tc ? 1 - 0.08 * Math.sin(t * 6) * k : 1 - ease((k - tc) / (te - tc)) * 0.97;
+    const R = 230 * enc, g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.5);
+    g.addColorStop(0, '#fff6e0'); g.addColorStop(0.35, '#ffc070'); g.addColorStop(0.7, 'rgba(255,110,30,.6)'); g.addColorStop(1, 'rgba(255,60,0,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 1.5, 0, 6.283); ctx.fill();
+  } else {
+    const u = (k - te) / (1 - te), f = Math.exp(-u * 9);
+    ctx.fillStyle = `rgba(255,245,225,${f})`; ctx.fillRect(0, 0, W, H);
+    for (let i = 0; i < 3; i++) { const rr = ease(u) * (900 + i * 260); ctx.strokeStyle = `rgba(255,${160 - i * 40},70,${(1 - u) * (0.7 - i * 0.18)})`;
+      ctx.lineWidth = 30 - i * 8; ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 6.283); ctx.stroke(); }
+    bn(cx, cy, 34 * ease(u * 3), t, ease(u * 2) * 0.8);
+  }
+  if (p.texto) texto(p.texto, W / 2, H - 140, 54, AMBAR, 'MX', 'center', fade(t, dur), 6);
+  vinheta(0.75);
+}
+
+// ---------- quem cai x quem observa (dilatação do tempo) ----------
+function relogio(t, dur, p) {
+  fundo('#03030a', '#000'); estrelas(t, 0, 0.5);
+  const hx = W * 0.74, hy = H / 2, R = 260; bn(hx, hy, R, t);
+  const x0 = 260, xh = hx - R - 20, u = 1 - Math.exp(-t / (dur * 0.28)), x = x0 + (xh - x0) * u;
+  const vermelho = clamp(u * 1.15, 0, 1), alpha = 1 - clamp((u - 0.75) / 0.25, 0, 1) * 0.92;
+  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = `rgb(255,${Math.round(255 - 200 * vermelho)},${Math.round(255 - 240 * vermelho)})`;
+  ctx.shadowColor = ctx.fillStyle; ctx.shadowBlur = 25; ctx.beginPath(); ctx.ellipse(x, hy, 26, 16, 0, 0, 6.283); ctx.fill(); ctx.restore();
+  // relógios
+  const seg = t * 1.0, fora = (dur * 0.28) * u;
+  const fmt = s => `00:${String(Math.floor(s)).padStart(2, '0')}`;
+  texto('SEU RELÓGIO, VISTO DA NAVE', W * 0.22, 150, 30, AMBAR, 'MX', 'center', fade(t, dur), 6);
+  texto(fmt(fora), W * 0.22, 220, 72, '#fff', 'MX', 'center', fade(t, dur));
+  texto('SEU RELÓGIO, PARA VOCÊ', W * 0.22, H - 220, 30, AMBAR, 'MX', 'center', fade(t, dur), 6);
+  texto(fmt(seg), W * 0.22, H - 150, 72, '#fff', 'MX', 'center', fade(t, dur));
+  texto('HORIZONTE DE EVENTOS', hx, hy + R + 90, 30, 'rgba(255,255,255,.7)', 'MX', 'center', fade(t, dur), 6);
+  vinheta(0.7);
+}
+
+// ---------- espaguetificação ----------
+function espaguete(t, dur, p) {
+  fundo('#03030a', '#000'); estrelas(t, 0, 0.45);
+  const cx = W / 2, by = H + 380, k = ease(t / dur), cy = 260 + k * 330;
+  bn(cx, by, 520, t, 0.9);
+  const alt = 120 * (1 + k * 3.2), larg = 46 * (1 - k * 0.7);
+  ctx.save(); const g = ctx.createLinearGradient(0, cy - alt / 2, 0, cy + alt / 2); g.addColorStop(0, '#cfe3ff'); g.addColorStop(1, '#ffd2a0');
+  ctx.fillStyle = g; ctx.shadowColor = '#9cc4ff'; ctx.shadowBlur = 20;
+  ctx.beginPath(); ctx.ellipse(cx, cy, larg, alt / 2, 0, 0, 6.283); ctx.fill(); ctx.restore();
+  // setas: puxão maior embaixo
+  const seta = (y, len, cor) => { ctx.strokeStyle = cor; ctx.fillStyle = cor; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(cx + 140, y); ctx.lineTo(cx + 140, y + len); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx + 140, y + len + 22); ctx.lineTo(cx + 124, y + len); ctx.lineTo(cx + 156, y + len); ctx.closePath(); ctx.fill(); };
+  seta(cy - alt / 2, 40 + k * 20, 'rgba(255,255,255,.6)'); seta(cy + alt / 2 - 30, 90 + k * 140, LARANJA);
+  for (const s of [-1, 1]) { ctx.strokeStyle = 'rgba(255,255,255,.45)'; ctx.lineWidth = 5; const xx = cx + s * (larg + 70);
+    ctx.beginPath(); ctx.moveTo(xx, cy); ctx.lineTo(xx - s * 40, cy); ctx.stroke(); }
+  if (p.texto) texto(p.texto, W / 2, 110, 48, AMBAR, 'MX', 'center', fade(t, dur), 8);
+  vinheta(0.7);
+}
+
+// ---------- radiação de Hawking ----------
+function hawking(t, dur, p) {
+  fundo('#03030a', '#000'); estrelas(t, t * 3, 0.45);
+  const cx = W / 2, cy = H / 2, R = 220 * (1 - 0.12 * t / dur); bn(cx, cy, R, t, 0.55);
+  const r = rng(13);
+  for (let i = 0; i < 70; i++) { const ang = r() * 6.283, t0 = r() * dur, life = ((t - t0) % 2.4 + 2.4) % 2.4 / 2.4;
+    const fora = R * 1.12 + life * 520, dentro = R * 1.12 - life * R * 0.9;
+    ctx.fillStyle = `rgba(190,220,255,${(1 - life) * 0.9})`; ctx.beginPath(); ctx.arc(cx + Math.cos(ang) * fora, cy + Math.sin(ang) * fora, 3.5, 0, 6.283); ctx.fill();
+    if (life < 0.5) { ctx.fillStyle = `rgba(255,170,90,${(0.5 - life) * 1.6})`; ctx.beginPath(); ctx.arc(cx + Math.cos(ang) * dentro, cy + Math.sin(ang) * dentro, 3, 0, 6.283); ctx.fill(); } }
+  if (p.texto) texto(p.texto, W / 2, H - 110, 56, '#fff', 'MX', 'center', fade(t, dur), 4);
+  if (p.titulo) texto(p.titulo, W / 2, 110, 40, AMBAR, 'MX', 'center', fade(t, dur), 10);
+  vinheta(0.7);
+}
+
+// ---------- buraco de minhoca (diagrama de imersão) ----------
+function minhoca(t, dur, p) {
+  fundo('#03030a', '#000'); estrelas(t, t * 4, 0.5);
+  const cx = W / 2, cy = H / 2, a = fade(t, dur, 0.6), rot = t * 0.25, garg = 70;
+  for (const lado of [-1, 1]) {
+    for (let i = 0; i <= 16; i++) { const rr = garg + i * i * 3.2, z = lado * (60 + 300 * Math.sqrt(Math.max(0, 1 - (garg / rr) ** 0.9)));
+      ctx.strokeStyle = `rgba(${lado < 0 ? '120,170,255' : '255,170,90'},${a * (0.25 + 0.6 * (1 - i / 16))})`; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.ellipse(cx, cy + z * 0.95, rr * 1.6, rr * 0.33, 0, 0, 6.283); ctx.stroke(); }
+    for (let j = 0; j < 24; j++) { const ang = rot + j * Math.PI / 12; ctx.strokeStyle = `rgba(${lado < 0 ? '120,170,255' : '255,170,90'},${a * 0.35})`;
+      ctx.beginPath(); for (let i = 0; i <= 16; i++) { const rr = garg + i * i * 3.2, z = lado * (60 + 300 * Math.sqrt(Math.max(0, 1 - (garg / rr) ** 0.9)));
+        const x = cx + Math.cos(ang) * rr * 1.6, y = cy + z * 0.95 + Math.sin(ang) * rr * 0.33; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke(); }
+  }
+  ctx.strokeStyle = `rgba(255,255,255,${a * 0.6})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(cx - garg * 1.6, cy - 57); ctx.lineTo(cx - garg * 1.6, cy + 57); ctx.moveTo(cx + garg * 1.6, cy - 57); ctx.lineTo(cx + garg * 1.6, cy + 57); ctx.stroke();
+  if (p.texto) texto(p.texto, W / 2, 90, 44, AMBAR, 'MX', 'center', a, 10);
+  vinheta(0.6);
+}
+
+// ---------- Event Horizon Telescope: um telescópio do tamanho da Terra ----------
+const SITIOS = [[19.8, -155.5], [32.7, -109.9], [19.0, -97.3], [-23.0, -67.8], [37.1, -3.4], [-89.9, 0], [-23.0, -67.75]];
+function eht(t, dur, p) {
+  fundo('#02040c', '#000'); estrelas(t, 0, 0.5);
+  const cx = W / 2, cy = H / 2 + 20, R = 380, lon0 = -95 + t * 9, lat0 = 12, rad = Math.PI / 180;
+  const proj = (la, lo) => { const f = la * rad, l = (lo - lon0) * rad, f0 = lat0 * rad;
+    const x = Math.cos(f) * Math.sin(l), y = Math.cos(f0) * Math.sin(f) - Math.sin(f0) * Math.cos(f) * Math.cos(l), z = Math.sin(f0) * Math.sin(f) + Math.cos(f0) * Math.cos(f) * Math.cos(l);
+    return [cx + R * x, cy - R * y, z]; };
+  const g = ctx.createRadialGradient(cx - 120, cy - 140, 40, cx, cy, R); g.addColorStop(0, '#1f5fa8'); g.addColorStop(1, '#061630');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283); ctx.fill();
+  ctx.strokeStyle = 'rgba(140,190,255,.18)'; ctx.lineWidth = 1.5;
+  for (let la = -60; la <= 60; la += 30) { ctx.beginPath(); let on = false; for (let lo = -180; lo <= 180; lo += 4) { const [x, y, z] = proj(la, lo); if (z > 0) { on ? ctx.lineTo(x, y) : ctx.moveTo(x, y); on = true; } else on = false; } ctx.stroke(); }
+  for (let lo = -180; lo < 180; lo += 30) { ctx.beginPath(); let on = false; for (let la = -90; la <= 90; la += 4) { const [x, y, z] = proj(la, lo); if (z > 0) { on ? ctx.lineTo(x, y) : ctx.moveTo(x, y); on = true; } else on = false; } ctx.stroke(); }
+  const pts = SITIOS.slice(0, 6).map(([la, lo]) => proj(la, lo)), n = Math.floor(ease(t / (dur * 0.6)) * 6.99);
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const a = pts[i], b = pts[j]; if (a[2] < -0.2 || b[2] < -0.2) continue;
+    ctx.strokeStyle = 'rgba(255,170,80,.45)'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
+  pts.forEach(([x, y, z], i) => { if (i >= n || z < 0) return; const gg = ctx.createRadialGradient(x, y, 0, x, y, 26); gg.addColorStop(0, '#fff'); gg.addColorStop(0.3, AMBAR); gg.addColorStop(1, 'rgba(255,140,40,0)');
+    ctx.fillStyle = gg; ctx.fillRect(x - 26, y - 26, 52, 52); });
+  ctx.restore();
+  if (p.texto) texto(p.texto, W / 2, 95, 46, AMBAR, 'MX', 'center', fade(t, dur), 8);
+  vinheta(0.6);
+}
+
+// ---------- comparação de tamanho (Sol e Terra comprimidos) ----------
+function tamanho(t, dur, p) {
+  fundo('#03030a', '#000'); estrelas(t, t * 3, 0.4); const a = fade(t, dur, 0.5), k = ease((t - 0.8) / 1.6);
+  const linha = (y, cor, R0, nome, alvo) => { const R = R0 * (1 - k) + 10 * k;
+    const g = ctx.createRadialGradient(560, y, 0, 560, y, R); g.addColorStop(0, cor[0]); g.addColorStop(1, cor[1]);
+    ctx.globalAlpha = a; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(560, y, R, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+    if (k > 0.95) bn(560, y, 9, t, 0.9);
+    texto(nome, 920, y - 30, 56, '#fff', 'MX', 'left', a); texto(alvo, 920, y + 35, 44, AMBAR, 'MX', 'left', a * ease((t - 2.2) / 0.6)); };
+  linha(H * 0.3, ['#fff3c8', '#ff9a2a'], 190, 'SOL', '→ 6 km de diâmetro');
+  linha(H * 0.72, ['#9fd0ff', '#1d4f9a'], 110, 'TERRA', '→ uma bolinha de gude');
+  vinheta(0.7);
+}
+
+const CENAS = { floresta, apagando, capitulo, citacao, axioma, drake, galaxia, filtro, sinal, suspeita, explosao, bolha, binario, wow,
+  colapso, relogio, espaguete, hawking, minhoca, eht, tamanho };
 window.desenhar = (nome, t, dur, p) => { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; CENAS[nome](t, dur, p || {}); };
 </script>
 </body></html>

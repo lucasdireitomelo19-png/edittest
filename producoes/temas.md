@@ -5,7 +5,7 @@ Edite à vontade: reordene, apague ou acrescente temas. ⚠️ indica fato que p
 
 ## Vídeos longos (10 min)
 - [x] A teoria da Floresta Negra
-- [ ] O que existe dentro de um buraco negro?
+- [x] O que existe dentro de um buraco negro?
 - [ ] O fim do universo: as 3 formas como tudo pode acabar (Big Freeze, Big Rip, Big Crunch)
 - [ ] Betelgeuse: a estrela que vai explodir (e o que veremos da Terra)
 - [ ] ʻOumuamua: o visitante interestelar que ninguém conseguiu explicar

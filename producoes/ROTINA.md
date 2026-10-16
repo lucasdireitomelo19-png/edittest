@@ -3,7 +3,7 @@
 Este é o manual que a tarefa agendada de domingo segue. Ele também serve para rodar a rotina à mão, pedindo "rode a rotina semanal" numa sessão.
 
 ## Ritmo do canal
-- **3 vídeos longos por semana** (10:00, horizontal 1920x1080, só voz). Publicação: terça, quinta e sábado, às 19h.
+- **3 vídeos longos por semana** (10:00, horizontal 1920x1080, voz + trilha ambiente leve). A trilha é original, gerada por `pipeline/musica.py <pasta>/musica.wav 600`, e entra com `MUSICA = "musica.wav"` no cenas.py. Nunca use música de terceiros. Publicação: terça, quinta e sábado, às 19h.
 - **3 Shorts por dia** (61,0 s, vertical 1080x1920, só voz). Publicação: 9h, 13h e 20h.
   - Por semana: **9 derivados** (3 por vídeo longo, como `s5`–`s7`) e **12 avulsos** tirados de `temas.md`.
 

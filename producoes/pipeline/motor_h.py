@@ -75,7 +75,12 @@ def dur_de(i):
 
 if os.environ.get("CHECK"):
     for i, c in enumerate(CENAS):
-        print(f"{i:03d} {c['t']:7.2f} {dur_de(i):5.2f}s  {c['src']}")
+        aviso = ""
+        if not c["src"].startswith("anim:") and not c["src"].lower().endswith((".jpg", ".png")):
+            total = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", os.path.join(SRC, c["src"])]))
+            fim_clip = c.get("ss", 0) + dur_de(i) * c.get("vel", 1.0)
+            if fim_clip > total - 0.1: aviso = f"  <<< CLIPE CURTO: pede até {fim_clip:.1f}s, tem {total:.1f}s"
+        print(f"{i:03d} {c['t']:7.2f} {dur_de(i):5.2f}s  {c['src']} {c.get('ss', '')}{aviso}")
     print("planos:", len(CENAS), "| média:", round(FIM / len(CENAS), 2), "s")
     sys.exit()
 
@@ -166,7 +171,7 @@ for gi, g in enumerate(grupos):
 ROTULOS = {"real": ("Real", "● IMAGEM REAL"), "sim": ("Anim", "SIMULAÇÃO"), "anim": ("Anim", "ANIMAÇÃO"), "ilus": ("Anim", "ILUSTRAÇÃO")}
 def credito_padrao(src):
     if src.startswith("anim:"): return "Animação: Lado Sombrio do Universo"
-    for pref, cr in (("bh_", "NASA Goddard"), ("vgi_", "NASA/JPL-Caltech"), ("vg_", "NASA/JPL-Caltech"), ("hd_webb", "NASA/STScI"),
+    for pref, cr in (("bd_eso", "ESO"), ("bdi_", "EHT Collaboration / ESO"), ("bd_", "NASA Goddard"), ("bh_", "NASA Goddard"), ("vgi_", "NASA/JPL-Caltech"), ("vg_", "NASA/JPL-Caltech"), ("hd_webb", "NASA/STScI"),
                      ("hdi_", "NASA"), ("hd_", "ESA/Hubble, M. Kornmesser"), ("eso_", "ESO"), ("ns_", "NASA SVS"), ("fl_hawking", "NASA/Paul Alers")):
         if src.startswith(pref): return cr
     return ""
@@ -201,14 +206,27 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """ + "\n".join(ev) + "\n"
 ass_path = os.path.join(TMP, "legendas.ass"); open(ass_path, "w", encoding="utf-8").write(ass)
 
-# ---------------- render final (somente voz) ----------------
+# ---------------- render final (voz + trilha opcional) ----------------
+# MUSICA = "musica.wav" (na pasta do vídeo) liga a trilha de fundo; MUSICA_DB ajusta o volume.
+# A trilha abaixa sozinha enquanto a narração fala (sidechain).
 saida = os.path.join(pasta, cfg.SAIDA)
-run(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-i", os.path.join(pasta, "narracao.mp3"),
-     "-filter_complex",
-     "[1:a]aresample=44100,highpass=f=75,equalizer=f=170:t=q:w=1:g=2.5,equalizer=f=3200:t=q:w=1.4:g=2,"
-     "acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,"
-     "aecho=0.9:0.6:35|60:0.10|0.06,aformat=channel_layouts=stereo,"
-     f"apad,atrim=0:{FIM},loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.84:level=disabled[a];"
+musica = getattr(cfg, "MUSICA", "")
+voz = ("[1:a]aresample=44100,highpass=f=75,equalizer=f=170:t=q:w=1:g=2.5,equalizer=f=3200:t=q:w=1.4:g=2,"
+       "acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,"
+       f"aecho=0.9:0.6:35|60:0.10|0.06,aformat=channel_layouts=stereo,apad,atrim=0:{FIM}")
+fim_audio = f"loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.84:level=disabled[a];"
+entradas = ["-i", bruto, "-i", os.path.join(pasta, "narracao.mp3")]
+if musica:
+    entradas += ["-i", os.path.join(pasta, musica)]
+    audio = (f"{voz},asplit[v1][v2];"
+             f"[2:a]aresample=44100,aformat=channel_layouts=stereo,apad,atrim=0:{FIM},"
+             f"volume={getattr(cfg, 'MUSICA_DB', -12)}dB,afade=t=out:st={FIM - 4}:d=4[m];"
+             "[m][v2]sidechaincompress=threshold=0.06:ratio=2:attack=80:release=1000[md];"
+             f"[v1][md]amix=inputs=2:duration=first:normalize=0,{fim_audio}")
+else:
+    audio = f"{voz},{fim_audio}"
+run(["ffmpeg", "-v", "error", "-y", *entradas,
+     "-filter_complex", audio +
      f"[0:v]vignette=angle=0.5,noise=alls=4:allf=t,ass={ass_path}:fontsdir={FONTS},"
      f"fade=t=in:d=0.4,fade=t=out:st={FIM - 1.0}:d=1.0,trim=0:{FIM}[v]",
      "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
