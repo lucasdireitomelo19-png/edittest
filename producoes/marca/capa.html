@@ -1,0 +1,55 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"MX";src:url("Montserrat-ExtraBold.ttf")}
+  @font-face{font-family:"MM";src:url("Montserrat-Medium.ttf")}
+  html,body{margin:0;background:#000}
+  #capa{position:relative;width:2560px;height:1440px;overflow:hidden;background:#000}
+  #nasa{position:absolute;right:-1000px;top:-40px;height:1520px;
+        -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 38%);
+                mask-image:linear-gradient(90deg,transparent 0%,#000 38%);
+        filter:saturate(1.15) contrast(1.05)}
+  #estrelas{position:absolute;inset:0}
+  #vinheta{position:absolute;inset:0;
+           background:radial-gradient(ellipse at 70% 50%,transparent 35%,rgba(0,0,0,.55) 100%),
+                      linear-gradient(90deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.7) 40%,rgba(0,0,0,0) 62%)}
+  /* área segura do YouTube (todos os dispositivos): 1546 x 423, centralizada */
+  #seguro{position:absolute;left:507px;top:508px;width:1546px;height:423px;
+          display:flex;flex-direction:column;justify-content:center;padding-left:70px;box-sizing:border-box}
+  .linha1{font-family:"MX";color:#fff;font-size:138px;line-height:.95;letter-spacing:4px;
+          text-shadow:0 0 40px rgba(255,120,30,.35),0 6px 18px rgba(0,0,0,.9)}
+  .linha2{font-family:"MX";font-size:64px;letter-spacing:24px;margin-top:14px;
+          background:linear-gradient(90deg,#ff7a1a,#ffd29a);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .barra{width:120px;height:6px;background:#ff7a1a;margin:34px 0 26px;border-radius:3px;box-shadow:0 0 18px #ff7a1a}
+  .slogan{font-family:"MM";color:#e9e1d8;font-size:44px;letter-spacing:2px}
+  .slogan b{font-family:"MX";color:#ffb35c}
+  #credito{position:absolute;right:30px;bottom:22px;font-family:"MM";font-size:20px;color:rgba(255,255,255,.35)}
+  #guias{position:absolute;left:507px;top:508px;width:1546px;height:423px;outline:3px dashed #0f0;display:none}
+</style></head>
+<body>
+<div id="capa">
+  <svg id="estrelas" width="2560" height="1440"></svg>
+  <img id="nasa" src="bg_arco.png">
+  <div id="vinheta"></div>
+  <div id="seguro">
+    <div class="linha1">LADO SOMBRIO</div>
+    <div class="linha2">DO UNIVERSO</div>
+    <div class="barra"></div>
+    <div class="slogan">Os mistérios do cosmos em <b>61 segundos</b></div>
+  </div>
+  <div id="credito">Simulação: NASA Goddard</div>
+  <div id="guias"></div>
+</div>
+<script>
+  let s = 11; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const g = document.getElementById('estrelas');
+  for (let i = 0; i < 1100; i++) {
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', r() * 1900); c.setAttribute('cy', r() * 1440);
+    c.setAttribute('r', (r() * 1.6 + 0.3).toFixed(2));
+    c.setAttribute('fill', '#fff'); c.setAttribute('opacity', (r() * 0.7 + 0.15).toFixed(2));
+    g.appendChild(c);
+  }
+  if (location.hash === '#guias') document.getElementById('guias').style.display = 'block';
+</script>
+</body></html>
