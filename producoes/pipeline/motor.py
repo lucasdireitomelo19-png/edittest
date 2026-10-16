@@ -60,9 +60,9 @@ for i, c in enumerate(CENAS):
     if c.get("chuva"):
         # chuva de vidro horizontal (ilustração): faíscas esticadas varrendo a tela de lado
         f.append("format=gbrp[q];"
-                 f"color=black:s={W}x{H}:r={FPS},noise=alls=100:allf=t,"
-                 "lutyuv=y='if(gt(val,252),255,0)':u=128:v=128,avgblur=sizeX=60:sizeY=1,"
-                 "lutyuv=y='min(255,val*6)',rotate=-0.18:fillcolor=black,"
+                 f"nullsrc=s={W//2}x{H//2}:r={FPS},geq=lum='if(lt(random(1),0.0035),255,0)':cb=128:cr=128,"
+                 f"avgblur=sizeX=28:sizeY=1,lutyuv=y='min(255,val*14)':u=128:v=128,scale={W}:{H},"
+                 "rotate=-0.18:fillcolor=black,"
                  "format=gbrp,colorchannelmixer=rr=0.75:gg=0.9:bb=1.0[r];"
                  "[q][r]blend=all_mode=screen:shortest=1,format=yuv420p")
     if c.get("flash"):
