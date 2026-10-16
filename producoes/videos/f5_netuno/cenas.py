@@ -12,7 +12,7 @@ CREDITO = "Imagens: NASA/JPL (Voyager 2) · NASA/ESA (Hubble)"
 N = "fd_neptune_cast.mp4"
 CENAS = montar(AQUI, [
     C("", "fdi_neptune.jpg", tag="real", punch=1, zoom=(1.1, 1.3)),
-    C("e ninguem sabe exatamente", N, 13, "anim"),
+    C("e ninguem sabe exatamente", N, 18.6, "anim"),
     C("netuno fica a quatro bilhoes", "fdi_neptune2.jpg", tag="real", zoom=(1.0, 1.3), texto="4,5 BILHÕES DE KM"),
     C("la a luz do sol chega", N, 26, "anim", texto="900× MAIS FRACA"),
     C("mesmo assim os ventos", "fdi_gds.jpg", tag="real", shake=6, zoom=(1.1, 1.4), texto="+2.000 KM/H"),

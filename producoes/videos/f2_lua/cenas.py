@@ -22,7 +22,7 @@ CENAS = montar(AQUI, [
     C("a lua puxa os oceanos", "hdi_earth.jpg", tag="real", zoom=(1.2, 1.5)),
     C("a terra perde velocidade", "ns_earth_spin.mp4", 60),
     C("por isso os dias na terra", "ns_earth_spin.mp4", 75, texto="DIAS MAIS LONGOS"),
-    C("so dois milesimos", M, 30, "sim"),
+    C("so dois milesimos", M, 12, "sim"),
     C("e isso tem uma consequencia", M, 46.5, "sim"),
     C("hoje a lua tem o tamanho certo", "fdi_eclipse.jpg", tag="real", zoom=(1.0, 1.3)),
     C("daqui a centenas de milhoes", M, 262, "sim", zoom=(1.3, 1.0)),
