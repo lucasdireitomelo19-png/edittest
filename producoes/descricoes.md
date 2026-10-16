@@ -235,3 +235,85 @@ E se o universo for uma floresta escura, cheia de caçadores em silêncio? A teo
 🎥 ESO · animações: Lado Sombrio do Universo
 #florestanegra #3bodyproblem #alienigenas #universo #astronomia
 ```
+
+## Versões TikTok e Reels dos Shorts derivados
+
+### 05 · O sinal Wow!
+**TikTok**
+```
+Em 1977 captamos um sinal do espaço… e ele NUNCA mais se repetiu 📡 O que você acha que era? 👇
+🎬 Vídeo completo no YouTube: Lado Sombrio do Universo
+#sinalwow #alienigenas #universo #espaço #misterio #curiosidades
+```
+**Reels**
+```
+Em 1977, um radiotelescópio captou um sinal vindo do espaço. E até hoje ninguém sabe o que ele era 📡
+
+O astrônomo circulou os números na folha e escreveu: "Wow!". Durou 72 segundos. Os cientistas voltaram a procurar dezenas de vezes, por anos. Nada.
+
+Interferência… ou alguém que aprendeu a ficar em silêncio?
+
+📌 Salva esse mistério
+🎬 A teoria completa está no YouTube (link na bio)
+
+🎥 ESO · NASA · recriação ilustrativa
+#sinalwow #alienigenas #universo #espaço #astronomia
+```
+
+### 06 · Nós já gritamos
+**TikTok**
+```
+A humanidade mandou o endereço da Terra pro espaço. De propósito 😨 E se alguém ouviu? 👇
+🎬 Vídeo completo no YouTube: Lado Sombrio do Universo
+#arecibo #alienigenas #universo #espaço #stephenhawking #curiosidades
+```
+**Reels**
+```
+A humanidade pode ter cometido o maior erro da sua história. E foi de propósito 😨
+
+Em 1974, a mensagem de Arecibo foi disparada para as estrelas com o desenho de um humano, o nosso DNA e a posição da Terra. As Voyager levam até um mapa para encontrar o Sol. Stephen Hawking alertou que o contato poderia ser como a chegada de Colombo à América.
+
+E se quem receber não for amigável?
+
+📤 Manda pra quem ama esse tipo de assunto
+🎬 A teoria completa está no YouTube (link na bio)
+
+🎥 ESO · NASA/JPL-Caltech · foto: NASA/Paul E. Alers
+#arecibo #alienigenas #universo #espaço #astronomia
+```
+
+### 07 · A floresta escura
+**TikTok**
+```
+A teoria mais assustadora sobre por que nunca encontramos alienígenas 🌲👁️ Faz sentido pra você? 👇
+🎬 Explicação completa no YouTube: Lado Sombrio do Universo
+#florestanegra #3bodyproblem #alienigenas #universo #paradoxodefermi
+```
+**Reels**
+```
+Existe uma teoria que explica por que nunca encontramos alienígenas. E ela é aterrorizante 🌲👁️
+
+O universo seria uma floresta escura, cheia de caçadores em silêncio. Quem se revela vira alvo. Por isso, todos se escondem.
+
+É a teoria da Floresta Negra, popularizada por Liu Cixin, autor de O Problema dos Três Corpos. É só uma hipótese… mas explicaria o silêncio do universo.
+
+💬 Você acha que estamos sozinhos?
+🎬 Explicação completa no YouTube (link na bio)
+
+🎥 ESO · animações: Lado Sombrio do Universo
+#florestanegra #3bodyproblem #alienigenas #universo #astronomia
+```
+
+---
+
+# Vídeo longo · A Teoria da Floresta Negra (10 min)
+
+**Título:** `Por que o universo está em silêncio? A assustadora teoria da Floresta Negra`
+**Thumbnail:** `thumb_a.jpg` ("NÃO FAÇA BARULHO")
+
+A descrição completa, com os capítulos, está em [04_floresta_negra_10min.md](04_floresta_negra_10min.md#descrição-para-o-youtube).
+
+**Comentário fixado sugerido:**
+```
+Se você recebesse uma mensagem de outra civilização, responderia ou ficaria em silêncio? 👇
+```
