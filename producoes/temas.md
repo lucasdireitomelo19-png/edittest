@@ -19,12 +19,12 @@ Edite à vontade: reordene, apague ou acrescente temas. ⚠️ indica fato que p
 - [ ] Viagem até a borda do universo observável
 
 ## Shorts avulsos (61 s)
-- [ ] Em Vênus, um dia dura mais que um ano
-- [ ] A Lua está se afastando da Terra 3,8 cm por ano
-- [ ] As pegadas na Lua podem durar milhões de anos
-- [ ] O "som" de um buraco negro (sonificação da NASA do aglomerado de Perseu)
-- [ ] Netuno tem os ventos mais rápidos do Sistema Solar
-- [ ] Saturno flutuaria numa banheira gigante (densidade menor que a da água)
+- [x] Em Vênus, um dia dura mais que um ano
+- [x] A Lua está se afastando da Terra 3,8 cm por ano
+- [x] As pegadas na Lua podem durar milhões de anos
+- [x] O "som" de um buraco negro (sonificação da NASA do aglomerado de Perseu)
+- [x] Netuno tem os ventos mais rápidos do Sistema Solar
+- [x] Saturno flutuaria numa banheira gigante (densidade menor que a da água)
 - [ ] O Sol perde cerca de 4 milhões de toneladas por segundo
 - [ ] A luz do Sol que você vê saiu de lá há 8 minutos
 - [ ] Uma colher de estrela de nêutrons pesaria bilhões de toneladas
