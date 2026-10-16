@@ -108,3 +108,59 @@ Esse planeta é azul como a Terra… mas lá chove VIDRO de lado 😳 E o final 
 - **Comentário fixado:** responda e fixe a primeira boa resposta à pergunta do vídeo. Isso estimula mais comentários.
 - **Créditos:** mantenha sempre a linha 🎥. O material da ESA/Hubble exige crédito (licença CC BY 4.0), e o da NASA não pode sugerir endosso.
 - **Hashtags:** no YouTube, as 3 primeiras aparecem acima do título. Não passe de 5 para não parecer spam.
+
+---
+
+# Legendas para Instagram Reels
+
+> No Reels, só a primeira linha aparece antes do "mais", então ela precisa prender. O Instagram valoriza **salvamentos e compartilhamentos**, por isso o CTA pede isso. Use de 3 a 5 hashtags.
+
+## 01 · Buraco negro
+```
+A NASA simulou o que você veria caindo num buraco negro… e o final é perturbador 😨
+
+Um supercomputador recriou a queda num monstro com 4 milhões de vezes a massa do Sol. Você orbita, cruza o horizonte de eventos e restam 12,8 segundos.
+
+Mas o mais estranho: para quem fica do lado de fora, você NUNCA termina de cair.
+
+📌 Salva pra mostrar pra alguém que ama o espaço
+👉 Siga @ladosombriodouniverso para mais segredos do cosmos
+
+🎥 Simulação: NASA Goddard / J. Schnittman e B. Powell
+#buraconegro #nasa #universo #espaço #astronomia
+```
+
+## 02 · Voyager 1
+```
+Existe uma máquina humana a 26 bilhões de km daqui. E ela ainda responde 🛰️
+
+A Voyager 1 saiu da Terra em 1977, com menos memória que o seu celular. Fotografou a Terra como um pontinho azul, saiu do Sistema Solar e, mesmo quebrando, foi consertada a bilhões de quilômetros.
+
+Ela leva um disco de ouro com sons da Terra e saudações em 55 línguas. Talvez seja a última lembrança de que nós existimos.
+
+💬 O que você colocaria no disco de ouro?
+📤 Manda pra quem precisa ver isso
+
+🎥 NASA/JPL-Caltech · ESA/Hubble
+#voyager #nasa #espaço #universo #astronomia
+```
+
+## 03 · Planeta de vidro
+```
+Esse planeta é azul como a Terra… mas lá chove VIDRO de lado 😳
+
+HD 189733 b passa de 1.000 °C, tem ventos de 7.000 km/h e uma atmosfera cheia de silicato, o material do vidro.
+
+E em 2024 o telescópio James Webb descobriu o detalhe mais bizarro: o planeta mais bonito que já encontramos… cheira a ovo podre 🤢
+
+📤 Marca aquele amigo que ama curiosidades
+👉 Siga @ladosombriodouniverso
+
+🎥 NASA, ESA/Hubble, M. Kornmesser, STScI · chuva de vidro: ilustração
+#exoplaneta #jameswebb #universo #espaço #curiosidades
+```
+
+## Dicas para o Reels
+- **Capa:** escolha um quadro com o texto grande na tela (por exemplo "12,8 SEGUNDOS" ou "7.000 KM/H"). Ele aparece na grade do perfil.
+- **Áudio:** os vídeos são só voz. Não adicione música em alta por cima da narração, para não competir com ela.
+- **Postagem:** publique primeiro no Reels e no TikTok (mesmo vídeo) e depois no YouTube Shorts, com horas de diferença. Evite reposts com marca d'água de outra plataforma.
