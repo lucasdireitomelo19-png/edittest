@@ -317,3 +317,31 @@ A descrição completa, com os capítulos, está em [04_floresta_negra_10min.md]
 ```
 Se você recebesse uma mensagem de outra civilização, responderia ou ficaria em silêncio? 👇
 ```
+
+---
+
+# Títulos e tags do YouTube (campo "Tags", separadas por vírgula)
+
+| # | Vídeo | Título |
+|---|---|---|
+| 01 | Buraco negro | A NASA simulou a queda num buraco negro. O final é perturbador 😨 |
+| 02 | Voyager 1 | Existe uma máquina humana a 26 bilhões de km. E ela ainda responde 🛰️ |
+| 03 | Planeta de vidro | O planeta mais bonito já encontrado esconde um segredo nojento 🤢 |
+| 04 | Floresta Negra (10 min) | Por que o universo está em silêncio? A assustadora teoria da Floresta Negra |
+| 05 | Sinal Wow! | Em 1977 captamos um sinal do espaço. Ele nunca mais se repetiu 📡 |
+| 06 | Nós já gritamos | A humanidade gritou para o espaço. E se alguém ouviu? 😨 |
+| 07 | Floresta escura | A teoria mais assustadora sobre alienígenas 🌲👁️ |
+
+**01** `buraco negro, o que acontece se cair num buraco negro, simulação nasa, horizonte de eventos, espaguetificação, sagittarius a, nasa, universo, espaço, astronomia, curiosidades do universo, ciência, shorts`
+
+**02** `voyager 1, voyager, sonda voyager, disco de ouro, pálido ponto azul, espaço interestelar, nasa, jpl, objeto mais distante, universo, espaço, astronomia, curiosidades do universo, shorts`
+
+**03** `hd 189733 b, planeta azul, chuva de vidro, exoplaneta, james webb, telescópio james webb, hubble, planeta mais estranho, sulfeto de hidrogênio, universo, espaço, astronomia, curiosidades do universo, shorts`
+
+**04** `teoria da floresta negra, floresta sombria, dark forest theory, paradoxo de fermi, o problema dos três corpos, 3 body problem, liu cixin, alienígenas, vida extraterrestre, equação de drake, grande filtro, sinal wow, mensagem de arecibo, stephen hawking, seti, universo, espaço, astronomia, documentário espaço`
+
+**05** `sinal wow, wow signal, sinal do espaço, sinal alienígena, big ear, seti, mistério do espaço, alienígenas, vida extraterrestre, universo, espaço, astronomia, curiosidades do universo, shorts`
+
+**06** `mensagem de arecibo, arecibo, disco de ouro voyager, stephen hawking alienígenas, contato alienígena, seti, alienígenas, teoria da floresta negra, universo, espaço, astronomia, curiosidades do universo, shorts`
+
+**07** `teoria da floresta negra, floresta sombria, dark forest, paradoxo de fermi, 3 body problem, o problema dos três corpos, liu cixin, alienígenas, estamos sozinhos no universo, universo, espaço, astronomia, shorts`
