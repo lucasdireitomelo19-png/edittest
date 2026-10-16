@@ -1,0 +1,261 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"MX";src:url("../fonts/Montserrat-ExtraBold.ttf")}
+  @font-face{font-family:"MM";src:url("Montserrat-Medium.ttf")}
+  html,body{margin:0;background:#000;overflow:hidden}
+  canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// Cenas animadas do canal (1920x1080). Cada cena é draw(t, dur, p): t em segundos.
+const W = 1920, H = 1080;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const LARANJA = '#ff8a2a', AMBAR = '#ffc278';
+
+// ---------- utilidades ----------
+function rng(seed) { let s = seed % 2147483647; if (s <= 0) s += 2147483646;
+  return () => (s = s * 16807 % 2147483647) / 2147483647; }
+const ease = x => x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x);
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+function fundo(c1 = '#02030a', c2 = '#000') {
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, c1); g.addColorStop(1, c2);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+}
+const ESTRELAS = (() => { const r = rng(42), a = [];
+  for (let i = 0; i < 1400; i++) a.push({ x: r() * W * 1.3, y: r() * H, r: r() ** 3 * 2.2 + 0.3, a: r() * 0.8 + 0.2, f: r() * 6.28 });
+  return a; })();
+function estrelas(t, dx = 0, alpha = 1, ymax = H) {
+  for (const s of ESTRELAS) {
+    if (s.y > ymax) continue;
+    const x = ((s.x - dx * (0.3 + s.r * 0.2)) % (W * 1.3) + W * 1.3) % (W * 1.3);
+    ctx.globalAlpha = alpha * s.a * (0.75 + 0.25 * Math.sin(t * 1.7 + s.f));
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, s.y, s.r, 0, 6.283); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+}
+function texto(str, x, y, size, cor = '#fff', fonte = 'MX', alinh = 'center', alpha = 1, esp = 0) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = cor; ctx.textAlign = alinh; ctx.textBaseline = 'middle';
+  ctx.font = `${size}px ${fonte}`; if (esp) ctx.letterSpacing = esp + 'px';
+  ctx.shadowColor = 'rgba(0,0,0,.85)'; ctx.shadowBlur = 18; ctx.fillText(str, x, y); ctx.restore();
+}
+function vinheta(f = 0.75) {
+  const g = ctx.createRadialGradient(W / 2, H / 2, H * 0.35, W / 2, H / 2, H * 1.05);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${f})`); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+}
+function fade(t, dur, d = 0.5) { return Math.min(ease(t / d), ease((dur - t) / d)); }
+
+// ---------- floresta ----------
+const ARVORES = (() => { const camadas = [];
+  for (let c = 0; c < 4; c++) { const r = rng(100 + c), a = [];
+    for (let x = -300; x < W * 2.2; x += (30 + r() * 70) * (1 + c * 0.6)) a.push({ x, h: (260 + r() * 300) * (0.6 + c * 0.45), w: (55 + r() * 45) * (1 + c * 0.55) });
+    camadas.push(a); } return camadas; })();
+function pinheiro(x, base, h, w, cor) {
+  ctx.fillStyle = cor; ctx.beginPath(); ctx.moveTo(x, base - h);
+  const n = 7; for (let i = 1; i <= n; i++) { const yy = base - h + h * i / n, ww = w * (0.25 + 0.75 * i / n);
+    ctx.lineTo(x + ww * 0.55, yy - h / n * 0.25); ctx.lineTo(x + ww * 0.35, yy); }
+  ctx.lineTo(x + 6, base); ctx.lineTo(x - 6, base);
+  for (let i = n; i >= 1; i--) { const yy = base - h + h * i / n, ww = w * (0.25 + 0.75 * i / n);
+    ctx.lineTo(x - ww * 0.35, yy); ctx.lineTo(x - ww * 0.55, yy - h / n * 0.25); }
+  ctx.closePath(); ctx.fill();
+}
+function neblina(y, alpha, t) {
+  const g = ctx.createLinearGradient(0, y - 120, 0, y + 120);
+  g.addColorStop(0, 'rgba(120,140,170,0)'); g.addColorStop(0.5, `rgba(120,140,170,${alpha})`); g.addColorStop(1, 'rgba(120,140,170,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, y - 120, W, 240);
+}
+function floresta(t, dur, p) {
+  const dx = t * (p.vel ?? 28);
+  fundo('#060c1f', '#1a2846');
+  estrelas(t, dx * 0.1, 0.9, H * 0.7);
+  // lua
+  const lg = ctx.createRadialGradient(1500, 190, 10, 1500, 190, 260);
+  lg.addColorStop(0, 'rgba(220,230,255,.9)'); lg.addColorStop(0.08, 'rgba(200,215,255,.35)'); lg.addColorStop(1, 'rgba(120,140,200,0)');
+  ctx.fillStyle = lg; ctx.fillRect(1200, 0, 600, 500);
+  const cores = ['#16223a', '#0c1426', '#050912', '#000000'], bases = [H * 0.80, H * 0.90, H * 1.0, H * 1.12];
+  for (let c = 0; c < 4; c++) {
+    for (const a of ARVORES[c]) { const x = a.x - dx * (0.25 + c * 0.35); if (x < -200 || x > W + 200) continue; pinheiro(x, bases[c], a.h, a.w, cores[c]); }
+    if (c === 1) neblina(H * 0.8, 0.10, t);
+    if (c === 2) neblina(H * 0.9, 0.07, t);
+  }
+  // olhos de caçadores
+  if (p.olhos) { const r = rng(7);
+    for (let i = 0; i < p.olhos; i++) { const x = 200 + r() * 1500, y = H * (0.62 + r() * 0.25), t0 = r() * dur * 0.6;
+      const a = ease((t - t0) / 0.6) * (0.6 + 0.4 * Math.sin(t * 3 + i)) * (Math.sin(t * 0.9 + i * 2) > -0.85 ? 1 : 0);
+      for (const ox of [-11, 11]) { const g = ctx.createRadialGradient(x + ox, y, 0, x + ox, y, 14);
+        g.addColorStop(0, `rgba(255,190,90,${a})`); g.addColorStop(1, 'rgba(255,120,30,0)'); ctx.fillStyle = g; ctx.fillRect(x + ox - 14, y - 14, 28, 28); } } }
+  // lanterna varrendo
+  if (p.lanterna) { const ang = -0.55 + Math.sin(t * 0.6) * 0.35, ox = 260, oy = H * 0.98;
+    ctx.save(); ctx.globalCompositeOperation = 'lighter';
+    const g = ctx.createRadialGradient(ox, oy, 0, ox, oy, 1500); g.addColorStop(0, 'rgba(255,240,200,.55)'); g.addColorStop(0.6, 'rgba(255,240,200,.12)'); g.addColorStop(1, 'rgba(255,240,200,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(ox, oy); ctx.arc(ox, oy, 1500, ang - 0.09, ang + 0.09); ctx.closePath(); ctx.fill(); ctx.restore(); }
+  // fogueira (a humanidade "gritando")
+  if (p.fogueira) { const fx = W / 2, fy = H * 0.9, pul = 0.85 + 0.15 * Math.sin(t * 9) * Math.sin(t * 5.3);
+    ctx.save(); ctx.globalCompositeOperation = 'lighter';
+    const g = ctx.createRadialGradient(fx, fy, 0, fx, fy, 520 * pul); g.addColorStop(0, 'rgba(255,170,60,.85)'); g.addColorStop(0.15, 'rgba(255,110,20,.35)'); g.addColorStop(1, 'rgba(255,80,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    const r = rng(3); for (let i = 0; i < 40; i++) { const life = (t * 0.7 + r()) % 1, x = fx + (r() - 0.5) * 80 + Math.sin(t * 2 + i) * 30 * life, y = fy - life * 420;
+      ctx.fillStyle = `rgba(255,${150 + r() * 80},60,${1 - life})`; ctx.beginPath(); ctx.arc(x, y, 2.5 * (1 - life) + 0.5, 0, 6.28); ctx.fill(); }
+    ctx.restore(); }
+  // disparo
+  if (p.tiro !== undefined) { const k = t - p.tiro;
+    if (k > 0 && k < 1.2) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; const a = Math.exp(-k * 6);
+      ctx.fillStyle = `rgba(255,235,200,${a * 0.45})`; ctx.fillRect(0, 0, W, H);
+      const g = ctx.createRadialGradient(p.tx ?? 1300, p.ty ?? H * 0.8, 0, p.tx ?? 1300, p.ty ?? H * 0.8, 400);
+      g.addColorStop(0, `rgba(255,220,150,${a})`); g.addColorStop(1, 'rgba(255,120,30,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+    if (k > 0.15) { ctx.fillStyle = `rgba(0,0,0,${clamp((k - 0.15) * 0.5, 0, 0.55)})`; ctx.fillRect(0, 0, W, H); } }
+  vinheta(0.8);
+}
+
+// ---------- estrelas se apagando (civilizações se escondendo) ----------
+function apagando(t, dur, p) {
+  fundo('#03040c', '#000'); const r = rng(9);
+  for (let i = 0; i < 900; i++) { const x = r() * W, y = r() * H, rr = r() ** 2.5 * 2.5 + 0.4, t0 = r() * dur * 0.9, quente = r() < 0.12;
+    let a = 1; if (quente) a = 1 - ease((t - t0) / 0.8);
+    ctx.globalAlpha = a * (0.4 + 0.6 * r()); ctx.fillStyle = quente ? AMBAR : '#fff';
+    ctx.beginPath(); ctx.arc(x, y, quente ? rr * 1.8 : rr, 0, 6.283); ctx.fill(); }
+  ctx.globalAlpha = 1; vinheta(0.7);
+}
+
+// ---------- cartões ----------
+function capitulo(t, dur, p) {
+  fundo('#04050d', '#000'); estrelas(t, t * 15, 0.7); vinheta(0.85);
+  const a = fade(t, dur, 0.6), s = 1 + t * 0.02;
+  ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(s, s); ctx.translate(-W / 2, -H / 2);
+  texto(p.num, W / 2, H / 2 - 120, 40, LARANJA, 'MX', 'center', a, 18);
+  texto(p.titulo, W / 2, H / 2, 110, '#fff', 'MX', 'center', a, 3);
+  ctx.globalAlpha = a; ctx.fillStyle = LARANJA; ctx.fillRect(W / 2 - 60, H / 2 + 85, 120 * ease(t / 0.8), 5); ctx.restore();
+}
+function citacao(t, dur, p) {
+  fundo('#05060c', '#000'); estrelas(t, t * 8, 0.45); vinheta(0.85); const a = fade(t, dur, 0.6);
+  const linhas = p.texto.split('|'); linhas.forEach((l, i) => texto(l, W / 2, H / 2 - 60 + (i - (linhas.length - 1) / 2) * 92, 76, '#fff', 'MX', 'center', a * ease((t - i * 0.35) / 0.5)));
+  if (p.autor) texto(p.autor, W / 2, H / 2 + 60 + linhas.length * 46, 40, AMBAR, 'MM', 'center', a * ease((t - 0.8) / 0.6), 2);
+}
+function axioma(t, dur, p) {
+  floresta(t, dur, { vel: 12 }); ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(0, 0, W, H); const a = fade(t, dur, 0.5);
+  texto(p.titulo, W / 2, H / 2 - 150, 46, LARANJA, 'MX', 'center', a, 14);
+  p.texto.split('|').forEach((l, i) => texto(l, W / 2, H / 2 - 30 + i * 90, 72, '#fff', 'MX', 'center', a * ease((t - 0.3 - i * 0.3) / 0.5)));
+}
+
+// ---------- Drake ----------
+function drake(t, dur, p) {
+  fundo('#04050d', '#000'); estrelas(t, t * 10, 0.5); vinheta(0.8); const a = fade(t, dur, 0.5);
+  const termos = [['N', 'civilizações'], ['R*', 'estrelas/ano'], ['fp', 'com planetas'], ['ne', 'habitáveis'], ['fl', 'com vida'], ['fi', 'inteligente'], ['fc', 'comunica'], ['L', 'duração']];
+  const x0 = 220, passo = 215; const ativo = Math.floor(t / (dur / 9));
+  termos.forEach(([s, d], i) => { const x = i === 0 ? x0 : x0 + 230 + (i - 1) * passo, on = i === ativo - 1 || ativo > 8;
+    texto(s, x, H / 2 - 20, 92, on ? LARANJA : '#fff', 'MX', 'center', a);
+    texto(d, x, H / 2 + 70, 26, on ? AMBAR : 'rgba(255,255,255,.55)', 'MM', 'center', a);
+    if (i === 0) texto('=', x0 + 115, H / 2 - 20, 92, '#fff', 'MX', 'center', a); else if (i > 1) texto('×', x - passo / 2, H / 2 - 20, 60, 'rgba(255,255,255,.6)', 'MM', 'center', a); });
+  texto('EQUAÇÃO DE DRAKE · 1961', W / 2, H / 2 - 220, 40, AMBAR, 'MX', 'center', a, 10);
+}
+
+// ---------- galáxia sendo colonizada ----------
+const GAL = (() => { const r = rng(5), a = [];
+  for (let i = 0; i < 9000; i++) { const braco = i % 4, d = r() ** 0.6 * 460, ang = braco * Math.PI / 2 + d * 0.012 + (r() - 0.5) * 0.55;
+    a.push({ x: Math.cos(ang) * d, y: Math.sin(ang) * d * 0.55, r: r() * 1.4 + 0.3 }); }
+  for (let i = 0; i < 2500; i++) { const d = r() ** 2 * 110, ang = r() * 6.28; a.push({ x: Math.cos(ang) * d, y: Math.sin(ang) * d * 0.6, r: r() * 1.6 + 0.4 }); }
+  return a; })();
+function galaxia(t, dur, p) {
+  fundo('#03030a', '#000'); estrelas(t, 0, 0.3);
+  const cx = W / 2, cy = H / 2, rot = t * 0.04, raio = p.colonizar ? Math.pow(t / dur, 1.6) * 1000 : -1, ox = 330, oy = 60;
+  for (const s of GAL) { const x = s.x * Math.cos(rot) - s.y * Math.sin(rot) * 1.8, y = s.x * Math.sin(rot) * 0.55 + s.y * Math.cos(rot);
+    const d = Math.hypot(x - ox, y - oy), col = d < raio;
+    ctx.fillStyle = col ? LARANJA : (Math.hypot(s.x, s.y) < 120 ? '#ffe9c4' : '#cfd8ff'); ctx.globalAlpha = col ? 0.95 : 0.55;
+    ctx.beginPath(); ctx.arc(cx + x * 1.6, cy + y * 1.6, s.r * (col ? 1.4 : 1), 0, 6.283); ctx.fill(); }
+  ctx.globalAlpha = 1; vinheta(0.6);
+  if (p.colonizar) texto(`${Math.round(ease(t / dur) * 50)} milhões de anos`, W - 120, H - 90, 44, AMBAR, 'MX', 'right', fade(t, dur, 0.4));
+}
+
+// ---------- grande filtro ----------
+function filtro(t, dur, p) {
+  fundo('#05040a', '#000'); estrelas(t, t * 5, 0.35);
+  const xm = W * 0.62; const g = ctx.createLinearGradient(xm - 40, 0, xm + 40, 0);
+  g.addColorStop(0, 'rgba(255,90,20,0)'); g.addColorStop(0.5, 'rgba(255,120,40,.9)'); g.addColorStop(1, 'rgba(255,90,20,0)'); ctx.fillStyle = g; ctx.fillRect(xm - 40, 120, 80, H - 240);
+  const r = rng(11); for (let i = 0; i < 70; i++) { const y = 160 + r() * (H - 320), v = 120 + r() * 160, t0 = r() * dur * 0.8, passa = i === 13;
+    let x = 80 + (t - t0) * v; if (t < t0) continue; if (!passa) x = Math.min(x, xm - 50); else if (x > xm - 50 && x < xm + 50) x = xm - 50 + (x - xm + 50) * 0.3;
+    const parado = !passa && x >= xm - 51; ctx.fillStyle = passa ? '#fff' : (parado ? 'rgba(255,120,60,.35)' : '#9fd0ff');
+    ctx.beginPath(); ctx.arc(x, y, passa ? 7 : 5, 0, 6.283); ctx.fill(); }
+  texto('GRANDE FILTRO', xm, 80, 46, LARANJA, 'MX', 'center', fade(t, dur), 10); vinheta(0.7);
+}
+
+// ---------- sinal entre duas civilizações ----------
+function sinal(t, dur, p) {
+  fundo('#03040b', '#000'); estrelas(t, t * 6, 0.5);
+  const ax = 300, bx = W - 300, y = H / 2;
+  for (const [x, nome] of [[ax, 'NÓS'], [bx, p.outro || '?']]) { const g = ctx.createRadialGradient(x, y, 0, x, y, 70); g.addColorStop(0, '#fff'); g.addColorStop(0.2, AMBAR); g.addColorStop(1, 'rgba(255,140,40,0)');
+    ctx.fillStyle = g; ctx.fillRect(x - 70, y - 70, 140, 140); texto(nome, x, y + 120, 40, '#fff', 'MX', 'center', 0.9, 6); }
+  const ida = dur * 0.45, k = t / ida; const anos = p.anos || 100;
+  let xs, dir; if (k <= 1) { xs = ax + (bx - ax) * k; dir = 1; } else { xs = bx - (bx - ax) * clamp(k - 1, 0, 1); dir = -1; }
+  for (let i = 0; i < 5; i++) { const xx = xs - dir * i * 26; ctx.strokeStyle = `rgba(255,170,80,${0.9 - i * 0.17})`; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.arc(xx, y, 30 + i * 6, dir > 0 ? -0.7 : Math.PI - 0.7, dir > 0 ? 0.7 : Math.PI + 0.7); ctx.stroke(); }
+  ctx.setLineDash([6, 14]); ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(ax + 80, y); ctx.lineTo(bx - 80, y); ctx.stroke(); ctx.setLineDash([]);
+  texto(`${anos} ANOS-LUZ`, W / 2, y - 110, 44, AMBAR, 'MX', 'center', 0.9, 8);
+  texto(`${Math.round(clamp(t / ida, 0, 2) * anos)} anos`, W / 2, H - 150, 64, '#fff', 'MX', 'center', fade(t, dur));
+  vinheta(0.7);
+}
+
+// ---------- cadeia de suspeita ----------
+function suspeita(t, dur, p) {
+  fundo('#05050c', '#000'); estrelas(t, t * 4, 0.35);
+  const frases = ['Ela é pacífica?', 'Ela sabe o que eu penso dela?', 'Ela sabe o que eu penso que ela pensa?', 'E se ela estiver mentindo?', '...'];
+  const n = Math.min(frases.length, Math.floor(t / (dur / frases.length)) + 1);
+  for (let i = 0; i < n; i++) { const k = ease((t - i * dur / frases.length) / 0.5), esc = 1 - (n - 1 - i) * 0.14;
+    texto(frases[i], W / 2, H / 2 + (i - (n - 1) / 2) * 118 * esc, 76 * esc, i === n - 1 ? '#fff' : 'rgba(255,255,255,.45)', 'MX', 'center', k); }
+  vinheta(0.8);
+}
+
+// ---------- explosão tecnológica ----------
+function explosao(t, dur, p) {
+  fundo('#04040b', '#000'); estrelas(t, t * 5, 0.3);
+  const x0 = 200, x1 = W - 200, y0 = H - 200, y1 = 160, prog = ease(t / (dur * 0.8));
+  ctx.strokeStyle = 'rgba(255,255,255,.3)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y0); ctx.stroke();
+  ctx.strokeStyle = LARANJA; ctx.lineWidth = 6; ctx.shadowColor = LARANJA; ctx.shadowBlur = 25; ctx.beginPath();
+  for (let i = 0; i <= 200 * prog; i++) { const u = i / 200, x = x0 + (x1 - x0) * u, y = y0 - (y0 - y1) * (Math.exp(u * 5) - 1) / (Math.exp(5) - 1); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+  ctx.stroke(); ctx.shadowBlur = 0;
+  const marcos = [[0.0, '1903', 'primeiro avião'], [0.38, '1957', 'Sputnik'], [0.5, '1969', 'Lua'], [0.6, '1977', 'Voyager'], [0.95, 'HOJE', 'sondas interestelares']];
+  for (const [u, ano, d] of marcos) { if (u > prog + 0.001) continue; const x = x0 + (x1 - x0) * u, y = y0 - (y0 - y1) * (Math.exp(u * 5) - 1) / (Math.exp(5) - 1);
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, 9, 0, 6.28); ctx.fill(); texto(ano, x, y0 + 50, 40, AMBAR, 'MX'); texto(d, x, y0 + 95, 26, 'rgba(255,255,255,.7)', 'MM'); }
+  vinheta(0.6);
+}
+
+// ---------- bolha de rádio da Terra ----------
+function bolha(t, dur, p) {
+  fundo('#02030a', '#000'); estrelas(t, 0, 0.6); const cx = W / 2, cy = H / 2, R = 120 + ease(t / dur) * 520;
+  const r = rng(21); for (let i = 0; i < 160; i++) { const x = cx + (r() - 0.5) * 1700, y = cy + (r() - 0.5) * 1000, d = Math.hypot(x - cx, y - cy);
+    ctx.fillStyle = d < R ? AMBAR : 'rgba(255,255,255,.6)'; ctx.globalAlpha = d < R ? 1 : 0.6; ctx.beginPath(); ctx.arc(x, y, d < R ? 3.2 : 2, 0, 6.28); ctx.fill(); }
+  ctx.globalAlpha = 1;
+  for (let k = 0; k < 4; k++) { const rr = R - k * 38; if (rr < 20) continue; ctx.strokeStyle = `rgba(255,150,60,${0.6 - k * 0.13})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 6.283); ctx.stroke(); }
+  const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R); g.addColorStop(0, 'rgba(255,140,40,.12)'); g.addColorStop(1, 'rgba(255,140,40,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.28); ctx.fill();
+  ctx.fillStyle = '#4da3ff'; ctx.beginPath(); ctx.arc(cx, cy, 10, 0, 6.28); ctx.fill(); texto('TERRA', cx, cy + 40, 26, '#cfe6ff', 'MX', 'center', 0.9, 5);
+  texto(`${Math.round(ease(t / dur) * 100)} anos-luz`, cx + R * 0.71 + 20, cy - R * 0.71 - 20, 38, AMBAR, 'MX', 'left', fade(t, dur));
+  vinheta(0.6);
+}
+
+// ---------- mensagem binária (ilustração do estilo Arecibo) ----------
+function binario(t, dur, p) {
+  fundo('#020208', '#000'); const cols = 23, linhas = 73, tam = 12, x0 = W / 2 - cols * tam / 2, y0 = (H - linhas * tam) / 2 - 10;
+  const r = rng(77), n = Math.floor(ease(t / (dur * 0.85)) * cols * linhas);
+  for (let i = 0; i < cols * linhas; i++) { const on = r() < 0.32; if (i > n) break; const x = x0 + (i % cols) * tam, y = y0 + Math.floor(i / cols) * tam;
+    ctx.fillStyle = on ? (i > n - 40 ? '#fff' : LARANJA) : 'rgba(255,255,255,.05)'; ctx.fillRect(x, y, tam - 2, tam - 2); }
+  texto('1.679 BITS', W * 0.22, H / 2 - 30, 64, '#fff', 'MX'); texto('Arecibo · 1974', W * 0.22, H / 2 + 40, 36, AMBAR, 'MM');
+  texto('→ M13', W * 0.78, H / 2 - 30, 64, '#fff', 'MX'); texto('25.000 anos-luz', W * 0.78, H / 2 + 40, 36, AMBAR, 'MM'); vinheta(0.5);
+}
+
+// ---------- sinal Wow! ----------
+function wow(t, dur, p) {
+  ctx.fillStyle = '#e9e4d6'; ctx.fillRect(0, 0, W, H); const r = rng(31);
+  ctx.font = '44px "Courier New", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const cols = 12, lin = 15, s = 1 + t * 0.03; ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(s, s); ctx.translate(-W / 2, -H / 2);
+  const ch = '1111211131121111123111';
+  for (let c = 0; c < cols; c++) for (let l = 0; l < lin; l++) { let v = ch[Math.floor(r() * ch.length)]; if (r() < 0.6) v = ' ';
+    if (c === 7 && l >= 4 && l <= 9) v = '6EQUJ5'[l - 4]; ctx.fillStyle = 'rgba(30,30,40,.85)'; ctx.fillText(v, 330 + c * 115, 140 + l * 58); }
+  const k = ease((t - 1) / 1.2); ctx.strokeStyle = `rgba(200,20,20,${k})`; ctx.lineWidth = 6; ctx.beginPath(); ctx.ellipse(330 + 7 * 115, 140 + 6.5 * 58, 48, 200, 0, 0, 6.283 * k); ctx.stroke();
+  ctx.font = 'italic 110px "MM"'; ctx.fillStyle = `rgba(200,20,20,${ease((t - 2) / 0.8)})`; ctx.fillText('Wow!', 330 + 7 * 115 - 220, 140 + 3 * 58); ctx.restore();
+  const g = ctx.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.7)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+}
+
+const CENAS = { floresta, apagando, capitulo, citacao, axioma, drake, galaxia, filtro, sinal, suspeita, explosao, bolha, binario, wow };
+window.desenhar = (nome, t, dur, p) => { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; CENAS[nome](t, dur, p || {}); };
+</script>
+</body></html>
