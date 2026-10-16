@@ -171,7 +171,7 @@ for gi, g in enumerate(grupos):
 ROTULOS = {"real": ("Real", "● IMAGEM REAL"), "sim": ("Anim", "SIMULAÇÃO"), "anim": ("Anim", "ANIMAÇÃO"), "ilus": ("Anim", "ILUSTRAÇÃO")}
 def credito_padrao(src):
     if src.startswith("anim:"): return "Animação: Lado Sombrio do Universo"
-    for pref, cr in (("px_", "Pexels"), ("bd_eso", "ESO"), ("bdi_", "EHT Collaboration / ESO"), ("bd_", "NASA Goddard"), ("bh_", "NASA Goddard"), ("vgi_", "NASA/JPL-Caltech"), ("vg_", "NASA/JPL-Caltech"), ("hd_webb", "NASA/STScI"),
+    for pref, cr in (("px_", "Pexels"), ("pb_", "Pixabay"), ("bd_eso", "ESO"), ("bdi_", "EHT Collaboration / ESO"), ("bd_", "NASA Goddard"), ("bh_", "NASA Goddard"), ("vgi_", "NASA/JPL-Caltech"), ("vg_", "NASA/JPL-Caltech"), ("hd_webb", "NASA/STScI"),
                      ("hdi_", "NASA"), ("hd_", "ESA/Hubble, M. Kornmesser"), ("eso_", "ESO"), ("ns_", "NASA SVS"), ("fl_hawking", "NASA/Paul Alers")):
         if src.startswith(pref): return cr
     return ""
