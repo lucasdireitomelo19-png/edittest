@@ -193,3 +193,45 @@ Tudo baseado em ciência real, com fontes checadas, imagens oficiais das agênci
 
 Se você já olhou para o céu e se perguntou "o que existe lá fora?", este canal é pra você. Inscreva-se e ative o sininho 🔔
 ```
+
+---
+
+# Shorts derivados do vídeo "Floresta Negra"
+
+> Fixe um comentário com o link do vídeo longo e, no YouTube, use o recurso "vídeo relacionado" do Short apontando para o vídeo completo.
+
+## 05 · O sinal Wow!
+**Título (YouTube):** `Em 1977 captamos um sinal do espaço. Ele nunca mais se repetiu 📡`
+```
+Em 15 de agosto de 1977, o radiotelescópio Big Ear captou um sinal fortíssimo, perto da frequência do hidrogênio. O astrônomo Jerry Ehman circulou os números e escreveu: "Wow!". Ele durou 72 segundos e nunca mais se repetiu.
+
+Interferência… ou alguém que aprendeu a ficar em silêncio? 👇
+🎬 A teoria completa está no canal: "A teoria da Floresta Negra"
+
+🎥 ESO · NASA · recriação ilustrativa da folha original
+#sinalwow #alienigenas #universo #espaço #astronomia
+```
+
+## 06 · Nós já gritamos
+**Título (YouTube):** `A humanidade gritou para o espaço. E se alguém ouviu? 😨`
+```
+Em 1974, a mensagem de Arecibo foi enviada para as estrelas com o desenho de um humano, o nosso DNA e a posição da Terra. As Voyager levam até um mapa para achar o Sol. Stephen Hawking alertou para o risco.
+
+E se quem receber não for amigável? 👇
+🎬 Vídeo completo no canal: "A teoria da Floresta Negra"
+
+🎥 ESO · NASA/JPL-Caltech · foto: NASA/Paul E. Alers
+#arecibo #alienigenas #universo #espaço #astronomia
+```
+
+## 07 · A floresta escura
+**Título (YouTube):** `A teoria mais assustadora sobre alienígenas 🌲👁️`
+```
+E se o universo for uma floresta escura, cheia de caçadores em silêncio? A teoria da Floresta Negra, popularizada por Liu Cixin (O Problema dos Três Corpos), tenta explicar por que nunca encontramos ninguém.
+
+É só uma hipótese… mas você acha que ela faz sentido? 👇
+🎬 Explicação completa no canal
+
+🎥 ESO · animações: Lado Sombrio do Universo
+#florestanegra #3bodyproblem #alienigenas #universo #astronomia
+```

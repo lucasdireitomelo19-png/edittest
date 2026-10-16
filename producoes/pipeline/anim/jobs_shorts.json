@@ -1,0 +1,13 @@
+[
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_floresta_olhos.mp4","cena":"floresta","dur":8,"p":{"olhos":7,"lanterna":1}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_floresta_calma.mp4","cena":"floresta","dur":7,"p":{"vel":18}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_floresta_muitos.mp4","cena":"floresta","dur":7,"p":{"olhos":12,"vel":10}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_floresta_tiro.mp4","cena":"floresta","dur":5,"p":{"tiro":1.2,"olhos":3}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_floresta_fogueira.mp4","cena":"floresta","dur":8,"p":{"fogueira":1,"olhos":12}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_apagando.mp4","cena":"apagando","dur":7,"p":{}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_bolha.mp4","cena":"bolha","dur":8,"p":{}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_binario.mp4","cena":"binario","dur":7,"p":{}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_wow.mp4","cena":"wow","dur":9,"p":{}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_sinal.mp4","cena":"sinal","dur":9,"p":{"anos":100}},
+ {"saida":"/tmp/claude-0/-home-user-edittest/5d5c25a3-d977-5e7d-b1a6-45b07eb68ebb/scratchpad/prod/src/an_suspeita.mp4","cena":"suspeita","dur":7,"p":{}}
+]
