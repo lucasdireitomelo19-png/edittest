@@ -66,6 +66,9 @@ for i, c in enumerate(CENAS):
                  "rotate=-0.18:fillcolor=black,"
                  "format=gbrp,colorchannelmixer=rr=0.75:gg=0.9:bb=1.0[r];"
                  "[q][r]blend=all_mode=screen:shortest=1,format=yuv420p")
+    if c.get("rgb"):
+        # aberração cromática (glitch) nos primeiros 0,35 s do corte
+        f.append("rgbashift=rh=-14:bh=14:gv=6:enable='lt(t,0.35)'")
     if c.get("flash"):
         f.append("fade=t=in:st=0:d=0.15:color=white")
     entrada = ["-loop", "1", "-framerate", str(FPS), "-t", f"{dur + 0.1:.3f}", "-i", arq] if imagem else \
@@ -153,14 +156,46 @@ Dialogue: 0,{ts(0)},{ts(FIM)},Credito,,0,0,0,,{cfg.CREDITO}
 ass_path = os.path.join(pasta, "tmp", "legendas.ass")
 open(ass_path, "w", encoding="utf-8").write(ass)
 
-# ---------------- render final (somente voz) ----------------
+# ---------------- render final (voz + efeitos sonoros opcionais) ----------------
+# som="whoosh" ou som=("boom", -4) numa cena toca o efeito no corte; AMBIENTE = "drone" põe um fundo grave
+# que abaixa sozinho quando a voz fala. Os .wav saem de pipeline/sfx.py.
+SFX = os.path.join(BASE, "sfx")
+sons = []
+for c in CENAS:
+    s = c.get("som")
+    for item in ([s] if isinstance(s, (str, tuple)) else s or []):
+        nome, ganho = (item, 0) if isinstance(item, str) else item
+        sons.append((c["t"], nome, ganho))
+AMBIENTE = getattr(cfg, "AMBIENTE", None)
+entradas, mix = [], ""
+if sons or AMBIENTE:
+    import sfx as _sfx; _sfx.gerar()
+for k, (t, nome, ganho) in enumerate(sons):
+    entradas += ["-i", os.path.join(SFX, f"{nome}.wav")]
+    ms = int(max(0, t - (0.35 if nome == "whoosh" else 0)) * 1000)
+    mix += f"[{k + 2}:a]adelay={ms}|{ms},volume={ganho - 6}dB[s{k}];"
+voz = ("[1:a]aresample=44100,highpass=f=75,equalizer=f=170:t=q:w=1:g=2.5,equalizer=f=3200:t=q:w=1.4:g=2,"
+       "acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,"
+       "aecho=0.9:0.6:35|60:0.10|0.06,aformat=channel_layouts=stereo,"
+       f"apad,atrim=0:{FIM}")
+if AMBIENTE:
+    entradas += ["-i", os.path.join(SFX, f"{AMBIENTE}.wav")]
+    na = len(sons) + 2
+    voz += ",asplit[voz][chave];"
+    mix += (f"[{na}:a]atrim=0:{FIM},volume=-10dB[amb0];"
+            "[amb0][chave]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=400[amb];")
+    rotulos = "[voz][amb]" + "".join(f"[s{k}]" for k in range(len(sons)))
+    audio = voz + mix + f"{rotulos}amix=inputs={len(sons) + 2}:normalize=0:duration=first"
+elif sons:
+    voz += "[voz];"
+    audio = voz + mix + "[voz]" + "".join(f"[s{k}]" for k in range(len(sons))) + \
+            f"amix=inputs={len(sons) + 1}:normalize=0:duration=first"
+else:
+    audio = voz
 saida = os.path.join(pasta, cfg.SAIDA)
-run(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-i", os.path.join(pasta, "narracao.mp3"),
+run(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-i", os.path.join(pasta, "narracao.mp3"), *entradas,
      "-filter_complex",
-     "[1:a]aresample=44100,highpass=f=75,equalizer=f=170:t=q:w=1:g=2.5,equalizer=f=3200:t=q:w=1.4:g=2,"
-     "acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,"
-     "aecho=0.9:0.6:35|60:0.10|0.06,aformat=channel_layouts=stereo,"
-     f"apad,atrim=0:{FIM},loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.84:level=disabled[a];"
+     audio + f",atrim=0:{FIM},loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.84:level=disabled[a];"
      f"[0:v]vignette=angle=0.55,noise=alls=5:allf=t,ass={ass_path}:fontsdir={FONTS},"
      f"fade=t=out:st={FIM - 0.4}:d=0.4,trim=0:{FIM}[v]",
      "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "medium", "-crf", "19",

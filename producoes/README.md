@@ -9,6 +9,7 @@ Shorts de 61 s (1080x1920, só voz) sobre espaço, montados automaticamente com 
 | 01 | Queda num buraco negro (simulação da NASA) | [01_buraco_negro.md](01_buraco_negro.md) | `buraco_negro_61s.mp4` |
 | 02 | Voyager 1 | [02_voyager1.md](02_voyager1.md) | `voyager1_61s.mp4` |
 | 03 | HD 189733 b, o planeta onde chove vidro | [03_planeta_de_vidro.md](03_planeta_de_vidro.md) | `planeta_vidro_61s.mp4` |
+| 06 | Estrela de nêutrons: um cubo de açúcar de 1 bilhão de toneladas | [06_estrela_de_neutrons.md](06_estrela_de_neutrons.md) | `short_estrela_neutrons_61s.mp4` |
 
 Cada documento traz título, gancho, roteiro, divisão por cenas, prompts visuais, prompt de voz e checklist de retenção.
 Os MP4 não ficam no git (são grandes). Eles são regerados pelo processo abaixo.
@@ -57,6 +58,10 @@ Em ambientes com proxy, rode `narrar.py` com `SSL_CERT_FILE` apontando para o ce
 | `circulo=1` | círculo de destaque no centro da tela |
 | `tag` | etiqueta no topo: `real`, `sim`, `anim`, `ilus` |
 | `texto` | texto de apoio grande no topo |
+| `rgb=1` | glitch de aberração cromática nos primeiros 0,35 s do corte |
+| `som` | efeito sonoro no corte: `"whoosh"`, `"boom"`, `"hit"`, `"riser"`, `"pulsar"`, `"tick"` ou `(nome, ganho_dB)` |
+
+No topo do `cenas.py`, `AMBIENTE = "drone"` põe um fundo grave que abaixa sozinho sob a voz. Os sons são originais, sintetizados por `pipeline/sfx.py` (gerados na primeira montagem).
 
 ### Padrão do canal
 

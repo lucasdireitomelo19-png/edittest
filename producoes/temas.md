@@ -27,7 +27,7 @@ Edite à vontade: reordene, apague ou acrescente temas. ⚠️ indica fato que p
 - [x] Saturno flutuaria numa banheira gigante (densidade menor que a da água)
 - [ ] O Sol perde cerca de 4 milhões de toneladas por segundo
 - [ ] A luz do Sol que você vê saiu de lá há 8 minutos
-- [ ] Uma colher de estrela de nêutrons pesaria bilhões de toneladas
+- [x] Uma colher de estrela de nêutrons pesaria bilhões de toneladas
 - [ ] A Grande Mancha Vermelha de Júpiter está encolhendo
 - [ ] O lugar mais frio do universo conhecido: a Nebulosa do Bumerangue
 - [ ] Apophis: o asteroide que vai passar perto da Terra em 2029
