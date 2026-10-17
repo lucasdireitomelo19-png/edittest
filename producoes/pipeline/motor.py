@@ -29,10 +29,12 @@ for i, c in enumerate(CENAS):
     dur, vel = dur_de(i), c.get("vel", 1.0)
     out = os.path.join(pasta, "tmp", f"parte_{i:02d}.mp4")
     partes.append(out)
-    chave = json.dumps({k: v for k, v in c.items() if k not in ("texto", "tag")}, sort_keys=True) + f"{dur:.3f}"
-    if os.path.exists(out) and open(out + ".key").read() == chave:
-        continue
     arq = os.path.join(SRC, c["src"])
+    # a chave inclui a data do arquivo de origem: se o clipe for refeito, a cena é remontada
+    chave = json.dumps({k: v for k, v in c.items() if k not in ("texto", "tag")}, sort_keys=True) + \
+            f"{dur:.3f}|{os.path.getmtime(arq):.0f}"
+    if os.path.exists(out) and os.path.exists(out + ".key") and open(out + ".key").read() == chave:
+        continue
     imagem = arq.lower().endswith((".jpg", ".png"))
     f = []
     if vel != 1.0:

@@ -9,6 +9,7 @@ Shorts de 61 s (1080x1920, só voz) sobre espaço, montados automaticamente com 
 | 01 | Queda num buraco negro (simulação da NASA) | [01_buraco_negro.md](01_buraco_negro.md) | `buraco_negro_61s.mp4` |
 | 02 | Voyager 1 | [02_voyager1.md](02_voyager1.md) | `voyager1_61s.mp4` |
 | 03 | HD 189733 b, o planeta onde chove vidro | [03_planeta_de_vidro.md](03_planeta_de_vidro.md) | `planeta_vidro_61s.mp4` |
+| 08 | E se você pulasse num buraco que atravessa a Terra? | [08_buraco_na_terra.md](08_buraco_na_terra.md) | `short_buraco_terra_61s.mp4` |
 | 07 | E se a Terra parasse de girar do nada? | [07_terra_parasse.md](07_terra_parasse.md) | `short_terra_parasse_61s.mp4` |
 | 06 | Estrela de nêutrons: um cubo de açúcar de 1 bilhão de toneladas | [06_estrela_de_neutrons.md](06_estrela_de_neutrons.md) | `short_estrela_neutrons_61s.mp4` |
 
