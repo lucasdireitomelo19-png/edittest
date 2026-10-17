@@ -62,6 +62,7 @@ Em ambientes com proxy, rode `narrar.py` com `SSL_CERT_FILE` apontando para o ce
 | `circulo=1` | círculo de destaque no centro da tela |
 | `tag` | etiqueta no topo: `real`, `sim`, `anim`, `ilus` |
 | `texto` | texto de apoio grande no topo |
+| `pixel=(a, b)` | pixelização progressiva, de blocos de a até b pixels |
 | `rgb=1` | glitch de aberração cromática nos primeiros 0,35 s do corte |
 | `som` | efeito sonoro no corte: `"whoosh"`, `"boom"`, `"hit"`, `"riser"`, `"pulsar"`, `"tick"` ou `(nome, ganho_dB)` |
 

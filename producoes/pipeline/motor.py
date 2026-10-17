@@ -68,6 +68,13 @@ for i, c in enumerate(CENAS):
                  "rotate=-0.18:fillcolor=black,"
                  "format=gbrp,colorchannelmixer=rr=0.75:gg=0.9:bb=1.0[r];"
                  "[q][r]blend=all_mode=screen:shortest=1,format=yuv420p")
+    if c.get("pixel"):
+        # pixelização progressiva (o mundo "virando" grade de computador): blocos de a até b pixels, em 8 degraus
+        a, b = c["pixel"]
+        for i in range(8):
+            px = max(1, round(a + (b - a) * (i + 1) / 8))
+            if px > 1:
+                f.append(f"pixelize=w={px}:h={px}:enable='between(t,{dur * i / 8:.3f},{dur * (i + 1) / 8:.3f})'")
     if c.get("rgb"):
         # aberração cromática (glitch) nos primeiros 0,35 s do corte
         f.append("rgbashift=rh=-14:bh=14:gv=6:enable='lt(t,0.35)'")
