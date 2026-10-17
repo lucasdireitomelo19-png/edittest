@@ -9,6 +9,7 @@ Shorts de 61 s (1080x1920, só voz) sobre espaço, montados automaticamente com 
 | 01 | Queda num buraco negro (simulação da NASA) | [01_buraco_negro.md](01_buraco_negro.md) | `buraco_negro_61s.mp4` |
 | 02 | Voyager 1 | [02_voyager1.md](02_voyager1.md) | `voyager1_61s.mp4` |
 | 03 | HD 189733 b, o planeta onde chove vidro | [03_planeta_de_vidro.md](03_planeta_de_vidro.md) | `planeta_vidro_61s.mp4` |
+| 09 | Lote viral 01 (10 Shorts de ~45 s) | [09_lote_virais_01.md](09_lote_virais_01.md) | `videos/v11…v20` |
 | 08 | E se você pulasse num buraco que atravessa a Terra? | [08_buraco_na_terra.md](08_buraco_na_terra.md) | `short_buraco_terra.mp4` |
 | 07 | E se a Terra parasse de girar do nada? | [07_terra_parasse.md](07_terra_parasse.md) | `short_terra_parasse_61s.mp4` |
 | 06 | Estrela de nêutrons: um cubo de açúcar de 1 bilhão de toneladas | [06_estrela_de_neutrons.md](06_estrela_de_neutrons.md) | `short_estrela_neutrons_61s.mp4` |
@@ -33,6 +34,8 @@ python3 baixar_img.py <nasa_id> src/nome.jpg
 # 2. Roteiro e narração (ajusta a velocidade sozinho para caber em ~60 s)
 mkdir -p ../videos/v4_tema && $EDITOR ../videos/v4_tema/roteiro.txt
 python3 narrar.py ../videos/v4_tema 60.2 15
+# voz do ElevenLabs (Brian), com tempos por palavra; a chave vem só da variável de ambiente:
+# ELEVENLABS_API_KEY=... python3 narrar_el.py ../videos/v4_tema 44 --vel 1.2 --pausa 0.15
 # voz mais natural e fala contínua (fica gravado em voz.txt):
 # python3 narrar.py ../videos/v4_tema 59.4 0 --voz fr-FR-RemyMultilingualNeural --pausa 0.25
 

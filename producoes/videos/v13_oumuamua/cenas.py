@@ -2,7 +2,7 @@ import os, sys; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspa
 from ancoras import montar
 AQUI = os.path.dirname(os.path.abspath(__file__))
 FINAL = "SIGA PARA MAIS"
-FIM = 44.5
+FIM = 45.5
 AMBIENTE = "drone"
 AMBIENTE_DB = -22
 ETIQUETAS = False
@@ -19,10 +19,10 @@ GAS = "es_eso1820b.mp4"      # ʻOumuamua liberando gás (ESO/M. Kornmesser)
 GAS2 = "es_eso1820c.mp4"
 CENAS = montar(AQUI, [
     C("", GIRA, 4, "ilus", zoom=(1.2, 1.4), texto="2017"),
-    C("e fez algo", GIRA, 7, "ilus", zoom=(1.3, 1.5), pan=(0.5, 0.5)),
+    C("e fez algo", GIRA, 5.5, "ilus", zoom=(1.3, 1.5), pan=(0.5, 0.5)),
     C("um telescopio no havai", "pb_ceu_estrelas.mp4", 2, "real", zoom=(1.0, 1.1), texto="PAN-STARRS · HAVAÍ"),
-    C("pela primeira vez", ROTA, 22, "anim", zoom=(1.0, 1.15), texto="VEIO DE OUTRA ESTRELA"),
-    C("os astronomos o chamaram", GIRA, 1, "ilus", zoom=(1.0, 1.25), texto="OUMUAMUA"),
+    C("pela primeira vez", ROTA, 30, "anim", zoom=(1.0, 1.15), texto="VEIO DE OUTRA ESTRELA"),
+    C("os astronomos o chamaram", GIRA, 5, "ilus", zoom=(1.0, 1.2), texto="OUMUAMUA"),
     C("em havaiano", GAS2, 4, "ilus", zoom=(1.0, 1.1), texto="“MENSAGEIRO VINDO DE LONGE”"),
     C("e ele era estranho", GAS2, 10, "ilus", zoom=(1.1, 1.3)),
     C("o brilho mudava", GIRA, 5, "ilus", zoom=(1.3, 1.5), texto="BRILHO VARIAVA 10×"),
@@ -36,5 +36,5 @@ CENAS = montar(AQUI, [
     C("uma nave", "nl_vela_solar.mp4", 268, "ilus", zoom=(1.1, 1.3), texto="UMA NAVE?"),
     C("a maioria dos cientistas", GAS2, 6, "ilus", zoom=(1.0, 1.15), texto="PROVAVELMENTE NATURAL"),
     C("mas ninguem vai poder", ROTA, 62, "anim", zoom=(1.0, 1.15)),
-    C("ele ja foi embora", GIRA, 9, "ilus", zoom=(1.2, 1.0), texto="NUNCA MAIS VAI VOLTAR"),
+    C("ele ja foi embora", GIRA, 6.5, "ilus", zoom=(1.0, 1.25), texto="NUNCA MAIS VAI VOLTAR"),
 ])

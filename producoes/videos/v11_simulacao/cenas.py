@@ -2,7 +2,7 @@ import os, sys; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspa
 from ancoras import montar
 AQUI = os.path.dirname(os.path.abspath(__file__))
 FINAL = "SIGA PARA MAIS"
-FIM = 44.8
+FIM = 44.5
 AMBIENTE = "drone"
 AMBIENTE_DB = -22
 ETIQUETAS = False
