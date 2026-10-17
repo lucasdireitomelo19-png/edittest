@@ -211,9 +211,9 @@ function atualizar(t) {
   detritos.material.opacity = a * 0.95;
   for (const p of poeira) {
     const u = p.userData; p.position.set(((u.x0 + u.v * Math.max(0, dt)) % 260 + 260) % 260 - 160, u.y, u.z);
-    p.material.opacity = a * 0.5; p.lookAt(p.position.x, p.position.y, p.position.z + 10);
+    p.material.opacity = a * 0.3; p.lookAt(p.position.x, p.position.y, p.position.z + 10);
   }
-  scene.fog.near = 40 - 30 * a; scene.fog.far = 230 - 150 * a;
+  scene.fog.near = 40 - 15 * a; scene.fog.far = 230 - 90 * a;
   scene.fog.color.copy(CEU).lerp(new THREE.Color('#8f877b'), a); scene.background = scene.fog.color;
 }
 
