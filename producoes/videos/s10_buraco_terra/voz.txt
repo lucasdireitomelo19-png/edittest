@@ -1,2 +1,2 @@
 voz=fr-FR-RemyMultilingualNeural
-pausa=0.25
+pausa=0.15
