@@ -1,0 +1,254 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style></head>
+<body>
+<script type="module">
+// Rua em 3D (1080x1920) para "e se a Terra parasse de girar": até T_PARADA a câmera anda pela calçada;
+// depois tudo o que está solto (pessoas, carros, árvores, lixo) é arremessado para o leste (+X).
+// A simulação é uma função pura do tempo, então qualquer câmera pode ser renderizada em qualquer instante.
+// window.desenhar(cam, t, p): cam = "pov" | "baixa" | "pessoas" | "carros" | "arvores" | "alta".
+import * as THREE from './three.module.min.js';
+
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.domElement.id = 'c';
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const CEU = new THREE.Color('#b9c3cc');
+scene.background = CEU;
+scene.fog = new THREE.Fog(CEU, 40, 230);
+const camera = new THREE.PerspectiveCamera(62, W / H, 0.1, 600);
+
+scene.add(new THREE.HemisphereLight('#dfe8f0', '#4a4238', 1.3));
+const sol = new THREE.DirectionalLight('#fff3e0', 2.2);
+sol.position.set(-40, 70, 25); sol.castShadow = true;
+sol.shadow.mapSize.set(2048, 2048);
+Object.assign(sol.shadow.camera, { left: -60, right: 60, top: 60, bottom: -60, near: 1, far: 200 });
+scene.add(sol);
+
+// ---------- utilidades ----------
+function rng(seed) { let s = seed % 2147483647; if (s <= 0) s += 2147483646;
+  return () => (s = s * 16807 % 2147483647) / 2147483647; }
+const R = rng(7);
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const smooth = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+function textura(w, h, pintar) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  pintar(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; return t;
+}
+const mat = (cor, o = {}) => new THREE.MeshStandardMaterial(Object.assign({ color: cor, roughness: 0.8 }, o));
+
+// ---------- chão ----------
+const texAsfalto = textura(512, 512, (g, w, h) => {
+  g.fillStyle = '#3b3d40'; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 9000; i++) { const v = 40 + R() * 40; g.fillStyle = `rgb(${v},${v},${v + 3})`; g.fillRect(R() * w, R() * h, 2, 2); }
+});
+texAsfalto.repeat.set(3, 60);
+const rua = new THREE.Mesh(new THREE.PlaneGeometry(14, 600), mat('#ffffff', { map: texAsfalto, roughness: 0.95 }));
+rua.rotation.x = -Math.PI / 2; rua.position.z = -250; rua.receiveShadow = true; scene.add(rua);
+const texCalcada = textura(256, 256, (g, w, h) => {
+  g.fillStyle = '#9a958c'; g.fillRect(0, 0, w, h); g.strokeStyle = '#7d786f'; g.lineWidth = 3;
+  for (let i = 0; i <= w; i += 64) { g.beginPath(); g.moveTo(i, 0); g.lineTo(i, h); g.stroke(); g.beginPath(); g.moveTo(0, i); g.lineTo(w, i); g.stroke(); }
+});
+texCalcada.repeat.set(2, 150);
+for (const lado of [-1, 1]) {
+  const c = new THREE.Mesh(new THREE.BoxGeometry(6, 0.18, 600), mat('#ffffff', { map: texCalcada }));
+  c.position.set(lado * 10, 0.09, -250); c.receiveShadow = true; scene.add(c);
+}
+// faixas da rua
+const faixaMat = mat('#e8e4d8', { roughness: 0.6 });
+for (let z = 20; z > -540; z -= 9) {
+  const f = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 4), faixaMat);
+  f.rotation.x = -Math.PI / 2; f.position.set(0, 0.02, z); scene.add(f);
+}
+
+// ---------- prédios (presos: não saem do lugar) ----------
+function texJanelas(cor, seed) {
+  const r = rng(seed);
+  return textura(256, 512, (g, w, h) => {
+    g.fillStyle = cor; g.fillRect(0, 0, w, h);
+    for (let y = 16; y < h - 16; y += 42) for (let x = 14; x < w - 14; x += 40) {
+      const v = 60 + r() * 70; g.fillStyle = `rgb(${v * 0.7},${v * 0.8},${v})`; g.fillRect(x, y, 24, 28);
+    }
+  });
+}
+const CORES_PREDIO = ['#8c8579', '#a39a8a', '#6f6a63', '#b3a58f', '#7c7f84', '#94877a'];
+for (const lado of [-1, 1]) {
+  for (let z = 15; z > -560;) {
+    const larg = 10 + R() * 12, alt = 12 + R() * 34, prof = 12 + R() * 8;
+    const t = texJanelas(CORES_PREDIO[Math.floor(R() * CORES_PREDIO.length)], Math.floor(R() * 1e6));
+    t.repeat.set(Math.max(1, Math.round(larg / 6)), Math.max(1, Math.round(alt / 10)));
+    const p = new THREE.Mesh(new THREE.BoxGeometry(prof, alt, larg), mat('#ffffff', { map: t, roughness: 0.7 }));
+    p.position.set(lado * (13 + prof / 2), alt / 2, z - larg / 2);
+    p.castShadow = p.receiveShadow = true; scene.add(p);
+    z -= larg + 0.4;
+  }
+}
+
+// ---------- objetos soltos ----------
+// Cada objeto tem posição de repouso, momento de soltura e velocidade para +X. Os que começam muito a oeste
+// só entram em cena depois da parada (eles vêm voando de longe), o que mantém o fluxo cheio por vários segundos.
+const T_PARADA = 3.0;
+const soltos = [];
+function registrar(obj, x, y, z, o = {}) {
+  obj.traverse(m => { if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; } });
+  scene.add(obj);
+  soltos.push(Object.assign({ obj, x, y, z, ry: o.ry || 0, atraso: R() * 0.25, vx: 34 + R() * 22,
+    vy: 2 + R() * 6, wx: (R() - 0.5) * 9, wy: (R() - 0.5) * 6, wz: (R() - 0.5) * 9, anda: 0 }, o));
+}
+function carro(cor) {
+  const g = new THREE.Group(), m = mat(cor, { roughness: 0.35, metalness: 0.4 });
+  const corpo = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.8, 4.3), m); corpo.position.y = 0.75; g.add(corpo);
+  const cab = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.7, 2.2), mat('#1d2228', { roughness: 0.15, metalness: 0.6 }));
+  cab.position.set(0, 1.45, -0.2); g.add(cab);
+  const rodaG = new THREE.CylinderGeometry(0.38, 0.38, 0.3, 16), rodaM = mat('#111');
+  for (const [x, z] of [[-0.95, 1.4], [0.95, 1.4], [-0.95, -1.4], [0.95, -1.4]]) {
+    const r = new THREE.Mesh(rodaG, rodaM); r.rotation.z = Math.PI / 2; r.position.set(x, 0.38, z); g.add(r);
+  }
+  return g;
+}
+function pessoa(cor) {
+  const g = new THREE.Group();
+  const tronco = new THREE.Mesh(new THREE.CapsuleGeometry(0.22, 0.6, 4, 10), mat(cor)); tronco.position.y = 1.25; g.add(tronco);
+  const cabeca = new THREE.Mesh(new THREE.SphereGeometry(0.15, 14, 10), mat('#c9a184')); cabeca.position.y = 1.78; g.add(cabeca);
+  const pernaM = mat('#2b2f3a'), pernaG = new THREE.CapsuleGeometry(0.09, 0.7, 4, 8);
+  const pe = [];
+  for (const x of [-0.11, 0.11]) { const l = new THREE.Mesh(pernaG, pernaM); l.position.set(x, 0.5, 0); g.add(l); pe.push(l); }
+  const bracoG = new THREE.CapsuleGeometry(0.07, 0.55, 4, 8);
+  for (const x of [-0.3, 0.3]) { const b = new THREE.Mesh(bracoG, mat(cor)); b.position.set(x, 1.25, 0); g.add(b); pe.push(b); }
+  g.userData.membros = pe; return g;
+}
+function arvore() {
+  const g = new THREE.Group();
+  const tronco = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.25, 3, 8), mat('#5b4331')); tronco.position.y = 1.5; g.add(tronco);
+  const folhaM = mat('#4f6b3a', { flatShading: true });
+  for (let i = 0; i < 3; i++) {
+    const f = new THREE.Mesh(new THREE.IcosahedronGeometry(1.1 + R() * 0.5, 1), folhaM);
+    f.position.set((R() - 0.5) * 0.9, 3.4 + R() * 0.9, (R() - 0.5) * 0.9); g.add(f);
+  }
+  return g;
+}
+function caixa(cor, w, h, d) { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(cor)); m.position.y = h / 2;
+  const g = new THREE.Group(); g.add(m); return g; }
+
+const CORES_CARRO = ['#b8231d', '#e8e8e8', '#20262e', '#2d5b8c', '#9aa0a6', '#d8a12a', '#3f6e3a'];
+const CORES_ROUPA = ['#2d4a7a', '#7a2d2d', '#3c3c3c', '#c9b48a', '#4d7a4d', '#7a5a2d', '#e0e0e0'];
+// estacionados e andando (z de 10 a -160), mais uma fila "a oeste" que só aparece voando
+for (let z = 6; z > -170; z -= 7 + R() * 5) {
+  for (const lado of [-1, 1]) if (R() < 0.75) registrar(carro(CORES_CARRO[Math.floor(R() * 7)]), lado * 5.6, 0, z);
+  if (R() < 0.5) registrar(carro(CORES_CARRO[Math.floor(R() * 7)]), (R() < 0.5 ? -2 : 2), 0, z - 3, { anda: 8 + R() * 4 });
+}
+for (let z = 4; z > -120; z -= 3 + R() * 6) {
+  for (const lado of [-1, 1]) if (R() < 0.55) registrar(pessoa(CORES_ROUPA[Math.floor(R() * 7)]), lado * (8.5 + R() * 2.5), 0.18, z,
+    { anda: 1.1 + R() * 0.5, ry: lado > 0 ? 0 : Math.PI, vx: 30 + R() * 25 });
+}
+for (let z = 0; z > -160; z -= 11) for (const lado of [-1, 1]) registrar(arvore(), lado * 11.6, 0.18, z, { atraso: 0.25 + R() * 0.35, vx: 22 + R() * 14, vy: 4 + R() * 4 });
+for (let z = 2; z > -140; z -= 6 + R() * 6) for (const lado of [-1, 1]) {
+  if (R() < 0.6) registrar(caixa(['#2f5d3a', '#555', '#1f3f6a'][Math.floor(R() * 3)], 0.6, 1.0, 0.6), lado * 7.6, 0.18, z, { vx: 40 + R() * 25, vy: 4 + R() * 8 });
+  if (R() < 0.35) registrar(caixa('#6b4a2d', 1.6, 0.5, 0.5), lado * 8.2, 0.18, z, { vx: 36 + R() * 20 });
+}
+// o que vem voando do oeste depois da parada (começa fora da rua, à esquerda)
+for (let i = 0; i < 320; i++) {
+  const tipo = R(), z = 8 - R() * 120, x = -20 - R() * 560;
+  const o = tipo < 0.35 ? carro(CORES_CARRO[Math.floor(R() * 7)]) : tipo < 0.65 ? pessoa(CORES_ROUPA[Math.floor(R() * 7)])
+          : tipo < 0.8 ? arvore() : caixa(['#2f5d3a', '#555', '#6b4a2d', '#8a8a8a'][Math.floor(R() * 4)], 0.4 + R(), 0.3 + R(), 0.4 + R());
+  registrar(o, x, 1 + R() * 9, z, { atraso: 0, vx: 38 + R() * 26, vy: R() * 3, oeste: true });
+}
+// detritos pequenos e folhas
+const nDet = 1600, detG = new THREE.BufferGeometry(), detP = new Float32Array(nDet * 3), detBase = [];
+for (let i = 0; i < nDet; i++) detBase.push([-120 + R() * 140, 0.2 + R() * 14, 10 - R() * 140, 50 + R() * 40, R()]);
+detG.setAttribute('position', new THREE.BufferAttribute(detP, 3));
+const detritos = new THREE.Points(detG, new THREE.PointsMaterial({ color: '#6d6152', size: 0.12, transparent: true, opacity: 0 }));
+scene.add(detritos);
+// poeira: planos translúcidos que atravessam a tela
+const poeiraTex = textura(256, 64, (g, w, h) => {
+  const gr = g.createLinearGradient(0, 0, w, 0); gr.addColorStop(0, 'rgba(160,150,135,0)'); gr.addColorStop(0.5, 'rgba(160,150,135,0.55)'); gr.addColorStop(1, 'rgba(160,150,135,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, w, h);
+});
+const poeira = [];
+for (let i = 0; i < 70; i++) {
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(26 + R() * 30, 2 + R() * 5), new THREE.MeshBasicMaterial({ map: poeiraTex, transparent: true, opacity: 0, depthWrite: false, fog: true }));
+  m.userData = { x0: -200 + R() * 200, y: 0.5 + R() * 12, z: 6 - R() * 90, v: 80 + R() * 60 };
+  scene.add(m); poeira.push(m);
+}
+
+// ---------- posição de cada objeto no tempo t ----------
+function atualizar(t) {
+  const dt = t - T_PARADA;
+  for (const s of soltos) {
+    const o = s.obj;
+    let x = s.x, y = s.y, z = s.z - (s.anda || 0) * Math.min(t, T_PARADA);
+    o.rotation.set(0, s.ry, 0);
+    const m = o.userData.membros;
+    if (m) m.forEach((l, i) => l.rotation.x = (s.anda && t < T_PARADA) ? Math.sin(t * 6 + i * Math.PI) * 0.5 : 0);
+    const tt = dt - s.atraso;
+    if (tt > 0) {
+      // arranque quase instantâneo (0,15 s) e depois velocidade constante, com subida e queda
+      const ac = 0.15, d = tt < ac ? s.vx * tt * tt / (2 * ac) : s.vx * (tt - ac / 2);
+      x += d;
+      y += s.vy * tt - 4.9 * tt * tt * 0.35;
+      if (!s.oeste) y = Math.max(y, s.y + 0.02 * tt);
+      else y = Math.max(y, 0.3);
+      z -= (s.anda || 0) * 0.0;
+      o.rotation.x += s.wx * tt; o.rotation.y += s.wy * tt; o.rotation.z -= Math.abs(s.wz) * tt;
+    } else if (s.oeste) { o.visible = false; continue; }
+    o.visible = x < 160;
+    o.position.set(x, y, z);
+  }
+  const a = smooth(dt / 0.4);
+  for (let i = 0; i < nDet; i++) {
+    const [x0, y0, z0, v, f] = detBase[i], tt = Math.max(0, dt - f * 0.3);
+    detP[i * 3] = ((x0 + v * tt + 140) % 160) - 140 + 20; detP[i * 3 + 1] = y0 + Math.sin(tt * 7 + f * 40) * 0.6; detP[i * 3 + 2] = z0;
+  }
+  detG.attributes.position.needsUpdate = true;
+  detritos.material.opacity = a * 0.95;
+  for (const p of poeira) {
+    const u = p.userData; p.position.set(((u.x0 + u.v * Math.max(0, dt)) % 260 + 260) % 260 - 160, u.y, u.z);
+    p.material.opacity = a * 0.5; p.lookAt(p.position.x, p.position.y, p.position.z + 10);
+  }
+  scene.fog.near = 40 - 30 * a; scene.fog.far = 230 - 150 * a;
+  scene.fog.color.copy(CEU).lerp(new THREE.Color('#8f877b'), a); scene.background = scene.fog.color;
+}
+
+// ---------- câmeras ----------
+function tremor(t, k) { return [k * (Math.sin(t * 37) * 0.6 + Math.sin(t * 23 + 1) * 0.4), k * (Math.sin(t * 41 + 2) * 0.5 + Math.sin(t * 29) * 0.5)]; }
+function posicionar(cam, t) {
+  const dt = t - T_PARADA, k = dt > 0 ? smooth(dt / 0.2) * (0.06 + 0.04 * Math.exp(-dt * 2)) : 0;
+  const [sx, sy] = tremor(t, k);
+  if (cam === 'pov') {
+    // pessoa andando na calçada da esquerda; na parada ela se agarra a um poste e a câmera vira um pouco para a esquerda
+    const z = -1.3 * Math.min(t, T_PARADA), bob = t < T_PARADA ? Math.sin(t * 2 * Math.PI * 1.8) * 0.035 : 0;
+    camera.position.set(-9 + sx * 4, 1.65 + bob + sy * 3, z);
+    const vira = -smooth((dt - 0.1) / 0.6) * 0.45;
+    camera.rotation.set(-0.04 + sy, vira + sx, sx * 2 + smooth(dt / 0.3) * 0.08, 'YXZ');
+    camera.fov = 62;
+  } else if (cam === 'baixa') {
+    camera.position.set(9.5 + sx * 2, 0.6 + sy, -14);
+    camera.rotation.set(0.05 + sy, 1.05 + sx, sx, 'YXZ'); camera.fov = 70;
+  } else if (cam === 'pessoas') {
+    camera.position.set(12 + sx * 3, 2.0 + sy * 2, -26);
+    camera.rotation.set(-0.05 + sy, 1.2 + sx, sx, 'YXZ'); camera.fov = 55;
+  } else if (cam === 'carros') {
+    camera.position.set(-1 + sx * 2, 6 + sy, 8);
+    camera.rotation.set(-0.35 + sy, -0.2 + sx, sx, 'YXZ'); camera.fov = 60;
+  } else if (cam === 'arvores') {
+    camera.position.set(8.8 + sx * 2, 2.2 + sy, -4);
+    camera.rotation.set(0.12 + sy, 0.55 + sx, sx, 'YXZ'); camera.fov = 62;
+  } else if (cam === 'alta') {
+    camera.position.set(30, 40, 20);
+    camera.lookAt(-10, 0, -40); camera.fov = 55;
+  }
+  camera.updateProjectionMatrix();
+}
+
+window.desenhar = (cam, t) => { atualizar(t); posicionar(cam, t); renderer.render(scene, camera); };
+window.pronto = true;
+</script>
+</body></html>

@@ -119,7 +119,7 @@ ROTULOS = {"real": ("Real", "● IMAGEM REAL"), "sim": ("Anim", "SIMULAÇÃO NAS
            "anim": ("Anim", "ANIMAÇÃO"), "ilus": ("Anim", "ILUSTRAÇÃO")}
 for i, c in enumerate(CENAS):
     t0, t1 = c["t"], c["t"] + dur_de(i)
-    if c.get("tag"):
+    if c.get("tag") and getattr(cfg, "ETIQUETAS", True):
         estilo, texto = ROTULOS[c["tag"]]
         ev.append(f"Dialogue: 1,{ts(t0)},{ts(t1)},{estilo},,0,0,0,,{texto}")
     if c.get("circulo"):
