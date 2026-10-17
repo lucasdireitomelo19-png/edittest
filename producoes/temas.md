@@ -19,6 +19,17 @@ Edite à vontade: reordene, apague ou acrescente temas. ⚠️ indica fato que p
 - [ ] Viagem até a borda do universo observável
 
 ## Shorts avulsos (61 s)
+<!-- Lote viral 01: roteiros prontos em roteiros/lote_virais_01.md (use o texto de lá) -->
+- [ ] E se o universo for uma simulação? (roteiro pronto: lote_virais_01 #6)
+- [ ] Betelgeuse vai explodir e dar para ver de dia (lote_virais_01 #10)
+- [ ] ʻOumuamua: o visitante que acelerou sozinho (lote_virais_01 #1)
+- [ ] O vácuo falso: o universo pode acabar sem aviso (lote_virais_01 #9)
+- [ ] BLC1: o sinal de Proxima Centauri (lote_virais_01 #4)
+- [ ] 7 possíveis esferas de Dyson (2024) (lote_virais_01 #5)
+- [ ] A estrela de Tabby (lote_virais_01 #2)
+- [ ] Planeta Nove ou buraco negro escondido (lote_virais_01 #8)
+- [ ] Rajadas rápidas de rádio (lote_virais_01 #3)
+- [ ] O Vazio de Boötes (lote_virais_01 #7)
 - [x] Em Vênus, um dia dura mais que um ano
 - [x] A Lua está se afastando da Terra 3,8 cm por ano
 - [x] As pegadas na Lua podem durar milhões de anos
