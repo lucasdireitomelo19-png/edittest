@@ -30,7 +30,7 @@ CENAS = montar(AQUI, [
     C("claro que muita gente", ALMA, 9, "real", zoom=(1.0, 1.15), texto="UMA CIVILIZAÇÃO?"),
     C("em 2020", MAG, 2, "anim", zoom=(1.0, 1.2), texto="2020"),
     C("uma estrela morta", MAG, 172, "anim", zoom=(1.0, 1.15), texto="MAGNETAR"),
-    C("disparou uma rajada", MAG, 8, "anim", zoom=(1.1, 1.3)),
+    C("disparou uma rajada", MAG, 176, "anim", zoom=(1.2, 1.4)),
     C("entao pelo menos", "pb_via_lactea_v.mp4", 6, "real", zoom=(1.0, 1.15), texto="ORIGEM NATURAL"),
     C("mas a fisica", FRB, 2, "anim", zoom=(1.0, 1.15)),
     C("ainda e um dos", "pb_estrelas_tl.mp4", 5, "real", zoom=(1.0, 1.15), texto="MISTÉRIO EM ABERTO"),
