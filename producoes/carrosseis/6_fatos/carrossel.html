@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:M;src:url(../../marca/Montserrat-ExtraBold.ttf);font-weight:800}
+  @font-face{font-family:M;src:url(../../marca/Montserrat-Medium.ttf);font-weight:500}
+  :root{--bg:#0a0608;--tx:#e9e1d8;--ac:#ff7a1a;--mut:#a89c90}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#222;font-family:M,sans-serif;color:var(--tx)}
+  .s{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--bg);margin-bottom:40px}
+  .foto{position:absolute;background-size:cover;background-repeat:no-repeat}
+  .vel{position:absolute;inset:0}
+  .in{position:absolute;z-index:1;left:80px;right:80px;top:80px;bottom:190px;display:flex;flex-direction:column}
+  .k{font-weight:800;font-size:28px;letter-spacing:.14em;color:var(--ac);text-transform:uppercase}
+  .n{font-weight:800;font-size:30px;color:var(--ac);letter-spacing:.06em}
+  h1{font-weight:800;font-size:108px;line-height:1.0;letter-spacing:-.02em}
+  h2{font-weight:800;font-size:82px;line-height:1.04;letter-spacing:-.015em}
+  p{font-weight:500;font-size:40px;line-height:1.38}
+  .ac{color:var(--ac)}
+  .mut{color:var(--mut)}
+  .puxa{font-weight:800;font-size:32px;color:var(--ac)}
+  .cred{position:absolute;z-index:2;right:80px;bottom:150px;font-weight:500;font-size:20px;color:#8a7f75}
+  /* rodapé */
+  .rod{position:absolute;z-index:2;left:80px;right:80px;bottom:72px;height:52px;display:flex;align-items:center;justify-content:space-between}
+  .rod .eu{display:flex;align-items:center;gap:16px;font-weight:500;font-size:26px}
+  .rod img{width:52px;height:52px;border-radius:50%}
+  .rod .c{font-weight:800;font-size:26px;display:flex;align-items:center;gap:14px}
+  .rod .c svg{width:34px;height:34px}
+  .fade{position:absolute;left:0;right:0;bottom:0;height:300px;background:linear-gradient(180deg,rgba(10,6,8,0),var(--bg) 62%)}
+  .bar{position:absolute;left:0;bottom:0;height:8px;width:100%;background:#2a1a12}
+  .bar i{display:block;height:100%;background:var(--ac)}
+</style></head>
+<body>
+
+<!-- 01 GANCHO -->
+<section class="s" id="s1">
+  <div class="foto" style="width:1250px;height:1250px;left:240px;top:520px;background-image:url(../src/venus.jpg)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,var(--bg) 38%,rgba(10,6,8,.55) 62%,rgba(10,6,8,.1) 80%,rgba(10,6,8,.6) 100%)"></div>
+  <div class="in">
+    <div class="k">Parece fake news. Não é.</div>
+    <h1 style="margin-top:40px">6 fatos do espaço que parecem <span class="ac">mentira</span></h1>
+    <p style="margin-top:40px;max-width:760px">O último muda como você olha pro&nbsp;céu.</p>
+    <div class="puxa" style="margin-top:auto;display:flex;align-items:center;gap:14px;font-size:34px">Arraste <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ff7a1a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+  </div>
+  <div class="cred">Vênus · NASA/JPL</div>
+</section>
+
+<!-- 02 RETENÇÃO -->
+<section class="s" id="s2">
+  <svg class="vel" viewBox="0 0 1080 1350"><circle cx="1080" cy="300" r="300" fill="none" stroke="#ff7a1a" stroke-opacity=".18" stroke-width="2"/><circle cx="1080" cy="300" r="420" fill="none" stroke="#ff7a1a" stroke-opacity=".09" stroke-width="2"/></svg>
+  <div class="in" style="justify-content:center">
+    <div class="k">Antes de começar</div>
+    <h2 style="margin-top:36px">Aposto que você não sabia nem <span class="ac">3</span> desses.</h2>
+    <p style="margin-top:48px;max-width:820px">Conte quantos você já conhecia.<br>Guarde o número.<br><span class="mut">No final você vai querer desafiar&nbsp;alguém.</span></p>
+  </div>
+</section>
+
+<!-- 03 VÊNUS -->
+<section class="s" id="s3">
+  <div class="foto" style="width:900px;height:900px;left:400px;top:-260px;background-image:url(../src/venus.jpg)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,rgba(10,6,8,0) 20%,var(--bg) 52%)"></div>
+  <div class="in" style="justify-content:flex-end">
+    <div class="n">1/6</div>
+    <h2 style="margin-top:24px">Em Vênus, um dia dura mais que <span class="ac">um&nbsp;ano</span>.</h2>
+    <p style="margin-top:32px">Ele leva 243 dias terrestres para girar uma vez. E só 225 para dar a volta no Sol.</p>
+  </div>
+  <div class="cred">NASA/JPL</div>
+</section>
+
+<!-- 04 SATURNO -->
+<section class="s" id="s4">
+  <div class="foto" style="width:1560px;height:797px;left:-90px;top:470px;background-image:url(../src/saturno.jpg)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,var(--bg) 45%,rgba(10,6,8,0) 70%)"></div>
+  <div class="in">
+    <div class="n">2/6</div>
+    <h2 style="margin-top:24px">Saturno <span class="ac">boiaria</span> numa banheira.</h2>
+    <p style="margin-top:32px;max-width:860px">Ele é menos denso que a água. Mesmo sendo 95 vezes mais pesado que a Terra.</p>
+  </div>
+  <div class="cred">NASA/JPL/Space Science Institute</div>
+</section>
+
+<!-- 05 ASTRONAUTAS -->
+<section class="s" id="s5">
+  <div class="foto" style="width:1500px;height:1000px;left:-300px;top:-40px;background-image:url(../src/eva2.jpg)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,rgba(10,6,8,.15) 10%,rgba(10,6,8,.7) 40%,var(--bg) 58%)"></div>
+  <div class="in" style="justify-content:flex-end">
+    <div class="n">3/6</div>
+    <h2 style="margin-top:20px">No espaço, astronautas ficam até <span class="ac">3% mais altos</span>.</h2>
+    <p style="margin-top:30px">Sem gravidade, a coluna estica. Em quem tem 1,80 m, são até 5 cm a mais.</p>
+  </div>
+  <div class="cred">Scott Tingle · NASA</div>
+</section>
+
+<!-- 06 CHEIRO -->
+<section class="s" id="s6">
+  <div class="foto" style="width:1500px;height:996px;left:-160px;top:-60px;background-image:url(../src/eva.jpg)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,rgba(10,6,8,.1) 10%,rgba(10,6,8,.75) 42%,var(--bg) 58%)"></div>
+  <div class="in" style="justify-content:flex-end">
+    <div class="n">4/6</div>
+    <h2 style="margin-top:20px">O espaço tem <span class="ac">cheiro</span>.</h2>
+    <p style="margin-top:30px">Astronautas voltam das caminhadas espaciais com um odor no traje: carne chamuscada e metal quente.</p>
+    <p class="puxa" style="margin-top:28px">O próximo pesa mais. Muito mais. →</p>
+  </div>
+  <div class="cred">Terry Virts · NASA</div>
+</section>
+
+<!-- 07 NÊUTRONS -->
+<section class="s" id="s7">
+  <svg class="vel" viewBox="0 0 1080 1350">
+    <defs><radialGradient id="g"><stop offset="0" stop-color="#fff1d6"/><stop offset=".12" stop-color="#ffb35c"/><stop offset=".35" stop-color="#ff7a1a" stop-opacity=".35"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="880" cy="250" r="260" fill="url(#g)"/>
+    <circle cx="880" cy="250" r="22" fill="#fff8ec"/>
+  </svg>
+  <div class="in" style="justify-content:center">
+    <div class="n">5/6</div>
+    <p style="margin-top:28px;font-weight:800;font-size:46px;line-height:1.2">Uma colher de chá de estrela de nêutrons pesa</p>
+    <div style="font-weight:800;font-size:150px;line-height:.95;letter-spacing:-.03em;color:var(--ac);margin-top:24px">+1 bilhão</div>
+    <div style="font-weight:800;font-size:72px;line-height:1;margin-top:8px">de toneladas.</div>
+    <p style="margin-top:44px">É o que sobra de uma estrela gigante que colapsou: um Sol e meio espremido em&nbsp;20&nbsp;km.</p>
+  </div>
+</section>
+
+<!-- 08 ESTRELAS -->
+<section class="s" id="s8">
+  <div class="foto" style="width:1400px;height:1220px;left:-160px;top:-220px;background-image:url(../src/xdf.jpg)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,rgba(10,6,8,0) 25%,rgba(10,6,8,.8) 50%,var(--bg) 62%)"></div>
+  <div class="in" style="justify-content:flex-end">
+    <div class="n">6/6</div>
+    <h2 style="margin-top:20px;font-size:72px">Há mais estrelas no universo do que <span class="ac">grãos de areia</span> em todas as praias da Terra.</h2>
+    <p style="margin-top:30px">E quase cada pontinho desta foto é uma galáxia inteira.</p>
+  </div>
+  <div class="cred">Hubble eXtreme Deep Field · NASA/ESA</div>
+</section>
+
+<!-- 09 VIRADA -->
+<section class="s" id="s9">
+  <div class="foto" style="width:1250px;height:1250px;left:-85px;top:-280px;background-image:url(../src/caranguejo.jpg)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,rgba(10,6,8,.35) 15%,rgba(10,6,8,.85) 45%,var(--bg) 60%)"></div>
+  <div class="in" style="justify-content:flex-end;align-items:center;text-align:center">
+    <div class="k">Bônus: o mais estranho de todos</div>
+    <h2 style="margin-top:32px;font-size:80px">O ferro do seu sangue nasceu numa estrela que <span class="ac">explodiu</span>.</h2>
+    <p style="margin-top:36px">Você não só olha pro céu.<br>Você veio de lá.</p>
+  </div>
+  <div class="cred">Nebulosa do Caranguejo · NASA/ESA/Hubble</div>
+</section>
+
+<!-- 10 CTA -->
+<section class="s" id="s10">
+  <svg class="vel" viewBox="0 0 1080 1350"><circle cx="540" cy="330" r="190" fill="none" stroke="#ff7a1a" stroke-opacity=".25" stroke-width="2"/><circle cx="540" cy="330" r="260" fill="none" stroke="#ff7a1a" stroke-opacity=".1" stroke-width="2"/></svg>
+  <div class="in" style="align-items:center;text-align:center">
+    <img src="../../marca/logo_lado_sombrio_800x800.png" style="width:240px;height:240px;border-radius:50%;margin-top:130px;box-shadow:0 0 80px rgba(255,122,26,.35)">
+    <h2 style="margin-top:96px">Quantos você <span class="ac">já&nbsp;sabia</span>?</h2>
+    <p style="margin-top:32px;max-width:860px">Manda pra aquele amigo que acha que sabe tudo de espaço. Desafia ele a bater o seu número.</p>
+    <div style="margin-top:48px;display:flex;align-items:center;gap:18px;background:var(--ac);color:var(--bg);font-weight:800;font-size:34px;padding:22px 40px;border-radius:999px">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#0a0608" stroke-width="2.4" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+      Enviar para um amigo
+    </div>
+  </div>
+</section>
+
+<script>
+  const total = 10;
+  const seta = '<svg viewBox="0 0 24 24" fill="none" stroke="#ff7a1a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  document.querySelectorAll('.s').forEach((s, i) => {
+    const n = i + 1;
+    s.insertAdjacentHTML('beforeend',
+      `<div class="fade"></div><div class="rod"><div class="eu"><img src="../../marca/logo_lado_sombrio_800x800.png">@ladosombriodouniverso</div>` +
+      `<div class="c">${n}/${total}${n < total ? seta : ''}</div></div>` +
+      `<div class="bar"><i style="width:${n / total * 100}%"></i></div>`);
+  });
+</script>
+</body></html>
