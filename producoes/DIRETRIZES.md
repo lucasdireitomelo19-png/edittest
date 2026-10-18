@@ -43,3 +43,11 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 ## Título e thumbnail
 - **Título:** curiosidade sem mentira.
 - **Thumbnail:** 1 elemento principal, alto contraste e 2–5 palavras que complementem o título.
+
+## Entrega
+- **Todo vídeo pronto vai para a Central dos Canais** (artefato `https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q`, coleção `videos`, linhas `lado-NN`).
+  1. Fazer uma cópia abaixo de 19 MiB: `ffmpeg -nostdin -i in.mp4 -c:v libx264 -preset slow -crf 23 -maxrate 2300k -bufsize 4600k -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart out.mp4` (subir o crf se passar).
+  2. Subir com `Artifact publish` (`url` do artefato, `asset: true`) e gravar `video_asset` e `video_url` na linha.
+  3. Preencher **todas** as legendas: `yt_titulo`, `yt_desc`, `tags`, `tiktok`, `reels` e `comentario`. Status `Pronto`.
+- Não republicar a página da Central; só mexer no banco e nos assets.
+- Também mandar o MP4 no chat (anexo) e manter os textos em `producoes/NN_*.md`.
