@@ -61,7 +61,8 @@ for i, c in enumerate(CENAS):
     arq = os.path.join(SRC, c["src"])
     # a chave inclui a data do arquivo de origem: se o clipe for refeito, a cena é remontada
     chave = json.dumps({k: v for k, v in c.items() if k not in ("texto", "tag")}, sort_keys=True) + \
-            f"{dur:.3f}|{os.path.getmtime(arq):.0f}"
+            f"{dur:.3f}|{os.path.getmtime(arq):.0f}" + \
+            (f"|{os.path.getmtime(os.path.join(SRC, c['sobre'])):.0f}" if c.get("sobre") else "")
     if os.path.exists(out) and os.path.exists(out + ".key") and open(out + ".key").read() == chave:
         continue
     imagem = arq.lower().endswith((".jpg", ".png"))
@@ -89,6 +90,11 @@ for i, c in enumerate(CENAS):
     ys = f"(ih-oh)*{py}" + (f"+{a*0.8}*sin(41*t+2)+{a*0.5}*sin(23*t)" if a else "")
     f.append(f"crop={W}:{H}:x='max(0,min(iw-ow,{xs}))':y='max(0,min(ih-oh,{ys}))'")
     f.append(f"setsar=1,fps={FPS},eq=contrast=1.07:saturation={c.get('sat', 1.15)}")
+    if c.get("sobre"):
+        # sobreposição transparente (PNG 1080x1920) por cima do plano, ex.: anel ilustrado no céu real
+        png = os.path.join(SRC, c["sobre"])
+        f.append(f"null[b];movie='{png}',loop=-1:size=1,setpts=N/({FPS}*TB),format=rgba,"
+                 f"fade=t=in:st=0:d=0.5:alpha=1[o];[b][o]overlay=0:0:shortest=1")
     if c.get("chuva"):
         # chuva de vidro horizontal (ilustração): faíscas esticadas varrendo a tela de lado
         f.append("format=gbrp[q];"

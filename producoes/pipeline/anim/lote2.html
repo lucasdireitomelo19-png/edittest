@@ -77,7 +77,23 @@ function lua(x, y, r, luz = 1) {
 }
 
 const CENAS = {
-  // o Sol some; a Terra ainda gira 8 minutos (p.atraso) e depois segue em linha reta pela tangente
+  // arco do anel visto do chão (PNG transparente para sobrepor ao céu real); p.sombra corta o meio (noite)
+  arco(t, d, p) {
+    ctx.clearRect(0, 0, W, H);
+    const cx = CX + 380, cy = 1880, rx = 1700, ry = 1760, rot = -0.36, a0 = Math.PI * 1.02, a1 = Math.PI * 1.98;
+    // sombra fina por baixo para destacar o anel no céu claro
+    ctx.strokeStyle = 'rgba(40,30,20,0.28)'; ctx.lineWidth = 230;
+    ctx.beginPath(); ctx.ellipse(cx, cy, rx - 110, ry - 110, rot, a0, a1); ctx.stroke();
+    for (let k = 0; k < 40; k++) {
+      const r = k / 40; if (r > 0.62 && r < 0.68) continue;           // divisão (como a de Cassini)
+      const a = (0.45 + 0.4 * Math.abs(Math.sin(r * 23))) * (p.a ?? 1);
+      ctx.strokeStyle = `rgba(255,${238 - 30 * r | 0},${205 - 50 * r | 0},${a})`; ctx.lineWidth = 6;
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx - k * 5.6, ry - k * 5.6, rot, a0, a1); ctx.stroke();
+    }
+    if (p.sombra) { ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = 'rgba(0,0,0,0.95)';
+      const sa = Math.PI * 1.55, sx = cx + Math.cos(sa) * rx * Math.cos(rot) - Math.sin(sa) * ry * Math.sin(rot), sy = cy + Math.cos(sa) * rx * Math.sin(rot) + Math.sin(sa) * ry * Math.cos(rot);
+      ctx.beginPath(); ctx.ellipse(sx, sy, 230, 300, rot, 0, 6.283); ctx.fill(); ctx.restore(); }
+  },
   tangente(t, d, p) {
     ceu(t, 0.9);
     const apaga = p.apaga ?? 0.15, atraso = p.atraso ?? d * 0.45, R = 300, w = 0.55;

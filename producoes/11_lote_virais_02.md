@@ -21,6 +21,7 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 | 1 | E se o Sol apagasse agora? | `videos/v22_sol_apagasse` | lado-31 | 43,4 s | 25 (maior 2,4 s) | 100% |
 | 2 | O Sol não é do tamanho que você pensa | `videos/v23_tamanho_sol` | lado-32 | 41,6 s | 25 (maior 2,4 s) | 100% |
 | 3 | E se existisse um elevador até o espaço? | `videos/v24_elevador` | lado-33 | 50,3 s | 32 (maior 2,4 s) | 100% |
+| 4 | A Terra já teve anéis? | `videos/v25_aneis_terra` | lado-34 | 48,6 s | 28 (maior 2,3 s) | 100% |
 | 6 | Apophis: sexta-feira 13 | `videos/v27_apophis` | lado-36 | 50,2 s | 29 (maior 2,4 s) | 100% |
 | 7 | Viagem no tempo existe | `videos/v28_viagem_tempo` | lado-37 | 47,9 s | 31 (maior 2,3 s) | 100% |
 
@@ -92,3 +93,16 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 **Título:** `E se existisse um ELEVADOR até o espaço? 🚀`
 
 **Legendas:** na Central (lado-33).
+
+## 4 · A Terra já teve anéis?
+**Visual:**
+- **Saturno:** visualização dos anéis (NASA Goddard), com o anel de perfil em "~10 M DE ESPESSURA" e o contador "280.000 KM".
+- **O céu com anel:** vídeos reais do céu de São Paulo, do litoral, de um céu de dia e de uma cidade à noite, com o anel desenhado por cima (`sobre=`, PNG de `lote2.html`/arco, com a sombra da Terra cortando o anel à noite). O crédito avisa "anel no céu: ilustração".
+- **Animações próprias:** Terra com anel (de lado no equador), Lua se aproximando e se despedaçando, e 21 crateras acendendo perto do equador (contador).
+- **Final:** "HIPÓTESE · 2024", contador "466 MILHÕES DE ANOS" e águas-vivas (Pixabay).
+
+**Fatos:** sem ajuste. A hipótese está marcada na fala e na tela.
+
+**Título:** `A Terra já teve ANÉIS? 🪐🌍`
+
+**Legendas:** na Central (lado-34).
