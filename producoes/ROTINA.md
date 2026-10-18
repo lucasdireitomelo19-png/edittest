@@ -28,8 +28,9 @@ Este é o manual que a tarefa agendada de domingo segue. Ele também serve para 
    - `LONGOS/` → MP4 (comprimido abaixo de 500 MB), thumbnails A/B e `descricao.txt`.
    - `SHORTS/` → MP4 numerados na ordem de publicação.
    - `CALENDARIO.md` → o que publicar em cada dia e horário, com título e legenda prontos.
-9. **Repositório:** commit dos roteiros, das cenas e dos documentos (sem MP4), marque os temas usados com `[x]` e faça push.
-10. **Resumo:** termine com uma lista curta do que foi produzido, link da pasta no Drive e qualquer fato que precise de atenção.
+9. **Central dos Canais** (https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q): todo vídeo pronto entra lá no mesmo turno, com o vídeo anexado (Shorts comprimidos abaixo de 15 MB) e as legendas de YouTube Shorts, TikTok e Reels, mais tags e comentário fixado. Documento `lado-NN` na coleção `videos`. Detalhes em `CLAUDE.md`.
+10. **Repositório:** commit dos roteiros, das cenas e dos documentos (sem MP4), marque os temas usados com `[x]` e faça push.
+11. **Resumo:** termine com uma lista curta do que foi produzido, link da pasta no Drive e qualquer fato que precise de atenção.
 
 ## O que a automação NÃO faz
 - Não publica sozinha: o dono do canal revisa e agenda (ou aprova os rascunhos).
