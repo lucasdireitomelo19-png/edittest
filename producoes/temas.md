@@ -78,3 +78,4 @@ Edite à vontade: reordene, apague ou acrescente temas. ⚠️ indica fato que p
 - [ ] Auroras em Júpiter são maiores que a Terra
 - [ ] O Pálido Ponto Azul: a foto mais humilde da história
 - [ ] Ganimedes, a lua maior que o planeta Mercúrio
+- [x] El Niño: o mais forte desde 1950? (out/2026)
