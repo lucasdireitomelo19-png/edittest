@@ -1,5 +1,7 @@
 # Canal dark de astronomia: produções
 
+> Regras de roteiro e direção do canal: [`DIRETRIZES.md`](DIRETRIZES.md) (footage real do Pixabay primeiro, Visual Plan obrigatório, até 61 s).
+
 Shorts de 61 s (1080x1920, só voz) sobre espaço, montados automaticamente com material público da NASA, ESA/Hubble e Webb.
 
 ## Vídeos produzidos
