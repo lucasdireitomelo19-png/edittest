@@ -19,6 +19,7 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 | # | Short | Pasta | Central | Duração | Cortes | Vídeo em movimento |
 |---|---|---|---|---|---|---|
 | 1 | E se o Sol apagasse agora? | `videos/v22_sol_apagasse` | lado-31 | 43,4 s | 25 (maior 2,4 s) | 100% |
+| 6 | Apophis: sexta-feira 13 | `videos/v27_apophis` | lado-36 | 50,2 s | 29 (maior 2,4 s) | 100% |
 
 ---
 
@@ -36,3 +37,16 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 **Título:** `E se o Sol APAGASSE agora? ☀️❌`
 
 **Descrição, tags, TikTok, Reels e comentário:** na Central (lado-31).
+
+## 6 · Numa sexta-feira 13, um asteroide vai passar raspando
+**Visual:**
+- **Abertura:** calendário virando com "SEXTA-FEIRA 13", asteroide (animação Pixabay), estádio visto de drone com "3 CAMPOS DE FUTEBOL" e contador "0 → 340 M".
+- **A passagem:** animação própria com o Apophis passando por dentro do anel de satélites geoestacionários, contador "0 → 32.000 KM". Céu noturno real com "A OLHO NU".
+- **2004:** gráfica rodando com "2004" e contador "2,7% DE CHANCE". Radiotelescópios com "NÃO VAI BATER" e "SEM RISCO POR +100 ANOS".
+- **DART:** lançamento real (NASA), aproximação real de Dimorphos e impacto. As imagens da NASA foram recortadas para tirar o texto em inglês das telas da transmissão.
+
+**Fatos:** sem ajuste.
+
+**Título:** `Numa SEXTA-FEIRA 13, um asteroide vai passar raspando na Terra ☄️`
+
+**Legendas:** na Central (lado-36).
