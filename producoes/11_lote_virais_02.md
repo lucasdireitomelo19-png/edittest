@@ -20,6 +20,7 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 |---|---|---|---|---|---|---|
 | 1 | E se o Sol apagasse agora? | `videos/v22_sol_apagasse` | lado-31 | 43,4 s | 25 (maior 2,4 s) | 100% |
 | 2 | O Sol não é do tamanho que você pensa | `videos/v23_tamanho_sol` | lado-32 | 41,6 s | 25 (maior 2,4 s) | 100% |
+| 3 | E se existisse um elevador até o espaço? | `videos/v24_elevador` | lado-33 | 50,3 s | 32 (maior 2,4 s) | 100% |
 | 6 | Apophis: sexta-feira 13 | `videos/v27_apophis` | lado-36 | 50,2 s | 29 (maior 2,4 s) | 100% |
 | 7 | Viagem no tempo existe | `videos/v28_viagem_tempo` | lado-37 | 47,9 s | 31 (maior 2,3 s) | 100% |
 
@@ -78,3 +79,16 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 **Título:** `O Sol NÃO é do tamanho que você pensa 😳`
 
 **Legendas:** na Central (lado-32).
+
+## 3 · E se existisse um elevador até o espaço?
+**Visual:**
+- **Altura:** Burj Khalifa (Pixabay) com os contadores "828 M" e "121 PRÉDIOS". Lançamento de foguete com "0 → 100 KM".
+- **A órbita:** Terra vista da Estação com "97% DA GRAVIDADE". Animação própria do cabo até a órbita geoestacionária (contador "36.000 KM"), com contrapeso e cabine (contador "200 KM/H" e "+7 DIAS DE VIAGEM").
+- **O problema:** cabo de aço arrebentando (animação), laboratório, estrutura de nanotubo (animação Pixabay) e "RECORDE: MEIO METRO".
+- **Cena descartada:** o mapa do equador, que tinha "PACIFIC OCEAN" escrito.
+
+**Fatos:** sem ajuste.
+
+**Título:** `E se existisse um ELEVADOR até o espaço? 🚀`
+
+**Legendas:** na Central (lado-33).
