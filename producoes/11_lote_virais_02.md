@@ -20,6 +20,7 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 |---|---|---|---|---|---|---|
 | 1 | E se o Sol apagasse agora? | `videos/v22_sol_apagasse` | lado-31 | 43,4 s | 25 (maior 2,4 s) | 100% |
 | 6 | Apophis: sexta-feira 13 | `videos/v27_apophis` | lado-36 | 50,2 s | 29 (maior 2,4 s) | 100% |
+| 7 | Viagem no tempo existe | `videos/v28_viagem_tempo` | lado-37 | 47,9 s | 31 (maior 2,3 s) | 100% |
 
 ---
 
@@ -50,3 +51,17 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 **Título:** `Numa SEXTA-FEIRA 13, um asteroide vai passar raspando na Terra ☄️`
 
 **Legendas:** na Central (lado-36).
+
+## 7 · Viagem no tempo existe (e já aconteceu)
+**Visual:**
+- **Relatividade:** máquina do tempo (animação Pixabay), astronauta real dentro da Estação (NASA, versão limpa do passeio 4K), engrenagens de relógio com "EINSTEIN · RELATIVIDADE", rua acelerada e relógio em câmera lenta.
+- **A Estação:** Terra real vista da Estação (NASA) com "1 VOLTA A CADA 90 MIN" e contador "0 → 28.000 KM/H".
+- **Krikalev:** só nomeado, sobre a Terra vista da órbita, porque não achei imagem dele com licença livre. Ampulheta com contador "803 DIAS NO ESPAÇO" e "+0,02 S NO FUTURO".
+- **GPS:** animação própria da constelação ("+38 µs / DIA"), celular e cidade com "10 KM DE ERRO POR DIA".
+- **Final:** relógio andando para trás.
+
+**Fatos:** sem ajuste.
+
+**Título:** `Viagem no tempo EXISTE. E já aconteceu ⏳`
+
+**Legendas:** na Central (lado-37).
