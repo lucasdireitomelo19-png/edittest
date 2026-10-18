@@ -19,6 +19,7 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 | # | Short | Pasta | Central | Duração | Cortes | Vídeo em movimento |
 |---|---|---|---|---|---|---|
 | 1 | E se o Sol apagasse agora? | `videos/v22_sol_apagasse` | lado-31 | 43,4 s | 25 (maior 2,4 s) | 100% |
+| 2 | O Sol não é do tamanho que você pensa | `videos/v23_tamanho_sol` | lado-32 | 41,6 s | 25 (maior 2,4 s) | 100% |
 | 6 | Apophis: sexta-feira 13 | `videos/v27_apophis` | lado-36 | 50,2 s | 29 (maior 2,4 s) | 100% |
 | 7 | Viagem no tempo existe | `videos/v28_viagem_tempo` | lado-37 | 47,9 s | 31 (maior 2,3 s) | 100% |
 
@@ -65,3 +66,15 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 **Título:** `Viagem no tempo EXISTE. E já aconteceu ⏳`
 
 **Legendas:** na Central (lado-37).
+
+## 2 · O Sol não é do tamanho que você pensa
+**Visual:**
+- **O Sol:** erupção de 2014 (NASA SDO, disco inteiro e closes) com os contadores "1.300.000 TERRAS" e "99,8% DA MASSA". Disco do Sol em luz visível (SDO). Asa de avião sobre as nuvens com "+6 MESES SEM PARAR".
+- **Betelgeuse:** zoom real em Órion até Betelgeuse (ESO), animação própria de Betelgeuse no lugar do Sol, "LUZ: 15 S" contra "LUZ: ~3 HORAS".
+- **Final:** Via Láctea, Terra vista da Estação, supernova (NASA Goddard) e o Sol com "5 BILHÕES DE ANOS".
+
+**Fatos:** sem ajuste. O raio de Betelgeuse é uma estimativa, e a descrição avisa da incerteza.
+
+**Título:** `O Sol NÃO é do tamanho que você pensa 😳`
+
+**Legendas:** na Central (lado-32).
