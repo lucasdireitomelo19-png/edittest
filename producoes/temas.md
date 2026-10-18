@@ -19,6 +19,17 @@ Edite à vontade: reordene, apague ou acrescente temas. ⚠️ indica fato que p
 - [ ] Viagem até a borda do universo observável
 
 ## Shorts avulsos (61 s)
+<!-- Lote viral 02: temas dos Shorts mais vistos do nicho, roteiros prontos em roteiros/lote_virais_02.md -->
+- [ ] E se o Sol apagasse agora? (lote_virais_02 #1)
+- [ ] Numa sexta-feira 13, o Apophis vai passar raspando (lote_virais_02 #6)
+- [ ] Viagem no tempo existe e já aconteceu (lote_virais_02 #7)
+- [ ] O Sol não é do tamanho que você pensa (lote_virais_02 #2)
+- [ ] E se existisse um elevador até o espaço? (lote_virais_02 #3)
+- [ ] A Terra já teve anéis? (lote_virais_02 #4)
+- [ ] O buraco negro mais perto da Terra (lote_virais_02 #10)
+- [ ] E se a Lua chegasse perto da Terra? (lote_virais_02 #5)
+- [ ] O espaço tem cheiro (lote_virais_02 #8)
+- [ ] Todos os planetas cabem entre a Terra e a Lua? (lote_virais_02 #9)
 <!-- Lote viral 01: roteiros prontos em roteiros/lote_virais_01.md (use o texto de lá) -->
 - [x] E se o universo for uma simulação? (roteiro pronto: lote_virais_01 #6)
 - [x] Betelgeuse vai explodir e dar para ver de dia (lote_virais_01 #10)
@@ -41,12 +52,10 @@ Edite à vontade: reordene, apague ou acrescente temas. ⚠️ indica fato que p
 - [x] Uma colher de estrela de nêutrons pesaria bilhões de toneladas
 - [ ] A Grande Mancha Vermelha de Júpiter está encolhendo
 - [ ] O lugar mais frio do universo conhecido: a Nebulosa do Bumerangue
-- [ ] Apophis: o asteroide que vai passar perto da Terra em 2029
 - [ ] Olympus Mons: o vulcão quase 3 vezes mais alto que o Everest
 - [ ] Existem mais estrelas no universo do que grãos de areia na Terra
 - [ ] A Estação Espacial dá 16 voltas na Terra por dia
 - [ ] Astronautas ficam mais altos no espaço
-- [ ] O espaço tem cheiro (segundo os astronautas)
 - [ ] Plutão tem um coração de gelo
 - [ ] Encélado lança jatos de água no espaço
 - [ ] Titã tem lagos e chuva de metano
