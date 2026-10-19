@@ -24,6 +24,7 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 | 4 | A Terra já teve anéis? | `videos/v25_aneis_terra` | lado-34 | 48,6 s | 28 (maior 2,3 s) | 100% |
 | 6 | Apophis: sexta-feira 13 | `videos/v27_apophis` | lado-36 | 50,2 s | 29 (maior 2,4 s) | 100% |
 | 7 | Viagem no tempo existe | `videos/v28_viagem_tempo` | lado-37 | 47,9 s | 31 (maior 2,3 s) | 100% |
+| 10 | O buraco negro mais perto da Terra | `videos/v31_buraco_perto` | lado-40 | 42,4 s | 26 (maior 2,4 s) | 100% |
 
 ---
 
@@ -106,3 +107,15 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 **Título:** `A Terra já teve ANÉIS? 🪐🌍`
 
 **Legendas:** na Central (lado-34).
+
+## 10 · O buraco negro mais perto da Terra
+**Visual:**
+- **Gaia BH1:** zoom real no céu até o Gaia BH1 (NOIRLab, CC BY 4.0) com o contador "1.560 ANOS-LUZ" e "OFIÚCO". Ilustração do buraco negro da NOIRLab, recortada no anel.
+- **A estrela:** animação própria da estrela dançando em volta de um ponto invisível. A animação oficial foi descartada porque tinha o rótulo "blackhole" em inglês.
+- **A viagem:** Parker Solar Probe (NASA Goddard) com "692.000 KM/H", céu estrelado com "2,4 MILHÕES DE ANOS", Via Láctea com "VOYAGER 1 · 27 MILHÕES DE ANOS" e radiotelescópio.
+
+**Fatos:** sem ajuste.
+
+**Título:** `O buraco negro mais PERTO da Terra (e quanto tempo pra chegar) 🕳️`
+
+**Legendas:** na Central (lado-40).
