@@ -22,8 +22,10 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 | 2 | O Sol não é do tamanho que você pensa | `videos/v23_tamanho_sol` | lado-32 | 41,6 s | 25 (maior 2,4 s) | 100% |
 | 3 | E se existisse um elevador até o espaço? | `videos/v24_elevador` | lado-33 | 50,3 s | 32 (maior 2,4 s) | 100% |
 | 4 | A Terra já teve anéis? | `videos/v25_aneis_terra` | lado-34 | 48,6 s | 28 (maior 2,3 s) | 100% |
+| 5 | E se a Lua chegasse perto da Terra? | `videos/v26_lua_perto` | lado-35 | 44,6 s | 29 (maior 2,2 s) | 100% |
 | 6 | Apophis: sexta-feira 13 | `videos/v27_apophis` | lado-36 | 50,2 s | 29 (maior 2,4 s) | 100% |
 | 7 | Viagem no tempo existe | `videos/v28_viagem_tempo` | lado-37 | 47,9 s | 31 (maior 2,3 s) | 100% |
+| 8 | O espaço tem cheiro | `videos/v29_cheiro_espaco` | lado-38 | 42,8 s | 26 (maior 2,3 s) | 100% |
 | 10 | O buraco negro mais perto da Terra | `videos/v31_buraco_perto` | lado-40 | 42,4 s | 26 (maior 2,4 s) | 100% |
 
 ---
@@ -119,3 +121,35 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 **Título:** `O buraco negro mais PERTO da Terra (e quanto tempo pra chegar) 🕳️`
 
 **Legendas:** na Central (lado-40).
+
+## 5 · E se a Lua chegasse perto da Terra?
+**Visual:**
+- **A aproximação:** Lua nascendo e Lua cheia (Pixabay) com o contador "384.000 KM", e animação própria da Lua chegando com "METADE DA DISTÂNCIA", contador "10.000 KM" e a Lua se despedaçando num anel.
+- **As consequências:** mar agitado com "8× MAIS MARÉ", enchente real de Porto Alegre com "2× POR DIA", casas danificadas e vulcão com tremor de câmera.
+- **O afastamento:** laser do VLT disparando (ESO) com o contador "3,8 CM POR ANO" e "ESPELHOS DA APOLLO NA LUA".
+- **Final:** eclipse total de 2024 (NASA) com "ADEUS, ECLIPSE TOTAL".
+
+**Fatos:** sem ajuste.
+
+**Título:** `E se a Lua chegasse PERTO da Terra? 🌕`
+
+**Legendas:** na Central (lado-35).
+
+## 8 · O espaço tem cheiro
+**Visual:**
+- **Os astronautas:** Terra vista da Estação e interior real da Estação (NASA).
+- **Os cheiros:** bife na chapa, solda e biscoito no forno (Pixabay), cada um com o nome do cheiro na tela. Átomos (animação) com "HIPÓTESE: OXIGÊNIO".
+- **A Lua:** voo sobre o local de pouso da Apollo 17 (NASA, dados do LRO) com "POEIRA LUNAR" e fogos com "PÓLVORA QUEIMADA".
+- **O centro da galáxia:** imagem do ALMA (ESO), recortada para tirar a legenda em inglês. Framboesas e copo com "FRAMBOESA + RUM".
+- **Final:** frasco de perfume sem marca com "FRAGRÂNCIA DO ESPAÇO".
+- **Cenas descartadas:** o vídeo da caminhada espacial da NASA, que tinha textos em inglês em todos os trechos, e o cigarro, trocado pelos fogos para combinar com "pólvora".
+
+**Fatos:** sem ajuste.
+
+**Título:** `O espaço tem CHEIRO. E não é o que você imagina 👃🚀`
+
+**Legendas:** na Central (lado-38).
+
+## Correção no meio do lote
+O motor agora congela o último quadro quando um clipe acaba antes da cena e avisa no terminal. Antes, o vídeo inteiro adiantava em relação à fala.
+Isso aconteceu no #2 e no #4 (cerca de 0,6–0,8 s no fim). Os dois foram remontados e substituídos na Central. Os outros não mudaram.
