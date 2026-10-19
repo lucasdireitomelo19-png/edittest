@@ -30,10 +30,10 @@ CENAS = montar(AQUI, [
     C("pra terra ganhar", "a2_lua_vem.mp4", 0, "anim", zoom=(1.0, 1.05), fixo=True),
     C("a gravidade rasgaria", "a2_lua_rasga.mp4", 0, "anim", zoom=(1.0, 1.06), fixo=True, flash=True),
     C("e aqui vem", "pb_s4_meteoro.mp4", 1, "anim", zoom=(1.0, 1.15), rgb=True),
-    C("em 2024", "a2_anel.mp4", 2, "anim", zoom=(1.08, 1.15), fixo=True, texto="HIPÓTESE · 2024"),
+    C("em 2024", "a2_anel.mp4", 0, "anim", zoom=(1.08, 1.15), fixo=True, texto="HIPÓTESE · 2024"),
     C("ha uns quatrocentos", "pb_s4_agua_viva.mp4", 2, "real", zoom=(1.0, 1.12), conta=(0, 466, " MILHÕES DE ANOS"), som=("hit", -14)),
     C("a pista", "a2_anel_crateras.mp4", 0, "anim", zoom=(1.0, 1.05), fixo=True, conta=(0, 21, " CRATERAS")),
     C("como se pedras", "pb_s4_meteoro.mp4", 4, "anim", zoom=(1.1, 1.25)),
-    C("ainda e uma hipotese", "a2_anel.mp4", 3.5, "anim", zoom=(1.1, 1.2), fixo=True, texto="AINDA É HIPÓTESE"),
+    C("ainda e uma hipotese", "a2_anel.mp4", 2.0, "anim", zoom=(1.1, 1.2), fixo=True, texto="AINDA É HIPÓTESE"),
     C("mas os animais", "pb_s4_agua_viva.mp4", 10, "real", zoom=(1.0, 1.15)),
 ])

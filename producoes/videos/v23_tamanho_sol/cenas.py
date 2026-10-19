@@ -30,7 +30,7 @@ CENAS = montar(AQUI, [
     C("aquele ponto vermelho", ZOOM, 6, "real", zoom=(1.0, 1.2), texto="BETELGEUSE", flash=True),
     C("se ela estivesse", TAM, 0, "anim", zoom=(1.0, 1.04), fixo=True),
     C("a luz da uma volta", ER, 40, "real", zoom=(1.0, 1.15), texto="LUZ: 15 S", som=("hit", -14)),
-    C("pra contornar", TAM, 6, "anim", zoom=(1.0, 1.06), fixo=True, texto="LUZ: ~3 HORAS", som=("hit", -14)),
+    C("pra contornar", TAM, 4.5, "anim", zoom=(1.0, 1.06), fixo=True, texto="LUZ: ~3 HORAS", som=("hit", -14)),
     C("e ela nem e a maior", "pb_via_lactea_v.mp4", 4, "real", zoom=(1.0, 1.15)),
     C("perto dessas gigantes", "es_eso2003d.mp4", 10, "real", zoom=(1.0, 1.15)),
     C("o nosso sol", SDO, 150, "real", zoom=(1.0, 1.1), **SOLC, texto="ESTRELA MEDIANA"),

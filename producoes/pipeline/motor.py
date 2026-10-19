@@ -118,6 +118,13 @@ for i, c in enumerate(CENAS):
         f.append(f"fade=t=out:st={dur * c['apaga']:.3f}:d={dur * (1 - c['apaga']) * 0.8:.3f}")
     if c.get("flash"):
         f.append("fade=t=in:st=0:d=0.15:color=white")
+    if not imagem:
+        # clipe que acaba antes da cena: avisa e congela o último quadro (senão o vídeo inteiro adianta)
+        resto = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                                               "-of", "csv=p=0", arq])) - c.get("ss", 0)
+        if resto < dur * vel:
+            print(f"AVISO: {c['src']} tem só {resto:.2f}s a partir de {c.get('ss', 0)} (cena pede {dur * vel:.2f}s)")
+        f.append("tpad=stop_mode=clone:stop_duration=30")
     entrada = ["-loop", "1", "-framerate", str(FPS), "-t", f"{dur + 0.1:.3f}", "-i", arq] if imagem else \
               ["-ss", str(c.get("ss", 0)), "-t", f"{dur * vel + 0.2:.3f}", "-i", arq]
     run(["ffmpeg", "-v", "error", "-y", *entrada, "-filter_complex", ",".join(f).replace(",split", ",split"),
