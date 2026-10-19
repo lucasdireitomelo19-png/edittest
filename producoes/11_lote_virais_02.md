@@ -26,6 +26,7 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 | 6 | Apophis: sexta-feira 13 | `videos/v27_apophis` | lado-36 | 50,2 s | 29 (maior 2,4 s) | 100% |
 | 7 | Viagem no tempo existe | `videos/v28_viagem_tempo` | lado-37 | 47,9 s | 31 (maior 2,3 s) | 100% |
 | 8 | O espaço tem cheiro | `videos/v29_cheiro_espaco` | lado-38 | 42,8 s | 26 (maior 2,3 s) | 100% |
+| 9 | Todos os planetas cabem entre a Terra e a Lua? | `videos/v30_planetas_lua` | lado-39 | 41,0 s | 25 (maior 2,3 s) | 100% |
 | 10 | O buraco negro mais perto da Terra | `videos/v31_buraco_perto` | lado-40 | 42,4 s | 26 (maior 2,4 s) | 100% |
 
 ---
@@ -153,3 +154,22 @@ Na Central dos Canais, cada Short vai como `lado-3N` (N = número do roteiro; o 
 ## Correção no meio do lote
 O motor agora congela o último quadro quando um clipe acaba antes da cena e avisa no terminal. Antes, o vídeo inteiro adiantava em relação à fala.
 Isso aconteceu no #2 e no #4 (cerca de 0,6–0,8 s no fim). Os dois foram remontados e substituídos na Central. Os outros não mudaram.
+
+## 9 · Todos os planetas cabem entre a Terra e a Lua?
+**Visual:**
+- **A conta:** animação própria **em escala** (diâmetros da NASA). Os planetas entram um a um entre a Terra e a Lua, com os contadores "384.400 KM" e "380.010 KM" e "SOBRAM ~4.400 KM".
+- **Os detalhes:** Saturno com anéis com "COM ANÉIS: NÃO CABE" e o perigeu com contador "384.400 → 356.500 KM" e "NO PERIGEU: NÃO CABE".
+- **Imagens reais:** Terra vista da Estação, Lua (Pixabay), Via Láctea com "CABE ATÉ PLUTÃO", calendário com "DEPENDE DO DIA" e laser do VLT com "LUZ: ~1,3 S".
+
+**Fatos — ajuste:** a conta só fecha medindo **de centro a centro**. De superfície a superfície, a distância média é ~376.300 km e os planetas não cabem. A animação mostra "DE CENTRO A CENTRO · 384.400 KM" e a descrição avisa. A fala ficou como no roteiro.
+
+**Título:** `TODOS os planetas cabem entre a Terra e a Lua? 🌍🪐🌕`
+
+**Legendas:** na Central (lado-39).
+
+## Resumo do lote
+- **10 Shorts de 41–50 s**, todos com **100% de vídeo em movimento**: nenhuma foto parada, só vídeo real, visualizações da NASA, ESO e NOIRLab, e animações.
+- **Ritmo:** 25–32 cortes por vídeo, nenhum plano acima de 2,4 s.
+- **Volume:** −14,1 a −14,6 LUFS, pico ≤ −1,1 dBFS.
+- **Voz:** Brian (ElevenLabs) nos 10, gastando cerca de 8 mil caracteres.
+- **Fatos ajustados:** só o #9 (de centro a centro).
