@@ -1,0 +1,32 @@
+# Gerado por pipeline/gerar_short.py a partir de plano.py.
+FINAL = "SIGA PARA MAIS"
+FIM = 48.25
+AMBIENTE = "drone"
+AMBIENTE_DB = -22
+ETIQUETAS = False
+CORTE_MAX = 2.6
+PROGRESSO = True
+LEGENDA_MV = 230
+FINAL_ALIN, FINAL_MV = 8, 200
+SAIDA = "short_buraco_passa.mp4"
+CREDITO = 'NASA · Pixabay/Abdul_basit07 · Pixabay/Matthias_Groeneveld'
+CENAS = [
+    dict(t=0.00, **{'tag': 'ilus', 'zoom': (1.0, 1.12), 'src': 'sv_2-Approaching_a_bare_black_hole-HD.mp4', 'ss': 0}),  # 1 Aproximando de um buraco negro solitário (animação NASA)
+    dict(t=1.94, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_157352.mp4', 'ss': 0}),  # 2 Céu noturno com estrelas e a Lua
+    dict(t=4.11, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs39_02_vb_lente.mp4', 'ss': 0, 'som': ('hit', -12)}),  # 3 Estrelas se deformando em volta de um ponto escuro (lente gravitacional)
+    dict(t=5.46, **{'tag': 'ilus', 'zoom': (1.0, 1.12), 'src': 'sv_1-Orbiting_a_bare_black_hole-HD.mp4', 'ss': 0}),  # 4 Buraco negro sem disco: só escuridão (animação NASA)
+    dict(t=6.98, **{'tag': 'ilus', 'zoom': (1.0, 1.12), 'src': 'sv_Microlensing_BH_4k_30fps_h264.mp4', 'ss': 2.0}),  # 5 Luz de uma estrela desviada pelo buraco negro (animação NASA)
+    dict(t=9.88, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs39_05_vb_radar.mp4', 'ss': 0}),  # 6 Tela de telescópio: ANOMALIA GRAVITACIONAL
+    dict(t=13.86, **{'crop': [0, 134, 1080, 1056], 'tag': 'ilus', 'zoom': (1.0, 1.12), 'src': 'sv_14165_ISOLATED_VERTICAL_MP4.mp4', 'ss': 3.0}),  # 7 Buracos negros vagando pela galáxia (animação NASA)
+    dict(t=15.74, **{'crop': [0, 134, 1080, 1056], 'tag': 'ilus', 'zoom': (1.0, 1.12), 'src': 'sv_14165_ISOLATED_VERTICAL_MP4.mp4', 'ss': 16.0}),  # 8 O Hubble em órbita (animação NASA)
+    dict(t=18.64, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs39_08_vb_ogle.mp4', 'ss': 0}),  # 9 Via Láctea vista de cima: o Sol e o buraco negro a ~5 mil anos-luz
+    dict(t=20.37, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs39_09_vb_veloc.mp4', 'ss': 0}),  # 10 45 km/s ≈ 162.000 km/h
+    dict(t=23.35, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs39_10_vb_massa.mp4', 'ss': 0}),  # 11 7 sóis viram um ponto escuro
+    dict(t=25.21, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs39_11_vb_rota.mp4', 'ss': 0}),  # 12 Vista de cima: de Netuno ao Sol em ~3,2 anos
+    dict(t=30.03, **{'crop': [0, 134, 1080, 1056], 'tag': 'ilus', 'zoom': (1.0, 1.12), 'src': 'sv_14165_ISOLATED_VERTICAL_MP4.mp4', 'ss': 47.0}),  # 13 Estrelas distorcidas em volta do buraco negro (animação NASA)
+    dict(t=31.89, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs39_13_vb_orbitas.mp4', 'ss': 0}),  # 14 As órbitas saem do lugar (simulação ilustrativa)
+    dict(t=35.63, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs39_14_vb_terra.mp4', 'ss': 0}),  # 15 Dois destinos: perto do Sol ou o escuro (hipotético)
+    dict(t=38.84, **{'tag': 'ilus', 'zoom': (1.0, 1.12), 'src': 'sv_3-Tidal_disruption_by_black_hole-HD.mp4', 'ss': 8.0, 'som': ('hit', -14)}),  # 16 Estrela sendo esticada pelo buraco negro (animação NASA)
+    dict(t=41.56, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_382582.mp4', 'ss': 0}),  # 17 Sol entrando na floresta com neblina
+    dict(t=42.45, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs39_17_vb_gaia.mp4', 'ss': 0}),  # 18 Gaia BH1: 1.560 anos-luz
+]

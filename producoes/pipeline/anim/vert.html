@@ -342,7 +342,7 @@ CENAS.vb_terra = (t, d) => {   // dois destinos possíveis da Terra
   ctx.strokeStyle = P.azul; ctx.beginPath(); ctx.moveTo(cx, cy + 230); ctx.lineTo(cx, cy + 480); ctx.stroke(); ctx.beginPath(); ctx.moveTo(cx - 40, cy + 440); ctx.lineTo(cx, cy + 490); ctx.lineTo(cx + 40, cy + 440); ctx.stroke(); ctx.restore();
   brilho(cx, 230, 200 * a, 'rgba(255,150,60,0.6)'); circ(cx, 230, 60 * a, P.ouro); txt('PERTO DO SOL', cx, 340, 44, P.verm, a); txt('PARA O ESCURO', cx, 1460, 44, P.azul, a); txt('HIPOTÉTICO', cx, 1520, 28, P.cinza, a, 'center', 'MM'); };
 CENAS.vb_gaia = (t, d) => {   // o mais próximo conhecido
-  fundo(t, 1, '#0b1030', '#02030a'); const k = easeOut((t - 0.3) / 1.6), y0 = 1450, y1 = 420;
+  fundo(t, 1, '#0b1030', '#02030a'); const k = easeOut((t - 0.3) / 1.6), y0 = 1450, y1 = 640;
   ctx.save(); ctx.translate(CX, y0); globoMini(0, 0, 70, t); ctx.restore(); txt('TERRA', CX, y0 + 110, 30, P.azul, 1, 'center', 'MM');
   ctx.setLineDash([16, 14]); ctx.strokeStyle = P.cinza; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(CX, y0 - 90); ctx.lineTo(CX, lerp(y0 - 90, y1 + 40, k)); ctx.stroke(); ctx.setLineDash([]);
   const a = ease((t - 1.6) / 0.4); circ(CX, y1, 26 * a, '#000'); anel(CX, y1, 32 * a, 'rgba(255,200,140,0.95)', 5); txt('GAIA BH1', CX, y1 - 130, 70, P.branco, a); txt('CONSTELAÇÃO DE OFIÚCO', CX, y1 - 70, 28, P.cinza, a, 'center', 'MM');
