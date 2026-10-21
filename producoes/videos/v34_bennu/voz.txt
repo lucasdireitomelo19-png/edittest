@@ -1,4 +1,4 @@
 elevenlabs=nPczCjzI2devNBz1zQrb
-vel=1.15
-pausa=0.15
+vel=1.2
+pausa=0.12
 atempo=1.000

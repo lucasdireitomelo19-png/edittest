@@ -2,7 +2,7 @@ import os, sys; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspa
 from ancoras import montar
 AQUI = os.path.dirname(os.path.abspath(__file__))
 FINAL = "SIGA PARA MAIS"
-FIM = 50.0
+FIM = 47.6
 AMBIENTE = "drone"
 AMBIENTE_DB = -22
 ETIQUETAS = False
@@ -22,8 +22,8 @@ BR = "na_bennu_broll.mp4"     # NASA: B-roll do retorno (TAG real 44 s, cápsula
 AM = "na_bennu_amostra.mp4"   # NASA: amostra sendo despejada na sala limpa
 DR = "na_dart_recap.mp4"      # NASA: aproximação real de Dimorphos (DART)
 CENAS = montar(AQUI, [
-    C("", "pb_s6_calendario.mp4", 1, "anim", zoom=(1.0, 1.1)),
-    C("24 de setembro", GL, 5, "real", zoom=(1.0, 1.08), fit=True, texto="24 · 09 · 2182", som=("hit", -12)),
+    C("", GL, 0, "real", zoom=(1.35, 1.15), rgb=True, texto="TEM DATA PRA BATER"),
+    C("24 de setembro", GL, 5, "real", zoom=(1.0, 1.08), fit=True, flash=True, texto="24 · 09 · 2182", som=("hit", -10)),
     C("o nome dele", GL, 40, "real", zoom=(1.0, 1.1), fit=True, texto="BENNU"),
     C("quase quinhentos", GL, 70, "real", zoom=(1.0, 1.12), conta=(0, 490, " M"), som=("hit", -14)),
     C("mais alto que", "pb_b_empire.mp4", 2, "real", zoom=(1.0, 1.12), texto="EMPIRE STATE · 443 M"),

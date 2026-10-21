@@ -1,1 +1,1 @@
-elevenlabs vel 1.15 atempo 1.000
+elevenlabs vel 1.2 atempo 1.000
