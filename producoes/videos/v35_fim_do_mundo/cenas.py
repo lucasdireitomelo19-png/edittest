@@ -96,10 +96,10 @@ CENAS = [
     ('a vantagem e que essas explosoes', {'src': 'fm_169951.mp4', 'tag': 'real', 'credito': 'Pixabay/Kanenori'}),  # 86 Céu estrelado sobre montanhas
     ('e a maioria acontece', {'src': 'anim:g_anas', 'tag': 'anim'}),  # 87 Galáxias pequenas e distantes
     ('ate aqui tudo e questao de chance', {'src': 'fm_26452.mp4', 'tag': 'real', 'credito': 'Pixabay/MattHrusc'}),  # 88 Ampulheta
-    ('ela vai acontecer com certeza', {'src': 'fm_15615.mp4', 'tag': 'real', 'credito': 'Pixabay/Matthias_Groeneveld'}),  # 89 Relógio correndo
+    ('ela vai acontecer com certeza', {'ss': 2.0, 'src': 'fm_15615.mp4', 'tag': 'real', 'credito': 'Pixabay/Matthias_Groeneveld'}),  # 89 Relógio correndo
     ('numero dois o sol', {'p': {'num': 2, 'titulo': 'O SOL', 'tema': 'sol', 'c1': '#2e1606'}, 'capitulo': '2 · O Sol', 'src': 'anim:cap', 'tag': 'anim'}),  # 90 Cartão do capítulo 2 (brilho do Sol)
     ('o sol e o motivo de existir vida', {'src': 'fm_62390.mp4', 'tag': 'real', 'credito': 'Pixabay/JoshuaWoroniecki'}),  # 91 Trigo ao nascer do Sol
-    ('e tambem vai ser o motivo', {'src': 'na_sdo_erupcao.mp4', 'tag': 'real', 'credito': 'NASA/SDO'}),  # 92 Erupção solar real (SDO/NASA)
+    ('e tambem vai ser o motivo', {'ss': 13.0, 'src': 'na_sdo_erupcao.mp4', 'tag': 'real', 'credito': 'NASA/SDO'}),  # 92 Erupção solar real (SDO/NASA)
     ('ele funciona queimando hidrogenio', {'src': 'anim:s_nucleo', 'tag': 'anim'}),  # 93 Corte do Sol: fusão H → He no núcleo
     ('conforme envelhece', {'src': 'anim:s_brilho', 'tag': 'anim'}),  # 94 Gráfico: +10% de brilho a cada bilhão de anos
     ('parece pouco', {'src': 'fm_328726.mp4', 'tag': 'real', 'credito': 'Pixabay/NguyenTham_NTB'}),  # 95 Seca: chão rachado

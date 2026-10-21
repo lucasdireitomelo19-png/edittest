@@ -97,11 +97,11 @@ PLANO = [
     ("a vantagem e que essas explosoes", "px:169951", "Céu estrelado sobre montanhas"),
     ("e a maioria acontece", "mg:g_anas", "Galáxias pequenas e distantes"),
     ("ate aqui tudo e questao de chance", "px:26452", "Ampulheta"),
-    ("ela vai acontecer com certeza", "px:15615", "Relógio correndo"),
+    ("ela vai acontecer com certeza", "px:15615@2", "Relógio correndo"),
     # ---------------- 2 · O SOL ----------------
     ("numero dois o sol", "mg:cap2", "Cartão do capítulo 2 (brilho do Sol)"),
     ("o sol e o motivo de existir vida", "px:62390", "Trigo ao nascer do Sol"),
-    ("e tambem vai ser o motivo", "src:na_sdo_erupcao.mp4", "Erupção solar real (SDO/NASA)"),
+    ("e tambem vai ser o motivo", "src:na_sdo_erupcao.mp4@13", "Erupção solar real (SDO/NASA)"),
     ("ele funciona queimando hidrogenio", "mg:s_nucleo", "Corte do Sol: fusão H → He no núcleo"),
     ("conforme envelhece", "mg:s_brilho", "Gráfico: +10% de brilho a cada bilhão de anos"),
     ("parece pouco", "px:328726", "Seca: chão rachado"),

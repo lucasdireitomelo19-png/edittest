@@ -25,7 +25,7 @@ const easeOut = x => { x = clamp(x, 0, 1); return 1 - (1 - x) ** 3; };
 const back = x => { x = clamp(x, 0, 1); const c = 1.7; return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2; };
 const lerp = (a, b, k) => a + (b - a) * k;
 const RAD = Math.PI / 180;
-function rng(seed) { let s = (seed * 7919 + 104729) % 2147483647; for (let i = 0; i < 4; i++) s = s * 16807 % 2147483647; return () => (s = s * 16807 % 2147483647) / 2147483647; }
+function rng(seed) { let a = Math.imul(seed + 1, 2654435761) >>> 0; return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 const EST = (() => { const r = rng(23), a = []; for (let i = 0; i < 420; i++) a.push([r() * W, r() * H, r() * 1.6 + 0.3, r()]); return a; })();
 const fmt = n => Math.round(n).toLocaleString('pt-BR');
 
@@ -261,7 +261,7 @@ CENAS.v_geiser = (t, d) => {   // gêiseres aquecidos pelo magma
   const gm = ctx.createLinearGradient(0, 860, 0, H); gm.addColorStop(0, P.magma); gm.addColorStop(1, '#7a1a08'); ctx.fillStyle = gm; ctx.beginPath(); ctx.moveTo(0, H);
   for (let x = 0; x <= W; x += 40) ctx.lineTo(x, 880 + Math.sin(x * 0.006 + t) * 20); ctx.lineTo(W, H); ctx.fill();
   for (let i = 0; i < 9; i++) { const x = 200 + i * 190, y = 840 - ((t * 60 + i * 37) % 160); ctx.globalAlpha = 0.6; ctx.fillStyle = P.ouro; ctx.beginPath(); ctx.moveTo(x, y - 18); ctx.lineTo(x - 12, y); ctx.lineTo(x + 12, y); ctx.fill(); ctx.globalAlpha = 1; }
-  txt('MAGMA', CX, 990, 48, P.branco, ease((t - 0.5) / 0.5));
+  txt('MAGMA', CX, 925, 48, P.branco, ease((t - 0.5) / 0.5));
 };
 CENAS.v_linha = (t, d, p) => {   // três supererupções
   fundo(t, 0.2, '#1a1a2e', '#07070f'); const x0 = 200, x1 = 1720, y = 600, T = 2.3; const X = m => lerp(x0, x1, (T - m) / T);
@@ -287,7 +287,7 @@ CENAS.v_1816 = (t, d) => {   // junho de 1816 com neve
   for (let i = 0; i < 30; i++) { const c = i % 7, l = Math.floor(i / 7), x = x0 + 70 + c * 117, y = y0 + 200 + l * 95; txt(String(i + 1), x, y, 34, '#40485f', 1, 'center', 'MM'); }
   ctx.restore();
   for (let i = 0; i < 140; i++) { const r = rng(i + 50), x = (r() * W + Math.sin(t + i) * 30) % W, y = (r() * H + t * (60 + r() * 80)) % H; circ(x, y, 2 + r() * 4, 'rgba(255,255,255,0.85)'); }
-  pilula('O ANO SEM VERÃO', CX, 940, 46, P.verm, P.branco, ease((t - 1.0) / 0.4));
+  pilula('O ANO SEM VERÃO', CX, 905, 46, P.verm, P.branco, ease((t - 1.0) / 0.4));
 };
 CENAS.v_volume = (t, d) => {   // Tambora x Toba
   fundo(t, 0.2, '#1e1a2a', '#07060c'); const a = back(t / 0.6), b = back((t - 0.8) / 0.8);
@@ -389,7 +389,7 @@ CENAS.g_colapso = (t, d) => {   // núcleo colapsa e lança jatos
     ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.translate(CX, CY); ctx.rotate(0.35);
     const L = Math.min(1, f / 0.8) * 700; [-1, 1].forEach(s => { const g = ctx.createLinearGradient(0, 0, 0, s * L); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(1, 'rgba(155,123,255,0)');
       ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(-8, 0); ctx.lineTo(8, 0); ctx.lineTo(40, s * L); ctx.lineTo(-40, s * L); ctx.fill(); }); ctx.restore(); }
-  flash(t, 1.6, 0.4); txt(k < 1 ? 'ESTRELA GIGANTE' : 'BURACO NEGRO + JATOS', CX, 960, 40, P.branco, 0.9);
+  flash(t, 1.6, 0.4); txt(k < 1 ? 'ESTRELA GIGANTE' : 'BURACO NEGRO + JATOS', CX, 110, 40, P.branco, 0.9);
 };
 CENAS.g_energia = (t, d) => {   // poucos segundos = vida inteira do Sol
   fundo(t, 0.3, '#1a1638', '#05040c'); const inc = Math.sin(t * 1.4) * 0.02 * Math.max(0, 1 - t / 2);
@@ -441,7 +441,7 @@ CENAS.g_anas = (t, d) => {   // galáxias pequenas e distantes
   for (let i = 0; i < 120; i++) { const r = rng(i * 5 + 3), x = r() * W, y = r() * H, s = 3 + r() * 14, c = r() < 0.5 ? '255,210,170' : '170,200,255';
     ctx.save(); ctx.translate(x, y); ctx.rotate(r() * 3); ctx.scale(1, 0.4 + r() * 0.6); brilho(0, 0, s * 3.5, `rgba(${c},${0.7 + r() * 0.3})`); circ(0, 0, s * 0.35, `rgba(${c},0.95)`); ctx.restore(); }
   ctx.restore(); const a = ease((t - 0.8) / 0.4); anel(1320, 380, 46 + 6 * Math.sin(t * 4), `rgba(155,123,255,${a})`, 3);
-  txt('GALÁXIAS PEQUENAS E DISTANTES', CX, 960, 44, P.branco, ease((t - 0.4) / 0.5));
+  txt('GALÁXIAS PEQUENAS E DISTANTES', CX, 120, 44, P.branco, ease((t - 0.4) / 0.5));
 };
 
 // 2 · O SOL
@@ -530,7 +530,7 @@ CENAS.x_colisao = (t, d) => {   // colisão de partículas (ilustração de dete
   else { const f = t - tc; flash(t, tc, 0.3); for (let i = 0; i < 26; i++) { const r = rng(i + 41), a = r() * 6.283, cur = (r() - 0.5) * 0.004, L = Math.min(1, f / 0.7) * (250 + r() * 250);
       ctx.strokeStyle = r() < 0.2 ? P.ouro : 'rgba(120,210,255,0.85)'; ctx.lineWidth = r() < 0.2 ? 5 : 2.5; ctx.beginPath(); ctx.moveTo(CX, CY);
       for (let s = 0; s <= L; s += 12) { const an = a + cur * s; ctx.lineTo(CX + Math.cos(an) * s, CY + Math.sin(an) * s); } ctx.stroke(); } }
-  txt('2012 · BÓSON DE HIGGS', CX, 990, 46, P.branco, ease((t - 1.0) / 0.4)); txt('ILUSTRAÇÃO', CX, 1040, 22, P.cinza, ease((t - 1.0) / 0.4), 'center', 'MM');
+  txt('2012 · BÓSON DE HIGGS', CX, 90, 46, P.branco, ease((t - 1.0) / 0.4)); txt('ILUSTRAÇÃO', CX, 140, 22, P.cinza, ease((t - 1.0) / 0.4), 'center', 'MM');
 };
 const yPot = x => 820 - 470 * Math.exp(-(((x - 650) / 300) ** 2)) + 45 * Math.exp(-(((x - 650) / 50) ** 2)) + 120 * Math.exp(-(((x - 1500) / 220) ** 2));
 function desenhaPot(t, a) {
@@ -540,7 +540,7 @@ function desenhaPot(t, a) {
 CENAS.x_bola1 = (t, d) => {
   fundo(t, 0.4); desenhaPot(t, ease(t / 0.5)); const bx = 650, by = yPot(650) - 30; circ(bx, by + Math.sin(t * 3) * 2, 30 * back((t - 0.4) / 0.5), P.ouro);
   txt('NOSSO UNIVERSO', bx, by - 90, 40, P.branco, ease((t - 0.8) / 0.4)); txt('ESTÁVEL, MAS NÃO NO PONTO MAIS BAIXO', bx, by - 45, 24, P.cinza, ease((t - 1.0) / 0.4), 'center', 'MM');
-  txt('ESTADO MAIS BAIXO', 1500, yPot(1500) + 80, 36, P.verm, ease((t - 1.6) / 0.4));
+  txt('ESTADO MAIS BAIXO', 1500, yPot(1500) - 90, 36, P.verm, ease((t - 1.6) / 0.4));
 };
 CENAS.x_bola2 = (t, d) => {   // o empurrão
   fundo(t, 0.4); desenhaPot(t, 1); const tk = 0.8; let bx = 650;
@@ -554,11 +554,11 @@ CENAS.x_bolha = (t, d) => {   // nasce uma bolha de vácuo novo
   flash(t, 0.8, 0.25); if (t < 0.8) circ(CX, CY, 3, P.branco);
   if (R > 0) { ctx.save(); ctx.beginPath(); ctx.arc(CX, CY, R, 0, 6.283); ctx.clip(); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); ctx.restore();
     anel(CX, CY, R, 'rgba(160,235,255,0.95)', 4); brilho(CX, CY, R * 1.3, 'rgba(76,201,240,0.12)'); }
-  txt('UMA BOLHA DE VÁCUO NOVO', CX, 980, 44, P.branco, ease((t - 1.2) / 0.4)); txt('HIPÓTESE', CX, 1035, 24, P.cinza, ease((t - 1.2) / 0.4), 'center', 'MM');
+  txt('UMA BOLHA DE VÁCUO NOVO', CX, 110, 44, P.branco, ease((t - 1.2) / 0.4)); txt('HIPÓTESE', CX, 165, 24, P.cinza, ease((t - 1.2) / 0.4), 'center', 'MM');
 };
 CENAS.x_cresce = (t, d) => {   // a bolha engole galáxias
   ctx.fillStyle = '#020308'; ctx.fillRect(0, 0, W, H); const R = 80 + t * 300, bx = 300, by = CY;
-  for (let i = 0; i < 26; i++) { const r = rng(i * 9 + 1), x = 200 + r() * 1700, y = 80 + r() * 920; if (Math.hypot(x - bx, y - by) < R) continue; galaxia(x, y, 26 + r() * 30, t + i, 0.9); }
+  for (let i = 0; i < 26; i++) { const r = rng(i * 9 + 1), x = 200 + r() * 1700, y = 80 + r() * 920; if (Math.hypot(x - bx, y - by) < R) continue; const sz = 18 + r() * 26, c = r() < 0.5 ? '255,210,170' : '170,200,255'; ctx.save(); ctx.translate(x, y); ctx.rotate(r() * 3); ctx.scale(1, 0.35 + r() * 0.5); brilho(0, 0, sz * 2.2, `rgba(${c},0.85)`); circ(0, 0, sz * 0.25, `rgba(${c},1)`); ctx.restore(); }
   ctx.save(); ctx.beginPath(); ctx.arc(bx, by, R, 0, 6.283); ctx.fillStyle = '#000'; ctx.fill(); ctx.restore(); anel(bx, by, R, 'rgba(160,235,255,0.95)', 5);
   txt('≈ VELOCIDADE DA LUZ', 1500, 120, 46, P.azul, ease((t - 0.4) / 0.4));
 };
@@ -568,7 +568,7 @@ CENAS.x_atomos = (t, d) => {   // átomos deixam de funcionar
   for (let i = 0; i < 3; i++) { const rot = i * Math.PI / 3; ctx.save(); ctx.translate(CX, CY); ctx.rotate(rot); ctx.strokeStyle = `rgba(76,201,240,${0.6 * (1 - k)})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(0, 0, 320, 110, 0, 0, 6.283); ctx.stroke();
     const a = t * (2 + i * 0.5); let ex = Math.cos(a) * 320, ey = Math.sin(a) * 110; ex *= 1 + k * 2.5; ey *= 1 + k * 2.5; ctx.restore();
     const px = CX + ex * Math.cos(rot) - ey * Math.sin(rot), py = CY + ex * Math.sin(rot) + ey * Math.cos(rot); circ(px, py, 14, P.azul); brilho(px, py, 30, 'rgba(76,201,240,0.6)'); }
-  txt('ÁTOMOS · QUÍMICA · ESTRELAS', CX, 950, 44, P.branco, ease((t - 0.3) / 0.4) * (1 - k * 0.6));
+  txt('ÁTOMOS · QUÍMICA · ESTRELAS', CX, 120, 44, P.branco, ease((t - 0.3) / 0.4) * (1 - k * 0.6));
 };
 CENAS.x_void = (t, d) => {   // uma frente que apaga tudo
   fundo(t, 1, '#151a3a', '#03040a'); cidade(H - 60, 51, '#0d1124', 0.9);
