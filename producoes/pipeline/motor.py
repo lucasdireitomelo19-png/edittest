@@ -208,10 +208,10 @@ WrapStyle: 0
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Legenda,Montserrat Thin ExtraBold,98,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,0,0,1,7,4,2,70,70,600,1
+Style: Legenda,Montserrat Thin ExtraBold,98,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,0,0,1,7,4,2,70,70,{getattr(cfg, "LEGENDA_MV", 600)},1
 Style: Destaque,Montserrat Thin ExtraBold,84,&H0000E5FF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,1,0,1,6,5,8,60,60,330,1
 Style: Contador,Montserrat Thin ExtraBold,150,&H0000E5FF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,2,0,1,9,6,8,60,60,480,1
-Style: Final,Montserrat Thin ExtraBold,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,2,0,1,8,6,5,60,60,0,1
+Style: Final,Montserrat Thin ExtraBold,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,2,0,1,8,6,{getattr(cfg, "FINAL_ALIN", 5)},60,60,{getattr(cfg, "FINAL_MV", 0)},1
 Style: Real,Montserrat Thin ExtraBold,40,&H00FFFFFF,&H00FFFFFF,&H001E1EE6,&H00000000,0,0,0,0,100,100,2,0,3,12,0,8,40,40,230,1
 Style: Anim,Montserrat Thin ExtraBold,30,&H00FFFFFF,&H00FFFFFF,&H70000000,&H00000000,0,0,0,0,100,100,2,0,3,10,0,8,40,40,230,1
 Style: Credito,Montserrat Thin ExtraBold,28,&H40FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,1,0,1,2,0,2,40,40,90,1

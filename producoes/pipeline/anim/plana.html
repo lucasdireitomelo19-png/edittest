@@ -1,0 +1,330 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"MX";src:url("../fonts/Montserrat-ExtraBold.ttf")}
+  html,body{margin:0;background:#0b1026;overflow:hidden}canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Motion graphics "E se a Terra fosse plana?" (1080x1920). Estilo vetorial plano, fundo azul-noite.
+// window.desenhar(cena, t, dur, p). Cada cena é única (nenhum plano reaproveitado).
+const W = 1080, H = 1920, CX = W / 2, CY = 820;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const P = { bg1: '#0b1026', bg2: '#16224d', mar: '#2bb3c0', mar2: '#1d7f9e', terra: '#7cc98a', terra2: '#4e9a63',
+  areia: '#e9c46a', areia2: '#d4a24c', laranja: '#f4a261', verm: '#e76f51', branco: '#f4f1e8', cinza: '#8a93b8', gelo: '#dfe9f5', ouro: '#ffd166' };
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+const back = x => { x = clamp(x, 0, 1); const c = 1.7; return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2; };
+const lerp = (a, b, k) => a + (b - a) * k;
+function rng(seed) { let s = seed; return () => (s = s * 16807 % 2147483647) / 2147483647; }
+const EST = (() => { const r = rng(17), a = []; for (let i = 0; i < 260; i++) a.push([r() * W, r() * H, r() * 1.8 + 0.4, r()]); return a; })();
+
+function fundo(t, estrelas = 1) {
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, P.bg2); g.addColorStop(1, P.bg1);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  for (const [x, y, r, f] of EST) { ctx.globalAlpha = estrelas * (0.25 + 0.35 * Math.abs(Math.sin(t * 1.1 + f * 30)));
+    ctx.fillStyle = P.branco; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); }
+  ctx.globalAlpha = 1;
+}
+function txt(s, x, y, size, cor = P.branco, a = 1, alinh = 'center') {
+  ctx.save(); ctx.globalAlpha = a; ctx.font = `${size}px MX`; ctx.textAlign = alinh; ctx.textBaseline = 'middle';
+  ctx.fillStyle = cor; ctx.fillText(s, x, y); ctx.restore();
+}
+// título cinético: palavras sobem uma a uma
+function titulo(linhas, y, size, t, cor = P.branco, atraso = 0.12) {
+  let k = 0;
+  linhas.forEach((l, i) => { const e = back((t - atraso * k) / 0.45); k++;
+    ctx.save(); ctx.globalAlpha = clamp(e, 0, 1); ctx.translate(0, (1 - e) * 60);
+    txt(l, CX, y + i * size * 1.1, size, Array.isArray(cor) ? cor[i] : cor); ctx.restore(); });
+}
+function pilula(s, x, y, size, fundoCor, cor, a = 1) {
+  ctx.save(); ctx.globalAlpha = a; ctx.font = `${size}px MX`; const w = ctx.measureText(s).width + size * 1.2, h = size * 1.6;
+  ctx.fillStyle = fundoCor; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, h / 2); ctx.fill();
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = cor; ctx.fillText(s, x, y + 2); ctx.restore();
+}
+function sombra(x, y, rx, ry, a = 0.35) { ctx.fillStyle = `rgba(0,0,0,${a})`; ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, 6.283); ctx.fill(); }
+
+// continentes estilizados (blobs) desenhados num disco de raio R, em coordenadas do disco
+const CONT = [[0.05, -0.35, 0.28, 0.2], [-0.42, 0.05, 0.22, 0.3], [0.38, 0.22, 0.26, 0.18], [-0.1, 0.42, 0.2, 0.14], [0.45, -0.38, 0.14, 0.12], [-0.38, -0.42, 0.16, 0.12]];
+function continentes(R, cor1, cor2) {
+  CONT.forEach(([x, y, a, b], i) => {
+    ctx.fillStyle = i % 2 ? cor2 : cor1; ctx.beginPath();
+    for (let k = 0; k <= 24; k++) { const ang = k / 24 * 6.283, w = 1 + 0.18 * Math.sin(ang * 3 + i) + 0.1 * Math.sin(ang * 5 + i * 2);
+      const px = (x + Math.cos(ang) * a * w) * R, py = (y + Math.sin(ang) * b * w) * R; k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+    ctx.fill(); });
+}
+// disco visto de cima (mapa plano), com borda de gelo
+function discoCima(x, y, R, rot = 0, opc = {}) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+  ctx.fillStyle = opc.mar || P.mar2; ctx.beginPath(); ctx.arc(0, 0, R, 0, 6.283); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, R * 0.93, 0, 6.283); ctx.clip();
+  ctx.fillStyle = opc.mar1 || P.mar; ctx.fillRect(-R, -R, 2 * R, 2 * R);
+  continentes(R, opc.t1 || P.terra, opc.t2 || P.terra2); ctx.restore();
+  ctx.lineWidth = R * 0.07; ctx.strokeStyle = opc.borda || P.gelo; ctx.beginPath(); ctx.arc(0, 0, R * 0.965, 0, 6.283); ctx.stroke();
+  ctx.restore();
+}
+// disco em perspectiva (achatado em y), com espessura
+function discoPerspectiva(x, y, R, achata, esp, rot) {
+  ctx.save(); ctx.translate(x, y);
+  ctx.fillStyle = '#5b4632'; ctx.beginPath(); ctx.ellipse(0, esp, R, R * achata, 0, 0, Math.PI); ctx.lineTo(-R, 0); ctx.ellipse(0, 0, R, R * achata, 0, Math.PI, 0, true); ctx.fill();
+  ctx.fillStyle = '#7a5d40'; ctx.fillRect(-R, 0, 2 * R, esp);
+  ctx.beginPath(); ctx.ellipse(0, esp, R, R * achata, 0, 0, Math.PI); ctx.fill();
+  ctx.scale(1, achata); discoCima(0, 0, R, rot); ctx.restore();
+}
+// globo estilizado
+function globo(x, y, R, t, rot = 0.25) {
+  ctx.save(); ctx.beginPath(); ctx.arc(x, y, R, 0, 6.283); ctx.clip();
+  ctx.fillStyle = P.mar; ctx.fillRect(x - R, y - R, 2 * R, 2 * R);
+  for (let i = 0; i < 9; i++) { const lon = i * 0.7 + t * rot, lat = [0.3, -0.4, 0.1, 0.6, -0.2, 0.45, -0.55, 0.0, 0.25][i];
+    const c = Math.cos(lon); if (c < -0.15) continue; const px = x + Math.sin(lon) * R * 0.9, py = y + lat * R * 0.8;
+    ctx.fillStyle = i % 2 ? P.terra : P.terra2; ctx.beginPath(); ctx.ellipse(px, py, R * 0.28 * Math.max(0.1, c), R * 0.2, 0.3, 0, 6.283); ctx.fill(); }
+  const g = ctx.createLinearGradient(x - R, y - R, x + R, y + R); g.addColorStop(0, 'rgba(255,255,255,0.18)'); g.addColorStop(0.5, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(5,10,30,0.55)');
+  ctx.fillStyle = g; ctx.fillRect(x - R, y - R, 2 * R, 2 * R); ctx.restore();
+  ctx.strokeStyle = 'rgba(140,220,255,0.45)'; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(x, y, R + 4, 0, 6.283); ctx.stroke();
+}
+// boneco (pictograma) em pé; ang = inclinação do corpo
+function boneco(x, y, s, ang = 0, cor = P.branco, passo = 0) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.strokeStyle = cor; ctx.fillStyle = cor; ctx.lineWidth = s * 0.12; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(0, -s * 1.55, s * 0.22, 0, 6.283); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(0, -s * 1.3); ctx.lineTo(0, -s * 0.6);
+  const p = Math.sin(passo) * 0.35;
+  ctx.moveTo(0, -s * 0.6); ctx.lineTo(Math.sin(p) * s * 0.45, 0); ctx.moveTo(0, -s * 0.6); ctx.lineTo(-Math.sin(p) * s * 0.45, 0);
+  ctx.moveTo(0, -s * 1.15); ctx.lineTo(s * 0.35 * Math.cos(1 + p), -s * 0.8); ctx.moveTo(0, -s * 1.15); ctx.lineTo(-s * 0.35 * Math.cos(1 - p), -s * 0.8);
+  ctx.stroke(); ctx.restore();
+}
+function seta(x1, y1, x2, y2, cor, w = 8, cab = 26) {
+  const a = Math.atan2(y2 - y1, x2 - x1); ctx.strokeStyle = cor; ctx.fillStyle = cor; ctx.lineWidth = w; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2 - Math.cos(a) * cab * 0.6, y2 - Math.sin(a) * cab * 0.6); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - Math.cos(a - 0.45) * cab, y2 - Math.sin(a - 0.45) * cab); ctx.lineTo(x2 - Math.cos(a + 0.45) * cab, y2 - Math.sin(a + 0.45) * cab); ctx.fill();
+}
+function sol(x, y, r, a = 1, t = 0) {
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(x, y); ctx.rotate(t * 0.3);
+  ctx.fillStyle = P.ouro; for (let i = 0; i < 12; i++) { ctx.rotate(Math.PI / 6); ctx.beginPath(); ctx.roundRect(r * 1.2, -r * 0.08, r * 0.45, r * 0.16, r * 0.08); ctx.fill(); }
+  ctx.beginPath(); ctx.arc(0, 0, r, 0, 6.283); ctx.fill(); ctx.restore();
+}
+function relogio(x, y, r, h, m, cor = P.branco) {
+  ctx.fillStyle = '#1b2a5e'; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill();
+  ctx.strokeStyle = cor; ctx.lineWidth = r * 0.1; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.stroke();
+  for (let i = 0; i < 12; i++) { const a = i / 12 * 6.283; ctx.lineWidth = r * 0.05; ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * r * 0.78, y + Math.sin(a) * r * 0.78); ctx.lineTo(x + Math.cos(a) * r * 0.9, y + Math.sin(a) * r * 0.9); ctx.stroke(); }
+  const ah = (h % 12 + m / 60) / 12 * 6.283 - Math.PI / 2, am = m / 60 * 6.283 - Math.PI / 2; ctx.lineCap = 'round';
+  ctx.lineWidth = r * 0.1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(ah) * r * 0.5, y + Math.sin(ah) * r * 0.5); ctx.stroke();
+  ctx.lineWidth = r * 0.07; ctx.strokeStyle = P.laranja; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(am) * r * 0.75, y + Math.sin(am) * r * 0.75); ctx.stroke();
+}
+// laje do disco vista de lado (corte), com relevo opcional; inclinação em radianos
+function laje(x, y, w, h, ang = 0, cores = {}) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+  ctx.fillStyle = '#6b4f36'; ctx.beginPath(); ctx.roundRect(-w / 2, 0, w, h, 18); ctx.fill();
+  ctx.fillStyle = '#8a6847'; ctx.fillRect(-w / 2, 0, w, h * 0.35);
+  ctx.fillStyle = cores.topo || P.terra; ctx.beginPath(); ctx.roundRect(-w / 2, -14, w, 22, 10); ctx.fill();
+  ctx.restore();
+}
+
+const CENAS = {
+  // 1 · globo vira disco
+  achata(t, d) { fundo(t);
+    const k = ease((t - 0.5) / 1.3), R = 330, y = CY;
+    ctx.save(); ctx.translate(CX, y); ctx.scale(1, lerp(1, 0.16, k)); globo(0, 0, R, t * 2, 0.6); ctx.restore();
+    if (k > 0.95) { ctx.fillStyle = '#7a5d40'; ctx.fillRect(CX - R, y, 2 * R, 40); ctx.beginPath(); ctx.ellipse(CX, y + 40, R, R * 0.16, 0, 0, Math.PI); ctx.fill(); }
+    titulo(['E SE A TERRA', 'FOSSE PLANA?'], 330, 92, t - 0.2, [P.branco, P.ouro]);
+  },
+  // 2 · disco gigante girando em perspectiva
+  disco(t, d) { fundo(t);
+    const e = back(t / 0.6);
+    ctx.save(); ctx.translate(CX, CY); ctx.scale(e, e); discoPerspectiva(0, 0, 420, 0.38, 60, t * 0.6); ctx.restore();
+    pilula('UM DISCO GIGANTE', CX, 300, 54, P.ouro, P.bg1, ease(t / 0.4));
+  },
+  // 3 · régua atravessando o mapa com contador
+  regua(t, d) { fundo(t, 0.6);
+    discoCima(CX, CY, 400, -0.1 + t * 0.03);
+    const k = ease((t - 0.3) / 1.6), x0 = CX - 400, x1 = lerp(x0, CX + 400, k);
+    ctx.setLineDash([]); ctx.strokeStyle = P.ouro; ctx.lineWidth = 10; ctx.beginPath(); ctx.moveTo(x0, CY); ctx.lineTo(x1, CY); ctx.stroke();
+    [x0, x1].forEach(x => { ctx.fillStyle = P.ouro; ctx.beginPath(); ctx.arc(x, CY, 16, 0, 6.283); ctx.fill(); });
+    const n = Math.round(12700 * k).toLocaleString('pt-BR');
+    pilula(n + ' KM', CX, CY - 520, 80, P.bg1, P.ouro, ease(t / 0.3));
+    txt('DE PONTA A PONTA', CX, CY + 500, 44, P.cinza, ease((t - 0.8) / 0.4));
+  },
+  // 4 · card "problema #1"
+  problema(t, d) { fundo(t, 0.4);
+    const e = back(t / 0.5);
+    ctx.save(); ctx.translate(CX, CY - 40); ctx.scale(e, e);
+    ctx.fillStyle = P.verm; ctx.beginPath(); ctx.arc(0, 0, 190, 0, 6.283); ctx.fill();
+    txt('1', 0, 10, 260, P.branco); ctx.restore();
+    titulo(['PROBLEMA Nº 1'], CY + 260, 70, t - 0.25, P.verm);
+    titulo(['A GRAVIDADE'], CY + 360, 96, t - 0.45, P.branco);
+  },
+  // 5 · laje de lado com setas convergindo para o centro
+  setas(t, d) { fundo(t, 0.5);
+    laje(CX, CY + 60, 900, 120);
+    const k = ease(t / 1.2);
+    for (let i = -4; i <= 4; i++) { if (!i) continue;
+      const x = CX + i * 100, y = CY - 220 - Math.abs(i) * 8, tx = CX + i * 12, ty = CY + 90;
+      const px = lerp(x, tx, 0.65 * k), py = lerp(y, ty, 0.65 * k);
+      seta(x, y, px, py, i % 2 ? P.ouro : P.laranja, 9, 30); }
+    ctx.fillStyle = P.ouro; ctx.beginPath(); ctx.arc(CX, CY + 120, 18 + 6 * Math.sin(t * 8), 0, 6.283); ctx.fill();
+    pilula('TUDO PUXADO PRO CENTRO', CX, CY - 420, 50, P.ouro, P.bg1, ease(t / 0.4));
+  },
+  // 6 · pessoa no meio, em pé, gravidade reta
+  meio(t, d) { fundo(t, 0.5);
+    laje(CX, CY + 160, 960, 140);
+    boneco(CX, CY + 150, 170, 0, P.branco, t * 6);
+    seta(CX + 150, CY - 120, CX + 150, CY + 110, P.ouro, 10, 34);
+    const e = back((t - 0.5) / 0.4);
+    ctx.save(); ctx.translate(CX, CY - 330); ctx.scale(e, e); ctx.fillStyle = P.terra2; ctx.beginPath(); ctx.arc(0, 0, 80, 0, 6.283); ctx.fill();
+    ctx.strokeStyle = P.branco; ctx.lineWidth = 16; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(-34, 2); ctx.lineTo(-8, 28); ctx.lineTo(38, -24); ctx.stroke(); ctx.restore();
+    txt('NO MEIO: NORMAL', CX, CY + 470, 56, P.branco, ease(t / 0.4));
+  },
+  // 7 · caminhando para a borda, gravidade inclina
+  borda(t, d) { fundo(t, 0.5);
+    laje(CX - 120, CY + 160, 1100, 140);
+    const k = ease(t / d), x = lerp(CX - 100, CX + 330, k), inc = lerp(0.05, 0.55, k);
+    boneco(x, CY + 150, 160, -inc * 0.5, P.branco, t * 9);
+    const gx = x + 140, gy = CY - 140; seta(gx, gy, gx - Math.sin(inc) * 240, gy + Math.cos(inc) * 240, P.ouro, 10, 34);
+    txt('BORDA →', CX + 330, CY + 400, 52, P.laranja, ease(t / 0.4));
+    txt('GRAVIDADE INCLINADA', CX, CY - 380, 52, P.ouro, ease((t - 0.3) / 0.4));
+  },
+  // 8 · o chão vira ladeira (cena girada para a gravidade ficar para baixo)
+  ladeira(t, d) { fundo(t, 0.5);
+    const a = lerp(0, -0.5, ease(t / 0.9));
+    ctx.save(); ctx.translate(CX, CY + 200); ctx.rotate(a);
+    ctx.fillStyle = '#6b4f36'; ctx.fillRect(-900, 0, 1800, 900); ctx.fillStyle = P.terra; ctx.fillRect(-900, -16, 1800, 24);
+    const x = -120 + (t * 70) % 200; boneco(x, 0, 170, -a * 0.9 - 0.15, P.branco, t * 7);
+    ctx.restore();
+    titulo(['LADEIRA', 'SEM FIM'], 380, 110, t - 0.4, [P.branco, P.laranja]);
+  },
+  // 9 · oceanos escorrendo para o centro (visto de cima)
+  oceanos(t, d) { fundo(t, 0.5);
+    const R = 400, k = ease(t / (d * 0.9));
+    discoCima(CX, CY, R, 0.2, { mar1: lerp(1, 0, k) > 0.5 ? P.mar : '#b98b52', t1: P.terra, t2: P.terra2 });
+    ctx.save(); ctx.translate(CX, CY);
+    const rm = lerp(R * 0.9, R * 0.42, k);
+    ctx.fillStyle = 'rgba(43,179,192,0.92)'; ctx.beginPath();
+    for (let i = 0; i <= 40; i++) { const an = i / 40 * 6.283, w = 1 + 0.05 * Math.sin(an * 6 + t * 5); const px = Math.cos(an) * rm * w, py = Math.sin(an) * rm * w; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+    ctx.fill();
+    for (let i = 0; i < 18; i++) { const an = i / 18 * 6.283, r0 = lerp(R * 0.9, rm, ((t * 0.8 + i * 0.13) % 1));
+      ctx.fillStyle = 'rgba(200,245,255,0.8)'; ctx.beginPath(); ctx.arc(Math.cos(an) * r0, Math.sin(an) * r0, 9, 0, 6.283); ctx.fill(); }
+    ctx.restore();
+    pilula('MAR GIGANTE NO MEIO', CX, CY - 520, 54, P.mar, P.bg1, ease((t - 0.6) / 0.4));
+  },
+  // 10 · bordas viram deserto (dunas)
+  deserto(t, d) {
+    const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#f7b267'); g.addColorStop(0.55, '#f4845f'); g.addColorStop(1, '#7a3b2e');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    sol(CX + 250, 760, 100, 1, t);
+    [[1150, P.areia2, 0.6], [1280, P.areia, 0.9], [1420, '#c98a3e', 1.3]].forEach(([y, c, v], i) => {
+      ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(0, H);
+      for (let x = 0; x <= W; x += 20) ctx.lineTo(x, y + Math.sin(x * 0.006 + i + t * v * 0.3) * 60);
+      ctx.lineTo(W, H); ctx.fill(); });
+    for (let i = 0; i < 5; i++) { ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 4; ctx.beginPath();
+      for (let x = 100; x < 980; x += 20) ctx.lineTo(x, 900 + i * 40 + Math.sin(x * 0.03 + t * 6 + i) * 6); ctx.stroke(); }
+    titulo(['AS BORDAS:', 'DESERTO'], 300, 100, t - 0.1, [P.bg1, P.branco]);
+  },
+  // 11 · o ar escorre para o centro (partículas)
+  ar(t, d) { fundo(t, 0.4);
+    laje(CX, CY + 300, 960, 120);
+    const r = rng(3);
+    for (let i = 0; i < 160; i++) { const x0 = r() * W, y0 = CY - 400 + r() * 650, k = ease(t / d) * 0.6;
+      const x = lerp(x0, CX + (x0 - CX) * 0.25, k), y = lerp(y0, CY + 150 - r() * 200, k * 0.5);
+      ctx.fillStyle = `rgba(190,225,255,${0.35 + 0.5 * r()})`; ctx.beginPath(); ctx.arc(x, y, 5 + r() * 6, 0, 6.283); ctx.fill(); }
+    pilula('O AR TAMBÉM', CX, 380, 64, P.gelo, P.bg1, ease(t / 0.3));
+  },
+  // 12 · medidor de oxigênio caindo (topo do Everest)
+  everest(t, d) { fundo(t, 0.7);
+    ctx.fillStyle = '#3a4a7a'; ctx.beginPath(); ctx.moveTo(80, 1300); ctx.lineTo(560, 620); ctx.lineTo(1000, 1300); ctx.fill();
+    ctx.fillStyle = P.gelo; ctx.beginPath(); ctx.moveTo(560, 620); ctx.lineTo(470, 760); ctx.lineTo(530, 730); ctx.lineTo(590, 780); ctx.lineTo(650, 750); ctx.fill();
+    ctx.strokeStyle = P.branco; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(560, 620); ctx.lineTo(560, 520); ctx.stroke();
+    ctx.fillStyle = P.verm; ctx.beginPath(); ctx.moveTo(560, 520); ctx.lineTo(640, 545 + Math.sin(t * 8) * 6); ctx.lineTo(560, 570); ctx.fill();
+    const k = ease((t - 0.3) / 1.6), v = Math.round(lerp(100, 33, k));
+    ctx.fillStyle = '#1b2a5e'; ctx.beginPath(); ctx.roundRect(140, 300, 800, 70, 35); ctx.fill();
+    ctx.fillStyle = v > 50 ? P.mar : P.verm; ctx.beginPath(); ctx.roundRect(150, 310, 780 * v / 100, 50, 25); ctx.fill();
+    txt(`O₂  ${v}%`, CX, 240, 70, P.branco);
+    txt('COMO NO TOPO DO EVEREST', CX, 1420, 48, P.ouro, ease((t - 0.8) / 0.4));
+  },
+  // 13 · "e o dia?"
+  dia(t, d) { fundo(t, 0.3);
+    const e = back(t / 0.5); ctx.save(); ctx.translate(CX, CY); ctx.scale(e, e);
+    relogio(0, 0, 210, 6, (t * 400) % 60); ctx.restore();
+    titulo(['E O DIA?'], CY + 380, 110, t - 0.2, P.ouro);
+  },
+  // 14 · o Sol acima e o disco inteiro clareia de uma vez
+  amanhecer(t, d) {
+    const k = ease((t - 0.4) / 1.2);
+    fundo(t, 1 - k);
+    ctx.fillStyle = `rgba(120,190,255,${0.55 * k})`; ctx.fillRect(0, 0, W, H);
+    sol(CX, lerp(1100, 360, ease(t / 1.4)), 90, 1, t);
+    ctx.save(); ctx.translate(CX, CY + 420); ctx.scale(1, 0.32); discoCima(0, 0, 440, t * 0.2); ctx.restore();
+    ctx.fillStyle = `rgba(5,10,30,${0.65 * (1 - k)})`; ctx.beginPath(); ctx.ellipse(CX, CY + 420, 440, 141, 0, 0, 6.283); ctx.fill();
+    txt('TUDO AMANHECE JUNTO', CX, CY + 660, 52, P.branco, ease((t - 1.0) / 0.4));
+  },
+  // 15 · relógios do mundo todos iguais
+  fusos(t, d) { fundo(t, 0.3);
+    const cid = ['TÓQUIO', 'LONDRES', 'SÃO PAULO', 'NOVA YORK'];
+    cid.forEach((c, i) => { const x = 270 + (i % 2) * 540, y = 620 + Math.floor(i / 2) * 520, e = back((t - i * 0.08) / 0.4);
+      ctx.save(); ctx.translate(x, y); ctx.scale(e, e); relogio(0, 0, 150, 6, 0); ctx.restore();
+      txt(c, x, y + 210, 40, P.cinza, clamp(e, 0, 1)); });
+    pilula('SEM FUSO HORÁRIO', CX, 300, 60, P.ouro, P.bg1, ease(t / 0.3));
+  },
+  // 16 · rachadura: "nada disso ia durar"
+  durar(t, d) { fundo(t, 0.4);
+    ctx.save(); ctx.translate(CX, CY); ctx.scale(1, 0.34); discoCima(0, 0, 430, 0.4); ctx.restore();
+    const k = ease(t / 0.8); ctx.strokeStyle = P.branco; ctx.lineWidth = 7; ctx.beginPath();
+    const pts = [[-420, -20], [-250, 30], [-120, -30], [20, 40], [140, -10], [280, 35], [430, 0]]; const n = Math.max(1, Math.floor(k * (pts.length - 1)) + 1);
+    pts.slice(0, n).forEach(([x, y], i) => i ? ctx.lineTo(CX + x, CY + y) : ctx.moveTo(CX + x, CY + y)); ctx.stroke();
+    titulo(['MAS NADA DISSO', 'IA DURAR'], 420, 88, t - 0.15, [P.branco, P.verm]);
+  },
+  // 17a · bordas se dobrando para cima
+  dobra(t, d) { fundo(t, 0.5);
+    const k = ease(t / d), R = 420;
+    for (let i = 0; i < 28; i++) { const a0 = i / 28 * 6.283, a1 = (i + 1) / 28 * 6.283, lift = k * 0.9;
+      ctx.fillStyle = i % 2 ? P.terra2 : P.terra;
+      ctx.beginPath(); ctx.moveTo(CX, CY);
+      for (let s = 0; s <= 6; s++) { const a = lerp(a0, a1, s / 6), r = R * (1 - 0.25 * lift);
+        ctx.lineTo(CX + Math.cos(a) * r, CY + Math.sin(a) * r * lerp(0.34, 0.75, lift) - lift * 180 * (0.5 + 0.5 * Math.sin(a))); }
+      ctx.fill(); }
+    for (let i = 0; i < 10; i++) { const a = i / 10 * 6.283 + t; seta(CX + Math.cos(a) * 520, CY + Math.sin(a) * 330, CX + Math.cos(a) * 360, CY + Math.sin(a) * 230, P.ouro, 7, 24); }
+    txt('A GRAVIDADE ESMAGA AS BORDAS', CX, 380, 44, P.ouro, ease(t / 0.4));
+  },
+  // 17b · vira uma bola
+  bola(t, d) { fundo(t, 0.7);
+    const k = ease(t / 1.0), R = lerp(300, 330, k);
+    ctx.save(); ctx.translate(CX, CY); ctx.scale(1, lerp(0.75, 1, k)); globo(0, 0, R, t * 2, 0.5); ctx.restore();
+    ctx.globalAlpha = 0.5 * (1 - k); ctx.fillStyle = P.branco; ctx.beginPath(); ctx.arc(CX, CY, R * 1.25, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+    titulo(['ATÉ VIRAR', 'UMA BOLA'], 1300, 100, t - 0.3, [P.branco, P.ouro]);
+  },
+  // 18a · asteroides irregulares girando
+  batatas(t, d) { fundo(t);
+    const r = rng(9);
+    [[300, 600, 70], [740, 520, 55], [520, 900, 95], [250, 1150, 45], [800, 1060, 80]].forEach(([x, y, s], i) => {
+      ctx.save(); ctx.translate(x, y + Math.sin(t * 2 + i) * 12); ctx.rotate(t * (0.6 + i * 0.2));
+      ctx.fillStyle = ['#9a8f86', '#7d736c', '#b2a79c'][i % 3]; ctx.beginPath();
+      for (let k = 0; k <= 14; k++) { const a = k / 14 * 6.283, w = 0.7 + 0.45 * ((Math.sin(a * 3 + i * 1.7) + 1) / 2) * (0.6 + r() * 0.4);
+        k ? ctx.lineTo(Math.cos(a) * s * w * 1.3, Math.sin(a) * s * w) : ctx.moveTo(Math.cos(a) * s * w * 1.3, Math.sin(a) * s * w); }
+      ctx.fill(); ctx.restore(); });
+    pilula('PEQUENOS: IRREGULARES', CX, 300, 50, P.cinza, P.bg1, ease(t / 0.3));
+  },
+  // 18b · linha de corte: acima de algumas centenas de km, tudo redondo
+  limite(t, d) { fundo(t);
+    const k = ease(t / 1.2);
+    ctx.strokeStyle = P.ouro; ctx.setLineDash([20, 16]); ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(CX, 420); ctx.lineTo(CX, 1350); ctx.stroke(); ctx.setLineDash([]);
+    txt('~ CENTENAS DE KM', CX, 380, 46, P.ouro);
+    ctx.fillStyle = '#9a8f86'; ctx.save(); ctx.translate(290, 880); ctx.rotate(t); ctx.beginPath(); ctx.ellipse(0, 0, 90, 55, 0.4, 0, 6.283); ctx.fill(); ctx.restore();
+    const bolas = [[760, 640, 70, '#c9c3b8'], [820, 900, 110, '#d9a066'], [740, 1200, 90, P.mar]];
+    bolas.forEach(([x, y, r, c], i) => { const e = back((t - 0.3 - i * 0.15) / 0.4); ctx.save(); ctx.translate(x, y); ctx.scale(e, e);
+      ctx.fillStyle = c; ctx.beginPath(); ctx.arc(0, 0, r, 0, 6.283); ctx.fill(); ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.arc(r * 0.25, r * 0.2, r * 0.85, 0, 6.283); ctx.fill(); ctx.restore(); });
+    txt('IRREGULAR', 290, 1050, 40, P.cinza); txt('REDONDO', 770, 1380, 40, P.branco, k);
+  },
+  // 19 · Terra redonda girando
+  acaso(t, d) { fundo(t);
+    globo(CX, CY, 340, t * 2.5, 0.5);
+    ctx.strokeStyle = 'rgba(255,209,102,0.5)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(CX, CY, 420 + 10 * Math.sin(t * 3), 0, 6.283); ctx.stroke();
+    pilula('NÃO É POR ACASO', CX, CY + 520, 60, P.ouro, P.bg1, ease(t / 0.3));
+  },
+  // 20 · final
+  final(t, d) { fundo(t);
+    const e = back(t / 0.6); ctx.save(); ctx.translate(CX, CY - 80); ctx.scale(e, e); globo(0, 0, 260, t * 2, 0.5); ctx.restore();
+    titulo(['A ÚNICA FORMA', 'POSSÍVEL'], CY + 330, 96, t - 0.3, [P.branco, P.ouro]);
+  },
+};
+window.desenhar = (cena, t, d, p) => { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.setLineDash([]); CENAS[cena](t, d, p || {}); };
+</script>
+</body></html>
