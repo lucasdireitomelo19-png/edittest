@@ -211,7 +211,7 @@ CENAS.vy_corte = (t, d) => {   // piscinas coloridas por cima, magma por baixo
   const gm = ctx.createLinearGradient(0, 1400, 0, H); gm.addColorStop(0, P.magma); gm.addColorStop(1, '#6a1505'); ctx.fillStyle = gm; ctx.beginPath(); ctx.moveTo(0, H);
   for (let x = 0; x <= W; x += 30) ctx.lineTo(x, 1420 + Math.sin(x * 0.01 + t) * 26); ctx.lineTo(W, H); ctx.fill(); brilho(CX, 1500, 600, 'rgba(255,107,44,0.25)');
   for (let i = 0; i < 8; i++) { const x = 120 + i * 120, y = 1380 - ((t * 140 + i * 90) % 700); ctx.globalAlpha = 0.7; ctx.fillStyle = P.ouro; ctx.beginPath(); ctx.moveTo(x, y - 24); ctx.lineTo(x - 14, y); ctx.lineTo(x + 14, y); ctx.fill(); ctx.globalAlpha = 1; }
-  txt('MAGMA', CX, 1560, 60, P.branco, ease((t - 0.6) / 0.4)); };
+  txt('MAGMA', CX, 1480, 60, P.branco, ease((t - 0.6) / 0.4)); };
 CENAS.vy_linha = (t, d, p) => {   // linha do tempo vertical
   fundo(t, 0.2, '#1c1410', '#060403'); const x = 300, y0 = 330, y1 = 1500, T = 2.3, Y = m => lerp(y0, y1, (T - m) / T); const tl = p.ts || [0.4, 1.4, 2.4];
   ctx.strokeStyle = P.cinza; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x, lerp(y0, y1, easeOut(t / 1))); ctx.stroke();
