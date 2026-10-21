@@ -1,7 +1,9 @@
 # 15 · 5 maneiras de o mundo acabar (vídeo longo, 1920x1080)
 
 - **Duração estimada:** ~8 min (1536 palavras, voz Brian em ritmo de vídeo longo).
-- **Status:** aguardando aprovação do roteiro, do plano e do storyboard. Nada narrado nem renderizado ainda.
+- **Status:** Pronto na Central (lado-44, tipo longo), aprovado pelo dono pela prévia. Duração final 8:26 (voz Brian vel 1.1 + atempo 1.1). Arquivo final 1080p enviado no chat; na Central, cópia 540p.
+- **Capítulos:** 0:00 Introdução · 0:32 Supervulcão · 2:16 Asteroide · 3:44 Raios gama · 5:09 O Sol · 6:18 O vácuo · 7:45 Fazendo as contas
+- **Título:** 5 maneiras REAIS de o mundo acabar 🌍💥 (descrição, tags, TikTok, Reels e comentário na Central).
 - **Cenas:** 133, nenhuma repetida. 73 com footage (Pixabay e NASA) e 60 animações próprias (`pipeline/anim/mundo.html`, mapas com dados reais do Natural Earth).
 - **Estrutura:** abertura → 5 supervulcão → 4 asteroide → 3 raios gama → 2 o Sol → 1 decaimento do vácuo → fecho.
 
