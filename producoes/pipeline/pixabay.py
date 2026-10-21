@@ -40,6 +40,9 @@ def registrar(saida, **info):
 
 def melhor(videos):
     ok = [v for v in videos.values() if v.get("url") and v.get("width")]
+    teto = int(os.environ.get("PIXABAY_MAX_W", "0"))  # ex.: 1920 para não baixar 4K
+    if teto and any(v["width"] <= teto for v in ok):
+        ok = [v for v in ok if v["width"] <= teto]
     return max(ok, key=lambda v: v["width"] * v["height"])
 
 cmd = sys.argv[1]
