@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:M;src:url(../../marca/Montserrat-ExtraBold.ttf);font-weight:800}
+  @font-face{font-family:M;src:url(../../marca/Montserrat-Medium.ttf);font-weight:500}
+  :root{--bg:#0a0608;--tx:#e9e1d8;--ac:#ff7a1a;--mut:#a89c90}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#222;font-family:M,sans-serif;color:var(--tx)}
+  .s{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--bg);margin-bottom:40px}
+  .foto{position:absolute;background-size:cover;background-repeat:no-repeat}
+  .vel{position:absolute;inset:0}
+  .in{position:absolute;z-index:1;left:80px;right:80px;top:80px;bottom:190px;display:flex;flex-direction:column}
+  .k{font-weight:800;font-size:28px;letter-spacing:.14em;color:var(--ac);text-transform:uppercase}
+  .n{font-weight:800;font-size:30px;color:var(--ac);letter-spacing:.06em}
+  h1{font-weight:800;font-size:110px;line-height:1.0;letter-spacing:-.02em}
+  h2{font-weight:800;font-size:82px;line-height:1.04;letter-spacing:-.015em}
+  p{font-weight:500;font-size:40px;line-height:1.38}
+  .ac{color:var(--ac)}
+  .mut{color:var(--mut)}
+  .puxa{font-weight:800;font-size:32px;color:var(--ac)}
+  .cred{position:absolute;z-index:2;right:80px;bottom:150px;font-weight:500;font-size:20px;color:#8a7f75}
+  .rod{position:absolute;z-index:2;left:80px;right:80px;bottom:72px;height:52px;display:flex;align-items:center;justify-content:space-between}
+  .rod .eu{display:flex;align-items:center;gap:16px;font-weight:500;font-size:26px}
+  .rod img{width:52px;height:52px;border-radius:50%}
+  .rod .c{font-weight:800;font-size:26px;display:flex;align-items:center;gap:14px}
+  .rod .c svg{width:34px;height:34px}
+  .fade{position:absolute;left:0;right:0;bottom:0;height:300px;background:linear-gradient(180deg,rgba(10,6,8,0),var(--bg) 62%)}
+  .bar{position:absolute;left:0;bottom:0;height:8px;width:100%;background:#2a1a12}
+  .bar i{display:block;height:100%;background:var(--ac)}
+</style></head>
+<body>
+
+<!-- 01 GANCHO -->
+<section class="s" id="s1">
+  <div class="foto" style="width:1300px;height:1300px;left:180px;top:420px;background-image:url(../src/terra.jpg);mix-blend-mode:screen"></div>
+  <!-- noite "engolindo" a Terra -->
+  <div class="vel" style="background:linear-gradient(118deg,var(--bg) 46%,rgba(10,6,8,.7) 58%,rgba(10,6,8,0) 72%)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,var(--bg) 34%,rgba(10,6,8,0) 52%)"></div>
+  <div class="in">
+    <div class="k">Fim do mundo: versão científica</div>
+    <h1 style="margin-top:40px">5 maneiras do mundo <span class="ac">acabar</span></h1>
+    <p style="margin-top:40px;max-width:760px">A última já começou.</p>
+    <div class="puxa" style="margin-top:auto;display:flex;align-items:center;gap:14px;font-size:34px">Arraste <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ff7a1a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+  </div>
+  <div class="cred">Terra · NASA</div>
+</section>
+
+<!-- 02 RETENÇÃO -->
+<section class="s" id="s2">
+  <svg class="vel" viewBox="0 0 1080 1350"><circle cx="0" cy="1050" r="300" fill="none" stroke="#ff7a1a" stroke-opacity=".18" stroke-width="2"/><circle cx="0" cy="1050" r="420" fill="none" stroke="#ff7a1a" stroke-opacity=".09" stroke-width="2"/></svg>
+  <div class="in" style="justify-content:center">
+    <div class="k">Calma</div>
+    <h2 style="margin-top:36px">Nenhuma é pra amanhã. Mas todas são <span class="ac">ciência de&nbsp;verdade</span>.</h2>
+    <p style="margin-top:48px;max-width:840px">E uma delas a NASA já treinou para&nbsp;impedir.</p>
+  </div>
+</section>
+
+<!-- 03 ASTEROIDE -->
+<section class="s" id="s3">
+  <div class="foto" style="width:1560px;height:877px;left:-120px;top:-60px;background-image:url(../src/dart.jpg)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,rgba(10,6,8,0) 25%,rgba(10,6,8,.85) 50%,var(--bg) 60%)"></div>
+  <div class="in" style="justify-content:flex-end">
+    <div class="n">1/5</div>
+    <h2 style="margin-top:24px">Um asteroide de <span class="ac">10&nbsp;km</span> acerta a&nbsp;Terra.</h2>
+    <p style="margin-top:32px">Foi o que apagou os dinossauros, há 66 milhões de anos. Em 2022, a NASA desviou um asteroide de propósito pela primeira&nbsp;vez.</p>
+  </div>
+  <div class="cred">Missão DART (ilustração) · NASA/Johns Hopkins APL</div>
+</section>
+
+<!-- 04 SUPERVULCÃO -->
+<section class="s" id="s4">
+  <div class="foto" style="width:1300px;height:888px;left:-150px;top:-40px;background-image:url(../src/vulcao.jpg)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,rgba(10,6,8,0) 25%,rgba(10,6,8,.85) 52%,var(--bg) 62%)"></div>
+  <div class="in" style="justify-content:flex-end">
+    <div class="n">2/5</div>
+    <h2 style="margin-top:24px">Um <span class="ac">supervulcão</span> acorda.</h2>
+    <p style="margin-top:32px">Yellowstone já teve 3 supererupções. As cinzas tapariam o Sol, e o planeta esfriaria por&nbsp;anos.</p>
+  </div>
+  <div class="cred">Vulcão Sarychev visto da ISS · NASA</div>
+</section>
+
+<!-- 05 RAIO GAMA -->
+<section class="s" id="s5">
+  <svg class="vel" viewBox="0 0 1080 1350">
+    <defs>
+      <linearGradient id="feixe" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7a1a" stop-opacity="0"/><stop offset=".6" stop-color="#ffb35c" stop-opacity=".55"/><stop offset="1" stop-color="#fff1d6"/></linearGradient>
+      <radialGradient id="g"><stop offset="0" stop-color="#fff1d6"/><stop offset=".15" stop-color="#ffb35c"/><stop offset=".4" stop-color="#ff7a1a" stop-opacity=".3"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient>
+    </defs>
+    <g transform="rotate(-24 900 220)">
+      <polygon points="-300,190 900,212 900,228 -300,250" fill="url(#feixe)"/>
+      <polygon points="900,212 1500,190 1500,250 900,228" fill="#ffb35c" opacity=".35"/>
+    </g>
+    <circle cx="900" cy="220" r="200" fill="url(#g)"/>
+    <circle cx="900" cy="220" r="16" fill="#fff8ec"/>
+  </svg>
+  <div class="in" style="justify-content:flex-end">
+    <div class="n">3/5</div>
+    <h2 style="margin-top:24px">Um <span class="ac">raio gama</span> atinge a&nbsp;Terra.</h2>
+    <p style="margin-top:32px">Uma estrela colapsa perto de nós e dispara um jato de radiação. Em segundos, boa parte da camada de ozônio se&nbsp;vai.</p>
+    <p class="puxa" style="margin-top:28px">Há cientistas que suspeitam que isso já&nbsp;aconteceu.</p>
+  </div>
+</section>
+
+<!-- 06 SOL -->
+<section class="s" id="s6">
+  <div class="foto" style="width:1150px;height:1077px;left:180px;top:-330px;background-image:url(../src/sol_cme.jpg);mix-blend-mode:screen"></div>
+  <div class="vel" style="background:linear-gradient(180deg,rgba(10,6,8,0) 22%,rgba(10,6,8,.85) 46%,var(--bg) 56%)"></div>
+  <div class="in" style="justify-content:flex-end">
+    <div class="n">4/5</div>
+    <h2 style="margin-top:24px">O Sol vai <span class="ac">ferver os&nbsp;oceanos</span>.</h2>
+    <p style="margin-top:32px">Ele fica mais brilhante com o tempo. Em cerca de 1 bilhão de anos, a água da Terra evapora. Bem antes de ele virar gigante&nbsp;vermelha.</p>
+  </div>
+  <div class="cred">NASA/SDO</div>
+</section>
+
+<!-- 07 BIG FREEZE -->
+<section class="s" id="s7">
+  <div class="foto" style="width:1500px;height:1460px;left:-40px;top:-380px;background-image:url(../src/galaxia.jpg);filter:saturate(.8) brightness(.9)"></div>
+  <div class="vel" style="background:linear-gradient(180deg,rgba(10,6,8,.1) 15%,rgba(10,6,8,.85) 46%,var(--bg) 56%)"></div>
+  <div class="in" style="justify-content:flex-end">
+    <div class="n">5/5</div>
+    <h2 style="margin-top:24px">O universo inteiro <span class="ac">apaga</span>.</h2>
+    <p style="margin-top:32px">Ele se expande cada vez mais rápido. As estrelas morrem e param de nascer. Sobra só frio e&nbsp;escuro.</p>
+    <p class="puxa" style="margin-top:28px">E já começou: hoje nascem bem menos estrelas que no&nbsp;passado.</p>
+  </div>
+  <div class="cred">NASA/ESA/Hubble</div>
+</section>
+
+<!-- 08 VIRADA -->
+<section class="s" id="s8">
+  <div class="foto" style="width:640px;height:640px;left:220px;top:110px;background-image:url(../src/terra.jpg);mix-blend-mode:screen"></div>
+  <div class="in" style="justify-content:flex-end;align-items:center;text-align:center">
+    <div class="k">Agora respira</div>
+    <h2 style="margin-top:32px;font-size:76px">A Terra já passou por <span class="ac">5 extinções em&nbsp;massa</span>.</h2>
+    <p style="margin-top:32px">A vida voltou todas as&nbsp;vezes.</p>
+  </div>
+  <div class="cred">NASA</div>
+</section>
+
+<!-- 09 CTA -->
+<section class="s" id="s9">
+  <svg class="vel" viewBox="0 0 1080 1350"><circle cx="540" cy="330" r="190" fill="none" stroke="#ff7a1a" stroke-opacity=".25" stroke-width="2"/><circle cx="540" cy="330" r="260" fill="none" stroke="#ff7a1a" stroke-opacity=".1" stroke-width="2"/></svg>
+  <div class="in" style="align-items:center;text-align:center">
+    <img src="../../marca/logo_lado_sombrio_800x800.png" style="width:240px;height:240px;border-radius:50%;margin-top:130px;box-shadow:0 0 80px rgba(255,122,26,.35)">
+    <h2 style="margin-top:96px">Conhece alguém que <span class="ac">ama um fim do&nbsp;mundo</span>?</h2>
+    <p style="margin-top:32px;max-width:860px">Manda esse post pra ele. Só não manda antes de&nbsp;dormir.</p>
+    <div style="margin-top:48px;display:flex;align-items:center;gap:18px;background:var(--ac);color:var(--bg);font-weight:800;font-size:34px;padding:22px 40px;border-radius:999px">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#0a0608" stroke-width="2.4" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+      Enviar para um amigo
+    </div>
+  </div>
+</section>
+
+<script>
+  const total = document.querySelectorAll('.s').length;
+  const seta = '<svg viewBox="0 0 24 24" fill="none" stroke="#ff7a1a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  document.querySelectorAll('.s').forEach((s, i) => {
+    const n = i + 1;
+    s.insertAdjacentHTML('beforeend',
+      `<div class="fade"></div><div class="rod"><div class="eu"><img src="../../marca/logo_lado_sombrio_800x800.png">@ladosombriodouniverso</div>` +
+      `<div class="c">${n}/${total}${n < total ? seta : ''}</div></div>` +
+      `<div class="bar"><i style="width:${n / total * 100}%"></i></div>`);
+  });
+</script>
+</body></html>
