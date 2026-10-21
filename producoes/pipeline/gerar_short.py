@@ -27,6 +27,7 @@ jobs, linhas, creditos = [], [], []
 for i, (a, f, ideia) in enumerate(pl.PLANO):
     dur = (ts[i + 1] if i + 1 < len(ts) else FIM) - ts[i]
     tipo, nome = f.split(":", 1); ss = 0
+    topo = nome.endswith("#topo"); nome = nome.replace("#topo", "")
     if "@" in nome: nome, ss = nome.split("@"); ss = float(ss)
     o = {}
     if tipo == "mg":
@@ -36,6 +37,9 @@ for i, (a, f, ideia) in enumerate(pl.PLANO):
         o.update(tag="anim", zoom=(1.0, 1.03), sat=1.0, fixo=True)
     else:
         arq = {"px": f"fm_{nome}.mp4", "svs": f"sv_{nome}", "src": nome}[tipo]
+        if topo:  # fonte vertical com texto embaixo: usa só a parte de cima
+            w, h = map(int, subprocess.check_output(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=p=0", os.path.join(SRC, arq)]).decode().strip().split(","))
+            o["crop"] = [0, int(h * 0.07) // 2 * 2, w, int(h * 0.55) // 2 * 2]
         o.update(tag="ilus" if ("(anima" in ideia or "(ilustra" in ideia) else "real", zoom=(1.0, 1.12))
         c = cred.get(arq, {}).get("credito") if tipo == "px" else "NASA"
         if c and c not in creditos: creditos.append(c)
