@@ -3,7 +3,7 @@ PLANO = [
     ("em 2022 uma explosao", "svs:14634_Fermi_GRB_Emission_Line_Best.mp4@154", "Estrela explodindo com um jato (animação NASA)"),
     ("conseguiu mexer na atmosfera", "px:213425", "Aurora no céu noturno"),
     ("foi uma explosao de raios gama", "mg:vg_flash", "Clarão no céu: 9/10/2022"),
-    ("a mais brilhante ja registrada", "svs:14634_Fermi_GRB_Emission_Line_Best.mp4@58.5", "O BOAT no céu do Fermi (dados reais NASA)"),
+    ("a mais brilhante ja registrada", "svs:14634_Fermi_GRB_Emission_Line_Best.mp4@60", "O BOAT no céu do Fermi (dados reais NASA)"),
     ("os astronomos apelidaram", "mg:vg_boat", "BOAT: a mais brilhante já registrada"),
     ("ela acontece quando uma estrela gigante", "svs:Gamma-ray_Burst_Animation_MkII_1080.mp4@20", "Estrela gigante morrendo (animação NASA, outro trecho)"),
     ("o nucleo desaba", "mg:vg_colapso", "Camadas da estrela implodem e saem os jatos"),
