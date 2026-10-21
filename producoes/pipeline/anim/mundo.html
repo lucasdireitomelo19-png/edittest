@@ -263,11 +263,11 @@ CENAS.v_geiser = (t, d) => {   // gêiseres aquecidos pelo magma
   for (let i = 0; i < 9; i++) { const x = 200 + i * 190, y = 840 - ((t * 60 + i * 37) % 160); ctx.globalAlpha = 0.6; ctx.fillStyle = P.ouro; ctx.beginPath(); ctx.moveTo(x, y - 18); ctx.lineTo(x - 12, y); ctx.lineTo(x + 12, y); ctx.fill(); ctx.globalAlpha = 1; }
   txt('MAGMA', CX, 990, 48, P.branco, ease((t - 0.5) / 0.5));
 };
-CENAS.v_linha = (t, d) => {   // três supererupções
+CENAS.v_linha = (t, d, p) => {   // três supererupções
   fundo(t, 0.2, '#1a1a2e', '#07070f'); const x0 = 200, x1 = 1720, y = 600, T = 2.3; const X = m => lerp(x0, x1, (T - m) / T);
   const k = easeOut(t / 1.2); ctx.strokeStyle = P.cinza; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(lerp(x0, x1, k), y); ctx.stroke();
   txt('HOJE', x1, y + 70, 34, P.cinza, ease((t - 1.0) / 0.4)); circ(x1, y, 8 * ease((t - 1.0) / 0.4), P.cinza);
-  [[2.1, '2,1 MILHÕES'], [1.3, '1,3 MILHÃO'], [0.64, '640 MIL']].forEach(([m, s], i) => { const ti = 0.8 + i * 0.6, a = back((t - ti) / 0.5); if (a <= 0) return; const x = X(m);
+  const tl = p.ts || [0.8, 1.4, 2.0]; [[2.1, '2,1 MILHÕES'], [1.3, '1,3 MILHÃO'], [0.64, '640 MIL']].forEach(([m, s], i) => { const ti = tl[i], a = back((t - ti) / 0.5); if (a <= 0) return; const x = X(m);
     brilho(x, y, 120 * a, 'rgba(255,107,44,0.6)'); circ(x, y, 18 * a, P.magma); ctx.save(); ctx.globalAlpha = clamp(a, 0, 1);
     txt(s, x, y - 90, 44, P.branco); txt('DE ANOS ATRÁS', x, y - 45, 26, P.cinza, 1, 'center', 'MM'); ctx.restore(); });
   sobe('3 SUPERERUPÇÕES', CX, 230, 70, t, 0.2, P.ouro);

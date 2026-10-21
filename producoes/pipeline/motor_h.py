@@ -94,7 +94,7 @@ for i, c in enumerate(CENAS):
 if jobs:
     jp = os.path.join(TMP, "jobs.json"); json.dump(jobs, open(jp, "w"))
     env = dict(os.environ, NODE_PATH=subprocess.check_output(["npm", "root", "-g"], text=True).strip())
-    subprocess.run(["node", os.path.join(ANIM, "render_anim.js"), jp], check=True, env=env)
+    subprocess.run(["node", os.path.join(ANIM, "render_anim.js"), jp, getattr(cfg, "ANIM_PAGE", "anim.html")], check=True, env=env)
 
 # ---------------- planos ----------------
 partes = []
