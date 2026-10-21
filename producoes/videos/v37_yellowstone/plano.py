@@ -20,3 +20,5 @@ PLANO = [
     ("o servico geologico americano", "mg:vy_chance", "1 EM 730.000 POR ANO (USGS)"),
     ("e nem tem certeza", "px:228960", "Cachoeira e corredeiras"),
 ]
+MARCAS = {"vy_linha": ["ha dois milhoes", "ha um milhao", "e ha seiscentos"]}
+SONS = {"existe um supervulcao": ("hit", -12), "e uma camara de magma tao grande": ("hit", -14)}

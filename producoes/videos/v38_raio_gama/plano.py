@@ -19,3 +19,4 @@ PLANO = [
     ("numa das maiores extincoes", "px:264272", "Água-viva no escuro"),
     ("a sorte e que perto da gente", "px:368458", "Montanhas sob o céu estrelado"),
 ]
+SONS = {"foi uma explosao de raios gama": ("hit", -12), "o nucleo desaba": ("hit", -14)}

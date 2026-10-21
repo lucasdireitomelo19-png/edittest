@@ -1,3 +1,6 @@
 producoes/videos/v35_fim_do_mundo/*.wav
 producoes/videos/v35_fim_do_mundo/tmp/
 producoes/videos/v35_fim_do_mundo/*.mp4
+producoes/videos/v3[678]_*/tmp/
+producoes/videos/v3[678]_*/*.mp4
+producoes/videos/v3[678]_*/narracao_el.mp3

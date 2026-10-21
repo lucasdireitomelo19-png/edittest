@@ -19,3 +19,4 @@ PLANO = [
     ("e as contas mais recentes", "mg:vv_numero", "Contador até 10^790 anos"),
     ("o universo tem so", "px:137617", "Céu estrelado"),
 ]
+SONS = {"e voce nem ia perceber": ("hit", -12), "nasce uma bolha de vacuo novo": ("hit", -14)}
