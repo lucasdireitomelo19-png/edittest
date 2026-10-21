@@ -1,6 +1,7 @@
 # Short POV · O que aconteceria com VOCÊ no espaço sem traje?
 
-**Status:** aguardando aprovação do dono. Nada é renderizado antes.
+**Status:** roteiro APROVADO pelo dono (21/10). Vai para storyboard e depois para o render.
+**Pedidos do dono:** sem citar fontes na descrição; produção sem conteúdo explícito (veja "Segurança").
 **Pedido do dono:** "algo que mostre pra pessoa o que aconteceria com ela se tal coisa acontecesse". Formato POV, em segunda pessoa, como o campeão do canal "COMO SERIA CAIR EM UM BURACO NEGRO?" (5.790 views, 88% de retenção).
 **Por que este tema:** é a mesma experiência em primeira pessoa, com perigo real, e uma das buscas mais comuns do nicho ("quanto tempo você duraria no espaço sem traje").
 **Recurso visual que segura:** cronômetro na tela contando os segundos que você ainda tem.
@@ -10,7 +11,7 @@
 **Roteiro** (~135 palavras, ~48 s)
 > Você foi jogado no espaço. Sem traje. O que acontece com você?
 > Primeiro: você não explode. Isso é coisa de filme.
-> Mas não prenda a respiração. O ar nos seus pulmões se expandiria e rasgaria eles por dentro. Solte o ar.
+> Mas não prenda a respiração. O ar nos seus pulmões se expandiria e poderia romper eles. Solte o ar.
 > Agora você tem uns quinze segundos.
 > Na sua língua, a saliva começa a ferver. Sem pressão, a água do seu corpo vira vapor, e você incha inteiro.
 > Você não congela na hora: o vácuo quase não tira calor. Mas o lado virado pro Sol começa a queimar.
@@ -44,6 +45,11 @@
 - **Reels:** `O que aconteceria com VOCÊ no espaço sem traje? 💀🚀\n\nVocê não explode. Mas teria uns 15 segundos…\n\nQuanto tempo você acha que aguentaria? 👇\n\n#espaco #astronauta #nasa #curiosidades #ciencia #universo`
 - **YouTube (título):** `O que aconteceria com VOCÊ no espaço sem traje? 💀🚀 #shorts`
 - **Comentário fixado:** `Em qual situação você quer que eu te coloque no próximo? 👇`
+
+## Segurança (para não ser derrubado nem ganhar restrição de idade)
+- Tudo estilizado: silhueta, raio-X e animação. **Nada de corpo realista machucado, sangue ou rosto deformado.**
+- Inchaço: mão em silhueta crescendo. Saliva fervendo: macro de água fervendo (não mostrar boca).
+- Capa: cronômetro "15 S" com o astronauta flutuando. Sem caveira nem gore na imagem.
 
 ## Próximos POVs no mesmo formato (para escolher)
 - O que aconteceria com você se caísse em Júpiter.
