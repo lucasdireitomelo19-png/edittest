@@ -604,6 +604,43 @@ CENAS.f_final = (t, d) => {
   pilula('INSCREVA-SE', CX, 780, 54, P.verm, P.branco, ease((t - 0.9) / 0.4)); txt('LADO SOMBRIO DO UNIVERSO', CX, 900, 34, P.cinza, ease((t - 1.1) / 0.4), 'center', 'MM');
 };
 
+
+// THUMBNAIL (1920x1080, exporta em 1280x720)
+CENAS.thumb = (t, d, p) => {
+  const g0 = ctx.createRadialGradient(1350, 520, 100, 1350, 520, 1300); g0.addColorStop(0, '#3a0d05'); g0.addColorStop(0.5, '#12040a'); g0.addColorStop(1, '#030206');
+  ctx.fillStyle = g0; ctx.fillRect(0, 0, W, H);
+  for (const [x, y, r, f] of EST) { ctx.globalAlpha = 0.15 + 0.45 * f; circ(x, y, r, P.branco); } ctx.globalAlpha = 1;
+  const gx = 1360, gy = 600, R = 470;
+  brilho(gx, gy, R * 1.6, 'rgba(255,60,10,0.6)');
+  globo(gx, gy, R, -55, 18, { mar1: '#1a4f78', mar2: '#03101f', terra: '#35694c', atm: 'rgba(255,110,50,0.9)' });
+  // ponto de impacto
+  const ix = gx - R * 0.42, iy = gy - R * 0.38;
+  ctx.save(); ctx.beginPath(); ctx.arc(gx, gy, R, 0, 6.283); ctx.clip();
+  // escurece o lado oposto
+  const sh = ctx.createLinearGradient(gx - R, gy - R, gx + R, gy + R); sh.addColorStop(0, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,0,0.75)'); ctx.fillStyle = sh; ctx.fillRect(gx - R, gy - R, 2 * R, 2 * R);
+  ctx.globalCompositeOperation = 'lighter'; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; const r = rng(91);
+  const veio = (x, y, ang, len, lw, prof) => { ctx.beginPath(); ctx.moveTo(x, y); const pts = [[x, y]];
+    for (let j = 0; j < len; j++) { ang += (r() - 0.5) * 0.5; x += Math.cos(ang) * 26; y += Math.sin(ang) * 26; pts.push([x, y]); ctx.lineTo(x, y);
+      if (prof < 1 && r() < 0.12) veio(x, y, ang + (r() < 0.5 ? 0.9 : -0.9), Math.floor(len * 0.5), lw * 0.6, prof + 1); }
+    ctx.strokeStyle = 'rgba(255,80,20,0.35)'; ctx.lineWidth = lw * 3.5; ctx.stroke();
+    ctx.beginPath(); pts.forEach(([px, py], k) => k ? ctx.lineTo(px, py) : ctx.moveTo(px, py)); ctx.strokeStyle = 'rgba(255,200,120,0.95)'; ctx.lineWidth = lw; ctx.stroke(); };
+  for (let k = 0; k < 7; k++) veio(ix, iy, -0.2 + k * 0.42 + (r() - 0.5) * 0.2, 9 + Math.floor(r() * 9), 6, 0);
+  brilho(ix, iy, 330, 'rgba(255,210,140,1)'); brilho(ix, iy, 130, 'rgba(255,255,240,1)');
+  ctx.restore();
+  for (let i = 0; i < 3; i++) { ctx.save(); ctx.translate(ix, iy); ctx.scale(1, 0.55); anel(0, 0, 170 + i * 70, `rgba(255,${200 - i * 40},140,${0.7 - i * 0.2})`, 8 - i * 2); ctx.restore(); }
+  // rastro do asteroide
+  ctx.save(); ctx.globalCompositeOperation = 'lighter'; const L = 900, an = Math.atan2(iy - (-200), ix - 300);
+  ctx.translate(ix, iy); ctx.rotate(an); const tg = ctx.createLinearGradient(0, 0, -L, 0); tg.addColorStop(0, 'rgba(255,245,210,1)'); tg.addColorStop(0.25, 'rgba(255,140,50,0.85)'); tg.addColorStop(1, 'rgba(255,40,10,0)');
+  ctx.fillStyle = tg; ctx.beginPath(); ctx.moveTo(-10, -60); ctx.quadraticCurveTo(-L * 0.5, -90, -L, -10); ctx.lineTo(-L, 10); ctx.quadraticCurveTo(-L * 0.5, 90, -10, 60); ctx.fill(); ctx.restore();
+  pedra(ix - 70, iy - 60, 70, 0.8, 12, '#c49a80', '#3a221a'); brilho(ix - 40, iy - 30, 120, 'rgba(255,230,170,0.9)');
+  // faixa escura atrás do texto
+  const gt = ctx.createLinearGradient(0, 0, 900, 0); gt.addColorStop(0, 'rgba(0,0,0,0.75)'); gt.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = gt; ctx.fillRect(0, 0, 900, H);
+  const linhas = p.v === 'b' ? [['5 FINS', P.ouro, 250, 430], ['DO MUNDO', P.branco, 160, 660]] : [['O Nº1', P.ouro, 270, 420], ['É INVISÍVEL', P.branco, 150, 650]];
+  linhas.forEach(([s2, cor, sz, y]) => { ctx.save(); ctx.font = `${sz}px MX`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+    ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 30; ctx.lineWidth = 24; ctx.strokeStyle = '#000'; ctx.strokeText(s2, 70, y); ctx.shadowBlur = 0; ctx.fillStyle = cor; ctx.fillText(s2, 70, y); ctx.restore(); });
+  if (p.v !== 'b') pilula('DOS 5 FINS DO MUNDO', 410, 830, 50, P.verm, P.branco);
+};
+
 window.desenhar = (cena, t, dur, p) => { ctx.save(); ctx.clearRect(0, 0, W, H); CENAS[cena](t, dur, p || {}); ctx.restore(); };
 window.CENAS = CENAS;
 </script>
