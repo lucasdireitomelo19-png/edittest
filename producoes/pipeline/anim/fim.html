@@ -1,0 +1,311 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"MX";src:url("../fonts/Montserrat-ExtraBold.ttf")}
+  html,body{margin:0;background:#0b1026;overflow:hidden}canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Motion graphics "O fim do Sistema Solar" (1080x1920). Mesmo estilo vetorial do "Terra plana" (helpers copiados).
+// window.desenhar(cena, t, dur, p). Cada cena é única (nenhum plano reaproveitado).
+const W = 1080, H = 1920, CX = W / 2, CY = 820;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const P = { bg1: '#0b1026', bg2: '#16224d', mar: '#2bb3c0', mar2: '#1d7f9e', terra: '#7cc98a', terra2: '#4e9a63',
+  areia: '#e9c46a', areia2: '#d4a24c', laranja: '#f4a261', verm: '#e76f51', branco: '#f4f1e8', cinza: '#8a93b8', gelo: '#dfe9f5', ouro: '#ffd166' };
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+const back = x => { x = clamp(x, 0, 1); const c = 1.7; return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2; };
+const lerp = (a, b, k) => a + (b - a) * k;
+function rng(seed) { let s = seed; return () => (s = s * 16807 % 2147483647) / 2147483647; }
+const EST = (() => { const r = rng(17), a = []; for (let i = 0; i < 260; i++) a.push([r() * W, r() * H, r() * 1.8 + 0.4, r()]); return a; })();
+
+function fundo(t, estrelas = 1) {
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, P.bg2); g.addColorStop(1, P.bg1);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  for (const [x, y, r, f] of EST) { ctx.globalAlpha = estrelas * (0.25 + 0.35 * Math.abs(Math.sin(t * 1.1 + f * 30)));
+    ctx.fillStyle = P.branco; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); }
+  ctx.globalAlpha = 1;
+}
+function txt(s, x, y, size, cor = P.branco, a = 1, alinh = 'center') {
+  ctx.save(); ctx.globalAlpha = a; ctx.font = `${size}px MX`; ctx.textAlign = alinh; ctx.textBaseline = 'middle';
+  ctx.fillStyle = cor; ctx.fillText(s, x, y); ctx.restore();
+}
+// título cinético: palavras sobem uma a uma
+function titulo(linhas, y, size, t, cor = P.branco, atraso = 0.12) {
+  let k = 0;
+  linhas.forEach((l, i) => { const e = back((t - atraso * k) / 0.45); k++;
+    ctx.save(); ctx.globalAlpha = clamp(e, 0, 1); ctx.translate(0, (1 - e) * 60);
+    txt(l, CX, y + i * size * 1.1, size, Array.isArray(cor) ? cor[i] : cor); ctx.restore(); });
+}
+function pilula(s, x, y, size, fundoCor, cor, a = 1) {
+  ctx.save(); ctx.globalAlpha = a; ctx.font = `${size}px MX`; const w = ctx.measureText(s).width + size * 1.2, h = size * 1.6;
+  ctx.fillStyle = fundoCor; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, h / 2); ctx.fill();
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = cor; ctx.fillText(s, x, y + 2); ctx.restore();
+}
+function sombra(x, y, rx, ry, a = 0.35) { ctx.fillStyle = `rgba(0,0,0,${a})`; ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, 6.283); ctx.fill(); }
+
+// continentes estilizados (blobs) desenhados num disco de raio R, em coordenadas do disco
+const CONT = [[0.05, -0.35, 0.28, 0.2], [-0.42, 0.05, 0.22, 0.3], [0.38, 0.22, 0.26, 0.18], [-0.1, 0.42, 0.2, 0.14], [0.45, -0.38, 0.14, 0.12], [-0.38, -0.42, 0.16, 0.12]];
+function continentes(R, cor1, cor2) {
+  CONT.forEach(([x, y, a, b], i) => {
+    ctx.fillStyle = i % 2 ? cor2 : cor1; ctx.beginPath();
+    for (let k = 0; k <= 24; k++) { const ang = k / 24 * 6.283, w = 1 + 0.18 * Math.sin(ang * 3 + i) + 0.1 * Math.sin(ang * 5 + i * 2);
+      const px = (x + Math.cos(ang) * a * w) * R, py = (y + Math.sin(ang) * b * w) * R; k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+    ctx.fill(); });
+}
+// disco visto de cima (mapa plano), com borda de gelo
+function discoCima(x, y, R, rot = 0, opc = {}) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+  ctx.fillStyle = opc.mar || P.mar2; ctx.beginPath(); ctx.arc(0, 0, R, 0, 6.283); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, R * 0.93, 0, 6.283); ctx.clip();
+  ctx.fillStyle = opc.mar1 || P.mar; ctx.fillRect(-R, -R, 2 * R, 2 * R);
+  continentes(R, opc.t1 || P.terra, opc.t2 || P.terra2); ctx.restore();
+  ctx.lineWidth = R * 0.07; ctx.strokeStyle = opc.borda || P.gelo; ctx.beginPath(); ctx.arc(0, 0, R * 0.965, 0, 6.283); ctx.stroke();
+  ctx.restore();
+}
+// disco em perspectiva (achatado em y), com espessura
+function discoPerspectiva(x, y, R, achata, esp, rot) {
+  ctx.save(); ctx.translate(x, y);
+  ctx.fillStyle = '#5b4632'; ctx.beginPath(); ctx.ellipse(0, esp, R, R * achata, 0, 0, Math.PI); ctx.lineTo(-R, 0); ctx.ellipse(0, 0, R, R * achata, 0, Math.PI, 0, true); ctx.fill();
+  ctx.fillStyle = '#7a5d40'; ctx.fillRect(-R, 0, 2 * R, esp);
+  ctx.beginPath(); ctx.ellipse(0, esp, R, R * achata, 0, 0, Math.PI); ctx.fill();
+  ctx.scale(1, achata); discoCima(0, 0, R, rot); ctx.restore();
+}
+// globo estilizado
+function globo(x, y, R, t, rot = 0.25) {
+  ctx.save(); ctx.beginPath(); ctx.arc(x, y, R, 0, 6.283); ctx.clip();
+  ctx.fillStyle = P.mar; ctx.fillRect(x - R, y - R, 2 * R, 2 * R);
+  for (let i = 0; i < 9; i++) { const lon = i * 0.7 + t * rot, lat = [0.3, -0.4, 0.1, 0.6, -0.2, 0.45, -0.55, 0.0, 0.25][i];
+    const c = Math.cos(lon); if (c < -0.15) continue; const px = x + Math.sin(lon) * R * 0.9, py = y + lat * R * 0.8;
+    ctx.fillStyle = i % 2 ? P.terra : P.terra2; ctx.beginPath(); ctx.ellipse(px, py, R * 0.28 * Math.max(0.1, c), R * 0.2, 0.3, 0, 6.283); ctx.fill(); }
+  const g = ctx.createLinearGradient(x - R, y - R, x + R, y + R); g.addColorStop(0, 'rgba(255,255,255,0.18)'); g.addColorStop(0.5, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(5,10,30,0.55)');
+  ctx.fillStyle = g; ctx.fillRect(x - R, y - R, 2 * R, 2 * R); ctx.restore();
+  ctx.strokeStyle = 'rgba(140,220,255,0.45)'; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(x, y, R + 4, 0, 6.283); ctx.stroke();
+}
+// boneco (pictograma) em pé; ang = inclinação do corpo
+function boneco(x, y, s, ang = 0, cor = P.branco, passo = 0) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.strokeStyle = cor; ctx.fillStyle = cor; ctx.lineWidth = s * 0.12; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(0, -s * 1.55, s * 0.22, 0, 6.283); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(0, -s * 1.3); ctx.lineTo(0, -s * 0.6);
+  const p = Math.sin(passo) * 0.35;
+  ctx.moveTo(0, -s * 0.6); ctx.lineTo(Math.sin(p) * s * 0.45, 0); ctx.moveTo(0, -s * 0.6); ctx.lineTo(-Math.sin(p) * s * 0.45, 0);
+  ctx.moveTo(0, -s * 1.15); ctx.lineTo(s * 0.35 * Math.cos(1 + p), -s * 0.8); ctx.moveTo(0, -s * 1.15); ctx.lineTo(-s * 0.35 * Math.cos(1 - p), -s * 0.8);
+  ctx.stroke(); ctx.restore();
+}
+function seta(x1, y1, x2, y2, cor, w = 8, cab = 26) {
+  const a = Math.atan2(y2 - y1, x2 - x1); ctx.strokeStyle = cor; ctx.fillStyle = cor; ctx.lineWidth = w; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2 - Math.cos(a) * cab * 0.6, y2 - Math.sin(a) * cab * 0.6); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - Math.cos(a - 0.45) * cab, y2 - Math.sin(a - 0.45) * cab); ctx.lineTo(x2 - Math.cos(a + 0.45) * cab, y2 - Math.sin(a + 0.45) * cab); ctx.fill();
+}
+function sol(x, y, r, a = 1, t = 0) {
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(x, y); ctx.rotate(t * 0.3);
+  ctx.fillStyle = P.ouro; for (let i = 0; i < 12; i++) { ctx.rotate(Math.PI / 6); ctx.beginPath(); ctx.roundRect(r * 1.2, -r * 0.08, r * 0.45, r * 0.16, r * 0.08); ctx.fill(); }
+  ctx.beginPath(); ctx.arc(0, 0, r, 0, 6.283); ctx.fill(); ctx.restore();
+}
+function relogio(x, y, r, h, m, cor = P.branco) {
+  ctx.fillStyle = '#1b2a5e'; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill();
+  ctx.strokeStyle = cor; ctx.lineWidth = r * 0.1; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.stroke();
+  for (let i = 0; i < 12; i++) { const a = i / 12 * 6.283; ctx.lineWidth = r * 0.05; ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * r * 0.78, y + Math.sin(a) * r * 0.78); ctx.lineTo(x + Math.cos(a) * r * 0.9, y + Math.sin(a) * r * 0.9); ctx.stroke(); }
+  const ah = (h % 12 + m / 60) / 12 * 6.283 - Math.PI / 2, am = m / 60 * 6.283 - Math.PI / 2; ctx.lineCap = 'round';
+  ctx.lineWidth = r * 0.1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(ah) * r * 0.5, y + Math.sin(ah) * r * 0.5); ctx.stroke();
+  ctx.lineWidth = r * 0.07; ctx.strokeStyle = P.laranja; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(am) * r * 0.75, y + Math.sin(am) * r * 0.75); ctx.stroke();
+}
+// laje do disco vista de lado (corte), com relevo opcional; inclinação em radianos
+function laje(x, y, w, h, ang = 0, cores = {}) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+  ctx.fillStyle = '#6b4f36'; ctx.beginPath(); ctx.roundRect(-w / 2, 0, w, h, 18); ctx.fill();
+  ctx.fillStyle = '#8a6847'; ctx.fillRect(-w / 2, 0, w, h * 0.35);
+  ctx.fillStyle = cores.topo || P.terra; ctx.beginPath(); ctx.roundRect(-w / 2, -14, w, 22, 10); ctx.fill();
+  ctx.restore();
+}
+
+// estrela genérica com brilho (cor central, cor da borda, raio)
+function estrelaG(x, y, r, c1, c2, glow = 2.2, a = 1) {
+  ctx.save(); ctx.globalAlpha = a;
+  const g = ctx.createRadialGradient(x, y, r * 0.2, x, y, r * glow); g.addColorStop(0, c2); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * glow, 0, 6.283); ctx.fill();
+  const g2 = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r); g2.addColorStop(0, c1); g2.addColorStop(1, c2);
+  ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); ctx.restore();
+}
+const PLAN = [['MERCÚRIO', 95, 9, '#b8b0a6'], ['VÊNUS', 140, 15, '#e9c46a'], ['TERRA', 190, 16, '#2bb3c0'], ['MARTE', 250, 11, '#e76f51'], ['JÚPITER', 340, 30, '#d9b48a'], ['SATURNO', 420, 26, '#e6cf98']];
+function sistema(t, sR = 46, solC = ['#fff4c2', '#ffb830'], vis = 6, engole = 0, cx = CX, cy = CY) {
+  PLAN.slice(0, vis).forEach(([n, a, r, c], i) => {
+    ctx.strokeStyle = 'rgba(160,180,255,0.22)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(cx, cy, a, 0, 6.283); ctx.stroke();
+    if (a < engole) return; const ang = t * 0.9 / Math.sqrt(a / 100) + i * 1.7;
+    ctx.fillStyle = c; ctx.beginPath(); ctx.arc(cx + Math.cos(ang) * a, cy + Math.sin(ang) * a, r * 0.9, 0, 6.283); ctx.fill(); });
+  estrelaG(cx, cy, sR, solC[0], solC[1]);
+}
+function contador(v, sufixo, y, size, cor = P.ouro, a = 1) { txt(Math.round(v).toLocaleString('pt-BR') + sufixo, CX, y, size, cor, a); }
+
+const CENAS = {
+  // 1 · contagem: 5 bilhões de anos
+  contagem(t, d) { fundo(t);
+    estrelaG(CX, CY + 80, 150, '#fff4c2', '#ffb830', 2.4);
+    const k = ease(t / 1.6); contador(5e9 * k, '', 330, 92, P.ouro);
+    txt('ANOS NO FUTURO', CX, 430, 46, P.cinza, ease(t / 0.4));
+  },
+  // 2 · o Sol começa a morrer (barra de vida)
+  morrer(t, d) { fundo(t, 0.6);
+    const f = 0.85 + 0.15 * Math.sin(t * 22) * Math.sin(t * 7);
+    estrelaG(CX, CY, 170, '#fff0b0', '#ff9a30', 2.2, f);
+    const k = ease(t / d); ctx.fillStyle = '#1b2a5e'; ctx.beginPath(); ctx.roundRect(190, 380, 700, 54, 27); ctx.fill();
+    ctx.fillStyle = lerp(1, 0, k) > 0.4 ? P.ouro : P.verm; ctx.beginPath(); ctx.roundRect(198, 388, 684 * lerp(0.55, 0.12, k), 38, 19); ctx.fill();
+    txt('VIDA DO SOL', CX, 320, 44, P.branco);
+  },
+  // 3 · o sistema solar inteiro
+  sistema(t, d) { fundo(t); sistema(t * 2);
+    pilula('O SISTEMA SOLAR JUNTO', CX, 300, 52, P.ouro, P.bg1, ease(t / 0.3));
+  },
+  // 4 · "bem antes": ampulheta virando
+  antes(t, d) { fundo(t, 0.5);
+    ctx.save(); ctx.translate(CX, CY); ctx.rotate(ease(t / 0.8) * Math.PI);
+    ctx.fillStyle = P.gelo; ctx.fillRect(-170, -260, 340, 26); ctx.fillRect(-170, 234, 340, 26);
+    ctx.strokeStyle = P.gelo; ctx.lineWidth = 12; ctx.beginPath(); ctx.moveTo(-140, -234); ctx.lineTo(140, -234); ctx.lineTo(10, 0); ctx.lineTo(140, 234); ctx.lineTo(-140, 234); ctx.lineTo(-10, 0); ctx.closePath(); ctx.stroke();
+    ctx.fillStyle = P.ouro; ctx.beginPath(); ctx.moveTo(-110, 220); ctx.lineTo(110, 220); ctx.lineTo(0, 120); ctx.fill(); ctx.restore();
+    titulo(['MAS COMEÇA', 'BEM ANTES'], 1300, 96, t - 0.2, [P.branco, P.ouro]);
+  },
+  // 5 · +10% de brilho em 1 bilhão de anos
+  brilho(t, d) { fundo(t, 0.4);
+    const k = ease((t - 0.2) / 1.4);
+    estrelaG(CX, CY + 60, 160 + 20 * k, '#ffffff', '#ffc840', 2.2 + k * 1.2);
+    contador(10 * k, '% MAIS BRILHO', 330, 78, P.ouro); txt('EM 1 BILHÃO DE ANOS', CX, 430, 44, P.cinza);
+  },
+  // 6 · oceano fervendo (vista lateral)
+  ferver(t, d) { fundo(t, 0.2);
+    ctx.fillStyle = 'rgba(255,170,60,0.18)'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = P.mar2; ctx.fillRect(0, 1050, W, 870);
+    ctx.fillStyle = P.mar; ctx.beginPath(); ctx.moveTo(0, 1050); for (let x = 0; x <= W; x += 20) ctx.lineTo(x, 1050 + Math.sin(x * 0.02 + t * 6) * 14); ctx.lineTo(W, 1120); ctx.lineTo(0, 1120); ctx.fill();
+    const r = rng(5); for (let i = 0; i < 40; i++) { const x = r() * W, ph = (t * (0.6 + r()) + r()) % 1, y = 1500 - ph * 460;
+      ctx.strokeStyle = 'rgba(220,250,255,0.8)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(x, y, 8 + r() * 14, 0, 6.283); ctx.stroke(); }
+    for (let i = 0; i < 8; i++) { const x = 100 + i * 125, ph = (t * 0.5 + i * 0.17) % 1; ctx.fillStyle = `rgba(255,255,255,${0.35 * (1 - ph)})`;
+      ctx.beginPath(); ctx.arc(x + Math.sin(ph * 6 + i) * 30, 1000 - ph * 500, 50 + ph * 60, 0, 6.283); ctx.fill(); }
+    sol(CX, 360, 120, 1, t);
+    pilula('OS OCEANOS FERVEM', CX, 620, 56, P.verm, P.branco, ease(t / 0.3));
+  },
+  // 7 · Terra secando
+  seca(t, d) { fundo(t);
+    const k = ease(t / d), R = 300;
+    ctx.save(); ctx.beginPath(); ctx.arc(CX, CY, R, 0, 6.283); ctx.clip();
+    ctx.fillStyle = `rgb(${lerp(43, 190, k) | 0},${lerp(179, 120, k) | 0},${lerp(192, 70, k) | 0})`; ctx.fillRect(CX - R, CY - R, 2 * R, 2 * R);
+    ctx.fillStyle = `rgb(${lerp(124, 150, k) | 0},${lerp(201, 90, k) | 0},${lerp(138, 50, k) | 0})`; ctx.save(); ctx.translate(CX, CY); continentes(R * 1.05, ctx.fillStyle, ctx.fillStyle); ctx.restore();
+    ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.arc(CX + R * 0.35, CY + R * 0.3, R, 0, 6.283); ctx.fill(); ctx.restore();
+    txt('SEM OCEANOS', CX, CY + 440, 60, P.areia, ease((t - 0.4) / 0.4));
+  },
+  // 8 · núcleo sem hidrogênio (corte do Sol)
+  nucleo(t, d) { fundo(t, 0.4);
+    estrelaG(CX, CY, 330, '#ffd27a', '#f08a24', 1.5);
+    ctx.fillStyle = '#7a2e10'; ctx.beginPath(); ctx.moveTo(CX, CY); ctx.arc(CX, CY, 330, -0.6, 0.6); ctx.fill();
+    const k = ease(t / d); estrelaG(CX, CY, 90, '#ffffff', lerp(1, 0, k) > 0.5 ? '#ffe680' : '#b0b8d0', 1.2);
+    ctx.fillStyle = '#1b2a5e'; ctx.beginPath(); ctx.roundRect(190, 1320, 700, 50, 25); ctx.fill();
+    ctx.fillStyle = P.mar; ctx.beginPath(); ctx.roundRect(196, 1326, 688 * (1 - k), 38, 19); ctx.fill();
+    txt('HIDROGÊNIO NO CENTRO', CX, 1260, 44, P.branco);
+  },
+  // 9 · o Sol incha
+  incha(t, d) { fundo(t);
+    const k = ease(t / d), r = lerp(90, 520, k);
+    estrelaG(CX, CY, r, lerp(1, 0, k) > 0.5 ? '#fff0b0' : '#ffb070', k > 0.5 ? '#d8401c' : '#ff9a30', 1.6);
+    titulo(['O SOL INCHA'], 300, 96, t - 0.1, P.branco);
+  },
+  // 10 · gigante vermelha 200× maior
+  gigante(t, d) { fundo(t, 0.6);
+    estrelaG(CX + 120, CY + 900, 1150, '#ffb070', '#c0301a', 1.15);
+    estrelaG(240, 520, 14, '#fff4c2', '#ffb830', 3);
+    txt('SOL HOJE', 240, 580, 34, P.branco);
+    const k = ease(t / 1.2); contador(200 * k, '× MAIOR', 330, 96, P.ouro);
+    txt('GIGANTE VERMELHA', CX, 430, 52, '#ff8a6a', ease((t - 0.3) / 0.4));
+  },
+  // 11 · Mercúrio e Vênus engolidos
+  engole(t, d) { fundo(t);
+    const k = ease(t / d), sR = lerp(60, 165, k);
+    sistema(t * 1.2, sR, ['#ffb070', '#c8401c'], 4, sR);
+    txt('MERCÚRIO E VÊNUS: ENGOLIDOS', CX, 300, 46, '#ff8a6a', ease(t / 0.4));
+  },
+  // 12 · a Terra: provavelmente também
+  terra(t, d) { fundo(t, 0.5);
+    estrelaG(-200, CY, 760, '#ffb070', '#c0301a', 1.1);
+    const x = lerp(760, 640, ease(t / d)); globo(x, CY, 110, t * 2, 0.5);
+    ctx.fillStyle = 'rgba(200,60,30,0.35)'; ctx.beginPath(); ctx.arc(x, CY, 112, 0, 6.283); ctx.fill();
+    pilula('A TERRA? PROVAVELMENTE', CX, 380, 50, P.verm, P.branco, ease(t / 0.3));
+  },
+  // 13 · lua gelada rachando e derretendo
+  lua(t, d) { fundo(t);
+    const k = ease(t / d), R = 280;
+    ctx.save(); ctx.beginPath(); ctx.arc(CX, CY, R, 0, 6.283); ctx.clip();
+    ctx.fillStyle = P.gelo; ctx.fillRect(CX - R, CY - R, 2 * R, 2 * R);
+    ctx.strokeStyle = '#c96f4a'; ctx.lineWidth = 6; const r = rng(4);
+    for (let i = 0; i < 14; i++) { ctx.beginPath(); let x = CX - R + r() * 2 * R, y = CY - R + r() * 2 * R; ctx.moveTo(x, y);
+      for (let s = 0; s < 6; s++) { x += (r() - 0.5) * 140; y += (r() - 0.3) * 110; ctx.lineTo(x, y); } ctx.stroke(); }
+    ctx.fillStyle = `rgba(43,179,192,${0.85 * k})`; ctx.beginPath(); ctx.arc(CX, CY, R * lerp(0.1, 1, k), 0, 6.283); ctx.fill(); ctx.restore();
+    txt('LUAS GELADAS DERRETEM', CX, CY + 440, 54, P.mar, ease((t - 0.2) / 0.4));
+  },
+  // 14 · zona habitável se mudando para longe
+  zona(t, d) { fundo(t);
+    estrelaG(CX, CY, 120, '#ffb070', '#c0301a', 1.3);
+    const k = ease(t / d), r1 = lerp(190, 360, k), r2 = lerp(250, 450, k);
+    ctx.fillStyle = 'rgba(124,201,138,0.28)'; ctx.beginPath(); ctx.arc(CX, CY, r2, 0, 6.283); ctx.arc(CX, CY, r1, 0, 6.283, true); ctx.fill();
+    [['JÚPITER', 340, 30, '#d9b48a'], ['SATURNO', 420, 26, '#e6cf98']].forEach(([n, a, s, c], i) => { const an = t * 0.4 + i * 2.2;
+      ctx.fillStyle = c; ctx.beginPath(); ctx.arc(CX + Math.cos(an) * a, CY + Math.sin(an) * a, s, 0, 6.283); ctx.fill(); });
+    pilula('A VIDA MUDA DE ENDEREÇO', CX, 300, 50, P.terra, P.bg1, ease(t / 0.3));
+  },
+  // 15 · camadas sendo expulsas (anéis saindo)
+  expulsa(t, d) { fundo(t, 0.6);
+    for (let i = 0; i < 6; i++) { const ph = (t * 0.5 + i / 6) % 1, r = 120 + ph * 700;
+      ctx.strokeStyle = `rgba(255,${150 - i * 10},${90 + i * 20},${0.8 * (1 - ph)})`; ctx.lineWidth = 30 * (1 - ph) + 6; ctx.beginPath(); ctx.arc(CX, CY, r, 0, 6.283); ctx.stroke(); }
+    estrelaG(CX, CY, 70, '#ffffff', '#ff9a70', 2);
+    txt('AS CAMADAS DE FORA SÃO EXPULSAS', CX, 300, 42, P.branco, ease(t / 0.4));
+  },
+  // 16 · nebulosa planetária colorida
+  nebulosa(t, d) {
+    ctx.fillStyle = P.bg1; ctx.fillRect(0, 0, W, H); fundo(t, 0.8);
+    const cores = ['rgba(46,196,182,0.35)', 'rgba(231,111,81,0.35)', 'rgba(255,209,102,0.3)', 'rgba(160,110,255,0.3)'];
+    for (let i = 0; i < 4; i++) { ctx.save(); ctx.translate(CX, CY); ctx.rotate(i * 0.8 + t * 0.05); ctx.scale(1 + i * 0.12, 0.7 + i * 0.1);
+      const g = ctx.createRadialGradient(0, 0, 80, 0, 0, 420 + i * 40); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.7, cores[i]); g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, 480 + i * 40, 0, 6.283); ctx.fill(); ctx.restore(); }
+    estrelaG(CX, CY, 18, '#ffffff', '#cfe8ff', 3);
+    titulo(['NEBULOSA', 'PLANETÁRIA'], 1350, 90, t - 0.2, [P.branco, P.mar]);
+  },
+  // 17 · sobra uma anã branca
+  ana(t, d) { fundo(t);
+    const e = back(t / 0.6); ctx.save(); ctx.translate(CX, CY); ctx.scale(e, e); estrelaG(0, 0, 60, '#ffffff', '#bfe0ff', 3.4); ctx.restore();
+    pilula('ANÃ BRANCA', CX, CY + 360, 64, P.gelo, P.bg1, ease((t - 0.2) / 0.3));
+  },
+  // 18 · do tamanho da Terra
+  tamanho(t, d) { fundo(t, 0.5);
+    const e = back(t / 0.5);
+    ctx.save(); ctx.translate(320, CY); ctx.scale(e, e); estrelaG(0, 0, 170, '#ffffff', '#bfe0ff', 1.5); ctx.restore();
+    ctx.save(); ctx.translate(760, CY); ctx.scale(e, e); globo(0, 0, 170, t * 2, 0.5); ctx.restore();
+    txt('ANÃ BRANCA', 320, CY + 260, 40, P.gelo); txt('TERRA', 760, CY + 260, 40, P.mar);
+    txt('=', CX + 0, CY, 120, P.ouro, ease((t - 0.3) / 0.3));
+  },
+  // 19 · balança: mais pesada que meio Sol
+  balanca(t, d) { fundo(t, 0.5);
+    const k = ease(t / 1.0), inc = lerp(0, -0.22, k);
+    ctx.fillStyle = P.cinza; ctx.fillRect(CX - 12, CY - 40, 24, 520); ctx.beginPath(); ctx.moveTo(CX - 150, CY + 500); ctx.lineTo(CX + 150, CY + 500); ctx.lineTo(CX, CY + 430); ctx.fill();
+    ctx.save(); ctx.translate(CX, CY - 40); ctx.rotate(inc); ctx.fillStyle = P.gelo; ctx.fillRect(-380, -10, 760, 20);
+    ctx.fillStyle = '#bfe0ff'; ctx.beginPath(); ctx.arc(-330, -60, 50, 0, 6.283); ctx.fill();
+    estrelaG(330, -90, 80, '#fff4c2', '#ffb830', 1.3, 0.55); ctx.restore();
+    txt('ANÃ BRANCA', CX - 330, CY + 120, 34, P.gelo); txt('MEIO SOL', CX + 330, CY - 200, 34, P.ouro);
+    txt('MAIS DE MEIO SOL DE MASSA', CX, 300, 48, P.ouro, ease(t / 0.4));
+  },
+  // 20 · esfriando por trilhões de anos (cor muda)
+  esfria(t, d) { fundo(t);
+    const k = ease(t / d), c = k < 0.5 ? ['#ffffff', '#bfe0ff'] : k < 0.8 ? ['#ffe2b0', '#ff9a50'] : ['#ff9a70', '#a03018'];
+    estrelaG(CX, CY, 120, c[0], c[1], lerp(3, 1.6, k), lerp(1, 0.6, k));
+    txt('TRILHÕES DE ANOS ESFRIANDO', CX, 1350, 44, P.cinza, ease(t / 0.4));
+  },
+  // 21 · apaga de vez
+  apaga(t, d) { fundo(t);
+    const k = ease(t / d); estrelaG(CX, CY, 120, `rgb(${lerp(160, 30, k) | 0},${lerp(60, 20, k) | 0},${lerp(40, 30, k) | 0})`, '#120a10', lerp(1.6, 1.02, k), 1);
+    txt('ANÃ NEGRA', CX, CY + 300, 56, P.cinza, ease((t - 0.4) / 0.4));
+    txt('(HIPOTÉTICA)', CX, CY + 370, 34, P.cinza, ease((t - 0.6) / 0.4));
+  },
+  // 22 · final
+  final(t, d) { fundo(t, 0.6);
+    titulo(['NÃO EXPLODE.'], 700, 100, t, P.branco);
+    titulo(['SE APAGA.'], 840, 120, t - 0.6, P.ouro);
+  },
+};
+window.desenhar = (cena, t, d, p) => { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.setLineDash([]); CENAS[cena](t, d, p || {}); };
+</script>
+</body></html>
