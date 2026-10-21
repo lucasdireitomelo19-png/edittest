@@ -348,6 +348,84 @@ CENAS.vb_gaia = (t, d) => {   // o mais próximo conhecido
   const a = ease((t - 1.6) / 0.4); circ(CX, y1, 26 * a, '#000'); anel(CX, y1, 32 * a, 'rgba(255,200,140,0.95)', 5); txt('GAIA BH1', CX, y1 - 130, 70, P.branco, a); txt('CONSTELAÇÃO DE OFIÚCO', CX, y1 - 70, 28, P.cinza, a, 'center', 'MM');
   txt(fmt(1560 * k), CX - 20, 930, 150, P.ouro, 1, 'center'); txt('ANOS-LUZ', CX, 1040, 50, P.branco, ease((t - 0.6) / 0.4)); };
 
+
+// ---------- SHORT · SEM TRAJE (POV) ----------
+function hud(t, cor = 'rgba(76,201,240,0.55)') {   // moldura de HUD com cantos e linhas finas
+  ctx.save(); ctx.strokeStyle = cor; ctx.lineWidth = 3; const m = 60, l = 90;
+  [[m, m, 1, 1], [W - m, m, -1, 1], [m, H - m, 1, -1], [W - m, H - m, -1, -1]].forEach(([x, y, sx, sy]) => { ctx.beginPath(); ctx.moveTo(x, y + sy * l); ctx.lineTo(x, y); ctx.lineTo(x + sx * l, y); ctx.stroke(); });
+  ctx.globalAlpha = 0.25; for (let y = 0; y < H; y += 6) { ctx.fillStyle = 'rgba(255,255,255,0.03)'; ctx.fillRect(0, y, W, 1); } ctx.restore();
+}
+function silhueta(cx, cy, s, cor, inch = 0) {   // corpo estilizado (sem detalhes)
+  ctx.save(); ctx.translate(cx, cy); ctx.scale(s, s); ctx.fillStyle = cor; const k = 1 + inch;
+  circ(0, -300, 70 * (1 + inch * 0.6), cor); ctx.beginPath(); ctx.roundRect(-95 * k, -220, 190 * k, 300, 60 * k); ctx.fill();
+  ctx.beginPath(); ctx.roundRect(-150 * k, -200, 50 * k, 260, 25); ctx.roundRect(100 * k, -200, 50 * k, 260, 25); ctx.fill();
+  ctx.beginPath(); ctx.roundRect(-85 * k, 70, 75 * k, 320, 30); ctx.roundRect(10 * k, 70, 75 * k, 320, 30); ctx.fill(); ctx.restore();
+}
+CENAS.vp_porta = (t, d) => {   // POV: a escotilha abre para o vazio
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); const k = ease((t - 0.3) / 1.4);
+  for (const [x, y, r, f] of EST) circ(x, y, r, `rgba(255,255,255,${0.3 + 0.5 * f})`); globoMini(CX + 200, 1500 + t * 20, 420, t);
+  ctx.save(); ctx.fillStyle = '#c9ccd2'; const ab = k * 560; ctx.fillRect(0, 0, CX - ab, H); ctx.fillRect(CX + ab, 0, W, H);
+  ctx.fillStyle = '#9aa0a8'; ctx.fillRect(CX - ab - 30, 0, 30, H); ctx.fillRect(CX + ab, 0, 30, H);
+  ctx.fillStyle = '#e8b33a'; for (let y = -40; y < H; y += 120) { ctx.save(); ctx.beginPath(); ctx.rect(0, 0, CX - ab - 30, H); ctx.clip(); ctx.fillRect(CX - ab - 120, y + t * 0, 60, 60); ctx.restore(); } ctx.restore();
+  const p = Math.max(0, 1 - k); hud(t, `rgba(231,111,81,${0.8})`); txt('PRESSÃO DA CABINE', CX, 230, 40, P.branco, 1, 'center', 'MM'); txt(Math.round(101 * p) + ' kPa', CX, 320, 110, p < 0.3 ? P.verm : P.branco);
+  if (k > 0.8) { ctx.globalAlpha = 0.5 + 0.5 * Math.sin(t * 12); pilula('VÁCUO', CX, 440, 48, P.verm, P.branco); ctx.globalAlpha = 1; } };
+CENAS.vp_mito = (t, d) => {   // explosão cartunesca + carimbo MITO
+  ctx.fillStyle = '#1a0f22'; ctx.fillRect(0, 0, W, H); const cx = CX, cy = 860, k = easeOut(t / 0.6);
+  for (let i = 0; i < 14; i++) { const a = i / 14 * 6.283, r1 = 120 + 300 * k, r2 = 260 + 380 * k; ctx.fillStyle = i % 2 ? '#ffd166' : '#f4a261'; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2); ctx.lineTo(cx + Math.cos(a + 0.22) * r1, cy + Math.sin(a + 0.22) * r1); ctx.fill(); }
+  circ(cx, cy, 200 * k, '#fff3c4'); txt('BOOM!', cx, cy, 130, '#e76f51', k);
+  const s = back((t - 0.7) / 0.4); if (s > 0) { ctx.save(); ctx.translate(cx, cy + 40); ctx.rotate(-0.25); ctx.scale(s, s); ctx.strokeStyle = '#e63946'; ctx.lineWidth = 16; ctx.strokeRect(-300, -110, 600, 220);
+    ctx.font = '170px MX'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#e63946'; ctx.fillText('MITO', 0, 10); ctx.restore(); }
+  txt('ILUSTRAÇÃO', CX, 1440, 28, P.cinza, 1, 'center', 'MM'); };
+CENAS.vp_pulmao = (t, d) => {   // raio-X: pulmões se expandindo
+  ctx.fillStyle = '#020a14'; ctx.fillRect(0, 0, W, H); hud(t, 'rgba(76,201,240,0.4)'); const e = 1 + 0.45 * ease((t - 0.4) / 1.6), cx = CX, cy = 860;
+  ctx.strokeStyle = 'rgba(160,220,255,0.35)'; ctx.lineWidth = 10; for (let i = 0; i < 7; i++) { ctx.beginPath(); ctx.ellipse(cx, cy - 250 + i * 80, 280 + i * 10, 40, 0, Math.PI * 1.05, Math.PI * 1.95); ctx.stroke(); }
+  ctx.fillStyle = 'rgba(160,220,255,0.2)'; ctx.fillRect(cx - 12, cy - 380, 24, 650);
+  [-1, 1].forEach(s => { const g = ctx.createRadialGradient(cx + s * 140, cy, 20, cx + s * 140, cy, 260 * e); g.addColorStop(0, 'rgba(120,200,255,0.65)'); g.addColorStop(1, 'rgba(120,200,255,0.05)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(cx + s * 150 * e, cy, 130 * e, 270 * e, s * 0.12, 0, 6.283); ctx.fill(); ctx.strokeStyle = 'rgba(180,230,255,0.9)'; ctx.lineWidth = 4; ctx.stroke(); });
+  if (t > 1.2) { ctx.globalAlpha = 0.6 + 0.4 * Math.sin(t * 14); pilula('PRESSÃO NOS PULMÕES', CX, 280, 44, P.verm, P.branco); ctx.globalAlpha = 1; }
+  txt('RAIO-X · ILUSTRAÇÃO', CX, 1440, 28, P.cinza, 1, 'center', 'MM'); };
+CENAS.vp_15 = (t, d) => {   // 15 segundos
+  ctx.fillStyle = '#05050a'; ctx.fillRect(0, 0, W, H); hud(t, 'rgba(231,111,81,0.6)'); const p = back(t / 0.5), pis = 0.75 + 0.25 * Math.sin(t * 9);
+  ctx.save(); ctx.translate(CX, 860); ctx.scale(clamp(p, 0, 1.2), clamp(p, 0, 1.2)); anel(0, 0, 330, 'rgba(231,111,81,0.25)', 26); anel(0, 0, 330, `rgba(231,111,81,${pis})`, 26, -Math.PI / 2, -Math.PI / 2 + 6.283 * (1 - t / (d + 3)));
+  txt('15', 0, -20, 300, P.branco); txt('SEGUNDOS', 0, 160, 56, P.verm); ctx.restore(); };
+CENAS.vp_vapor = (t, d) => {   // água virando vapor sem pressão
+  ctx.fillStyle = '#04101c'; ctx.fillRect(0, 0, W, H); const k = ease((t - 0.3) / 1.6);
+  ctx.fillStyle = 'rgba(60,140,220,0.35)'; ctx.fillRect(140, 1000, 800, 420); ctx.strokeStyle = 'rgba(160,210,255,0.6)'; ctx.lineWidth = 4; ctx.strokeRect(140, 1000, 800, 420);
+  for (let i = 0; i < 60; i++) { const r = rng(i + 500), x = 180 + r() * 720, base = 1040 + r() * 360, sobe2 = (r() < k) ? ((t * (120 + r() * 200) + r() * 600) % 900) : 0, y = base - sobe2;
+    circ(x + Math.sin(t * 3 + i) * 8, y, 9 + (sobe2 > 0 ? 6 * (sobe2 / 900) : 0), sobe2 > 0 ? `rgba(220,240,255,${0.9 - sobe2 / 1100})` : 'rgba(120,190,255,0.9)'); }
+  txt('PRESSÃO: ZERO', CX, 300, 64, P.verm, ease(t / 0.4)); txt('A ÁGUA FERVE SEM CALOR', CX, 380, 36, P.branco, ease((t - 0.3) / 0.4), 'center', 'MM'); };
+CENAS.vp_mao = (t, d) => {   // mão em silhueta inchando
+  ctx.fillStyle = '#0a0d1c'; ctx.fillRect(0, 0, W, H); hud(t, 'rgba(76,201,240,0.35)'); const k = ease((t - 0.3) / (d - 0.5)), s = 1 + 0.35 * k, cx = CX, cy = 900;
+  ctx.save(); ctx.translate(cx, cy); ctx.scale(s, s); ctx.fillStyle = '#5a7fa8'; ctx.beginPath(); ctx.roundRect(-170, -60, 340, 360, 120); ctx.fill();
+  [[-150, -260, 70, 230], [-75, -380, 72, 340], [5, -400, 72, 360], [85, -360, 70, 320]].forEach(([x, y, w, h]) => { ctx.beginPath(); ctx.roundRect(x, y, w * (1 + k * 0.25), h, 36 + k * 10); ctx.fill(); });
+  ctx.save(); ctx.translate(-150, 60); ctx.rotate(-0.75); ctx.beginPath(); ctx.roundRect(-40 - k * 10, -230, 78 * (1 + k * 0.25), 240, 38); ctx.fill(); ctx.restore(); ctx.restore();
+  txt('+' + Math.round(k * 100 * 0.6) + '%', CX, 300, 100, P.verm); txt('INCHAÇO · ILUSTRAÇÃO', CX, 1440, 28, P.cinza, 1, 'center', 'MM'); };
+CENAS.vp_termo = (t, d) => {   // lado do Sol x lado da sombra
+  const g = ctx.createLinearGradient(0, 0, W, 0); g.addColorStop(0, '#06091a'); g.addColorStop(0.5, '#140c10'); g.addColorStop(1, '#3a1505'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  brilho(W + 100, 500, 700, 'rgba(255,170,60,0.55)'); silhueta(CX, 980, 1.2, '#1c2238');
+  ctx.save(); ctx.beginPath(); ctx.rect(CX, 0, W, H); ctx.clip(); silhueta(CX, 980, 1.2, `rgba(255,${150 - 60 * ease(t / d)},70,0.85)`); ctx.restore();
+  const a = ease((t - 0.4) / 0.4); txt('FRIO LENTO', 280, 330, 46, P.azul, a); txt(Math.round(lerp(36, 34, ease(t / d))) + ' °C', 280, 410, 64, P.branco, a);
+  txt('QUEIMADURA', 800, 330, 46, P.verm, a); txt(Math.round(lerp(36, 60, ease(t / d))) + ' °C', 800, 410, 64, P.branco, a); txt('ILUSTRAÇÃO', CX, 1560, 28, P.cinza, 1, 'center', 'MM'); };
+CENAS.vp_o2 = (t, d) => {   // oxigênio do cérebro caindo
+  ctx.fillStyle = '#06060c'; ctx.fillRect(0, 0, W, H); hud(t, 'rgba(231,111,81,0.5)'); const v = lerp(97, 40, ease((t - 0.2) / (d - 0.3)));
+  ctx.save(); ctx.translate(CX, 760); ctx.fillStyle = '#2a2f4a'; ctx.beginPath(); ctx.ellipse(0, 0, 260, 210, 0, 0, 6.283); ctx.fill(); ctx.strokeStyle = 'rgba(160,170,220,0.5)'; ctx.lineWidth = 6;
+  for (let i = -3; i <= 3; i++) { ctx.beginPath(); ctx.moveTo(-220, i * 50); for (let x = -220; x <= 220; x += 20) ctx.lineTo(x, i * 50 + Math.sin(x * 0.05 + i) * 16); ctx.stroke(); } ctx.restore();
+  ctx.fillStyle = 'rgba(244,241,232,0.12)'; ctx.fillRect(190, 1100, 700, 40); ctx.fillStyle = v < 60 ? P.verm : P.azul; ctx.fillRect(190, 1100, 700 * v / 100, 40);
+  txt('OXIGÊNIO NO CÉREBRO', CX, 1060, 40, P.branco, 1, 'center', 'MM'); txt(Math.round(v) + '%', CX, 1230, 96, v < 60 ? P.verm : P.branco); };
+CENAS.vp_apaga = (t, d) => {   // a visão escurece pelas bordas e o batimento some
+  fundo(t, 1, '#0d1430', '#02030a'); globoMini(CX, 1250, 380, t);
+  const k = ease(t / (d - 0.2)), R = lerp(1200, 0, k); const g = ctx.createRadialGradient(CX, 900, R * 0.3, CX, 900, Math.max(1, R)); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,1)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); if (R < 400) { ctx.fillStyle = `rgba(0,0,0,${1 - R / 400})`; ctx.fillRect(0, 0, W, H); }
+  ctx.strokeStyle = `rgba(231,111,81,${0.9 * (1 - k * 0.7)})`; ctx.lineWidth = 5; ctx.beginPath(); for (let x = 0; x <= W; x += 6) { const ph = (x / W + t * 0.5) % 1, pul = (ph > 0.45 && ph < 0.55) ? Math.sin((ph - 0.45) * 62.8) * 120 * (1 - k) : 0; x ? ctx.lineTo(x, 1650 - pul) : ctx.moveTo(x, 1650 - pul); } ctx.stroke(); };
+CENAS.vp_90 = (t, d) => {   // até 90 segundos para te salvar
+  ctx.fillStyle = '#04070d'; ctx.fillRect(0, 0, W, H); hud(t, 'rgba(76,201,240,0.5)'); const n = Math.round(90 * easeOut((t - 0.2) / 1.4));
+  anel(CX, 860, 330, 'rgba(244,241,232,0.12)', 24); anel(CX, 860, 330, P.azul, 24, -Math.PI / 2, -Math.PI / 2 + 6.283 * n / 90); txt(String(n), CX, 840, 260, P.branco); txt('SEGUNDOS', CX, 1010, 52, P.azul);
+  sobe('PARA TE PUXAR DE VOLTA', CX, 1330, 50, t, 0.8, P.branco); txt('ESTIMATIVA', CX, 1400, 30, P.cinza, ease((t - 1) / 0.4), 'center', 'MM'); };
+CENAS.vp_1966 = (t, d) => {   // 1966 · sobreviveu
+  ctx.fillStyle = '#0b0b0f'; ctx.fillRect(0, 0, W, H); for (let i = 0; i < 300; i++) { const r = rng(i + Math.floor(t * 12) * 7); ctx.fillStyle = `rgba(255,255,255,${r() * 0.06})`; ctx.fillRect(r() * W, r() * H, 2, 2 + r() * 30); }
+  sobe('1966', CX, 720, 260, t, 0.1, P.ouro); sobe('NASA · CÂMARA DE VÁCUO', CX, 900, 44, t, 0.35, P.branco, 'center', 'MM');
+  const s = back((t - 0.8) / 0.4); if (s > 0) { ctx.save(); ctx.translate(CX, 1120); ctx.rotate(-0.08); ctx.scale(s, s); ctx.strokeStyle = P.verde; ctx.lineWidth = 12; ctx.strokeRect(-330, -80, 660, 160); ctx.font = '96px MX'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = P.verde; ctx.fillText('SOBREVIVEU', 0, 6); ctx.restore(); } };
+
 window.desenhar = (cena, t, dur, p) => { ctx.save(); ctx.clearRect(0, 0, W, H); CENAS[cena](t, dur, p || {}); ctx.restore(); };
 window.CENAS = CENAS;
 </script>
