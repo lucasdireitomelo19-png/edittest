@@ -19,7 +19,7 @@ def dims(a):
 MARCAS = {'v_linha': ["ha dois milhoes", "ha um milhao e trezentos", "ha seiscentos e quarenta"],
           'f_recap': ["um supervulcao pode abalar", "um asteroide gigante", "uma explosao de raios gama perigosa", "o sol so vira problema", "e o vacuo provavelmente"]}
 TEXTOS = {"sessenta e seis milhoes de anos atras": "66 MILHÕES DE ANOS ATRÁS", "ha uns setenta e quatro mil anos": "LAGO TOBA · INDONÉSIA",
-          "e yellowstone ja teve tres": "YELLOWSTONE", "e pela primeira vez na historia": "DART · 2021", "a nasa jogou a nave dart": "DIMORPHOS · 26/09/2022",
+          "e yellowstone ja teve tres": "YELLOWSTONE", "e pela primeira vez na historia": "DART · 2021", "a nasa jogou a nave dart": "IMPACTO DA DART · 26/09/2022",
           "foi a primeira vez que a humanidade": "HUBBLE · 2022", "em outubro de 2022": "FERMI · 9/10/2022"}
 L = ['# Gerado por gerar_cenas.py a partir de plano.py. Ver producoes/15_fim_do_mundo.md.', 'FIM = 506.0', 'SAIDA = "fim_do_mundo.mp4"', 'FINAL = ""',
      'MAX_PLANO = 9.0', 'MUSICA = "musica.wav"', 'MUSICA_DB = -14', 'ANIM_PAGE = "mundo.html"', '', 'CENAS = [']

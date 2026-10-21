@@ -70,7 +70,7 @@ CENAS = [
     ('e a nasa estima', {'src': 'anim:a_90', 'tag': 'anim'}),  # 60 +90% dos asteroides com mais de 1 km encontrados
     ('nenhum deles tem rota de colisao', {'src': 'fm_324681.mp4', 'tag': 'real', 'credito': 'Pixabay/ghasoub'}),  # 61 Telescópio apontado para o céu
     ('e pela primeira vez na historia', {'ss': 37.0, 'src': 'na_dart_recap.mp4', 'tag': 'real', 'credito': 'NASA/Johns Hopkins APL', 'texto': 'DART · 2021'}),  # 62 Lançamento real da DART (2021)
-    ('a nasa jogou a nave dart', {'ss': 57.0, 'src': 'na_dart_recap.mp4', 'crop': [518, 129, 960, 540], 'tag': 'real', 'credito': 'NASA/Johns Hopkins APL', 'texto': 'DIMORPHOS · 26/09/2022'}),  # 63 Aproximação real: câmera da DART chegando em Dimorphos (recorte sem texto)
+    ('a nasa jogou a nave dart', {'ss': 57.0, 'src': 'na_dart_recap.mp4', 'crop': [518, 129, 960, 540], 'tag': 'real', 'credito': 'NASA/Johns Hopkins APL', 'texto': 'IMPACTO DA DART · 26/09/2022'}),  # 63 Aproximação real: câmera da DART chegando em Dimorphos (recorte sem texto)
     ('a orbita dele encurtou', {'src': 'anim:a_orbita', 'tag': 'anim'}),  # 64 Órbita de Dimorphos: 11h55 → 11h23
     ('foi a primeira vez que a humanidade', {'ss': 37.0, 'src': 'sv_14215_DART_WIDE_MP4.mp4', 'crop': [518, 129, 960, 540], 'tag': 'real', 'credito': 'NASA/ESA/Hubble', 'texto': 'HUBBLE · 2022'}),  # 65 Hubble: detritos depois do impacto (imagem real)
     ('os dinossauros nao tinham', {'src': 'fm_236.mp4', 'tag': 'ilus', 'credito': 'Pixabay/NASA-Imagery'}),  # 66 Foguete da NASA na plataforma (animação NASA)
