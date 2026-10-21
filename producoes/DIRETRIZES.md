@@ -44,6 +44,13 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Título:** curiosidade sem mentira.
 - **Thumbnail:** 1 elemento principal, alto contraste e 2–5 palavras que complementem o título.
 
+## Aprovação antes de renderizar
+- **Nada é renderizado sem aprovação do dono.** Antes do render final, mandar no chat:
+  - o roteiro;
+  - o plano de cenas;
+  - uma folha de storyboard com 1 quadro de cada cena (imagens paradas, sem montar o vídeo).
+- Só renderizar depois do ok. Se o dono pedir prévia em vídeo, fazer uma versão leve (baixa resolução) e marcar como PRÉVIA.
+
 ## Entrega
 - **Todo vídeo pronto vai para a Central dos Canais** (artefato `https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q`, coleção `videos`, linhas `lado-NN`).
   1. Fazer uma cópia abaixo de 19 MiB: `ffmpeg -nostdin -i in.mp4 -c:v libx264 -preset slow -crf 23 -maxrate 2300k -bufsize 4600k -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart out.mp4` (subir o crf se passar).
