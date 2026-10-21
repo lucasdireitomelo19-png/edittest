@@ -44,6 +44,16 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Título:** curiosidade sem mentira.
 - **Thumbnail:** 1 elemento principal, alto contraste e 2–5 palavras que complementem o título.
 
+## Padrão de vídeo longo (aprovado pelo dono em 21/10/2026, "5 maneiras de o mundo acabar")
+- **Formato:** 1920x1080, ~8 min, capítulos numerados (contagem regressiva ou etapas) com cartão de capítulo próprio para cada um.
+- **Mistura:** footage real (Pixabay e NASA) + motion graphics próprio (`pipeline/anim/mundo.html` como base), mais ou menos 60/40. Nenhuma cena repetida.
+- **Mapas:** sempre com dados geográficos reais (Natural Earth, `anim/geo/`), com zoom até o local e pino com nome e data.
+- **Animações:** números, linhas do tempo, comparações de escala, cortes (geologia, Sol) e conceitos abstratos. Textos fora da faixa da legenda (y < 900 ou no topo).
+- **Honestidade:** ilustração 3D ou animação da NASA leva etiqueta de animação, nunca "imagem real". Recortar textos em inglês das fontes.
+- **Som:** voz Brian (ElevenLabs vel 1.1 + atempo 1.1), trilha própria (`musica.py`) a −14 dB com sidechain, −14 LUFS.
+- **Fluxo:** roteiro + checagem de fatos + plano (`plano.py`) + storyboard → narração → `gerar_cenas.py` → `motor_h.py` → revisão por folha de contato → prévia 540p → aprovação → Central.
+- **Central:** cópia 540p < 19,5 MB (duas passagens) para revisão; o arquivo final 1080p vai no chat.
+
 ## Aprovação antes de renderizar
 - **Nada é renderizado sem aprovação do dono.** Antes do render final, mandar no chat:
   - o roteiro;
