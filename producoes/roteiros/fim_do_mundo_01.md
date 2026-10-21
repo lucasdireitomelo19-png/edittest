@@ -104,25 +104,25 @@ O dono do canal percebeu que funcionam melhor os vídeos que "parecem que o mund
 
 ## 4 · Uma galáxia inteira está vindo na nossa direção
 
-**Título:** `Uma galáxia inteira está vindo na nossa DIREÇÃO 🌌💥`
+**Título:** `Uma galáxia inteira está vindo na nossa DIREÇÃO. E a chance de batida voltou a subir 🌌💥`
 
 > Uma galáxia inteira está vindo na nossa direção, a quase quatrocentos mil quilômetros por hora.
 > É Andrômeda. Um trilhão de estrelas. Dá pra ver a olho nu, num céu bem escuro.
 > Durante anos, a ciência deu o choque como certo: em quatro bilhões e meio de anos, as duas galáxias iam se fundir numa só.
-> Mas em 2025, astrônomos rodaram cem mil simulações com dados dos telescópios Hubble e Gaia. E o resultado mudou tudo.
-> A chance de colisão nos próximos dez bilhões de anos é de cinquenta por cento. Cara ou coroa.
-> O motivo é uma galáxia pequena, a Grande Nuvem de Magalhães, que puxa a Via Láctea pro lado. Ela dá pra ver daqui do hemisfério sul.
-> E mesmo se o choque acontecer, as estrelas estão tão longe umas das outras que quase nenhuma iria bater. O que mudaria é o céu: ninguém mais reconheceria.
+> Em 2025, um estudo com cem mil simulações trouxe alívio: a chance de colisão tinha caído pra cinquenta por cento. Cara ou coroa.
+> O motivo era uma galáxia pequena, a Grande Nuvem de Magalhães, que puxa a Via Láctea pro lado. Ela dá pra ver daqui do hemisfério sul.
+> Mas o alívio durou pouco. Em 2026, astrônomos refizeram as contas com medições mais precisas do telescópio Gaia. E a chance voltou a subir: noventa por cento. Daqui a uns seis bilhões e meio de anos.
+> A boa notícia: as estrelas estão tão longe umas das outras que quase nenhuma iria bater. O que muda é o céu. Ninguém mais ia reconhecer.
 
 **Cenas:**
 - Andrômeda real (telescópio) se aproximando com zoom e contador "400.000 KM/H".
 - Simulação da fusão (NASA SVS 14847, ANIMAÇÃO).
 - Céu da Terra com Andrômeda gigante (NASA/STScI, ILUSTRAÇÃO).
-- Quadro com "100.000 SIMULAÇÕES", moeda girando com "50%".
+- Quadro com "100.000 SIMULAÇÕES", moeda girando com "50%" e depois contador "50% → 90%" com glitch.
 - Grande Nuvem de Magalhães real (ESO).
 - Estrelas passando umas pelas outras (ANIMAÇÃO).
 
 **Checagem:**
 - Andrômeda se aproxima a ~110 km/s (~400.000 km/h) e tem ~1 trilhão de estrelas.
 - Sawala et al. 2025, *Nature Astronomy*: 100 mil simulações com dados de Hubble e Gaia, ~50% de fusão em 10 bilhões de anos, <2% em 5 bilhões. O efeito da Grande Nuvem de Magalhães é decisivo ([ESA/Hubble heic2508](https://esahubble.org/news/heic2508/)).
-- ⚠️ Um blog cita um estudo de abril de 2026 que teria subido a probabilidade para ~90%. Não confirmei. Conferir antes de produzir.
+- Wu, Zhang et al. 2026 (arXiv 2603.22863, Universidade de Pequim): com os movimentos próprios corrigidos do Gaia para M31 e M33, a fusão tem ~90% de chance no modelo principal, com mediana de ~6,5 bilhões de anos ([arXiv](https://arxiv.org/html/2603.22863v1)). Ainda é pré-publicação, por isso a fala diz "refizeram as contas" sem chamar de definitivo.
