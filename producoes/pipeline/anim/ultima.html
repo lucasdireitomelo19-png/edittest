@@ -474,6 +474,18 @@ CENAS.u_final = (t, d) => {   // a Terra pequena e azul se afastando
   sobe('QUANDO NÃO SOBRA NINGUÉM', CX, 820, 52, t, 1.0, P.branco); sobe('PRA DIVIDIR', CX, 900, 52, t, 1.2, P.azul); };
 
 // THUMBNAIL (1920x1080 → 1280x720): silhueta sozinha numa avenida vazia ao entardecer
+CENAS.u_thumb_a = (t, d) => {   // thumb A: Terra apagada, um único ponto aceso = VOCÊ
+  ctx.fillStyle = '#02030a'; ctx.fillRect(0, 0, W, H); const r0 = rng(9); for (let i = 0; i < 260; i++) circ(r0() * W, r0() * H, r0() * 1.6, `rgba(255,255,255,${0.2 + r0() * 0.5})`);
+  const gx = 1330, gy = 610, R = 560; brilho(gx, gy, R * 1.25, 'rgba(70,140,255,0.35)');
+  ctx.save(); ctx.filter = 'brightness(0.5) saturate(0.85)'; globo(gx, gy, R, -50, -12, { atm: 0 }); ctx.restore(); anel(gx, gy, R, 'rgba(120,180,255,0.9)', 5);
+  const px = gx - 0.06 * R, py = gy + 0.12 * R;   // ~ sudeste do Brasil
+  brilho(px, py, 240, 'rgba(255,214,90,1)'); brilho(px, py, 90, 'rgba(255,250,220,1)'); circ(px, py, 20, '#ffffff');
+  ctx.strokeStyle = '#ff2a2a'; ctx.lineWidth = 14; ctx.beginPath(); ctx.arc(px, py, 78, 0, 6.283); ctx.stroke();
+  ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(px - 330, py + 250); ctx.lineTo(px - 100, py + 70); ctx.stroke();
+  ctx.fillStyle = '#ff2a2a'; ctx.beginPath(); ctx.moveTo(px - 70, py + 48); ctx.lineTo(px - 150, py + 60); ctx.lineTo(px - 95, py + 125); ctx.fill();
+  ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round'; ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 30;
+  const pinta = (s2, x, y, tam, cor, lw) => { ctx.font = `${tam}px MX`; ctx.lineWidth = lw; ctx.strokeStyle = '#000'; ctx.strokeText(s2, x, y); ctx.fillStyle = cor; ctx.fillText(s2, x, y); };
+  pinta('8 BILHÕES', 70, 230, 190, '#ffffff', 24); pinta('SUMIRAM', 70, 430, 190, '#ff2a2a', 24); ctx.textAlign = 'right'; pinta('VOCÊ', px - 350, py + 270, 140, '#ffd166', 20); ctx.restore(); };
 CENAS.u_thumb = (t, d) => {
   const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#2a1a3a'); g.addColorStop(0.45, '#e0603a'); g.addColorStop(0.6, '#ffb36b'); g.addColorStop(0.61, '#1a1418'); g.addColorStop(1, '#0a0608'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
   circ(CX, 640, 130, '#ffe0b0'); brilho(CX, 640, 600, 'rgba(255,170,90,0.55)');
