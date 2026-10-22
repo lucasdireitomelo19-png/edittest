@@ -47,6 +47,8 @@ def encurtar_pausas(words):
         w["t"] = round(w["t"] - sum(c1 - c0 for c0, c1 in cortes if c1 <= w["t"]), 3)
     return words
 
+N_PALAVRAS = len(TEXT.split())
+
 async def gerar(rate):
     c = edge_tts.Communicate(TEXT, VOZ, rate=rate, boundary="WordBoundary",
                              proxy=os.environ.get("HTTPS_PROXY"))
@@ -56,6 +58,9 @@ async def gerar(rate):
             if ch["type"] == "audio": f.write(ch["data"])
             elif ch["type"] == "WordBoundary":
                 words.append({"t": ch["offset"]/1e7, "d": ch["duration"]/1e7, "w": ch["text"]})
+    if len(words) < 0.85 * N_PALAVRAS:   # resposta cortada do serviço de voz: tenta de novo
+        print(f'áudio incompleto ({len(words)} de ~{N_PALAVRAS} palavras), repetindo')
+        return await gerar(rate)
     if PAUSA:
         words = encurtar_pausas(words)
     json.dump(words, open(f"{d}/palavras.json", "w"), ensure_ascii=False)

@@ -15,6 +15,8 @@ spec = importlib.util.spec_from_file_location("cenas", os.path.join(pasta, "cena
 cfg = importlib.util.module_from_spec(spec); spec.loader.exec_module(cfg)
 FIM = getattr(cfg, "FIM", 61.0)  # duração padrão 61 s; o cenas.py pode mudar
 CENAS = cfg.CENAS
+ORIG = CENAS          # cenas como escritas (textos, etiquetas e contadores valem para a cena inteira)
+CORTE_MAX = getattr(cfg, "CORTE_MAX", None)   # ex.: 2.5 -> nenhum plano fica parado mais que isso
 os.makedirs(os.path.join(pasta, "tmp"), exist_ok=True)
 
 def run(cmd):
@@ -23,16 +25,47 @@ def run(cmd):
 def dur_de(i):
     return (CENAS[i + 1]["t"] if i + 1 < len(CENAS) else FIM) - CENAS[i]["t"]
 
+def _fim_orig(i):
+    return ORIG[i + 1]["t"] if i + 1 < len(ORIG) else FIM
+
+if CORTE_MAX:
+    # cena longa vira sub-cortes do mesmo clipe, seguindo a ação, mas com enquadramento novo e punch-in
+    # a cada corte (jump cut). Fotos alternam o ponto focal.
+    novas = []
+    for i, c in enumerate(ORIG):
+        dur = _fim_orig(i) - c["t"]
+        n = max(1, int(dur / CORTE_MAX + 0.999))
+        for k in range(n):
+            d = dict(c)
+            d["t"] = c["t"] + dur * k / n
+            if k:
+                d.pop("som", None); d.pop("flash", None); d.pop("rgb", None)
+                if "ss" in d:
+                    d["ss"] = round(c.get("ss", 0) + dur * k / n * c.get("vel", 1.0), 3)
+                if c.get("fixo"):          # animação com o assunto no centro: só punch-in, sem mudar o quadro
+                    if not c.get("sem_punch"): d.setdefault("punch", True)
+                    novas.append(d); continue
+                z0, z1 = c.get("zoom", (1.07, 1.15))
+                d["zoom"] = (round(z1 + 0.08 * (k % 2 == 1), 3), round(z1 + 0.14 * (k % 2 == 1) - 0.02 * (k % 2 == 0), 3))
+                px, py = c.get("pan", (0.5, 0.5))
+                d["pan"] = (min(1, max(0, px + (0.18 if k % 2 else -0.12))), py)
+                d.setdefault("punch", True)
+            novas.append(d)
+    CENAS = novas
+
 # ---------------- cenas ----------------
 partes = []
 for i, c in enumerate(CENAS):
     dur, vel = dur_de(i), c.get("vel", 1.0)
     out = os.path.join(pasta, "tmp", f"parte_{i:02d}.mp4")
     partes.append(out)
-    chave = json.dumps({k: v for k, v in c.items() if k not in ("texto", "tag")}, sort_keys=True) + f"{dur:.3f}"
-    if os.path.exists(out) and open(out + ".key").read() == chave:
-        continue
     arq = os.path.join(SRC, c["src"])
+    # a chave inclui a data do arquivo de origem: se o clipe for refeito, a cena é remontada
+    chave = json.dumps({k: v for k, v in c.items() if k not in ("texto", "tag")}, sort_keys=True) + \
+            f"{dur:.3f}|{os.path.getmtime(arq):.0f}" + \
+            (f"|{os.path.getmtime(os.path.join(SRC, c['sobre'])):.0f}" if c.get("sobre") else "")
+    if os.path.exists(out) and os.path.exists(out + ".key") and open(out + ".key").read() == chave:
+        continue
     imagem = arq.lower().endswith((".jpg", ".png"))
     f = []
     if vel != 1.0:
@@ -58,6 +91,11 @@ for i, c in enumerate(CENAS):
     ys = f"(ih-oh)*{py}" + (f"+{a*0.8}*sin(41*t+2)+{a*0.5}*sin(23*t)" if a else "")
     f.append(f"crop={W}:{H}:x='max(0,min(iw-ow,{xs}))':y='max(0,min(ih-oh,{ys}))'")
     f.append(f"setsar=1,fps={FPS},eq=contrast=1.07:saturation={c.get('sat', 1.15)}")
+    if c.get("sobre"):
+        # sobreposição transparente (PNG 1080x1920) por cima do plano, ex.: anel ilustrado no céu real
+        png = os.path.join(SRC, c["sobre"])
+        f.append(f"null[b];movie='{png}',loop=-1:size=1,setpts=N/({FPS}*TB),format=rgba,"
+                 f"fade=t=in:st=0:d=0.5:alpha=1[o];[b][o]overlay=0:0:shortest=1")
     if c.get("chuva"):
         # chuva de vidro horizontal (ilustração): faíscas esticadas varrendo a tela de lado
         f.append("format=gbrp[q];"
@@ -66,11 +104,28 @@ for i, c in enumerate(CENAS):
                  "rotate=-0.18:fillcolor=black,"
                  "format=gbrp,colorchannelmixer=rr=0.75:gg=0.9:bb=1.0[r];"
                  "[q][r]blend=all_mode=screen:shortest=1,format=yuv420p")
+    if c.get("pixel"):
+        # pixelização progressiva (o mundo "virando" grade de computador): blocos de a até b pixels, em 8 degraus
+        a, b = c["pixel"]
+        for i in range(8):
+            px = max(1, round(a + (b - a) * (i + 1) / 8))
+            if px > 1:
+                f.append(f"pixelize=w={px}:h={px}:enable='between(t,{dur * i / 8:.3f},{dur * (i + 1) / 8:.3f})'")
     if c.get("rgb"):
         # aberração cromática (glitch) nos primeiros 0,35 s do corte
         f.append("rgbashift=rh=-14:bh=14:gv=6:enable='lt(t,0.35)'")
+    if c.get("apaga"):
+        # o plano escurece até o preto no fim (ex.: o Sol apagando)
+        f.append(f"fade=t=out:st={dur * c['apaga']:.3f}:d={dur * (1 - c['apaga']) * 0.8:.3f}")
     if c.get("flash"):
         f.append("fade=t=in:st=0:d=0.15:color=white")
+    if not imagem:
+        # clipe que acaba antes da cena: avisa e congela o último quadro (senão o vídeo inteiro adianta)
+        resto = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                                               "-of", "csv=p=0", arq])) - c.get("ss", 0)
+        if resto < dur * vel:
+            print(f"AVISO: {c['src']} tem só {resto:.2f}s a partir de {c.get('ss', 0)} (cena pede {dur * vel:.2f}s)")
+        f.append("tpad=stop_mode=clone:stop_duration=30")
     entrada = ["-loop", "1", "-framerate", str(FPS), "-t", f"{dur + 0.1:.3f}", "-i", arq] if imagem else \
               ["-ss", str(c.get("ss", 0)), "-t", f"{dur * vel + 0.2:.3f}", "-i", arq]
     run(["ffmpeg", "-v", "error", "-y", *entrada, "-filter_complex", ",".join(f).replace(",split", ",split"),
@@ -117,8 +172,20 @@ for gi, g in enumerate(grupos):
 
 ROTULOS = {"real": ("Real", "● IMAGEM REAL"), "sim": ("Anim", "SIMULAÇÃO NASA"),
            "anim": ("Anim", "ANIMAÇÃO"), "ilus": ("Anim", "ILUSTRAÇÃO")}
-for i, c in enumerate(CENAS):
-    t0, t1 = c["t"], c["t"] + dur_de(i)
+for i, c in enumerate(ORIG):
+    t0, t1 = c["t"], _fim_orig(i)
+    if c.get("conta"):
+        # contador subindo: ("0 → 384.000 KM") -> conta=(0, 384000, " KM"); 0,9 s de animação, depois fica
+        a, b, suf = (list(c["conta"]) + [""])[:3]
+        passos = 18
+        for k in range(passos + 1):
+            ta = t0 + 0.1 + 0.9 * k / passos
+            tb = t0 + 0.1 + 0.9 * (k + 1) / passos if k < passos else t1
+            x = 1 - (1 - k / passos) ** 3
+            v = a + (b - a) * x
+            casas = 1 if isinstance(b, float) and not float(b).is_integer() else 0
+            num = f"{v:,.{casas}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+            ev.append(f"Dialogue: 2,{ts(ta)},{ts(tb)},Contador,,0,0,0,,{num}{suf}")
     if c.get("tag") and getattr(cfg, "ETIQUETAS", True):
         estilo, texto = ROTULOS[c["tag"]]
         ev.append(f"Dialogue: 1,{ts(t0)},{ts(t1)},{estilo},,0,0,0,,{texto}")
@@ -142,9 +209,10 @@ WrapStyle: 0
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Legenda,Montserrat Thin ExtraBold,98,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,0,0,1,7,4,2,70,70,600,1
+Style: Legenda,Montserrat Thin ExtraBold,98,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,0,0,1,7,4,2,70,70,{getattr(cfg, "LEGENDA_MV", 600)},1
 Style: Destaque,Montserrat Thin ExtraBold,84,&H0000E5FF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,1,0,1,6,5,8,60,60,330,1
-Style: Final,Montserrat Thin ExtraBold,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,2,0,1,8,6,5,60,60,0,1
+Style: Contador,Montserrat Thin ExtraBold,150,&H0000E5FF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,2,0,1,9,6,8,60,60,480,1
+Style: Final,Montserrat Thin ExtraBold,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,2,0,1,8,6,{getattr(cfg, "FINAL_ALIN", 5)},60,60,{getattr(cfg, "FINAL_MV", 0)},1
 Style: Real,Montserrat Thin ExtraBold,40,&H00FFFFFF,&H00FFFFFF,&H001E1EE6,&H00000000,0,0,0,0,100,100,2,0,3,12,0,8,40,40,230,1
 Style: Anim,Montserrat Thin ExtraBold,30,&H00FFFFFF,&H00FFFFFF,&H70000000,&H00000000,0,0,0,0,100,100,2,0,3,10,0,8,40,40,230,1
 Style: Credito,Montserrat Thin ExtraBold,28,&H40FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,1,0,1,2,0,2,40,40,90,1
@@ -179,7 +247,7 @@ voz = ("[1:a]aresample=44100,highpass=f=75,equalizer=f=170:t=q:w=1:g=2.5,equaliz
        "aecho=0.9:0.6:35|60:0.10|0.06,aformat=channel_layouts=stereo,"
        f"apad,atrim=0:{FIM}")
 if AMBIENTE:
-    entradas += ["-i", os.path.join(SFX, f"{AMBIENTE}.wav")]
+    entradas += ["-i", os.path.join(pasta, AMBIENTE) if AMBIENTE.endswith(".wav") else os.path.join(SFX, f"{AMBIENTE}.wav")]
     na = len(sons) + 2
     voz += ",asplit[voz][chave];"
     mix += (f"[{na}:a]atrim=0:{FIM},volume={getattr(cfg, 'AMBIENTE_DB', -10)}dB[amb0];"
@@ -192,13 +260,31 @@ elif sons:
             f"amix=inputs={len(sons) + 1}:normalize=0:duration=first"
 else:
     audio = voz
+# CRONO = (t0, t1): cronômetro no canto que conta 00:00 -> 00:15 entre t0 e t1 e depois pisca em vermelho
+crono = ""
+if getattr(cfg, "CRONO", None):
+    c0, c1, c2 = (tuple(cfg.CRONO) + (FIM,))[:3]; fonte = os.path.join(FONTS, "Montserrat-ExtraBold.ttf")
+    base = f"fontfile={fonte}:fontsize=72:x=w-tw-60:y=70:box=1:boxcolor=black@0.55:boxborderw=18"
+    crono = (f"drawtext={base}:fontcolor=white:enable='lt(t,{c1})':"
+             f"text='00\\:%{{eif\\:min(15\\,max(0\\,(t-{c0})*15/{c1 - c0}))\\:d\\:2}}',"
+             f"drawtext={base}:fontcolor=0xE63946:enable='gte(t,{c1})*lt(t,{c2})*lt(mod(t,0.6),0.4)':text='00\\:15',")
+# DIAS = [(t, "DIA 1"), ...]: rótulo fixo no canto que troca nos tempos dados
+if getattr(cfg, "DIAS", None):
+    fonte = os.path.join(FONTS, "Montserrat-ExtraBold.ttf"); ds = list(cfg.DIAS) + [(FIM, "")]
+    for (ta, rot), (tb, _) in zip(ds, ds[1:]):
+        crono += (f"drawtext=fontfile={fonte}:fontsize=58:x=w-tw-60:y=70:box=1:boxcolor=black@0.55:boxborderw=16:"
+                  f"fontcolor=0xFF8A3D:enable='between(t,{ta},{tb})':text='{rot}',")
 saida = os.path.join(pasta, cfg.SAIDA)
 run(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-i", os.path.join(pasta, "narracao.mp3"), *entradas,
      "-filter_complex",
      audio + f",atrim=0:{FIM},loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.84:level=disabled[a];"
-     f"[0:v]vignette=angle=0.55,noise=alls=5:allf=t,ass={ass_path}:fontsdir={FONTS},"
+     f"[0:v]vignette=angle=0.55,noise=alls=5:allf=t,ass={ass_path}:fontsdir={FONTS}," +
+     (f"drawbox=x=0:y=0:w='iw*t/{FIM}':h=10:color=0xFFE500@0.9:t=fill," if getattr(cfg, "PROGRESSO", False) else "") +
+     crono +
      f"fade=t=out:st={FIM - 0.4}:d=0.4,trim=0:{FIM}[v]",
      "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "medium", "-crf", "19",
      "-r", str(FPS), "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-t", f"{FIM}",
      "-movflags", "+faststart", saida])
-print("PRONTO:", saida)
+foto = sum(dur_de(i) for i, c in enumerate(CENAS) if c["src"].lower().endswith((".jpg", ".png")))
+print(f"PRONTO: {saida} | cortes: {len(CENAS)} | maior plano: {max(dur_de(i) for i in range(len(CENAS))):.2f}s | "
+      f"vídeo em movimento: {100 * (1 - foto / FIM):.0f}%")

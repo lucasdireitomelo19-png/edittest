@@ -94,7 +94,7 @@ for i, c in enumerate(CENAS):
 if jobs:
     jp = os.path.join(TMP, "jobs.json"); json.dump(jobs, open(jp, "w"))
     env = dict(os.environ, NODE_PATH=subprocess.check_output(["npm", "root", "-g"], text=True).strip())
-    subprocess.run(["node", os.path.join(ANIM, "render_anim.js"), jp], check=True, env=env)
+    subprocess.run(["node", os.path.join(ANIM, "render_anim.js"), jp, getattr(cfg, "ANIM_PAGE", "anim.html")], check=True, env=env)
 
 # ---------------- planos ----------------
 partes = []
@@ -103,6 +103,8 @@ for i, c in enumerate(CENAS):
     out = os.path.join(TMP, f"parte_{i:03d}.mp4")
     partes.append(out)
     chave = json.dumps({k: v for k, v in c.items() if k not in ("texto", "tag", "credito")}, sort_keys=True) + f"{dur:.3f}"
+    if c.get("_arq"):  # animação refeita -> plano refeito
+        chave += f"|{os.path.getmtime(c['_arq']):.0f}"
     if os.path.exists(out) and os.path.exists(out + ".key") and open(out + ".key").read() == chave:
         continue
     anim = c["src"].startswith("anim:")
@@ -127,7 +129,8 @@ for i, c in enumerate(CENAS):
         xs = f"(iw-ow)*{px}" + (f"+{a}*sin(47*t)+{a*0.6}*sin(29*t+1)" if a else "")
         ys = f"(ih-oh)*{py}" + (f"+{a*0.8}*sin(41*t+2)+{a*0.5}*sin(23*t)" if a else "")
         f.append(f"crop={W}:{H}:x='max(0,min(iw-ow,{xs}))':y='max(0,min(ih-oh,{ys}))'")
-    f.append(f"setsar=1,fps={FPS}" + ("" if anim else f",eq=contrast=1.06:saturation={c.get('sat', 1.12)}"))
+    sat_anim = c.get("p", {}).get("sat", 1.0) if anim else 1.0   # dessaturação das animações (p.sat)
+    f.append(f"setsar=1,fps={FPS}" + ((f",eq=saturation={sat_anim}" if sat_anim != 1.0 else "") if anim else f",eq=contrast=1.06:saturation={c.get('sat', 1.12)}"))
     if c.get("flash"):
         f.append("fade=t=in:st=0:d=0.15:color=white")
     if c.get("escurecer"):
@@ -183,6 +186,9 @@ for i, c in enumerate(CENAS):
     if cr: ev.append(f"Dialogue: 1,{ts(t0)},{ts(t1)},Credito,,0,0,0,,{cr}")
     if c.get("texto"):
         ev.append(f"Dialogue: 2,{ts(t0 + 0.1)},{ts(t1)},Destaque,,0,0,0,," r"{\fad(150,150)}" + c["texto"])
+# CANTO = [(t0, t1, "texto")]: marcador fixo no canto (ex.: população / hora do dia)
+for t0, t1, txt in getattr(cfg, "CANTO", []):
+    ev.append(f"Dialogue: 1,{ts(t0)},{ts(t1)},Canto,,0,0,0,,{txt}")
 if getattr(cfg, "FINAL", ""):
     fim_voz = palavras[-1]["t"] + palavras[-1]["d"]
     ev.append(f"Dialogue: 4,{ts(fim_voz + 0.2)},{ts(FIM)},Final,,0,0,0,," r"{\fad(400,0)}" + cfg.FINAL)
@@ -199,6 +205,7 @@ Style: Destaque,Montserrat Thin ExtraBold,72,&H0040C8FF,&H00FFFFFF,&H00000000,&H
 Style: Final,Montserrat Thin ExtraBold,96,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,3,0,1,6,4,5,100,100,0,1
 Style: Real,Montserrat Thin ExtraBold,26,&H00FFFFFF,&H00FFFFFF,&H001E1EE6,&H00000000,0,0,0,0,100,100,2,0,3,8,0,7,50,50,45,1
 Style: Anim,Montserrat Thin ExtraBold,22,&H00FFFFFF,&H00FFFFFF,&H70000000,&H00000000,0,0,0,0,100,100,2,0,3,7,0,7,50,50,45,1
+Style: Canto,Montserrat Thin ExtraBold,26,&H0066D1FF,&H00FFFFFF,&H00000000,&H90000000,0,0,0,0,100,100,2,0,1,2.5,1,7,50,50,100,1
 Style: Credito,Montserrat Thin ExtraBold,20,&H50FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,1,0,1,1.5,0,9,40,40,40,1
 
 [Events]

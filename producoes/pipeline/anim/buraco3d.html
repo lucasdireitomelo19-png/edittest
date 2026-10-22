@@ -1,0 +1,289 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./three.module.min.js"}}</script>
+</head>
+<body>
+<script type="module">
+// "Buraco atravessando a Terra" em 3D (1080x1920), com bloom.
+// window.desenhar(cena, t, p) desenha um quadro; as cenas estão no fim do arquivo (CENAS).
+import * as THREE from 'three';
+import { EffectComposer } from './jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from './jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from './jsm/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from './jsm/postprocessing/OutputPass.js';
+
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+renderer.localClippingEnabled = true;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.domElement.id = 'c'; document.body.appendChild(renderer.domElement);
+const camera = new THREE.PerspectiveCamera(40, W / H, 0.01, 2000);
+
+function rng(seed) { let s = seed % 2147483647; if (s <= 0) s += 2147483646;
+  return () => (s = s * 16807 % 2147483647) / 2147483647; }
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+const lerp = (a, b, k) => a + (b - a) * k;
+function canvasTex(w, h, pintar, srgb = true) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; pintar(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c); if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; return t;
+}
+function carregar(url) { return new Promise(r => new THREE.TextureLoader().load(url, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; r(t); })); }
+
+// ======================= cena 1: a Terra em corte =======================
+const cenaTerra = new THREE.Scene();
+{ // estrelas
+  const r = rng(3), n = 4000, pos = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) { const v = new THREE.Vector3(r() - 0.5, r() - 0.5, r() - 0.5).normalize().multiplyScalar(300 + r() * 300); pos.set([v.x, v.y, v.z], i * 3); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  cenaTerra.add(new THREE.Points(g, new THREE.PointsMaterial({ color: '#cfd8ff', size: 1.3, sizeAttenuation: false })));
+}
+const solLuz = new THREE.DirectionalLight('#fff6ea', 3.0); solLuz.position.set(-4, 2.5, 3); cenaTerra.add(solLuz);
+cenaTerra.add(new THREE.AmbientLight('#334466', 0.6));
+const terra = new THREE.Group(); cenaTerra.add(terra);
+// cunha retirada: x>0 e z>0 (o túnel corre pelo eixo Y, na aresta da cunha)
+const corteA = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0), corteB = new THREE.Plane(new THREE.Vector3(0, 0, -1), 0);
+const CAMADAS = [  // raio (fração), cor
+  [1.0, '#6b4f3a'], [0.985, '#c2521f'], [0.86, '#d9692a'], [0.546, '#f0a234'], [0.19, '#fff1b8']];
+function texCorte(semi) {
+  // textura do plano de corte: anéis das camadas com brilho, e o túnel escuro na aresta (x=0)
+  return canvasTex(1024, 1024, (g, w, h) => {
+    const cx = w / 2, cy = h / 2, R = w / 2;
+    g.clearRect(0, 0, w, h);
+    const grad = g.createRadialGradient(cx, cy, 0, cx, cy, R);
+    grad.addColorStop(0, '#fffbe6'); grad.addColorStop(0.12, '#fff0a8'); grad.addColorStop(0.19, '#ffd25a');
+    grad.addColorStop(0.2, '#f5a12e'); grad.addColorStop(0.53, '#e2771f'); grad.addColorStop(0.55, '#c9521a');
+    grad.addColorStop(0.86, '#a8401a'); grad.addColorStop(0.97, '#7a2f16'); grad.addColorStop(0.985, '#4a3526'); grad.addColorStop(1, '#3b2a1f');
+    g.fillStyle = grad; g.beginPath(); g.arc(cx, cy, R - 1, 0, 6.283); g.fill();
+    // fronteiras das camadas
+    g.strokeStyle = 'rgba(255,240,200,0.35)'; g.lineWidth = 3;
+    for (const f of [0.19, 0.546, 0.985]) { g.beginPath(); g.arc(cx, cy, R * f, 0, 6.283); g.stroke(); }
+    // textura de convecção no manto
+    const r = rng(semi ? 5 : 9);
+    for (let i = 0; i < 2600; i++) { const a = r() * 6.283, d = R * (0.56 + r() * 0.42);
+      g.fillStyle = `rgba(${255},${120 + r() * 80},${40 + r() * 40},${0.05 + r() * 0.08})`;
+      g.beginPath(); g.ellipse(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 6 + r() * 22, 3 + r() * 8, a + 1.57, 0, 6.283); g.fill(); }
+    // túnel: faixa escura vertical no centro (fica na aresta da cunha)
+    g.fillStyle = '#050608'; g.fillRect(cx - 9, cy - R, 18, 2 * R);
+    g.strokeStyle = 'rgba(255,200,120,0.5)'; g.lineWidth = 2; g.strokeRect(cx - 9, cy - R, 18, 2 * R);
+  });
+}
+const SUPERFICIE_ESPESSURA = 1.0, facesCorte = [];
+let matAtm;
+function cortada(sim) { matSuperficie.clippingPlanes = sim ? [corteA, corteB] : []; matAtm.clippingPlanes = sim ? [corteA, corteB] : [];
+  matSuperficie.needsUpdate = matAtm.needsUpdate = true; facesCorte.forEach(f => f.visible = sim); }
+let matSuperficie;
+async function montarTerra() {
+  const mapa = await carregar('tex/terra.jpg');
+  matSuperficie = new THREE.MeshStandardMaterial({ map: mapa, roughness: 0.85, metalness: 0, clippingPlanes: [corteA, corteB], clipIntersection: true, side: THREE.DoubleSide });
+  const esfera = new THREE.Mesh(new THREE.SphereGeometry(SUPERFICIE_ESPESSURA, 160, 120), matSuperficie);
+  terra.add(esfera);
+  // atmosfera
+  const atm = new THREE.Mesh(new THREE.SphereGeometry(1.025, 96, 64), new THREE.MeshBasicMaterial({ color: '#5aa0ff', transparent: true, opacity: 0.07, side: THREE.BackSide, clippingPlanes: [corteA, corteB], clipIntersection: true }));
+  terra.add(atm); matAtm = atm.material;
+  // faces do corte (meio disco em cada plano), emissivas para o bloom pegar no núcleo
+  const t1 = texCorte(true), t2 = texCorte(false);
+  const mk = (tex, keep) => new THREE.MeshStandardMaterial({ map: tex, emissiveMap: tex, emissive: '#ffffff', emissiveIntensity: 0.55, transparent: true,
+    side: THREE.DoubleSide, clippingPlanes: [keep], roughness: 1 });
+  const f1 = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mk(t1, new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)));
+  f1.rotation.y = Math.PI / 2; terra.add(f1); facesCorte.push(f1);   // plano x=0, só z>0
+  const f2 = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mk(t2, new THREE.Plane(new THREE.Vector3(1, 0, 0), 0)));
+  terra.add(f2); facesCorte.push(f2);          // plano z=0, só x>0
+  // boca do túnel nos polos
+  for (const s of [1, -1]) { const b = new THREE.Mesh(new THREE.CircleGeometry(0.03, 32), new THREE.MeshBasicMaterial({ color: '#000' }));
+    b.position.y = s * 1.001; b.rotation.x = -s * Math.PI / 2; terra.add(b); }
+}
+// marcador da pessoa no túnel: brilho + rastro
+const marca = new THREE.Group(); terra.add(marca);
+const brilhoTex = canvasTex(128, 128, (g, w) => { const gr = g.createRadialGradient(w / 2, w / 2, 0, w / 2, w / 2, w / 2);
+  gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.25, 'rgba(160,220,255,0.9)'); gr.addColorStop(1, 'rgba(80,160,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, w, w); });
+const marcaSprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: brilhoTex, color: '#bfe6ff', depthTest: false, transparent: true }));
+marcaSprite.scale.set(0.09, 0.09, 1); marca.add(marcaSprite);
+const RASTRO_N = 90, rastroPos = new Float32Array(RASTRO_N * 3);
+const rastroGeo = new THREE.BufferGeometry(); rastroGeo.setAttribute('position', new THREE.BufferAttribute(rastroPos, 3));
+const rastro = new THREE.Line(rastroGeo, new THREE.LineBasicMaterial({ color: '#9fdcff', transparent: true, opacity: 0.85, depthTest: false }));
+terra.add(rastro);
+// eixo de rotação (para o túnel de polo a polo)
+const eixo = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, 2.6, 8), new THREE.MeshBasicMaterial({ color: '#9fdcff' }));
+eixo.visible = false; terra.add(eixo);
+// o túnel visto do polo: faixa escura sobre o equador (só aparece na cena 'polo')
+const faixa = new THREE.Mesh(new THREE.BoxGeometry(2.02, 0.004, 0.06), new THREE.MeshBasicMaterial({ color: '#050608' }));
+faixa.position.y = 1.02; faixa.visible = false; cenaTerra.add(faixa);
+
+function posMarca(y) { marca.position.set(0.0, y, 0.0); }
+function desenharRastro(fn, t, janela) {
+  for (let i = 0; i < RASTRO_N; i++) { const tt = t - janela * (1 - i / (RASTRO_N - 1)); rastroPos.set([0, fn(tt), 0], i * 3); }
+  rastroGeo.attributes.position.needsUpdate = true;
+}
+
+// ======================= cena 2: dentro do túnel =======================
+const cenaTunel = new THREE.Scene();
+cenaTunel.fog = new THREE.FogExp2('#000000', 0.018);
+const rochaTex = canvasTex(1024, 1024, (g, w, h) => {
+  g.fillStyle = '#4a3a2e'; g.fillRect(0, 0, w, h); const r = rng(21);
+  for (let i = 0; i < 26000; i++) { const v = 40 + r() * 70; g.fillStyle = `rgba(${v + 20},${v},${v - 10},${0.25 + r() * 0.4})`;
+    g.beginPath(); g.ellipse(r() * w, r() * h, 1 + r() * 9, 1 + r() * 4, r() * 3, 0, 6.283); g.fill(); }
+  for (let i = 0; i < 90; i++) { g.strokeStyle = `rgba(20,14,10,${0.3 + r() * 0.4})`; g.lineWidth = 1 + r() * 3; g.beginPath();
+    let x = r() * w, y = r() * h; g.moveTo(x, y); for (let k = 0; k < 8; k++) { x += (r() - 0.5) * 80; y += r() * 60; g.lineTo(x, y); } g.stroke(); }
+});
+const magmaTex = canvasTex(1024, 1024, (g, w, h) => {
+  g.fillStyle = '#000'; g.fillRect(0, 0, w, h); const r = rng(33);
+  for (let i = 0; i < 160; i++) { g.strokeStyle = `rgba(255,${120 + r() * 100},${30 + r() * 40},${0.6 + r() * 0.4})`; g.lineWidth = 2 + r() * 7;
+    g.beginPath(); let x = r() * w, y = r() * h; g.moveTo(x, y); for (let k = 0; k < 10; k++) { x += (r() - 0.5) * 70; y += 20 + r() * 50; g.lineTo(x, y); } g.stroke(); }
+});
+rochaTex.repeat.set(6, 60); magmaTex.repeat.set(6, 60);
+const matTunel = new THREE.MeshStandardMaterial({ map: rochaTex, roughness: 0.95, emissiveMap: magmaTex, emissive: '#ff6a1a', emissiveIntensity: 0, side: THREE.BackSide, bumpMap: rochaTex, bumpScale: 3 });
+const TUNEL_L = 600;
+const tubo = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.4, TUNEL_L, 48, 1, true), matTunel);
+tubo.rotation.x = Math.PI / 2; tubo.position.z = -TUNEL_L / 2 + 10; cenaTunel.add(tubo);
+// anéis de reforço com luzes (no início do túnel) que somem com a profundidade
+const aneis = [];
+for (let i = 0; i < 40; i++) {
+  const a = new THREE.Mesh(new THREE.TorusGeometry(1.38, 0.035, 8, 64), new THREE.MeshStandardMaterial({ color: '#222', emissive: '#bfe0ff', emissiveIntensity: 2 }));
+  a.position.z = -i * 14; cenaTunel.add(a); aneis.push(a);
+}
+const luzCam = new THREE.PointLight('#ffe2c0', 30, 30, 1.6); cenaTunel.add(luzCam);
+const luzFrente = new THREE.PointLight('#ff8a3a', 0, 80, 1.2); cenaTunel.add(luzFrente);
+cenaTunel.add(new THREE.AmbientLight('#2a2420', 0.6));
+// poeira / brasas
+const nP = 1500, pP = new Float32Array(nP * 3), baseP = [];
+{ const r = rng(44); for (let i = 0; i < nP; i++) { const a = r() * 6.283, d = r() * 1.3; baseP.push([Math.cos(a) * d, Math.sin(a) * d, -r() * 120]); } }
+const geoP = new THREE.BufferGeometry(); geoP.setAttribute('position', new THREE.BufferAttribute(pP, 3));
+const matP = new THREE.PointsMaterial({ color: '#ffd9a0', size: 0.03, transparent: true, opacity: 0.8 });
+cenaTunel.add(new THREE.Points(geoP, matP));
+
+// boneco 3D (manequim articulado)
+function boneco() {
+  const g = new THREE.Group();
+  const roupa = new THREE.MeshStandardMaterial({ color: '#d9622b', roughness: 0.6 });
+  const pele = new THREE.MeshStandardMaterial({ color: '#c99a7a', roughness: 0.7 });
+  const escuro = new THREE.MeshStandardMaterial({ color: '#23262d', roughness: 0.5 });
+  const parte = (geo, m, x, y, z) => { const p = new THREE.Mesh(geo, m); p.position.set(x, y, z); return p; };
+  const tronco = parte(new THREE.CapsuleGeometry(0.17, 0.42, 6, 16), roupa, 0, 0.15, 0); g.add(tronco);
+  g.add(parte(new THREE.SphereGeometry(0.13, 24, 18), pele, 0, 0.62, 0));
+  g.add(parte(new THREE.SphereGeometry(0.135, 24, 18, 0, 6.283, 0, 1.4), escuro, 0, 0.65, 0));   // cabelo
+  const membro = (r, l, m) => { const j = new THREE.Group(); const c = new THREE.Mesh(new THREE.CapsuleGeometry(r, l, 4, 12), m); c.position.y = -l / 2 - r; j.add(c); return j; };
+  const juntas = {};
+  for (const s of [-1, 1]) {
+    const ombro = membro(0.055, 0.26, roupa); ombro.position.set(s * 0.23, 0.38, 0); g.add(ombro);
+    const cot = membro(0.05, 0.24, pele); cot.position.y = -0.37; ombro.add(cot);
+    const quad = membro(0.075, 0.34, escuro); quad.position.set(s * 0.1, -0.12, 0); g.add(quad);
+    const joe = membro(0.065, 0.32, escuro); joe.position.y = -0.48; quad.add(joe);
+    juntas[s] = { ombro, cot, quad, joe };
+  }
+  g.userData.juntas = juntas; return g;
+}
+const pessoa = boneco(); cenaTunel.add(pessoa);
+const objetos = [];
+{ const r = rng(51);
+  const mats = ['#1e2330', '#b8281e', '#d9b44a', '#d9b44a', '#8aa0b8', '#e8e8e8'];
+  const geos = [new THREE.BoxGeometry(0.08, 0.16, 0.012), new THREE.SphereGeometry(0.09, 16, 8, 0, 6.283, 0, 1.6), new THREE.CylinderGeometry(0.03, 0.03, 0.006, 20),
+    new THREE.CylinderGeometry(0.03, 0.03, 0.006, 20), new THREE.BoxGeometry(0.12, 0.05, 0.08), new THREE.BoxGeometry(0.1, 0.14, 0.004)];
+  geos.forEach((geo, i) => { const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: mats[i], metalness: i === 2 || i === 3 ? 0.8 : 0.2, roughness: 0.4 }));
+    m.userData = { x: (r() - 0.5) * 1.3, y: (r() - 0.5) * 1.6, z: (r() - 0.5) * 0.6, w: [r() * 2, r() * 2, r() * 2] }; cenaTunel.add(m); objetos.push(m); });
+}
+
+function poseQueda(t, abre = 1) {
+  const j = pessoa.userData.juntas;
+  for (const s of [-1, 1]) {
+    j[s].ombro.rotation.z = s * (1.9 + 0.15 * Math.sin(t * 1.3 + s)) * abre + s * 0.2 * (1 - abre);
+    j[s].cot.rotation.z = s * 0.4 * Math.sin(t * 0.9 + s);
+    j[s].quad.rotation.z = s * 0.35 * abre; j[s].quad.rotation.x = 0.25 * Math.sin(t * 1.1 + s * 2);
+    j[s].joe.rotation.x = 0.5 + 0.2 * Math.sin(t * 1.4 + s);
+  }
+}
+
+// ======================= render com bloom =======================
+const composerT = new EffectComposer(renderer), composerU = new EffectComposer(renderer);
+composerT.addPass(new RenderPass(cenaTerra, camera));
+const bloomT = new UnrealBloomPass(new THREE.Vector2(W, H), 0.55, 0.6, 0.82); composerT.addPass(bloomT); composerT.addPass(new OutputPass());
+composerU.addPass(new RenderPass(cenaTunel, camera));
+const bloomU = new UnrealBloomPass(new THREE.Vector2(W, H), 0.8, 0.5, 0.7); composerU.addPass(bloomU); composerU.addPass(new OutputPass());
+
+// ======================= estados de cada cena =======================
+function tunelEm(prof, t, vel, quente, flash = 0) {
+  // prof: 0 = boca do túnel; anda ao longo de -Z. quente 0..1 acende o magma
+  const z = -prof;
+  camera.position.set(Math.sin(t * 7) * 0.02 * vel, Math.cos(t * 5) * 0.02 * vel, z);
+  camera.rotation.set(0, 0, Math.sin(t * 0.7) * 0.15); camera.fov = 75; camera.updateProjectionMatrix();
+  luzCam.position.copy(camera.position);
+  matTunel.emissiveIntensity = quente * 2.2 + flash * 6;
+  matTunel.color.setRGB(1 - 0.3 * quente, 1 - 0.45 * quente, 1 - 0.6 * quente);
+  luzFrente.position.set(0, 0, z - 30); luzFrente.intensity = quente * 900 + flash * 4000;
+  luzFrente.color.set(flash > 0.3 ? '#fff6dd' : '#ff8a3a');
+  cenaTunel.fog.color.setRGB(0.25 * quente + flash, 0.08 * quente + 0.8 * flash, 0.02 * quente + 0.5 * flash);
+  for (const a of aneis) a.visible = quente < 0.3;
+  for (let i = 0; i < nP; i++) { const [x, y, zz] = baseP[i]; pP.set([x, y, z + 2 - ((((zz + t * vel * 30) % 120) + 120) % 120)], i * 3); }
+  geoP.attributes.position.needsUpdate = true; matP.color.set(quente > 0.4 ? '#ffb060' : '#d8d0c0');
+  pessoa.visible = false; objetos.forEach(o => o.visible = false);
+}
+
+const CENAS = {
+  // Terra em corte, câmera orbitando. p.de/p.ate: fase da queda (0 = polo norte, 0.5 = polo sul); p.dist, p.alt, p.orb
+  corte(t, d, p) {
+    const k = t / d, ang = lerp(p.ang0 ?? 0.55, p.ang1 ?? 0.95, ease(k)), dist = lerp(p.dist0 ?? 4.6, p.dist1 ?? 4.2, ease(k)), alt = p.alt ?? 0.45;
+    cortada(true);
+    camera.position.set(Math.cos(ang) * dist + 0.0, alt * dist, Math.sin(ang) * dist);
+    camera.lookAt(p.alvoX ?? 0, p.alvoY ?? 0, 0); camera.fov = p.fov ?? 32; camera.updateProjectionMatrix();
+    terra.rotation.set(0, 0, 0); eixo.visible = false;
+    const amort = p.amort ?? 0, ciclos = p.ciclos, fase0 = p.de ?? 0, fase1 = p.ate ?? fase0;
+    const fasePor = tt => ciclos ? fase0 + ciclos * tt / d : lerp(fase0, fase1, p.linear ? tt / d : ease(tt / d));
+    const yDe = tt => { const f = fasePor(Math.max(0, tt)); return Math.cos(2 * Math.PI * f) * 0.99 * Math.exp(-amort * f * 2.2); };
+    if (p.semMarca) { marca.visible = rastro.visible = false; } else { marca.visible = rastro.visible = true; posMarca(yDe(t)); desenharRastro(yDe, t, p.rastro ?? 0.6); }
+    marcaSprite.scale.setScalar(0.07 * dist / 3.2);
+    bloomT.strength = p.bloom ?? 0.55;
+    composerT.render();
+  },
+  // Terra vista do polo norte girando; o túnel (no equador) gira junto e a pessoa, que cai reto, raspa na parede
+  polo(t, d, p) {
+    camera.position.set(0, 4.6, 0.001); camera.lookAt(0, 0, 0); camera.fov = 34; camera.updateProjectionMatrix();
+    cortada(false); const rot = -t * 0.3; terra.rotation.set(0, rot, 0); eixo.visible = false;
+    faixa.visible = true; faixa.rotation.y = rot;
+    // a pessoa entra pela borda e segue reto (direção fixa); o túnel gira e ela encosta na parede
+    const k = clamp(t / d, 0, 1), r0 = 0.98 - k * 1.2;
+    marca.visible = true; rastro.visible = false; marca.position.set(r0, 1.03, 0);
+    marcaSprite.scale.setScalar(0.12);
+    bloomT.strength = 0.4; composerT.render(); faixa.visible = false; marca.position.set(0, 0, 0);
+  },
+  // Terra de lado com o eixo de rotação aceso: túnel de polo a polo
+  eixo(t, d, p) {
+    camera.position.set(3.6, 0.9, 2.2); camera.lookAt(0, 0, 0); camera.fov = 36; camera.updateProjectionMatrix();
+    cortada(true); terra.rotation.set(0, t * 0.4, 0); eixo.visible = true;
+    marca.visible = rastro.visible = true; const y = t2 => Math.cos(2 * Math.PI * (t2 / d) * 1.2) * 0.99;
+    posMarca(y(t)); desenharRastro(y, t, 0.5); bloomT.strength = 0.7; composerT.render();
+  },
+  // primeira pessoa caindo: p.prof0/p.prof1 (unidades do túnel), p.quente0/1, p.flash (no centro)
+  tunel(t, d, p) {
+    const k = t / d, prof = lerp(p.prof0 ?? 0, p.prof1 ?? 60, p.acel ? k * k : k), vel = (p.prof1 - p.prof0) / d / 20;
+    const quente = lerp(p.quente0 ?? 0, p.quente1 ?? 0, k), flash = p.flash ? 0.7 * Math.exp(-Math.pow((k - 0.5) / 0.07, 2)) : 0;
+    tunelEm(prof, t, vel, quente, flash);
+    bloomU.strength = 0.8 + flash * 1.5; composerU.render();
+  },
+  // a pessoa flutuando dentro do túnel, com objetos soltos; as paredes passam para cima
+  flutua(t, d, p) {
+    const quente = p.quente ?? 0, vel = p.vel ?? 1;
+    tunelEm(0, t, 0, quente, 0);
+    rochaTex.offset.y = magmaTex.offset.y = -t * 0.9 * vel;     // parede "subindo"
+    camera.position.set(lerp(p.x0 ?? 0.2, p.x1 ?? -0.15, ease(t / d)), 0.15, lerp(p.z0 ?? 3.6, p.z1 ?? 3.0, ease(t / d)) - 20);
+    camera.rotation.set(0, 0, 0); camera.fov = 50; camera.updateProjectionMatrix();
+    luzCam.position.set(1.0, 1.2, -17.5); luzCam.color.set(quente > 0.4 ? '#ff9a50' : '#ffe8d0'); luzCam.intensity = quente > 0.4 ? 5 : 7;
+    matTunel.emissiveIntensity = quente * 1.2; luzFrente.intensity = quente * 150;
+    pessoa.visible = true; pessoa.position.set(0, -0.05, -20); pessoa.rotation.set(0.5 + Math.sin(t * 0.5) * 0.25, t * 0.35 + (p.giro ?? 0), Math.sin(t * 0.6) * 0.3);
+    poseQueda(t, 1);
+    objetos.forEach((o, i) => { const u = o.userData; o.visible = true;
+      o.position.set(u.x + Math.sin(t * 0.7 + i) * 0.08, u.y + Math.cos(t * 0.6 + i) * 0.08, -20 + u.z);
+      o.rotation.set(u.w[0] * t, u.w[1] * t, u.w[2] * t); });
+    bloomU.strength = 0.35; bloomU.threshold = 0.9; composerU.render(); bloomU.threshold = 0.7;
+    rochaTex.offset.y = magmaTex.offset.y = 0;
+  },
+};
+
+await montarTerra();
+window.desenhar = (cena, t, d, p) => CENAS[cena](t, d, p || {});
+window.pronto = true;
+</script>
+</body></html>

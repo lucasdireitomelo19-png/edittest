@@ -1,0 +1,647 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"MX";src:url("../fonts/Montserrat-ExtraBold.ttf")}
+  @font-face{font-family:"MM";src:url("Montserrat-Medium.ttf")}
+  html,body{margin:0;background:#070b1a;overflow:hidden}canvas{display:block}
+</style>
+<script src="geo/topojson-client.min.js"></script>
+<script src="geo/land.js"></script>
+<script src="geo/paises.js"></script>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// Motion graphics "5 maneiras de o mundo acabar" (1920x1080). window.desenhar(cena, t, dur, p).
+// Cada cena é única. Mapas com dados reais (Natural Earth via world-atlas).
+const W = 1920, H = 1080, CX = W / 2, CY = H / 2;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const P = { bg1: '#070b1a', bg2: '#121a3a', mar: '#0e2a47', mar2: '#0a1f36', terra: '#2c4a5e', terra2: '#3d6178', borda: '#6f90a8',
+  laranja: '#f4a261', verm: '#e76f51', ouro: '#ffd166', branco: '#f4f1e8', cinza: '#8a93b8', escuro: '#1b2240', azul: '#4cc9f0',
+  magma: '#ff6b2c', rocha: '#5a4636', rocha2: '#3e3027', verde: '#7cc98a', roxo: '#9b7bff' };
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+const easeOut = x => { x = clamp(x, 0, 1); return 1 - (1 - x) ** 3; };
+const back = x => { x = clamp(x, 0, 1); const c = 1.7; return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2; };
+const lerp = (a, b, k) => a + (b - a) * k;
+const RAD = Math.PI / 180;
+function rng(seed) { let a = Math.imul(seed + 1, 2654435761) >>> 0; return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const EST = (() => { const r = rng(23), a = []; for (let i = 0; i < 420; i++) a.push([r() * W, r() * H, r() * 1.6 + 0.3, r()]); return a; })();
+const fmt = n => Math.round(n).toLocaleString('pt-BR');
+
+function fundo(t, estrelas = 1, c1 = P.bg2, c2 = P.bg1) {
+  const g = ctx.createRadialGradient(CX, CY * 0.8, 100, CX, CY, W * 0.75); g.addColorStop(0, c1); g.addColorStop(1, c2);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  if (estrelas > 0) for (const [x, y, r, f] of EST) { ctx.globalAlpha = estrelas * (0.25 + 0.35 * Math.abs(Math.sin(t * 0.9 + f * 30)));
+    ctx.fillStyle = P.branco; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); }
+  ctx.globalAlpha = 1;
+}
+function vinheta(a = 0.55) {
+  const g = ctx.createRadialGradient(CX, CY, H * 0.45, CX, CY, W * 0.68); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${a})`);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+}
+function txt(s, x, y, size, cor = P.branco, a = 1, alinh = 'center', fonte = 'MX') {
+  ctx.save(); ctx.globalAlpha = a; ctx.font = `${size}px ${fonte}`; ctx.textAlign = alinh; ctx.textBaseline = 'middle';
+  ctx.fillStyle = cor; ctx.fillText(s, x, y); ctx.restore();
+}
+function sobe(s, x, y, size, t, t0 = 0, cor = P.branco, alinh = 'center', fonte = 'MX') {
+  const e = back((t - t0) / 0.5); if (e <= 0) return;
+  ctx.save(); ctx.globalAlpha = clamp(e, 0, 1); ctx.translate(0, (1 - e) * 40); txt(s, x, y, size, cor, 1, alinh, fonte); ctx.restore();
+}
+function pilula(s, x, y, size, fundoCor, cor, a = 1) {
+  ctx.save(); ctx.globalAlpha = a; ctx.font = `${size}px MX`; const w = ctx.measureText(s).width + size * 1.2, h = size * 1.7;
+  ctx.fillStyle = fundoCor; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, h / 2); ctx.fill();
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = cor; ctx.fillText(s, x, y + 2); ctx.restore();
+}
+function brilho(x, y, r, cor, a = 1) {
+  ctx.save(); ctx.globalAlpha = a; const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, cor); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, 2 * r, 2 * r); ctx.restore();
+}
+function circ(x, y, r, cor) { ctx.fillStyle = cor; ctx.beginPath(); ctx.arc(x, y, Math.max(0, r), 0, 6.283); ctx.fill(); }
+function anel(x, y, r, cor, lw, a0 = 0, a1 = 6.283) { ctx.strokeStyle = cor; ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(x, y, Math.max(0, r), a0, a1); ctx.stroke(); }
+function flash(t, t0, d = 0.5) { const k = (t - t0) / d; if (k < 0 || k > 1) return; ctx.fillStyle = `rgba(255,250,235,${(1 - k) ** 2})`; ctx.fillRect(0, 0, W, H); }
+function pino(x, y, t, rotulo, sub, cor = P.verm) {
+  const e = back(t / 0.5); if (e <= 0) return;
+  for (let k = 0; k < 2; k++) { const f = ((t * 0.7 + k * 0.5) % 1); anel(x, y, 10 + f * 60, `rgba(231,111,81,${(1 - f) * 0.8})`, 3); }
+  ctx.save(); ctx.translate(x, y); ctx.scale(e, e); circ(0, 0, 13, cor); circ(0, 0, 5, P.branco); ctx.restore();
+  if (rotulo) { const a = ease((t - 0.3) / 0.4); ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = P.branco; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x + 16, y - 16); ctx.lineTo(x + 70, y - 70); ctx.lineTo(x + 110, y - 70); ctx.stroke(); ctx.restore();
+    txt(rotulo, x + 120, y - 74, 46, P.branco, a, 'left'); if (sub) txt(sub, x + 122, y - 30, 30, P.ouro, a, 'left', 'MM'); }
+}
+// pedra irregular com crateras
+function pedra(x, y, R, rot, seed = 3, cor1 = '#6b5d52', cor2 = '#463b33') {
+  const r = rng(seed); const pts = []; for (let i = 0; i < 28; i++) pts.push(1 + (r() - 0.5) * 0.28);
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+  const g = ctx.createRadialGradient(-R * 0.35, -R * 0.35, R * 0.1, 0, 0, R * 1.1); g.addColorStop(0, cor1); g.addColorStop(1, cor2);
+  ctx.fillStyle = g; ctx.beginPath(); pts.forEach((k, i) => { const a = i / 28 * 6.283; const px = Math.cos(a) * R * k, py = Math.sin(a) * R * k * 0.86; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }); ctx.closePath(); ctx.fill();
+  for (let i = 0; i < 7; i++) { const a = r() * 6.283, d = r() * 0.6 * R, rr = R * (0.06 + r() * 0.1); circ(Math.cos(a) * d, Math.sin(a) * d * 0.86, rr, 'rgba(0,0,0,0.22)'); }
+  ctx.restore();
+}
+
+// ---------------- geografia ----------------
+const LAND = topojson.feature(TOPO_LAND, TOPO_LAND.objects.land);
+const FRONT = topojson.mesh(TOPO_PAISES, TOPO_PAISES.objects.countries, (a, b) => a !== b);
+const polys = []; for (const f of (LAND.features || [LAND])) { const g = f.geometry || f; if (g.type === 'Polygon') polys.push(g.coordinates); else for (const c of g.coordinates) polys.push(c); }
+const merc = lat => Math.log(Math.tan(Math.PI / 4 + clamp(lat, -85, 85) * RAD / 2)) / RAD;
+// mapa Mercator: centro (lon0, lat0), k = px por grau
+function mapa(lon0, lat0, k, opc = {}) {
+  const pr = (lon, lat) => [CX + (lon - lon0) * k, CY - (merc(lat) - merc(lat0)) * k];
+  ctx.fillStyle = opc.mar || P.mar2; ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.strokeStyle = 'rgba(120,150,190,0.12)'; ctx.lineWidth = 1;
+  const passo = k > 40 ? 5 : k > 12 ? 10 : 20;
+  for (let L = -180; L <= 180; L += passo) { const [x] = pr(L, 0); ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+  for (let L = -80; L <= 80; L += passo) { const [, y] = pr(0, L); ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  ctx.restore();
+  const p = new Path2D();
+  for (const poly of polys) for (const ring of poly) { let prev = null; ring.forEach(([lon, lat], i) => {
+    const [x, y] = pr(lon, lat); (i && Math.abs(lon - prev) < 180) ? p.lineTo(x, y) : p.moveTo(x, y); prev = lon; }); p.closePath(); }
+  ctx.fillStyle = opc.terra || P.terra; ctx.fill(p);
+  ctx.strokeStyle = opc.costa || P.borda; ctx.lineWidth = 1.4; ctx.stroke(p);
+  if (opc.fronteiras !== false) { ctx.save(); ctx.strokeStyle = 'rgba(200,220,240,0.25)'; ctx.lineWidth = 1; ctx.beginPath();
+    for (const line of FRONT.coordinates) line.forEach(([lon, lat], i) => { const [x, y] = pr(lon, lat); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); ctx.restore(); }
+  return pr;
+}
+// zoom suave de mapa: de (lon,lat,k) para (lon,lat,k)
+function mapaZoom(t, a, b, d = 2.6, opc) { const e = ease(t / d); const k = Math.exp(lerp(Math.log(a[2]), Math.log(b[2]), e));
+  return mapa(lerp(a[0], b[0], e), lerp(a[1], b[1], e), k, opc); }
+// globo ortográfico
+function globo(cx, cy, R, lon0, lat0, opc = {}) {
+  const f0 = lat0 * RAD;
+  const pr = (lon, lat) => { const l = (lon - lon0) * RAD, f = lat * RAD;
+    const cosc = Math.sin(f0) * Math.sin(f) + Math.cos(f0) * Math.cos(f) * Math.cos(l);
+    let x = Math.cos(f) * Math.sin(l), y = Math.cos(f0) * Math.sin(f) - Math.sin(f0) * Math.cos(f) * Math.cos(l);
+    if (cosc < 0) { const n = Math.hypot(x, y) || 1; x /= n; y /= n; }
+    return [cx + x * R, cy - y * R, cosc >= 0]; };
+  const g = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.3, R * 0.1, cx, cy, R);
+  g.addColorStop(0, opc.mar1 || '#1d5a85'); g.addColorStop(1, opc.mar2 || '#0b2440');
+  circ(cx, cy, R, g);
+  ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283); ctx.clip();
+  const p = new Path2D();
+  for (const poly of polys) for (const ring of poly) { let alguma = false; const pts = ring.map(([lo, la]) => { const q = pr(lo, la); if (q[2]) alguma = true; return q; });
+    if (!alguma) continue; pts.forEach(([x, y], i) => i ? p.lineTo(x, y) : p.moveTo(x, y)); p.closePath(); }
+  ctx.fillStyle = opc.terra || '#3f7a5a'; ctx.fill(p);
+  const s = ctx.createRadialGradient(cx - R * 0.4, cy - R * 0.4, R * 0.2, cx, cy, R * 1.05);
+  s.addColorStop(0, 'rgba(255,255,255,0.08)'); s.addColorStop(0.7, 'rgba(0,0,0,0)'); s.addColorStop(1, 'rgba(0,0,0,0.55)');
+  ctx.fillStyle = s; ctx.fillRect(cx - R, cy - R, 2 * R, 2 * R); ctx.restore();
+  anel(cx, cy, R + 4, opc.atm || 'rgba(120,200,255,0.35)', 8);
+  return pr;
+}
+// silhueta de cidade
+function cidade(base, seed, cor, alt = 1, x0 = 0, x1 = W) {
+  const r = rng(seed); ctx.fillStyle = cor; let x = x0;
+  while (x < x1) { const w = 30 + r() * 70, h = (40 + r() * 160 + (r() < 0.12 ? 160 : 0)) * alt; ctx.fillRect(x, base - h, w - 4, h); x += w; }
+  ctx.fillRect(x0, base, x1 - x0, H - base);
+}
+// camadas de rocha em corte
+function estratos(y0, t) {
+  const cores = ['#6b5340', '#5c4636', '#4c3a2e', '#3f3027', '#332720'];
+  for (let i = 0; i < 5; i++) { ctx.fillStyle = cores[i]; ctx.beginPath(); ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 40) ctx.lineTo(x, y0 + i * 95 + Math.sin(x * 0.004 + i) * 14); ctx.lineTo(W, H); ctx.fill(); }
+}
+function grama(y, cor = '#2e4a2c') { ctx.fillStyle = cor; ctx.fillRect(0, y - 10, W, 14); }
+
+// ---------------- cenas ----------------
+const CENAS = {};
+
+// ABERTURA
+CENAS.ab_risco = (t, d) => {   // céu do Cretáceo: um ponto riscando
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#1a2a4a'); g.addColorStop(0.6, '#c8734a'); g.addColorStop(1, '#f0b070');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const e = t / d, x = lerp(W * 0.85, W * 0.38, e), y = lerp(H * 0.08, H * 0.55, e);
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  const tg = ctx.createLinearGradient(x, y, x + 520, y - 380); tg.addColorStop(0, 'rgba(255,240,200,0.95)'); tg.addColorStop(1, 'rgba(255,180,120,0)');
+  ctx.strokeStyle = tg; ctx.lineWidth = 10 + e * 18; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 520, y - 380); ctx.stroke();
+  brilho(x, y, 60 + e * 140, 'rgba(255,245,220,1)'); ctx.restore();
+  // samambaias e árvores em silhueta
+  const r = rng(5); ctx.fillStyle = '#1b130e';
+  ctx.beginPath(); ctx.moveTo(0, H); for (let i = 0; i <= 48; i++) ctx.lineTo(i * 40, H - 120 - Math.sin(i * 0.7) * 30 - r() * 40); ctx.lineTo(W, H); ctx.fill();
+  for (let i = 0; i < 9; i++) { const bx = 80 + i * 230 + r() * 60, by = H - 140, h = 160 + r() * 200; ctx.fillRect(bx - 5, by - h, 10, h);
+    for (let k = 0; k < 7; k++) { const a = -Math.PI / 2 + (k - 3) * 0.42; ctx.beginPath(); ctx.moveTo(bx, by - h); ctx.quadraticCurveTo(bx + Math.cos(a) * 90, by - h + Math.sin(a) * 90 - 20, bx + Math.cos(a) * 160, by - h + Math.sin(a) * 160 + 40); ctx.lineWidth = 7; ctx.strokeStyle = '#1b130e'; ctx.stroke(); } }
+  vinheta(0.4);
+};
+CENAS.ab_escala = (t, d) => {   // rocha de 10 km x Everest x cidade
+  fundo(t, 0.5, '#1a2348', '#0a0f22'); const chao = 900;
+  ctx.fillStyle = '#121933'; ctx.fillRect(0, chao, W, H - chao);
+  const km = 62; // px por km
+  ctx.fillStyle = '#26315c'; ctx.beginPath(); ctx.moveTo(1180, chao); ctx.lineTo(1420, chao - 8.8 * km); ctx.lineTo(1660, chao); ctx.fill();
+  txt('EVEREST · 8,8 KM', 1420, chao - 8.8 * km - 40, 32, P.cinza, ease((t - 0.8) / 0.5));
+  cidade(chao, 9, '#3a4677', 0.05, 1700, 1900); txt('CIDADE', 1800, chao + 40, 26, P.cinza, ease((t - 1.1) / 0.5));
+  const e = easeOut(t / 1.6), R = 5 * km; pedra(740, lerp(-R, chao - R - 6, e), R, t * 0.05, 7);
+  const a = ease((t - 1.4) / 0.5); ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = P.ouro; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(330, chao); ctx.lineTo(330, chao - 2 * R); ctx.moveTo(315, chao); ctx.lineTo(345, chao); ctx.moveTo(315, chao - 2 * R); ctx.lineTo(345, chao - 2 * R); ctx.stroke(); ctx.restore();
+  txt('≈ 10 KM', 305, chao - R, 52, P.ouro, a, 'right');
+};
+CENAS.ab_especies = (t, d) => {   // 3 de cada 4 espécies
+  fundo(t, 0.3); const n = 10, s = 64, x0 = CX - (n - 1) * s / 2 - 420, y0 = CY - (n - 1) * s / 2;
+  for (let i = 0; i < 100; i++) { const cx = x0 + (i % n) * s, cy = y0 + Math.floor(i / n) * s, a = ease((t - i * 0.006) / 0.3);
+    const some = i % 4 !== 0, k = some ? ease((t - 1.0 - (i * 37 % 100) * 0.012) / 0.4) : 0;
+    ctx.globalAlpha = a; circ(cx, cy, 22 * (1 - 0.25 * k), some ? `rgb(${lerp(124, 70, k)},${lerp(201, 60, k)},${lerp(138, 70, k)})` : P.verde); ctx.globalAlpha = 1; }
+  sobe('3 DE CADA 4', 1180, 470, 104, t, 1.2, P.verm, 'left'); sobe('ESPÉCIES DESAPARECERAM', 1182, 570, 44, t, 1.4, P.branco, 'left');
+};
+CENAS.ab_titulo = (t, d) => {
+  fundo(t, 0.7, '#1c1636', '#06070f'); const z = 1 + t * 0.01; ctx.save(); ctx.translate(CX, CY); ctx.scale(z, z); ctx.translate(-CX, -CY);
+  const e = back(t / 0.6); ctx.save(); ctx.globalAlpha = clamp(e, 0, 1); ctx.translate(0, (1 - e) * 50); txt('5', CX, 380, 300, P.verm); ctx.restore();
+  sobe('MANEIRAS DE O MUNDO', CX, 610, 92, t, 0.3); sobe('ACABAR', CX, 720, 120, t, 0.45, P.ouro);
+  const ic = ['vulcao', 'rocha', 'raio', 'sol', 'bolha']; ic.forEach((k, i) => icone(k, CX + (i - 2) * 170, 880, 44, ease((t - 0.9 - i * 0.12) / 0.4)));
+  ctx.restore(); vinheta();
+};
+function icone(k, x, y, r, a = 1) {
+  if (a <= 0) return; ctx.save(); ctx.globalAlpha = a; ctx.translate(x, y);
+  anel(0, 0, r + 14, 'rgba(244,241,232,0.25)', 2);
+  if (k === 'vulcao') { ctx.fillStyle = P.rocha; ctx.beginPath(); ctx.moveTo(-r, r * 0.7); ctx.lineTo(-r * 0.25, -r * 0.4); ctx.lineTo(r * 0.25, -r * 0.4); ctx.lineTo(r, r * 0.7); ctx.fill();
+    circ(0, -r * 0.6, r * 0.28, P.magma); circ(-r * 0.25, -r * 0.85, r * 0.2, P.cinza); circ(r * 0.2, -r * 0.95, r * 0.24, P.cinza); }
+  if (k === 'rocha') { pedra(0, 0, r * 0.7, 0.4, 4); ctx.strokeStyle = P.laranja; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(r * 0.5, -r * 0.5); ctx.lineTo(r, -r); ctx.stroke(); }
+  if (k === 'raio') { brilho(0, 0, r, 'rgba(155,123,255,0.9)'); ctx.strokeStyle = P.branco; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(0, -r); ctx.lineTo(0, r); ctx.stroke(); circ(0, 0, 8, P.branco); }
+  if (k === 'sol') { brilho(0, 0, r * 1.2, 'rgba(255,140,60,0.8)'); circ(0, 0, r * 0.6, P.ouro); }
+  if (k === 'bolha') { anel(0, 0, r * 0.7, P.azul, 4); circ(0, 0, r * 0.66, 'rgba(10,10,20,0.9)'); anel(0, 0, r * 0.35, 'rgba(76,201,240,0.5)', 2); }
+  ctx.restore();
+}
+CENAS.ab_teaser = (t, d) => {   // uma bolha estranha no céu
+  fundo(t, 1, '#0d1030', '#020308'); const R = 120 + t * 25;
+  ctx.save(); ctx.beginPath(); ctx.arc(CX, CY, R, 0, 6.283); ctx.clip(); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  for (const [x, y, r, f] of EST) { const dx = x - CX, dy = y - CY; circ(CX - dx * 0.5, CY - dy * 0.5, r * 1.4, `rgba(150,220,255,${0.4 + 0.4 * f})`); }
+  ctx.restore(); anel(CX, CY, R, 'rgba(76,201,240,0.9)', 3); brilho(CX, CY, R * 1.5, 'rgba(76,201,240,0.15)');
+  sobe('?', CX, CY, 160, t, 0.5, 'rgba(244,241,232,0.9)');
+};
+CENAS.ab_contagem = (t, d) => {   // contagem regressiva 5 → 1
+  fundo(t, 0.4, '#151a36', '#05070f'); const ic = ['vulcao', 'rocha', 'raio', 'sol', 'bolha'];
+  for (let i = 0; i < 5; i++) { const x = 260 + i * 350, a = ease((t - i * 0.25) / 0.4);
+    ctx.save(); ctx.globalAlpha = a; txt(String(5 - i), x, 420, 200, i === 4 ? P.verm : P.branco); ctx.restore(); icone(ic[i], x, 680, 50, a); }
+  const k = clamp((t - 1.4) / (d - 1.6), 0, 1); ctx.fillStyle = P.verm; ctx.fillRect(260, 820, (1400) * k, 6);
+};
+
+// CARTÃO DE CAPÍTULO (um por capítulo, com fundo próprio)
+CENAS.cap = (t, d, p) => {
+  const tema = p.tema; fundo(t, tema === 'vacuo' ? 1 : 0.4, p.c1 || '#1a1530', '#04050b');
+  const r = rng(p.num * 11);
+  if (tema === 'vulcao') for (let i = 0; i < 160; i++) { const x = (r() * W + t * 20 * (r() - 0.5)) % W, y = (r() * H + t * (40 + r() * 60)) % H; circ(x, y, r() * 3 + 1, `rgba(180,170,160,${0.2 + r() * 0.3})`); }
+  if (tema === 'rocha') for (let i = 0; i < 26; i++) { const x = (r() * W * 1.4 - t * (200 + r() * 300)) % (W * 1.4), y = r() * H; ctx.strokeStyle = `rgba(255,200,150,${0.15 + r() * 0.3})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 140, y - 60); ctx.stroke(); }
+  if (tema === 'raio') { ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.translate(1500, CY); ctx.rotate(-0.5); const gl = ctx.createLinearGradient(0, -H, 0, H);
+    gl.addColorStop(0, 'rgba(155,123,255,0)'); gl.addColorStop(0.5, `rgba(155,123,255,${0.35 + 0.15 * Math.sin(t * 6)})`); gl.addColorStop(1, 'rgba(155,123,255,0)'); ctx.fillStyle = gl; ctx.fillRect(-30, -H, 60, 2 * H); ctx.restore(); }
+  if (tema === 'sol') { brilho(1550, CY, 700 + Math.sin(t * 2) * 20, 'rgba(255,120,40,0.45)'); }
+  if (tema === 'vacuo') { const R = 200 + t * 60; ctx.save(); ctx.beginPath(); ctx.arc(1500, CY, R, 0, 6.283); ctx.fillStyle = '#000'; ctx.fill(); ctx.restore(); anel(1500, CY, R, 'rgba(76,201,240,0.7)', 3); }
+  const e = back(t / 0.6); ctx.save(); ctx.globalAlpha = clamp(e, 0, 1); ctx.translate(380, CY); ctx.scale(e, e);
+  ctx.font = '520px MX'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineWidth = 6; ctx.strokeStyle = p.cor || P.verm; ctx.strokeText(String(p.num), 0, 20); ctx.restore();
+  const k = easeOut((t - 0.3) / 0.6); ctx.fillStyle = p.cor || P.verm; ctx.fillRect(700, CY - 4, 900 * k, 6);
+  sobe('NÚMERO ' + p.num, 700, CY - 70, 40, t, 0.4, p.cor || P.verm, 'left'); sobe(p.titulo, 700, CY + 80, 110, t, 0.55, P.branco, 'left');
+  vinheta();
+};
+
+// 5 · SUPERVULCÃO
+CENAS.v_camara = (t, d) => {   // câmara de magma esvazia e o chão afunda
+  const g = ctx.createLinearGradient(0, 0, 0, 420); g.addColorStop(0, '#2a3050'); g.addColorStop(1, '#5a5a70'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const k = ease((t - 1.0) / (d - 1.6)); const sup = 420;
+  // coluna de erupção
+  if (k > 0 && k < 1) for (let i = 0; i < 40; i++) { const r = rng(i + 3), x = CX + (r() - 0.5) * 420 * (1 + k), y = sup - r() * 400 * Math.min(1, k * 3) - t * 30 % 50; circ(x, y, 30 + r() * 60, `rgba(110,105,110,${0.35 * (1 - k * 0.5)})`); }
+  estratos(sup, t);
+  // câmara
+  const rx = 520 * (1 - 0.65 * k), ry = 150 * (1 - 0.6 * k); const gm = ctx.createRadialGradient(CX, 800, 10, CX, 800, rx);
+  gm.addColorStop(0, '#ffd166'); gm.addColorStop(0.5, P.magma); gm.addColorStop(1, '#8a1f0a'); ctx.fillStyle = gm; ctx.beginPath(); ctx.ellipse(CX, 800, rx, ry, 0, 0, 6.283); ctx.fill();
+  brilho(CX, 800, rx * 1.3, 'rgba(255,107,44,0.25)');
+  // bloco que afunda
+  const af = 140 * k; ctx.fillStyle = '#6b5340'; ctx.fillRect(CX - 460, sup, 920, 70 + af); ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.fillRect(CX - 460, sup, 920, af);
+  ctx.strokeStyle = '#1e140e'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(CX - 460, sup); ctx.lineTo(CX - 460, sup + 70 + af); ctx.moveTo(CX + 460, sup); ctx.lineTo(CX + 460, sup + 70 + af); ctx.stroke();
+  grama(sup, '#3a5236'); ctx.fillStyle = '#5a5a70'; ctx.fillRect(CX - 460, sup - 12, 920, af + 2);
+  txt('CÂMARA DE MAGMA', CX, 800, 40, P.branco, ease((t - 0.3) / 0.5) * (1 - k));
+  if (k > 0.6) { const a = ease((k - 0.6) / 0.3); ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = P.ouro; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(CX - 460, 330); ctx.lineTo(CX + 460, 330); ctx.stroke(); ctx.restore();
+    txt('CALDEIRA · DEZENAS DE KM', CX, 290, 44, P.ouro, a); }
+};
+CENAS.v_mapa = (t, d) => { const pr = mapaZoom(t, [-98, 40, 9], [-110.6, 44.5, 24], 2.4); const [x, y] = pr(-110.6, 44.5); pino(x, y, t - 2.0, 'YELLOWSTONE', 'ESTADOS UNIDOS'); vinheta(0.5); };
+CENAS.v_geiser = (t, d) => {   // gêiseres aquecidos pelo magma
+  const g = ctx.createLinearGradient(0, 0, 0, 380); g.addColorStop(0, '#5d8fc0'); g.addColorStop(1, '#c9dbe8'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const sup = 380; estratos(sup, t); grama(sup, '#7b8a5a');
+  // piscinas coloridas
+  [[520, '#2aa8c4'], [1380, '#2bb39a']].forEach(([x, c]) => { const gp = ctx.createRadialGradient(x, sup, 5, x, sup, 130); gp.addColorStop(0, c); gp.addColorStop(0.7, '#e9c46a'); gp.addColorStop(1, '#d9772f');
+    ctx.fillStyle = gp; ctx.beginPath(); ctx.ellipse(x, sup, 130, 22, 0, 0, 6.283); ctx.fill(); });
+  // jato do gêiser
+  const h = 260 * (0.6 + 0.4 * Math.abs(Math.sin(t * 1.6))); for (let i = 0; i < 30; i++) { const r = rng(i + 1), yy = sup - r() * h, xx = CX + (r() - 0.5) * 50 * (1 + (sup - yy) / h); circ(xx, yy - (t * 80 % 30), 14 + r() * 26, `rgba(255,255,255,${0.35 + r() * 0.3})`); }
+  // canais e magma
+  ctx.strokeStyle = 'rgba(120,190,230,0.6)'; ctx.lineWidth = 8; ctx.setLineDash([18, 14]); ctx.lineDashOffset = -t * 60;
+  [[CX, 0], [520, -0.3], [1380, 0.3]].forEach(([x]) => { ctx.beginPath(); ctx.moveTo(x, sup); ctx.quadraticCurveTo(x, 650, CX, 860); ctx.stroke(); }); ctx.setLineDash([]);
+  const gm = ctx.createLinearGradient(0, 860, 0, H); gm.addColorStop(0, P.magma); gm.addColorStop(1, '#7a1a08'); ctx.fillStyle = gm; ctx.beginPath(); ctx.moveTo(0, H);
+  for (let x = 0; x <= W; x += 40) ctx.lineTo(x, 880 + Math.sin(x * 0.006 + t) * 20); ctx.lineTo(W, H); ctx.fill();
+  for (let i = 0; i < 9; i++) { const x = 200 + i * 190, y = 840 - ((t * 60 + i * 37) % 160); ctx.globalAlpha = 0.6; ctx.fillStyle = P.ouro; ctx.beginPath(); ctx.moveTo(x, y - 18); ctx.lineTo(x - 12, y); ctx.lineTo(x + 12, y); ctx.fill(); ctx.globalAlpha = 1; }
+  txt('MAGMA', CX, 925, 48, P.branco, ease((t - 0.5) / 0.5));
+};
+CENAS.v_linha = (t, d, p) => {   // três supererupções
+  fundo(t, 0.2, '#1a1a2e', '#07070f'); const x0 = 200, x1 = 1720, y = 600, T = 2.3; const X = m => lerp(x0, x1, (T - m) / T);
+  const k = easeOut(t / 1.2); ctx.strokeStyle = P.cinza; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(lerp(x0, x1, k), y); ctx.stroke();
+  txt('HOJE', x1, y + 70, 34, P.cinza, ease((t - 1.0) / 0.4)); circ(x1, y, 8 * ease((t - 1.0) / 0.4), P.cinza);
+  const tl = p.ts || [0.8, 1.4, 2.0]; [[2.1, '2,1 MILHÕES'], [1.3, '1,3 MILHÃO'], [0.64, '640 MIL']].forEach(([m, s], i) => { const ti = tl[i], a = back((t - ti) / 0.5); if (a <= 0) return; const x = X(m);
+    brilho(x, y, 120 * a, 'rgba(255,107,44,0.6)'); circ(x, y, 18 * a, P.magma); ctx.save(); ctx.globalAlpha = clamp(a, 0, 1);
+    txt(s, x, y - 90, 44, P.branco); txt('DE ANOS ATRÁS', x, y - 45, 26, P.cinza, 1, 'center', 'MM'); ctx.restore(); });
+  sobe('3 SUPERERUPÇÕES', CX, 230, 70, t, 0.2, P.ouro);
+};
+CENAS.v_cinza = (t, d) => {   // a cinza cobrindo boa parte do continente
+  const pr = mapa(-100, 41, 13); const [x0, y0] = pr(-110.6, 44.5); const k = ease(t / (d * 0.85));
+  ctx.save(); for (let i = 0; i < 160; i++) { const r = rng(i * 7 + 1), a = r() * 6.283, dd = Math.sqrt(r()) * 900 * k * (0.7 + 0.5 * Math.cos(a - 0.15));
+    const x = x0 + Math.cos(a) * dd * 1.25, y = y0 + Math.sin(a) * dd * 0.6 + 40 * k; brilho(x, y, 140 + r() * 90, `rgba(170,165,160,${0.32 * (1 - dd / 1200)})`); } ctx.restore();
+  pino(x0, y0, t, null); txt('CINZA VULCÂNICA', 1500, 160, 50, P.branco, ease((t - 0.8) / 0.5)); txt('SIMULAÇÃO ILUSTRATIVA', 1500, 210, 24, P.cinza, ease((t - 0.8) / 0.5), 'center', 'MM'); vinheta(0.5);
+};
+CENAS.v_tambora = (t, d) => { const pr = mapaZoom(t, [110, 0, 8], [118, -8.25, 30], 2.4); const [x, y] = pr(117.99, -8.25); pino(x, y, t - 2.0, 'TAMBORA', 'INDONÉSIA · 1815'); vinheta(0.5); };
+CENAS.v_1816 = (t, d) => {   // junho de 1816 com neve
+  fundo(t, 0, '#2b3550', '#10131f'); const e = back(t / 0.6), x0 = CX - 420, y0 = 210;
+  ctx.save(); ctx.globalAlpha = clamp(e, 0, 1); ctx.translate(0, (1 - e) * 40);
+  ctx.fillStyle = '#f4f1e8'; ctx.beginPath(); ctx.roundRect(x0, y0, 840, 640, 20); ctx.fill(); ctx.fillStyle = P.verm; ctx.beginPath(); ctx.roundRect(x0, y0, 840, 130, [20, 20, 0, 0]); ctx.fill();
+  txt('JUNHO · 1816', CX, y0 + 66, 64, P.branco);
+  for (let i = 0; i < 30; i++) { const c = i % 7, l = Math.floor(i / 7), x = x0 + 70 + c * 117, y = y0 + 200 + l * 95; txt(String(i + 1), x, y, 34, '#40485f', 1, 'center', 'MM'); }
+  ctx.restore();
+  for (let i = 0; i < 140; i++) { const r = rng(i + 50), x = (r() * W + Math.sin(t + i) * 30) % W, y = (r() * H + t * (60 + r() * 80)) % H; circ(x, y, 2 + r() * 4, 'rgba(255,255,255,0.85)'); }
+  pilula('O ANO SEM VERÃO', CX, 905, 46, P.verm, P.branco, ease((t - 1.0) / 0.4));
+};
+CENAS.v_volume = (t, d) => {   // Tambora x Toba
+  fundo(t, 0.2, '#1e1a2a', '#07060c'); const a = back(t / 0.6), b = back((t - 0.8) / 0.8);
+  const R1 = 60 * a, R2 = 330 * clamp(b, 0, 1.2);
+  [[560, R1, 'TAMBORA · 1815', 0.2], [1250, R2, 'TOBA · ~74 MIL ANOS', 1.0]].forEach(([x, R, s, t0]) => { const g = ctx.createRadialGradient(x - R * 0.3, 560 - R * 0.3, 2, x, 560, Math.max(1, R));
+    g.addColorStop(0, '#b0a8a0'); g.addColorStop(1, '#4a4440'); circ(x, 560, R, g); txt(s, x, 560 + Math.max(R, 60) + 70, 40, P.branco, ease((t - t0) / 0.5)); });
+  txt('VOLUME DE MATERIAL EXPELIDO · ILUSTRATIVO', CX, 120, 28, P.cinza, ease((t - 0.4) / 0.5), 'center', 'MM');
+};
+CENAS.v_chance = (t, d) => {   // 1 em 730.000 por ano
+  fundo(t, 0.3, '#16203a', '#05070e'); const n = 730000 * easeOut(t / 1.6);
+  sobe('1 EM', CX, 330, 70, t, 0, P.cinza); txt(fmt(n), CX, 500, 210, P.branco, ease(t / 0.3));
+  sobe('POR ANO', CX, 680, 70, t, 1.3, P.ouro); txt('ESTIMATIVA DO SERVIÇO GEOLÓGICO DOS EUA (USGS)', CX, 800, 28, P.cinza, ease((t - 1.6) / 0.5), 'center', 'MM');
+};
+
+// 4 · ASTEROIDE
+CENAS.a_mapa = (t, d) => {   // impacto em Iucatã
+  const pr = mapaZoom(t, [-90, 22, 14], [-89.5, 21.4, 42], 2.0); const [x, y] = pr(-89.52, 21.4);
+  const k = clamp((t - 1.6) / 0.8, 0, 1); if (k < 1) { const sx = lerp(x + 900, x, k), sy = lerp(y - 600, y, k); ctx.strokeStyle = 'rgba(255,220,160,0.9)'; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + 160, sy - 110); ctx.stroke(); brilho(sx, sy, 50, 'rgba(255,240,210,1)'); }
+  if (t > 2.4) { const f = t - 2.4; for (let i = 0; i < 3; i++) anel(x, y, f * 260 + i * 40, `rgba(255,190,120,${Math.max(0, 0.8 - f * 0.4)})`, 6); brilho(x, y, 200, `rgba(255,220,160,${Math.max(0, 1 - f * 0.6)})`);
+    pino(x, y, f, 'CHICXULUB', 'PENÍNSULA DE IUCATÃ · MÉXICO'); }
+  flash(t, 2.4, 0.4); vinheta(0.5);
+};
+CENAS.a_veloc = (t, d) => {   // 20 km/s
+  fundo(t, 0.3, '#1c2040', '#06070f'); const cx = CX, cy = 640, R = 330, v = 20 * easeOut((t - 0.3) / 1.8);
+  anel(cx, cy, R, 'rgba(244,241,232,0.15)', 26, Math.PI, 2 * Math.PI); anel(cx, cy, R, P.verm, 26, Math.PI, Math.PI + Math.PI * v / 25);
+  for (let i = 0; i <= 25; i += 5) { const a = Math.PI + Math.PI * i / 25; txt(String(i), cx + Math.cos(a) * (R + 60), cy + Math.sin(a) * (R + 60), 30, P.cinza, 1, 'center', 'MM'); }
+  const a = Math.PI + Math.PI * v / 25; ctx.strokeStyle = P.branco; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(a) * (R - 40), cy + Math.sin(a) * (R - 40)); ctx.stroke(); circ(cx, cy, 18, P.branco);
+  txt(v.toFixed(0) + ' KM/S', cx, cy + 110, 90, P.branco); txt('≈ 72.000 KM/H', cx, cy + 200, 44, P.ouro, ease((t - 1.8) / 0.4));
+};
+CENAS.a_energia = (t, d) => {   // ~1 bilhão de Hiroshimas
+  fundo(t, 0.2, '#2a1a14', '#080403'); const e = clamp(t / (d * 0.7), 0, 1), ex = Math.floor(9 * ease(e));
+  const n = 9 * ease(e); const cols = 60, s = 22; const tot = Math.floor(Math.min(1, n / 9) * cols * 14);
+  for (let i = 0; i < cols * 14; i++) { const x = 300 + (i % cols) * s, y = 160 + Math.floor(i / cols) * s; circ(x, y, i < tot ? 6 : 3, i < tot ? P.laranja : 'rgba(255,255,255,0.08)'); }
+  ctx.fillStyle = 'rgba(8,4,3,0.75)'; ctx.fillRect(0, 520, W, 400);
+  txt(ex < 9 ? fmt(10 ** ex) : '1 BILHÃO', CX, 650, 150, P.branco); txt('DE BOMBAS DE HIROSHIMA', CX, 790, 54, P.ouro); txt('ORDEM DE GRANDEZA', CX, 860, 26, P.cinza, 1, 'center', 'MM');
+};
+CENAS.a_cratera = (t, d) => {   // cratera de 180 km
+  const pr = mapa(-89.6, 21.3, 160, { fronteiras: false }); const [x, y] = pr(-89.52, 21.3); const R = 90 / 111 * 160; // 90 km de raio em px
+  const k = easeOut(t / 1.4);
+  for (let i = 3; i >= 0; i--) { anel(x, y, R * k * (1 - i * 0.18), `rgba(255,${150 + i * 25},100,${0.85 - i * 0.15})`, 6 - i); }
+  ctx.save(); ctx.globalAlpha = ease((t - 1.2) / 0.4); ctx.strokeStyle = P.ouro; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x - R, y + R + 60); ctx.lineTo(x + R, y + R + 60); ctx.stroke(); ctx.restore();
+  txt('≈ 180 KM', x, y + R + 110, 60, P.ouro, ease((t - 1.2) / 0.4)); txt('CRATERA DE CHICXULUB (HOJE ENTERRADA)', CX, 90, 30, P.branco, ease((t - 0.4) / 0.4), 'center', 'MM'); vinheta(0.5);
+};
+CENAS.a_ejecta = (t, d) => {   // rochas derretidas voltando pelo planeta todo
+  fundo(t, 0.8); const lon0 = -60 + t * 4, pr = globo(CX, CY, 400, lon0, 15); const [ix, iy] = pr(-89.5, 21.4);
+  for (let i = 0; i < 70; i++) { const r = rng(i * 13 + 2), lo = -180 + r() * 360, la = -60 + r() * 120, [bx, by, vis] = pr(lo, la); if (!vis) continue;
+    const k = clamp((t - r() * 1.2) / 1.6, 0, 1); if (k <= 0) continue; const mx = (ix + bx) / 2, my = (iy + by) / 2 - 260 - r() * 120;
+    const qx = (1 - k) ** 2 * ix + 2 * (1 - k) * k * mx + k * k * bx, qy = (1 - k) ** 2 * iy + 2 * (1 - k) * k * my + k * k * by;
+    ctx.strokeStyle = 'rgba(255,170,90,0.35)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(ix, iy); ctx.quadraticCurveTo(mx, my, bx, by); ctx.stroke(); brilho(qx, qy, 16, 'rgba(255,220,160,1)');
+    if (k >= 1) brilho(bx, by, 26, 'rgba(255,110,40,0.8)'); }
+  brilho(ix, iy, 80, 'rgba(255,230,180,1)');
+};
+CENAS.a_75 = (t, d) => {   // 75% das espécies
+  fundo(t, 0.3, '#24161a', '#070405'); const v = 75 * easeOut((t - 0.2) / 1.6), cx = 700;
+  anel(cx, CY, 260, 'rgba(244,241,232,0.12)', 40); anel(cx, CY, 260, P.verm, 40, -Math.PI / 2, -Math.PI / 2 + 6.283 * v / 100);
+  txt(Math.round(v) + '%', cx, CY, 130, P.branco); sobe('DAS ESPÉCIES', 1080, 470, 74, t, 0.6, P.branco, 'left'); sobe('DESAPARECERAM', 1080, 570, 74, t, 0.75, P.verm, 'left');
+};
+CENAS.a_chelia = (t, d) => { const pr = mapaZoom(t, [60, 55, 6], [61.4, 55.15, 16], 2.4); const [x, y] = pr(61.4, 55.15); pino(x, y, t - 2.0, 'TCHELIABINSK', 'RÚSSIA · 15/02/2013'); vinheta(0.5); };
+CENAS.a_rastro = (t, d) => {   // rocha de 20 m explodindo no céu da cidade
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#2c3e66'); g.addColorStop(1, '#e8a87c'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const k = clamp(t / 2.2, 0, 1), x = lerp(-100, 1250, k), y = lerp(120, 380, k);
+  ctx.strokeStyle = 'rgba(240,235,230,0.7)'; ctx.lineWidth = 18; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(-100, 120); ctx.lineTo(x, y); ctx.stroke();
+  if (t < 2.2) brilho(x, y, 90, 'rgba(255,250,230,1)'); else { const f = t - 2.2; brilho(1250, 380, 260 + f * 200, `rgba(255,250,230,${Math.max(0, 1 - f * 0.5)})`); }
+  flash(t, 2.2, 0.6); cidade(H - 40, 31, '#1a1f33', 1.1); txt('≈ 20 METROS', 1400, 240, 48, P.branco, ease((t - 0.6) / 0.4));
+};
+CENAS.a_1500 = (t, d) => {
+  fundo(t, 0, '#1c2233', '#07090f'); const n = 1500 * easeOut(t / 1.4);
+  txt('≈ ' + fmt(n), CX, 470, 200, P.branco); sobe('FERIDOS', CX, 640, 80, t, 0.8, P.verm); txt('MAIS DE 7 MIL PRÉDIOS DANIFICADOS', CX, 760, 34, P.cinza, ease((t - 1.3) / 0.5), 'center', 'MM');
+};
+CENAS.a_neo = (t, d) => {   // asteroides que passam perto da Terra
+  fundo(t, 0.5); const sx = CX, sy = CY; brilho(sx, sy, 120, 'rgba(255,190,90,0.9)'); circ(sx, sy, 34, P.ouro);
+  anel(sx, sy, 330, 'rgba(76,201,240,0.5)', 2); const ae = t * 0.5; circ(sx + Math.cos(ae) * 330, sy + Math.sin(ae) * 330, 14, P.azul); txt('TERRA', sx + Math.cos(ae) * 330, sy + Math.sin(ae) * 330 - 36, 26, P.azul, 1, 'center', 'MM');
+  const n = Math.floor(300 * ease(t / 2)); for (let i = 0; i < n; i++) { const r = rng(i * 3 + 9), a = 250 + r() * 220, e = 0.2 + r() * 0.5, w = r() * 6.283, m = t * (0.6 + r() * 0.5) * (400 / a) ** 1.5 + r() * 6.283;
+    const rr = a * (1 - e * e) / (1 + e * Math.cos(m)); circ(sx + Math.cos(m + w) * rr, sy + Math.sin(m + w) * rr * 0.98, 3, 'rgba(244,162,97,0.85)'); }
+  txt('ASTEROIDES PRÓXIMOS DA TERRA', 1480, 130, 34, P.branco, ease((t - 0.5) / 0.5)); txt('ILUSTRATIVO', 1480, 175, 24, P.cinza, ease((t - 0.5) / 0.5), 'center', 'MM');
+};
+CENAS.a_90 = (t, d) => {
+  fundo(t, 0.3, '#13203a', '#04070e'); const v = 90 * easeOut((t - 0.2) / 1.6), cx = 1250;
+  anel(cx, CY, 260, 'rgba(244,241,232,0.12)', 40); anel(cx, CY, 260, P.azul, 40, -Math.PI / 2, -Math.PI / 2 + 6.283 * v / 100);
+  txt('+' + Math.round(v) + '%', cx, CY, 120, P.branco); sobe('DOS ASTEROIDES', 160, 450, 64, t, 0.5, P.branco, 'left'); sobe('COM MAIS DE 1 KM', 160, 540, 64, t, 0.65, P.ouro, 'left'); sobe('JÁ FORAM ENCONTRADOS', 160, 630, 64, t, 0.8, P.branco, 'left');
+};
+CENAS.a_orbita = (t, d) => {   // DART: órbita encurta 32 min
+  fundo(t, 0.6); const cx = CX - 200, cy = CY + 20; pedra(cx, cy, 120, 0.2, 21, '#8a7d70', '#4a4038');
+  const ti = 1.6, depois = t > ti, Ra = depois ? 330 - 12 * ease((t - ti) / 1) : 330;
+  ctx.setLineDash([10, 10]); anel(cx, cy, 330, 'rgba(244,241,232,0.25)', 2); ctx.setLineDash([]); if (depois) anel(cx, cy, Ra, P.azul, 3);
+  const a = t * 1.2; const mx = cx + Math.cos(a) * Ra, my = cy + Math.sin(a) * Ra * 0.5; pedra(mx, my, 26, a, 5, '#9a8d80', '#5a5048');
+  if (!depois) { const k = clamp(t / ti, 0, 1); const sx = lerp(W + 50, mx, k), sy = lerp(-50, my, k); circ(sx, sy, 7, P.branco); brilho(sx, sy, 30, 'rgba(255,255,255,0.8)'); }
+  flash(t, ti, 0.4); if (depois) brilho(mx, my, 60 * Math.max(0, 1 - (t - ti)), 'rgba(255,230,190,1)');
+  txt('DIDYMOS', cx, cy + 170, 30, P.cinza, 1, 'center', 'MM'); txt('DIMORPHOS', mx, my - 50, 26, P.branco, 1, 'center', 'MM');
+  const h = depois ? lerp(715, 683, ease((t - ti) / 1.2)) : 715; const hh = Math.floor(h / 60), mm = Math.round(h % 60);
+  txt('ÓRBITA', 1480, 380, 36, P.cinza); txt(`${hh}H${String(mm).padStart(2, '0')}`, 1480, 480, 120, depois ? P.azul : P.branco); txt('−32 MIN', 1480, 600, 60, P.ouro, ease((t - ti - 1.0) / 0.4));
+};
+
+// 3 · RAIOS GAMA
+CENAS.g_colapso = (t, d) => {   // núcleo colapsa e lança jatos
+  fundo(t, 0.7, '#150f2e', '#030208'); const k = ease((t - 0.4) / 1.2), R = lerp(260, 0, k);
+  if (R > 2) { brilho(CX, CY, R * 1.8, 'rgba(120,160,255,0.6)'); circ(CX, CY, R, '#cfe0ff'); }
+  if (k >= 1) { const f = t - 1.6; circ(CX, CY, 16, '#000'); anel(CX, CY, 18, 'rgba(255,200,140,0.9)', 4);
+    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.translate(CX, CY); ctx.rotate(0.35);
+    const L = Math.min(1, f / 0.8) * 700; [-1, 1].forEach(s => { const g = ctx.createLinearGradient(0, 0, 0, s * L); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(1, 'rgba(155,123,255,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(-8, 0); ctx.lineTo(8, 0); ctx.lineTo(40, s * L); ctx.lineTo(-40, s * L); ctx.fill(); }); ctx.restore(); }
+  flash(t, 1.6, 0.4); txt(k < 1 ? 'ESTRELA GIGANTE' : 'BURACO NEGRO + JATOS', CX, 110, 40, P.branco, 0.9);
+};
+CENAS.g_energia = (t, d) => {   // poucos segundos = vida inteira do Sol
+  fundo(t, 0.3, '#1a1638', '#05040c'); const inc = Math.sin(t * 1.4) * 0.02 * Math.max(0, 1 - t / 2);
+  ctx.save(); ctx.translate(CX, 500); ctx.rotate(inc); ctx.strokeStyle = P.cinza; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(-560, 0); ctx.lineTo(560, 0); ctx.stroke();
+  [-1, 1].forEach(s => { ctx.beginPath(); ctx.moveTo(s * 560, 0); ctx.lineTo(s * 560, 130); ctx.stroke(); ctx.fillStyle = '#2a2850'; ctx.fillRect(s * 560 - 160, 130, 320, 18); });
+  ctx.restore(); ctx.fillStyle = P.cinza; ctx.beginPath(); ctx.moveTo(CX, 500); ctx.lineTo(CX - 60, 900); ctx.lineTo(CX + 60, 900); ctx.fill();
+  const a = ease((t - 0.3) / 0.5); icone('raio', CX - 560, 560, 60, a); icone('sol', CX + 560, 560, 60, a);
+  txt('POUCOS SEGUNDOS', CX - 560, 720, 42, P.roxo, a); txt('10 BILHÕES DE ANOS', CX + 560, 720, 42, P.ouro, a);
+  txt('DE RAIOS GAMA', CX - 560, 770, 28, P.cinza, a, 'center', 'MM'); txt('DE SOL', CX + 560, 770, 28, P.cinza, a, 'center', 'MM');
+  sobe('MAIS ENERGIA', CX, 230, 80, t, 1.0, P.branco);
+};
+CENAS.g_boat = (t, d) => {
+  fundo(t, 1, '#0d0a20', '#000'); brilho(CX, CY, 600 * (1 + 0.04 * Math.sin(t * 3)), `rgba(155,123,255,${0.35 * ease(t / 0.4)})`); flash(t, 0, 0.6);
+  sobe('BOAT', CX, 470, 260, t, 0.3, P.branco); sobe('A MAIS BRILHANTE JÁ REGISTRADA', CX, 650, 52, t, 0.6, P.roxo); sobe('9 DE OUTUBRO DE 2022', CX, 730, 38, t, 0.8, P.cinza, 'center', 'MM');
+};
+CENAS.g_dist = (t, d) => {
+  fundo(t, 0.7); const k = easeOut((t - 0.3) / 1.8), x0 = 260, x1 = 1660, y = 560;
+  ctx.save(); ctx.translate(x0, y); globoMini(0, 0, 60, t); ctx.restore(); txt('TERRA', x0, y + 110, 30, P.azul, 1, 'center', 'MM');
+  ctx.setLineDash([14, 12]); ctx.strokeStyle = P.cinza; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x0 + 80, y); ctx.lineTo(lerp(x0 + 80, x1 - 80, k), y); ctx.stroke(); ctx.setLineDash([]);
+  galaxia(x1, y, 90, t, ease((t - 1.6) / 0.5)); brilho(x1, y, 60, `rgba(255,255,255,${ease((t - 1.8) / 0.3) * (0.6 + 0.4 * Math.sin(t * 9))})`);
+  txt('≈ ' + (2 * k).toFixed(1).replace('.', ',') + ' BILHÕES DE ANOS-LUZ', CX, y - 110, 56, P.branco);
+};
+function globoMini(x, y, R, t) { const g = ctx.createRadialGradient(x - R * 0.3, y - R * 0.3, 2, x, y, R); g.addColorStop(0, '#5fb0e0'); g.addColorStop(1, '#123a66'); circ(x, y, R, g);
+  ctx.save(); ctx.beginPath(); ctx.arc(x, y, R, 0, 6.283); ctx.clip(); ctx.fillStyle = '#4f9a6a'; for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.ellipse(x + Math.sin(t * 0.5 + i * 1.7) * R * 0.6, y + (i - 1.5) * R * 0.45, R * 0.35, R * 0.18, i, 0, 6.283); ctx.fill(); } ctx.restore(); }
+function galaxia(x, y, R, t, a = 1) { if (a <= 0) return; ctx.save(); ctx.globalAlpha = a; ctx.translate(x, y); ctx.rotate(t * 0.1); ctx.scale(1, 0.55);
+  for (let i = 0; i < 380; i++) { const r = rng(i + 77), br = i % 2, rr = Math.sqrt(r()) * R, an = rr / R * 5 + br * Math.PI + (r() - 0.5) * 0.7; circ(Math.cos(an) * rr, Math.sin(an) * rr, 1.4 + r() * 1.6, `rgba(${200 + r() * 55},${200 + r() * 40},255,${0.5 + r() * 0.4})`); }
+  brilho(0, 0, R * 0.4, 'rgba(255,240,210,0.9)'); ctx.restore(); }
+CENAS.g_mira = (t, d) => {   // jato apontado pra cá, ozônio sendo destruído
+  fundo(t, 0.6); const ex = 1400, ey = CY, R = 230; const k = clamp((t - 0.8) / 2.2, 0, 1);
+  ctx.save(); ctx.globalCompositeOperation = 'lighter'; const g = ctx.createLinearGradient(0, ey, ex, ey); g.addColorStop(0, 'rgba(155,123,255,0)'); g.addColorStop(1, `rgba(190,170,255,${0.6 * ease((t - 0.3) / 0.5)})`);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(0, ey - 20); ctx.lineTo(ex - R, ey - R * 0.9); ctx.lineTo(ex - R, ey + R * 0.9); ctx.lineTo(0, ey + 20); ctx.fill(); ctx.restore();
+  globoMini(ex, ey, R, t);
+  for (let i = 0; i < 90; i++) { const a = -Math.PI / 2 + i / 90 * 6.283, faceSol = Math.cos(a - Math.PI), dano = clamp(k * 1.6 * (0.4 + faceSol), 0, 1); const r = rng(i);
+    ctx.strokeStyle = `rgba(110,210,255,${0.75 * (1 - dano) * (r() > dano * 0.8 ? 1 : 0.2)})`; ctx.lineWidth = 12; ctx.beginPath(); ctx.arc(ex, ey, R + 24, a, a + 6.283 / 90 + 0.005); ctx.stroke(); }
+  txt('CAMADA DE OZÔNIO', ex, ey - R - 80, 40, P.azul, ease((t - 0.4) / 0.4)); txt('RAIOS GAMA', 300, ey - 80, 34, P.roxo, ease((t - 0.4) / 0.4)); txt('HIPOTÉTICO', 300, ey - 38, 24, P.cinza, ease((t - 0.4) / 0.4), 'center', 'MM');
+};
+CENAS.g_ordov = (t, d) => {   // extinção do Ordoviciano
+  fundo(t, 0.2, '#0f2230', '#030709'); const x0 = 200, x1 = 1720, y = 640, T = 541, X = m => lerp(x0, x1, (T - m) / T);
+  const k = easeOut(t / 1.2); ctx.strokeStyle = P.cinza; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(lerp(x0, x1, k), y); ctx.stroke();
+  [[541, '541 MI'], [66, 'DINOSSAUROS'], [0, 'HOJE']].forEach(([m, s], i) => { const a = ease((t - 0.5 - i * 0.2) / 0.4); circ(X(m), y, 8 * a, P.cinza); txt(s, X(m), y + 60, 28, P.cinza, a, 'center', 'MM'); });
+  const a = back((t - 1.2) / 0.5), x = X(445); if (a > 0) { brilho(x, y, 160 * a, 'rgba(155,123,255,0.6)'); circ(x, y, 18 * a, P.roxo); ctx.save(); ctx.globalAlpha = clamp(a, 0, 1);
+    txt('ORDOVICIANO', x, y - 200, 60, P.branco); txt('≈ 445 MILHÕES DE ANOS', x, y - 140, 36, P.roxo); txt('~85% DAS ESPÉCIES, QUASE TODAS MARINHAS', x, y - 90, 28, P.cinza, 1, 'center', 'MM'); ctx.restore(); }
+  // trilobita estilizado
+  const ta = ease((t - 1.6) / 0.5); ctx.save(); ctx.globalAlpha = ta * 0.85; ctx.translate(1400, 330); ctx.fillStyle = '#6f8a96'; ctx.beginPath(); ctx.ellipse(0, 0, 70, 110, 0, 0, 6.283); ctx.fill();
+  ctx.strokeStyle = '#0f2230'; ctx.lineWidth = 5; for (let i = -3; i <= 4; i++) { ctx.beginPath(); ctx.moveTo(-66, i * 22); ctx.lineTo(66, i * 22); ctx.stroke(); } ctx.beginPath(); ctx.moveTo(-24, -110); ctx.lineTo(-24, 110); ctx.moveTo(24, -110); ctx.lineTo(24, 110); ctx.stroke(); ctx.restore();
+};
+CENAS.g_anas = (t, d) => {   // galáxias pequenas e distantes
+  ctx.fillStyle = '#020309'; ctx.fillRect(0, 0, W, H); const z = 1 + t * 0.03; ctx.save(); ctx.translate(CX, CY); ctx.scale(z, z); ctx.translate(-CX, -CY);
+  for (let i = 0; i < 120; i++) { const r = rng(i * 5 + 3), x = r() * W, y = r() * H, s = 3 + r() * 14, c = r() < 0.5 ? '255,210,170' : '170,200,255';
+    ctx.save(); ctx.translate(x, y); ctx.rotate(r() * 3); ctx.scale(1, 0.4 + r() * 0.6); brilho(0, 0, s * 3.5, `rgba(${c},${0.7 + r() * 0.3})`); circ(0, 0, s * 0.35, `rgba(${c},0.95)`); ctx.restore(); }
+  ctx.restore(); const a = ease((t - 0.8) / 0.4); anel(1320, 380, 46 + 6 * Math.sin(t * 4), `rgba(155,123,255,${a})`, 3);
+  txt('GALÁXIAS PEQUENAS E DISTANTES', CX, 120, 44, P.branco, ease((t - 0.4) / 0.5));
+};
+
+// 2 · O SOL
+CENAS.s_nucleo = (t, d) => {   // fusão no centro do Sol
+  fundo(t, 0.2, '#2a0f05', '#050100'); const R = 430, cx = CX, cy = CY;
+  const g = ctx.createRadialGradient(cx, cy, 10, cx, cy, R); g.addColorStop(0, '#fff3c4'); g.addColorStop(0.3, '#ffb347'); g.addColorStop(0.75, '#e2531d'); g.addColorStop(1, '#7a1d06');
+  circ(cx, cy, R, g); ctx.save(); ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R + 4, -0.6, 0.6); ctx.closePath(); ctx.fillStyle = 'rgba(5,1,0,0.92)'; ctx.fill(); ctx.restore();
+  for (let i = 0; i < 26; i++) { const r = rng(i + 4), a = r() * 6.283, f = (t * 0.5 + r()) % 1, rr = (1 - f) * 170; const x = cx + Math.cos(a) * rr, y = cy + Math.sin(a) * rr;
+    circ(x, y, 7, '#ffffff'); if (f > 0.9) brilho(cx + Math.cos(a) * 10, cy + Math.sin(a) * 10, 40, 'rgba(255,255,220,0.8)'); }
+  brilho(cx, cy, 200, 'rgba(255,255,230,0.5)'); txt('H  →  He', cx + 620, cy - 30, 90, P.branco, ease((t - 0.5) / 0.4), 'center'); txt('FUSÃO NO NÚCLEO', cx + 620, cy + 50, 34, P.ouro, ease((t - 0.7) / 0.4), 'center', 'MM');
+};
+CENAS.s_brilho = (t, d) => {   // +10% a cada bilhão de anos
+  fundo(t, 0, '#1f1408', '#050301'); const x0 = 240, x1 = 1700, y0 = 860, y1 = 220;
+  ctx.strokeStyle = P.cinza; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x0, y1); ctx.lineTo(x0, y0); ctx.lineTo(x1, y0); ctx.stroke();
+  ['HOJE', '+1 BI', '+2 BI', '+3 BI'].forEach((s, i) => txt(s, lerp(x0, x1, i / 3), y0 + 45, 30, P.cinza, 1, 'center', 'MM'));
+  txt('BRILHO DO SOL', x0, y1 - 40, 30, P.cinza, 1, 'left', 'MM');
+  const k = easeOut((t - 0.3) / 2.2); ctx.strokeStyle = P.ouro; ctx.lineWidth = 8; ctx.beginPath();
+  for (let i = 0; i <= 100 * k; i++) { const f = i / 100, x = lerp(x0, x1, f), y = lerp(700, 300, (1.1 ** (3 * f) - 1) / (1.1 ** 3 - 1)); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke();
+  const fx = lerp(x0, x1, k), fy = lerp(700, 300, (1.1 ** (3 * k) - 1) / (1.1 ** 3 - 1)); brilho(fx, fy, 60, 'rgba(255,209,102,0.9)');
+  pilula('+10% A CADA BILHÃO DE ANOS', 1250, 180, 40, P.laranja, '#1f1408', ease((t - 1.2) / 0.4));
+};
+CENAS.s_estufa = (t, d) => {   // vapor prendendo calor
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#2a1a10'); g.addColorStop(1, '#8a4a20'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const k = ease(t / d); ctx.fillStyle = `rgba(230,220,210,${0.15 + 0.35 * k})`; ctx.fillRect(0, 220, W, 160);
+  for (let i = 0; i < 40; i++) { const r = rng(i + 8); brilho(r() * W, 230 + r() * 140, 80 + r() * 80, `rgba(240,235,230,${0.25 * k})`); }
+  ctx.fillStyle = '#5a3a20'; ctx.beginPath(); ctx.moveTo(0, H); for (let x = 0; x <= W; x += 60) ctx.lineTo(x, 900 + Math.sin(x * 0.01) * 20); ctx.lineTo(W, H); ctx.fill();
+  for (let i = 0; i < 7; i++) { const x = 200 + i * 260, f = (t * 0.6 + i * 0.15) % 1; ctx.strokeStyle = P.ouro; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(x, lerp(0, 880, f) - 80); ctx.lineTo(x, lerp(0, 880, f)); ctx.stroke();
+    const f2 = (t * 0.6 + i * 0.15 + 0.5) % 1, yb = f2 < 0.5 ? lerp(880, 300, f2 * 2) : lerp(300, 880, (f2 - 0.5) * 2); ctx.strokeStyle = P.verm; ctx.beginPath(); ctx.moveTo(x + 60, yb); ctx.lineTo(x + 60, yb + (f2 < 0.5 ? 60 : -60)); ctx.stroke(); }
+  txt('O CALOR NÃO CONSEGUE SAIR', CX, 120, 50, P.branco, ease((t - 0.4) / 0.5)); txt(Math.round(lerp(15, 100, k)) + ' °C', 1700, 600, 80, P.verm);
+};
+CENAS.s_venus = (t, d) => {   // Terra vira um deserto como Vênus
+  fundo(t, 0.8); const k = ease((t - 0.4) / (d - 1.2)), R = 360;
+  globo(CX, CY, R, 20 + t * 5, 10, { mar1: `rgb(${lerp(29, 160, k)},${lerp(90, 110, k)},${lerp(133, 60, k)})`, mar2: `rgb(${lerp(11, 90, k)},${lerp(36, 55, k)},${lerp(64, 25, k)})`, terra: `rgb(${lerp(63, 200, k)},${lerp(122, 150, k)},${lerp(90, 80, k)})`, atm: `rgba(255,200,120,${0.2 + 0.4 * k})` });
+  ctx.save(); ctx.globalAlpha = k * 0.75; for (let i = 0; i < 30; i++) { const r = rng(i + 2); ctx.save(); ctx.beginPath(); ctx.arc(CX, CY, R, 0, 6.283); ctx.clip(); brilho(CX + (r() - 0.5) * 2 * R + Math.sin(t * 0.3 + i) * 30, CY + (r() - 0.5) * 2 * R, 140, 'rgba(235,205,140,0.9)'); ctx.restore(); } ctx.restore();
+  txt('TERRA', 300, CY, 50, P.azul, 1 - k); txt('COMO VÊNUS', 1620, CY, 50, P.ouro, k);
+};
+CENAS.s_gigante = (t, d) => {   // gigante vermelha
+  fundo(t, 0.6, '#1a0805', '#020000'); const k = ease((t - 0.3) / (d - 0.8)), R = lerp(8, 1300, k);
+  const cx = 160, cy = CY; const cor = `rgb(255,${Math.round(lerp(210, 90, k))},${Math.round(lerp(120, 50, k))})`;
+  brilho(cx, cy, R * 1.25, `rgba(255,${Math.round(lerp(200, 70, k))},40,0.5)`); circ(cx, cy, R, cor);
+  [['MERCÚRIO', 0.39], ['VÊNUS', 0.72], ['TERRA', 1.0]].forEach(([s, au]) => { const x = cx + au * 1500; if (x < cx + R) return; circ(x, cy, 9, P.branco); txt(s, x, cy + 46, 26, P.branco, 1, 'center', 'MM'); });
+  txt('× ' + Math.round(lerp(1, 200, k)), 1650, 180, 90, P.branco); txt('MAIOR QUE HOJE', 1650, 260, 32, P.ouro, 1, 'center', 'MM');
+};
+CENAS.s_engole = (t, d) => {   // órbitas engolidas (vista de cima)
+  fundo(t, 0.5); const cx = CX, cy = CY; const k = ease((t - 0.2) / (d - 0.6)), R = lerp(40, 470, k);
+  [['MERCÚRIO', 150, 1.6], ['VÊNUS', 280, 1.2], ['TERRA', 390, 1.0]].forEach(([s, r, w]) => { anel(cx, cy, r, 'rgba(244,241,232,0.2)', 2); if (r < R - 6) return;
+    const a = t * w * 0.4 + r; const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r; circ(x, y, 10, s === 'TERRA' ? P.azul : P.branco); txt(s, x, y - 32, 24, P.branco, 1, 'center', 'MM'); });
+  brilho(cx, cy, R * 1.2, 'rgba(255,90,40,0.5)'); circ(cx, cy, R, '#e8552a');
+  if (R > 380) txt('?', cx + 420, cy - 120, 120, P.ouro, ease((R - 380) / 60));
+};
+CENAS.s_ana = (t, d) => {   // anã branca do tamanho da Terra
+  fundo(t, 0.8); const a = back(t / 0.6), b = back((t - 0.5) / 0.6);
+  brilho(700, CY, 220 * clamp(a, 0, 1), 'rgba(200,220,255,0.6)'); circ(700, CY, 120 * clamp(a, 0, 1), '#eef3ff'); txt('ANÃ BRANCA', 700, CY + 210, 42, P.branco, ease((t - 0.4) / 0.4));
+  ctx.save(); ctx.translate(1220, CY); globoMini(0, 0, 120 * clamp(b, 0, 1.1), t); ctx.restore(); txt('TERRA', 1220, CY + 210, 42, P.azul, ease((t - 0.8) / 0.4));
+  txt('≈', 960, CY, 90, P.cinza, ease((t - 0.9) / 0.3));
+};
+CENAS.s_check = (t, d) => {   // a única garantida
+  fundo(t, 0.3); const ic = ['vulcao', 'rocha', 'raio', 'sol', 'bolha'], nomes = ['SUPERVULCÃO', 'ASTEROIDE', 'RAIOS GAMA', 'O SOL', 'VÁCUO'];
+  for (let i = 0; i < 5; i++) { const x = 260 + i * 350, a = ease((t - i * 0.1) / 0.4), destaque = i === 3; ctx.save(); ctx.globalAlpha = a * (destaque || t < 1.2 ? 1 : 0.35);
+    ctx.fillStyle = destaque ? '#3a2410' : P.escuro; ctx.beginPath(); ctx.roundRect(x - 150, 300, 300, 460, 24); ctx.fill(); if (destaque && t > 1.2) { ctx.strokeStyle = P.ouro; ctx.lineWidth = 6; ctx.stroke(); }
+    ctx.restore(); icone(ic[i], x, 440, 50, a); txt(nomes[i], x, 600, 30, P.branco, a); txt(destaque ? 'GARANTIDO' : 'CHANCE', x, 680, 28, destaque ? P.ouro : P.cinza, a * (t > 1.2 ? 1 : 0), 'center', 'MM'); }
+};
+
+// 1 · DECAIMENTO DO VÁCUO
+function malha(t, amp, cor = 'rgba(76,201,240,0.35)', z = 0) {
+  ctx.strokeStyle = cor; ctx.lineWidth = 1.5; const n = 26, m = 15;
+  const pt = (i, j) => { const x = (i / n - 0.5), y = (j / m); const px = CX + x * W * (0.6 + y * 1.2), py = 380 + y * y * 700 + Math.sin(i * 0.7 + t * 2) * amp * y + Math.cos(j * 0.9 + t * 1.6) * amp * 0.5 * y; return [px, py]; };
+  for (let j = 0; j <= m; j++) { ctx.beginPath(); for (let i = 0; i <= n; i++) { const [x, y] = pt(i, j); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke(); }
+  for (let i = 0; i <= n; i++) { ctx.beginPath(); for (let j = 0; j <= m; j++) { const [x, y] = pt(i, j); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke(); }
+}
+CENAS.x_campo = (t, d) => {   // um campo invisível em todo o espaço
+  fundo(t, 0.6, '#0c1330', '#020309'); malha(t, 18 * ease(t / 1));
+  for (let i = 0; i < 12; i++) { const r = rng(i + 30), x = (r() * W + t * (240 - r() * 200)) % W, y = 420 + r() * 520; brilho(x, y, 22, 'rgba(255,209,102,0.9)'); circ(x, y, 5, P.branco); }
+  txt('CAMPO DE HIGGS', CX, 190, 76, P.branco, ease((t - 0.5) / 0.5)); txt('PREENCHE TODO O ESPAÇO', CX, 265, 32, P.azul, ease((t - 0.8) / 0.5), 'center', 'MM');
+};
+CENAS.x_lhc = (t, d) => {   // LHC perto de Genebra
+  const pr = mapaZoom(t, [8, 46.5, 40], [6.05, 46.24, 2500], 2.6, { fronteiras: true }); const [x, y] = pr(6.05, 46.24); const k = pr(6.05 + 0.1, 46.24)[0] - x; // px por 0,1°
+  const Rpx = 4.3 / (111 * Math.cos(46.24 * RAD)) * 10 * k; const a = ease((t - 2.2) / 0.8);
+  ctx.strokeStyle = P.azul; ctx.lineWidth = 8; ctx.beginPath(); ctx.arc(x, y, Rpx, -Math.PI / 2, -Math.PI / 2 + 6.283 * a); ctx.stroke(); brilho(x + Math.cos(t * 3) * Rpx, y + Math.sin(t * 3) * Rpx, 40 * a, 'rgba(255,255,255,0.9)');
+  const [gx, gy] = pr(6.143, 46.204); circ(gx, gy, 10 * a, P.branco); txt('GENEBRA', gx + 20, gy + 30, 30, P.branco, a, 'left', 'MM');
+  txt('LHC · 27 KM', x, y - Rpx - 60, 56, P.branco, a); vinheta(0.5);
+};
+CENAS.x_colisao = (t, d) => {   // colisão de partículas (ilustração de detector)
+  fundo(t, 0, '#0a0e1e', '#000'); for (let i = 1; i <= 6; i++) anel(CX, CY, i * 75, `rgba(120,150,200,${0.08 + i * 0.02})`, i % 2 ? 2 : 10);
+  const tc = 0.8; if (t < tc) { const k = t / tc; [-1, 1].forEach(s => { const x = CX + s * lerp(W / 2, 0, k); brilho(x, CY, 30, 'rgba(255,255,255,1)'); }); }
+  else { const f = t - tc; flash(t, tc, 0.3); for (let i = 0; i < 26; i++) { const r = rng(i + 41), a = r() * 6.283, cur = (r() - 0.5) * 0.004, L = Math.min(1, f / 0.7) * (250 + r() * 250);
+      ctx.strokeStyle = r() < 0.2 ? P.ouro : 'rgba(120,210,255,0.85)'; ctx.lineWidth = r() < 0.2 ? 5 : 2.5; ctx.beginPath(); ctx.moveTo(CX, CY);
+      for (let s = 0; s <= L; s += 12) { const an = a + cur * s; ctx.lineTo(CX + Math.cos(an) * s, CY + Math.sin(an) * s); } ctx.stroke(); } }
+  txt('2012 · BÓSON DE HIGGS', CX, 90, 46, P.branco, ease((t - 1.0) / 0.4)); txt('ILUSTRAÇÃO', CX, 140, 22, P.cinza, ease((t - 1.0) / 0.4), 'center', 'MM');
+};
+const yPot = x => 820 - 470 * Math.exp(-(((x - 650) / 300) ** 2)) + 45 * Math.exp(-(((x - 650) / 50) ** 2)) + 120 * Math.exp(-(((x - 1500) / 220) ** 2));
+function desenhaPot(t, a) {
+  ctx.save(); ctx.globalAlpha = a; const g = ctx.createLinearGradient(0, 300, 0, H); g.addColorStop(0, '#1f3a5a'); g.addColorStop(1, '#0a1424'); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(0, H);
+  for (let x = 0; x <= W; x += 8) ctx.lineTo(x, yPot(x)); ctx.lineTo(W, H); ctx.fill(); ctx.strokeStyle = P.azul; ctx.lineWidth = 5; ctx.beginPath(); for (let x = 0; x <= W; x += 8) x ? ctx.lineTo(x, yPot(x)) : ctx.moveTo(x, yPot(x)); ctx.stroke(); ctx.restore();
+}
+CENAS.x_bola1 = (t, d) => {
+  fundo(t, 0.4); desenhaPot(t, ease(t / 0.5)); const bx = 650, by = yPot(650) - 30; circ(bx, by + Math.sin(t * 3) * 2, 30 * back((t - 0.4) / 0.5), P.ouro);
+  txt('NOSSO UNIVERSO', bx, by - 90, 40, P.branco, ease((t - 0.8) / 0.4)); txt('ESTÁVEL, MAS NÃO NO PONTO MAIS BAIXO', bx, by - 45, 24, P.cinza, ease((t - 1.0) / 0.4), 'center', 'MM');
+  txt('ESTADO MAIS BAIXO', 1500, yPot(1500) - 90, 36, P.verm, ease((t - 1.6) / 0.4));
+};
+CENAS.x_bola2 = (t, d) => {   // o empurrão
+  fundo(t, 0.4); desenhaPot(t, 1); const tk = 0.8; let bx = 650;
+  if (t > tk) { const f = clamp((t - tk) / 1.8, 0, 1); bx = lerp(650, 1500, f < 1 ? f * f * (3 - 2 * f) : 1); }
+  const by = yPot(bx) - 30; circ(bx + (t < tk ? Math.sin(t * 40) * 3 * (t / tk) : 0), by, 30, P.ouro);
+  if (t > tk - 0.2 && t < tk + 0.4) { ctx.strokeStyle = P.branco; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(560, by); ctx.lineTo(610, by); ctx.stroke(); }
+  txt('UM EMPURRÃO…', CX, 160, 56, P.branco, ease((t - 0.2) / 0.4));
+};
+CENAS.x_bolha = (t, d) => {   // nasce uma bolha de vácuo novo
+  fundo(t, 1, '#0b0f2a', '#010206'); const k = Math.max(0, t - 0.8), R = k * k * 90;
+  flash(t, 0.8, 0.25); if (t < 0.8) circ(CX, CY, 3, P.branco);
+  if (R > 0) { ctx.save(); ctx.beginPath(); ctx.arc(CX, CY, R, 0, 6.283); ctx.clip(); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); ctx.restore();
+    anel(CX, CY, R, 'rgba(160,235,255,0.95)', 4); brilho(CX, CY, R * 1.3, 'rgba(76,201,240,0.12)'); }
+  txt('UMA BOLHA DE VÁCUO NOVO', CX, 110, 44, P.branco, ease((t - 1.2) / 0.4)); txt('HIPÓTESE', CX, 165, 24, P.cinza, ease((t - 1.2) / 0.4), 'center', 'MM');
+};
+CENAS.x_cresce = (t, d) => {   // a bolha engole galáxias
+  ctx.fillStyle = '#020308'; ctx.fillRect(0, 0, W, H); const R = 80 + t * 300, bx = 300, by = CY;
+  for (let i = 0; i < 26; i++) { const r = rng(i * 9 + 1), x = 200 + r() * 1700, y = 80 + r() * 920; if (Math.hypot(x - bx, y - by) < R) continue; const sz = 18 + r() * 26, c = r() < 0.5 ? '255,210,170' : '170,200,255'; ctx.save(); ctx.translate(x, y); ctx.rotate(r() * 3); ctx.scale(1, 0.35 + r() * 0.5); brilho(0, 0, sz * 2.2, `rgba(${c},0.85)`); circ(0, 0, sz * 0.25, `rgba(${c},1)`); ctx.restore(); }
+  ctx.save(); ctx.beginPath(); ctx.arc(bx, by, R, 0, 6.283); ctx.fillStyle = '#000'; ctx.fill(); ctx.restore(); anel(bx, by, R, 'rgba(160,235,255,0.95)', 5);
+  txt('≈ VELOCIDADE DA LUZ', 1500, 120, 46, P.azul, ease((t - 0.4) / 0.4));
+};
+CENAS.x_atomos = (t, d) => {   // átomos deixam de funcionar
+  fundo(t, 0.3, '#0c1026', '#010205'); const k = ease((t - 1.2) / 1.6);
+  circ(CX, CY, 46 * (1 - k * 0.4), P.verm); circ(CX + 18, CY - 10, 26 * (1 - k), '#f08a6f');
+  for (let i = 0; i < 3; i++) { const rot = i * Math.PI / 3; ctx.save(); ctx.translate(CX, CY); ctx.rotate(rot); ctx.strokeStyle = `rgba(76,201,240,${0.6 * (1 - k)})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(0, 0, 320, 110, 0, 0, 6.283); ctx.stroke();
+    const a = t * (2 + i * 0.5); let ex = Math.cos(a) * 320, ey = Math.sin(a) * 110; ex *= 1 + k * 2.5; ey *= 1 + k * 2.5; ctx.restore();
+    const px = CX + ex * Math.cos(rot) - ey * Math.sin(rot), py = CY + ex * Math.sin(rot) + ey * Math.cos(rot); circ(px, py, 14, P.azul); brilho(px, py, 30, 'rgba(76,201,240,0.6)'); }
+  txt('ÁTOMOS · QUÍMICA · ESTRELAS', CX, 120, 44, P.branco, ease((t - 0.3) / 0.4) * (1 - k * 0.6));
+};
+CENAS.x_void = (t, d) => {   // uma frente que apaga tudo
+  fundo(t, 1, '#151a3a', '#03040a'); cidade(H - 60, 51, '#0d1124', 0.9);
+  for (let i = 0; i < 40; i++) { const r = rng(i + 90); ctx.fillStyle = 'rgba(255,209,102,0.8)'; ctx.fillRect(r() * W, H - 60 - r() * 200, 6, 8); }
+  const x = lerp(-200, W + 400, ease((t - 0.6) / (d - 0.9))); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, Math.max(0, x - 40), H);
+  const g = ctx.createLinearGradient(x - 120, 0, x + 20, 0); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(0.8, 'rgba(200,245,255,0.9)'); g.addColorStop(1, 'rgba(200,245,255,0)'); ctx.fillStyle = g; ctx.fillRect(x - 120, 0, 140, H);
+};
+CENAS.x_numero = (t, d) => {   // 10^790
+  ctx.fillStyle = '#04050c'; ctx.fillRect(0, 0, W, H); ctx.save(); ctx.font = '34px MM'; ctx.fillStyle = 'rgba(76,201,240,0.22)';
+  const n = Math.floor(ease((t - 0.8) / (d - 1)) * 790); let s = '1' + '0'.repeat(n); const por = 74; for (let l = 0; l * por < s.length; l++) ctx.fillText(s.slice(l * por, (l + 1) * por), 60, 60 + l * 44); ctx.restore();
+  ctx.fillStyle = 'rgba(4,5,12,0.6)'; ctx.fillRect(0, 330, W, 420); const e = back(t / 0.6); ctx.save(); ctx.globalAlpha = clamp(e, 0, 1);
+  txt('10', CX - 80, 540, 240, P.branco); txt('790', CX + 170, 440, 120, P.azul); ctx.restore(); txt('ANOS (ESTIMATIVA)', CX, 700, 40, P.cinza, ease((t - 0.6) / 0.4), 'center', 'MM');
+};
+CENAS.x_escala = (t, d) => {   // idade do universo x 10^790
+  fundo(t, 0.3); const k = easeOut((t - 0.4) / 1.6);
+  txt('IDADE DO UNIVERSO HOJE', 160, 340, 38, P.branco, 1, 'left'); txt('13,8 BILHÕES DE ANOS ≈ 10¹⁰', 160, 395, 28, P.cinza, 1, 'left', 'MM');
+  ctx.fillStyle = P.ouro; ctx.fillRect(160, 440, Math.max(4, 1600 * 10 / 790 * k), 40);
+  txt('TEMPO ESTIMADO PARA O DECAIMENTO', 160, 600, 38, P.branco, ease((t - 0.3) / 0.4), 'left'); txt('10⁷⁹⁰ ANOS', 160, 655, 28, P.cinza, ease((t - 0.3) / 0.4), 'left', 'MM');
+  ctx.fillStyle = P.azul; ctx.fillRect(160, 700, 1600 * k, 40); txt('ESCALA DOS EXPOENTES', CX, 880, 26, P.cinza, ease((t - 1.6) / 0.4), 'center', 'MM');
+};
+
+// FECHO
+CENAS.f_recap = (t, d, p) => {   // as contas
+  fundo(t, 0.3); const ic = ['vulcao', 'rocha', 'raio', 'sol', 'bolha'], nomes = ['SUPERVULCÃO', 'ASTEROIDE', 'RAIOS GAMA', 'O SOL', 'VÁCUO'],
+    ver = ['RARO', 'JÁ SABEMOS DESVIAR', 'RARO E DISTANTE', 'DAQUI A 1 BILHÃO DE ANOS', 'PROVAVELMENTE NUNCA'], ts = p.ts || [0, 1.5, 3, 4.5, 6];
+  for (let i = 0; i < 5; i++) { const y = 170 + i * 175, a = ease((t - ts[i]) / 0.4), atual = t >= ts[i] && (i === 4 || t < ts[i + 1]);
+    ctx.save(); ctx.globalAlpha = a * (atual ? 1 : 0.55); ctx.fillStyle = atual ? '#232c56' : P.escuro; ctx.beginPath(); ctx.roundRect(260, y - 70, 1400, 140, 24); ctx.fill(); ctx.restore();
+    icone(ic[i], 370, y, 36, a); txt(nomes[i], 470, y, 46, P.branco, a, 'left'); txt(ver[i], 1610, y, 40, i === 3 ? P.ouro : P.azul, a, 'right', 'MM'); }
+};
+CENAS.f_final = (t, d) => {
+  fundo(t, 0.8, '#1c1636', '#04050b'); icone('bolha', CX, 260, 50, ease(t / 0.4));
+  sobe('QUAL DESSAS', CX, 470, 100, t, 0.2); sobe('TE ASSUSTOU MAIS?', CX, 580, 100, t, 0.35, P.ouro);
+  pilula('INSCREVA-SE', CX, 780, 54, P.verm, P.branco, ease((t - 0.9) / 0.4)); txt('LADO SOMBRIO DO UNIVERSO', CX, 900, 34, P.cinza, ease((t - 1.1) / 0.4), 'center', 'MM');
+};
+
+
+// THUMBNAIL (1920x1080, exporta em 1280x720)
+CENAS.thumb = (t, d, p) => {
+  const g0 = ctx.createRadialGradient(1350, 520, 100, 1350, 520, 1300); g0.addColorStop(0, '#3a0d05'); g0.addColorStop(0.5, '#12040a'); g0.addColorStop(1, '#030206');
+  ctx.fillStyle = g0; ctx.fillRect(0, 0, W, H);
+  for (const [x, y, r, f] of EST) { ctx.globalAlpha = 0.15 + 0.45 * f; circ(x, y, r, P.branco); } ctx.globalAlpha = 1;
+  const gx = 1360, gy = 600, R = 470;
+  brilho(gx, gy, R * 1.6, 'rgba(255,60,10,0.6)');
+  globo(gx, gy, R, -55, 18, { mar1: '#1a4f78', mar2: '#03101f', terra: '#35694c', atm: 'rgba(255,110,50,0.9)' });
+  // ponto de impacto
+  const ix = gx - R * 0.42, iy = gy - R * 0.38;
+  ctx.save(); ctx.beginPath(); ctx.arc(gx, gy, R, 0, 6.283); ctx.clip();
+  // escurece o lado oposto
+  const sh = ctx.createLinearGradient(gx - R, gy - R, gx + R, gy + R); sh.addColorStop(0, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,0,0.75)'); ctx.fillStyle = sh; ctx.fillRect(gx - R, gy - R, 2 * R, 2 * R);
+  ctx.globalCompositeOperation = 'lighter'; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; const r = rng(91);
+  const veio = (x, y, ang, len, lw, prof) => { ctx.beginPath(); ctx.moveTo(x, y); const pts = [[x, y]];
+    for (let j = 0; j < len; j++) { ang += (r() - 0.5) * 0.5; x += Math.cos(ang) * 26; y += Math.sin(ang) * 26; pts.push([x, y]); ctx.lineTo(x, y);
+      if (prof < 1 && r() < 0.12) veio(x, y, ang + (r() < 0.5 ? 0.9 : -0.9), Math.floor(len * 0.5), lw * 0.6, prof + 1); }
+    ctx.strokeStyle = 'rgba(255,80,20,0.35)'; ctx.lineWidth = lw * 3.5; ctx.stroke();
+    ctx.beginPath(); pts.forEach(([px, py], k) => k ? ctx.lineTo(px, py) : ctx.moveTo(px, py)); ctx.strokeStyle = 'rgba(255,200,120,0.95)'; ctx.lineWidth = lw; ctx.stroke(); };
+  for (let k = 0; k < 7; k++) veio(ix, iy, -0.2 + k * 0.42 + (r() - 0.5) * 0.2, 9 + Math.floor(r() * 9), 6, 0);
+  brilho(ix, iy, 330, 'rgba(255,210,140,1)'); brilho(ix, iy, 130, 'rgba(255,255,240,1)');
+  ctx.restore();
+  for (let i = 0; i < 3; i++) { ctx.save(); ctx.translate(ix, iy); ctx.scale(1, 0.55); anel(0, 0, 170 + i * 70, `rgba(255,${200 - i * 40},140,${0.7 - i * 0.2})`, 8 - i * 2); ctx.restore(); }
+  // rastro do asteroide
+  ctx.save(); ctx.globalCompositeOperation = 'lighter'; const L = 900, an = Math.atan2(iy - (-200), ix - 300);
+  ctx.translate(ix, iy); ctx.rotate(an); const tg = ctx.createLinearGradient(0, 0, -L, 0); tg.addColorStop(0, 'rgba(255,245,210,1)'); tg.addColorStop(0.25, 'rgba(255,140,50,0.85)'); tg.addColorStop(1, 'rgba(255,40,10,0)');
+  ctx.fillStyle = tg; ctx.beginPath(); ctx.moveTo(-10, -60); ctx.quadraticCurveTo(-L * 0.5, -90, -L, -10); ctx.lineTo(-L, 10); ctx.quadraticCurveTo(-L * 0.5, 90, -10, 60); ctx.fill(); ctx.restore();
+  pedra(ix - 70, iy - 60, 70, 0.8, 12, '#c49a80', '#3a221a'); brilho(ix - 40, iy - 30, 120, 'rgba(255,230,170,0.9)');
+  // faixa escura atrás do texto
+  const gt = ctx.createLinearGradient(0, 0, 900, 0); gt.addColorStop(0, 'rgba(0,0,0,0.75)'); gt.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = gt; ctx.fillRect(0, 0, 900, H);
+  const linhas = p.v === 'b' ? [['5 FINS', P.ouro, 250, 430], ['DO MUNDO', P.branco, 160, 660]] : [['O Nº1', P.ouro, 270, 420], ['É INVISÍVEL', P.branco, 150, 650]];
+  linhas.forEach(([s2, cor, sz, y]) => { ctx.save(); ctx.font = `${sz}px MX`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+    ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 30; ctx.lineWidth = 24; ctx.strokeStyle = '#000'; ctx.strokeText(s2, 70, y); ctx.shadowBlur = 0; ctx.fillStyle = cor; ctx.fillText(s2, 70, y); ctx.restore(); });
+  if (p.v !== 'b') pilula('DOS 5 FINS DO MUNDO', 410, 830, 50, P.verm, P.branco);
+};
+
+window.desenhar = (cena, t, dur, p) => { ctx.save(); ctx.clearRect(0, 0, W, H); CENAS[cena](t, dur, p || {}); ctx.restore(); };
+window.CENAS = CENAS;
+</script>
+</body></html>

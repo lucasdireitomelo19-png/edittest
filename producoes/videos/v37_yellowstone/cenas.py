@@ -1,0 +1,33 @@
+# Gerado por pipeline/gerar_short.py a partir de plano.py.
+FINAL = "SIGA PARA MAIS"
+FIM = 46.51
+AMBIENTE = "drone"
+AMBIENTE_DB = -22
+ETIQUETAS = False
+CORTE_MAX = 2.6
+PROGRESSO = True
+LEGENDA_MV = 230
+FINAL_ALIN, FINAL_MV = 8, 200
+SAIDA = "short_yellowstone.mp4"
+CREDITO = 'Pixabay/Cal_Captures · Pixabay/Gylfi · Pixabay/Neugiernase · Pixabay/TungArt7 · Pixabay/caeuje · Pixabay/tiburi · Pixabay/Motionwell · Pixabay/Nils_Vega · Pixabay/doktorkleinmusic'
+CENAS = [
+    dict(t=0.00, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_230250.mp4', 'ss': 0}),  # 1 Rio com corredeiras em Yellowstone
+    dict(t=2.23, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs37_01_vy_mapa.mp4', 'ss': 0, 'som': ('hit', -12)}),  # 2 Mapa real: zoom até Yellowstone
+    dict(t=3.82, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_230157.mp4', 'ss': 0}),  # 3 Rio de Yellowstone
+    dict(t=5.77, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_232072.mp4', 'ss': 0}),  # 4 Gêiser soltando vapor em Yellowstone
+    dict(t=7.66, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_348049.mp4', 'ss': 0}),  # 5 Área geotérmica com vapor (contexto)
+    dict(t=8.96, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs37_05_vy_corte.mp4', 'ss': 0}),  # 6 Corte: piscina colorida em cima, magma embaixo
+    dict(t=10.35, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_130156.mp4', 'ss': 0}),  # 7 Erupção na Islândia
+    dict(t=12.05, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs37_07_vy_linha.mp4', 'ss': 0}),  # 8 Linha do tempo vertical: 2,1 mi · 1,3 mi · 640 mil
+    dict(t=16.77, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_62032.mp4', 'ss': 0}),  # 9 Gêiser com vapor e enxofre na Islândia
+    dict(t=18.64, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs37_09_vy_camara.mp4', 'ss': 0, 'som': ('hit', -14)}),  # 10 Corte: a câmara esvazia e o chão afunda (caldeira)
+    dict(t=22.21, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_231170.mp4', 'ss': 0}),  # 11 Cratera vulcânica com lago (vista aérea)
+    dict(t=24.48, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_92288.mp4', 'ss': 0}),  # 12 Cratera em erupção soltando cinza (La Palma)
+    dict(t=27.31, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_3959.mp4', 'ss': 0}),  # 13 Gás de enxofre saindo do chão vulcânico
+    dict(t=28.29, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_336603.mp4', 'ss': 0}),  # 14 Floresta coberta de neve
+    dict(t=29.80, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs37_14_vy_tambora.mp4', 'ss': 0}),  # 15 Mapa real: zoom até o Tambora, 1815
+    dict(t=34.43, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_223111.mp4', 'ss': 0}),  # 16 Neve caindo
+    dict(t=36.82, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_344403.mp4', 'ss': 0}),  # 17 Poças de lama fervendo
+    dict(t=37.80, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs37_17_vy_chance.mp4', 'ss': 0}),  # 18 1 EM 730.000 POR ANO (USGS)
+    dict(t=41.88, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_228960.mp4', 'ss': 0}),  # 19 Cachoeira e corredeiras
+]

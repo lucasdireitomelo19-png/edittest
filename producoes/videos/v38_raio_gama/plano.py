@@ -1,0 +1,22 @@
+# Short "Raios gama" (vertical). (âncora, fonte, ideia). Sem cenas repetidas nem do vídeo longo.
+PLANO = [
+    ("em 2022 uma explosao", "svs:14634_Fermi_GRB_Emission_Line_Best.mp4@154", "Estrela explodindo com um jato (animação NASA)"),
+    ("conseguiu mexer na atmosfera", "px:213425", "Aurora no céu noturno"),
+    ("foi uma explosao de raios gama", "mg:vg_flash", "Clarão no céu: 9/10/2022"),
+    ("a mais brilhante ja registrada", "svs:14634_Fermi_GRB_Emission_Line_Best.mp4@60", "O BOAT no céu do Fermi (dados reais NASA)"),
+    ("os astronomos apelidaram", "mg:vg_boat", "BOAT: a mais brilhante já registrada"),
+    ("ela acontece quando uma estrela gigante", "svs:Gamma-ray_Burst_Animation_MkII_1080.mp4@20", "Estrela gigante morrendo (animação NASA, outro trecho)"),
+    ("o nucleo desaba", "mg:vg_colapso", "Camadas da estrela implodem e saem os jatos"),
+    ("em poucos segundos", "mg:vg_energia", "3 segundos = 10 bilhões de anos de Sol"),
+    ("mesmo de tao longe", "px:314151", "Lua vista por telescópio: tão longe"),
+    ("a camada mais alta da nossa atmosfera", "px:213423", "Aurora entre nuvens: a alta atmosfera"),
+    ("agora imagina uma dessas", "mg:vg_mira", "Feixe vindo de cima rompe o ozônio da Terra"),
+    ("ela destruiria boa parte", "px:159412", "Camada de ozônio em volta da Terra (ilustração)"),
+    ("e o ultravioleta do sol", "px:131765", "Sol com raios entre as nuvens"),
+    ("mataria o plancton dos oceanos", "px:192073", "Plâncton no oceano"),
+    ("alguns cientistas suspeitam", "px:308897", "Plâncton sobre o recife"),
+    ("ha quatrocentos e quarenta e cinco", "mg:vg_ordov", "Fóssil de trilobita: 445 milhões de anos"),
+    ("numa das maiores extincoes", "px:264272", "Água-viva no escuro"),
+    ("a sorte e que perto da gente", "px:368458", "Montanhas sob o céu estrelado"),
+]
+SONS = {"foi uma explosao de raios gama": ("hit", -12), "o nucleo desaba": ("hit", -14)}

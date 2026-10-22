@@ -1,0 +1,237 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"MX";src:url("../fonts/Montserrat-ExtraBold.ttf")}
+  html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Animações verticais (1080x1920) do lote viral 02. window.desenhar(cena, t, dur, p).
+// Cenas: tangente (Sol apaga e a Terra sai em linha reta), elevador (cabo até a órbita geoestacionária),
+// anel (Terra com anel e crateras no equador), lua (Lua se aproximando e virando anel), apophis (passagem
+// dentro do anel de satélites), gps (constelação GPS), planetas (todos os planetas entre a Terra e a Lua, em escala),
+// gaia (estrela girando em volta de um ponto invisível).
+const W = 1080, H = 1920, CX = W / 2, CY = H / 2 - 80;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+function rng(seed) { let s = seed % 2147483647; if (s <= 0) s += 2147483646;
+  return () => (s = s * 16807 % 2147483647) / 2147483647; }
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+const lerp = (a, b, k) => a + (b - a) * k;
+const ESTRELAS = (() => { const r = rng(11), a = [];
+  for (let i = 0; i < 1200; i++) a.push([r() * W, r() * H, r() ** 3 * 2.2 + 0.4, r()]); return a; })();
+function ceu(t, alpha = 1, deriva = 0) {
+  const g = ctx.createRadialGradient(CX, CY, 50, CX, CY, H);
+  g.addColorStop(0, '#0a1020'); g.addColorStop(1, '#010206'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  for (const [x, y, r, f] of ESTRELAS) { ctx.globalAlpha = alpha * (0.45 + 0.55 * Math.abs(Math.sin(t * 1.3 + f * 40)));
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc((x + deriva * t * (0.3 + f)) % W, y, r, 0, 6.283); ctx.fill(); }
+  ctx.globalAlpha = 1;
+}
+function brilho(x, y, r, cor, a = 1) {
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, cor); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.globalAlpha = a; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+}
+function rotulo(txt, x, y, size = 34, cor = '#dfe8ff', alinh = 'center', a = 1) {
+  ctx.save(); ctx.globalAlpha = a; ctx.font = `${size}px MX`; ctx.textAlign = alinh; ctx.textBaseline = 'middle';
+  ctx.lineWidth = 7; ctx.strokeStyle = 'rgba(0,0,0,0.8)'; ctx.strokeText(txt, x, y); ctx.fillStyle = cor; ctx.fillText(txt, x, y); ctx.restore();
+}
+function sol(x, y, r, a = 1) {
+  brilho(x, y, r * 3.5, 'rgba(255,170,40,0.55)', a);
+  const g = ctx.createRadialGradient(x - r * 0.2, y - r * 0.2, r * 0.1, x, y, r);
+  g.addColorStop(0, '#fffbe6'); g.addColorStop(0.6, '#ffc640'); g.addColorStop(1, '#ff7a10');
+  ctx.globalAlpha = a; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+}
+// Terra estilizada: oceano, manchas de continente girando e terminador (lado noturno)
+function terra(x, y, r, t, luz = 1, rot = 0.25) {
+  ctx.save(); ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.clip();
+  const g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r);
+  g.addColorStop(0, '#3f8fe0'); g.addColorStop(1, '#0b2c66'); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, 2 * r, 2 * r);
+  const rr = rng(5);
+  for (let i = 0; i < 14; i++) {
+    const lon = rr() * 6.283 + t * rot, lat = (rr() - 0.5) * 2.2, s = (0.18 + rr() * 0.3) * r;
+    const cx = x + Math.sin(lon) * Math.cos(lat * 0.7) * r, cy = y + Math.sin(lat * 0.7) * r * 0.85;
+    if (Math.cos(lon) < -0.1) continue;
+    ctx.fillStyle = i % 4 ? 'rgba(70,140,70,0.85)' : 'rgba(170,140,90,0.8)';
+    ctx.beginPath(); ctx.ellipse(cx, cy, s * Math.max(0.15, Math.cos(lon)), s * 0.6, 0, 0, 6.283); ctx.fill();
+  }
+  for (let i = 0; i < 10; i++) {
+    const lon = rr() * 6.283 + t * rot * 1.4, lat = (rr() - 0.5) * 2.4, s = (0.25 + rr() * 0.35) * r;
+    if (Math.cos(lon) < 0) continue;
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.beginPath(); ctx.ellipse(x + Math.sin(lon) * r, y + Math.sin(lat * 0.7) * r * 0.85, s * Math.cos(lon), s * 0.18, 0.2, 0, 6.283); ctx.fill();
+  }
+  const sh = ctx.createLinearGradient(x - r, y, x + r, y);
+  sh.addColorStop(0, `rgba(0,0,10,${0.05 + 0.9 * (1 - luz)})`); sh.addColorStop(0.55, `rgba(0,0,10,${0.25 + 0.7 * (1 - luz)})`); sh.addColorStop(1, 'rgba(0,0,10,0.92)');
+  ctx.fillStyle = sh; ctx.fillRect(x - r, y - r, 2 * r, 2 * r);
+  ctx.restore();
+  brilho(x, y, r * 1.12, `rgba(120,180,255,${0.25 * luz})`);
+}
+function lua(x, y, r, luz = 1) {
+  const g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r);
+  g.addColorStop(0, `rgb(${235 * luz | 0},${232 * luz | 0},${225 * luz | 0})`); g.addColorStop(1, `rgb(${110 * luz | 0},${108 * luz | 0},${105 * luz | 0})`);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill();
+  const rr = rng(9); ctx.fillStyle = `rgba(60,60,60,${0.35 * luz})`;
+  for (let i = 0; i < 9; i++) { const a = rr() * 6.283, d = rr() * r * 0.7, s = r * (0.08 + rr() * 0.16);
+    ctx.beginPath(); ctx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, s, 0, 6.283); ctx.fill(); }
+}
+
+const CENAS = {
+  // arco do anel visto do chão (PNG transparente para sobrepor ao céu real); p.sombra corta o meio (noite)
+  arco(t, d, p) {
+    ctx.clearRect(0, 0, W, H);
+    const cx = CX + 380, cy = 1880, rx = 1700, ry = 1760, rot = -0.36, a0 = Math.PI * 1.02, a1 = Math.PI * 1.98;
+    // sombra fina por baixo para destacar o anel no céu claro
+    ctx.strokeStyle = 'rgba(40,30,20,0.28)'; ctx.lineWidth = 230;
+    ctx.beginPath(); ctx.ellipse(cx, cy, rx - 110, ry - 110, rot, a0, a1); ctx.stroke();
+    for (let k = 0; k < 40; k++) {
+      const r = k / 40; if (r > 0.62 && r < 0.68) continue;           // divisão (como a de Cassini)
+      const a = (0.45 + 0.4 * Math.abs(Math.sin(r * 23))) * (p.a ?? 1);
+      ctx.strokeStyle = `rgba(255,${238 - 30 * r | 0},${205 - 50 * r | 0},${a})`; ctx.lineWidth = 6;
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx - k * 5.6, ry - k * 5.6, rot, a0, a1); ctx.stroke();
+    }
+    if (p.sombra) { ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = 'rgba(0,0,0,0.95)';
+      const sa = Math.PI * 1.55, sx = cx + Math.cos(sa) * rx * Math.cos(rot) - Math.sin(sa) * ry * Math.sin(rot), sy = cy + Math.cos(sa) * rx * Math.sin(rot) + Math.sin(sa) * ry * Math.cos(rot);
+      ctx.beginPath(); ctx.ellipse(sx, sy, 230, 300, rot, 0, 6.283); ctx.fill(); ctx.restore(); }
+  },
+  tangente(t, d, p) {
+    ceu(t, 0.9);
+    const apaga = p.apaga ?? 0.15, atraso = p.atraso ?? d * 0.45, R = 300, w = 0.55;
+    const ks = 1 - ease((t - apaga) / 0.35);
+    if (ks > 0.01) sol(CX, CY, 80, ks);
+    if (ks < 0.99) { ctx.strokeStyle = `rgba(255,200,120,${0.35 * (1 - ks)})`; ctx.setLineDash([8, 10]); ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(CX, CY, 80, 0, 6.283); ctx.stroke(); ctx.setLineDash([]); rotulo('SOL', CX, CY, 34, 'rgba(255,210,140,0.6)', 'center', 1 - ks); }
+    ctx.strokeStyle = 'rgba(140,190,255,0.45)'; ctx.lineWidth = 4; ctx.setLineDash([12, 14]);
+    ctx.beginPath(); ctx.arc(CX, CY, R, 0, 6.283); ctx.stroke(); ctx.setLineDash([]);
+    const a0 = 0.6, ang = a0 + w * Math.min(t, atraso);
+    const ex = CX + Math.cos(ang) * R, ey = CY + Math.sin(ang) * R;
+    let x = ex, y = ey;
+    if (t > atraso) { const s = (t - atraso) * w * R * 0.75;
+      x = ex - Math.sin(ang) * s; y = ey + Math.cos(ang) * s;
+      ctx.strokeStyle = 'rgba(255,230,120,0.95)'; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(ex, ey); ctx.lineTo(x, y); ctx.stroke(); }
+    ctx.strokeStyle = 'rgba(160,210,255,0.95)'; ctx.lineWidth = 8; ctx.beginPath(); ctx.arc(CX, CY, R, Math.max(a0 - 0.8, ang - 1.4), ang); ctx.stroke();
+    terra(x, y, 60, t, ks > 0.5 ? 1 : 0.55);
+    rotulo('TERRA', x, y + 95, 32, '#bfe0ff');
+  },
+  // cabo do equador até além da órbita geoestacionária, com contrapeso; p.cabine sobe; p.rompe arrebenta
+  elevador(t, d, p) {
+    ceu(t, 0.6);
+    const rot = t * 0.05, ER = 210, ex = CX, ey = H - 330;
+    ctx.save(); ctx.translate(ex, ey); ctx.rotate(rot);
+    ctx.strokeStyle = 'rgba(160,210,255,0.4)'; ctx.setLineDash([14, 14]); ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(0, 0, 1180, 0, 6.283); ctx.stroke(); ctx.setLineDash([]);
+    const topo = p.rompe ? lerp(1400, 400, ease(t / (d * 0.5))) : 1400;
+    ctx.strokeStyle = '#e8eef8'; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(0, -ER); ctx.lineTo(0, -topo); ctx.stroke();
+    if (p.rompe) { const q = ease(t / (d * 0.6)); ctx.strokeStyle = 'rgba(232,238,248,0.8)';
+      for (let i = 0; i < 6; i++) { ctx.save(); ctx.translate(18 * i * q, -topo - 120 * i); ctx.rotate(q * (i - 2.5) * 0.4);
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -110); ctx.stroke(); ctx.restore(); } }
+    else { ctx.fillStyle = '#9aa8bb'; ctx.fillRect(-26, -topo - 34, 52, 34); }
+    if (p.cabine) { const h = lerp(ER + 10, 1150, ease(t / d)); ctx.fillStyle = '#ffd34a'; ctx.fillRect(-16, -h - 26, 32, 26);
+      brilho(0, -h - 13, 50, 'rgba(255,210,80,0.6)'); }
+    ctx.restore();
+    terra(ex, ey, ER, t, 0.95, 0.15);
+  },
+  // Terra com anel (inclinação de leve); p.crateras acende 21 pontos perto do equador
+  anel(t, d, p) {
+    ceu(t, 0.7);
+    const R = 260, inc = p.inc ?? 0.22, r1 = 380, r2 = 560;
+    const faixa = (lado) => { for (let r = r1; r < r2; r += 6) {
+        const a = 0.12 + 0.18 * Math.abs(Math.sin(r * 0.07)) * (1 - (r - r1) / (r2 - r1) * 0.4);
+        ctx.strokeStyle = `rgba(230,215,190,${a})`; ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.ellipse(CX, CY, r, r * inc, -0.18, lado ? Math.PI : 0, lado ? 2 * Math.PI : Math.PI); ctx.stroke(); } };
+    faixa(true);
+    terra(CX, CY, R, t, 1, 0.3);
+    faixa(false);
+    if (p.crateras) { const k = ease(t / (d * 0.7)), rr = rng(21);
+      for (let i = 0; i < 21; i++) { const lon = rr() * 2.6 - 1.3, lat = (rr() - 0.5) * 0.9;
+        if (i / 21 > k) break; const x = CX + Math.sin(lon) * R * 0.92, y = CY + lat * R * 0.55;
+        brilho(x, y, 26, 'rgba(255,80,60,0.9)'); ctx.fillStyle = '#ff5a3c'; ctx.beginPath(); ctx.arc(x, y, 7, 0, 6.283); ctx.fill(); }
+      ctx.strokeStyle = 'rgba(255,200,80,0.7)'; ctx.setLineDash([12, 10]); ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(CX - R, CY - R * 0.28); ctx.lineTo(CX + R, CY - R * 0.28); ctx.moveTo(CX - R, CY + R * 0.28); ctx.lineTo(CX + R, CY + R * 0.28); ctx.stroke(); ctx.setLineDash([]); }
+  },
+  // Lua se aproximando (cresce no céu); p.rasga: vira fragmentos que se espalham num anel
+  lua(t, d, p) {
+    ceu(t, 0.6);
+    const k = ease(t / d), ER = 300;
+    const my = lerp(260, p.rasga ? 700 : 560, k), mr = p.rasga ? 150 : lerp(40, 190, k ** 1.6);
+    if (!p.rasga) lua(CX, my, mr);
+    else { const rr = rng(4);
+      for (let i = 0; i < 260; i++) { const a0 = rr() * 6.283, dd = rr() * mr, s = 3 + rr() * 9;
+        const ang = a0 + k * (1.5 + rr()) * (dd / mr + 0.3), spread = lerp(dd, 220 + rr() * 260, k);
+        const x = CX + Math.cos(ang) * spread * (1 + k * 0.8), y = my + Math.sin(ang) * spread * lerp(1, 0.22, k);
+        ctx.fillStyle = `rgba(200,195,185,${0.9 - 0.3 * rr()})`; ctx.beginPath(); ctx.arc(x, y, s, 0, 6.283); ctx.fill(); } }
+    terra(CX, H - 120, ER * 1.6, t, 1, 0.12);
+  },
+  // Apophis cruzando por dentro do anel de satélites geoestacionários
+  apophis(t, d, p) {
+    ceu(t, 0.7);
+    const ER = 120, G = 520;
+    terra(CX, CY, ER, t, 1, 0.3);
+    ctx.strokeStyle = 'rgba(140,200,255,0.45)'; ctx.setLineDash([8, 12]); ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(CX, CY, G, 0, 6.283); ctx.stroke(); ctx.setLineDash([]);
+    for (let i = 0; i < 40; i++) { const a = i / 40 * 6.283 + t * 0.05; ctx.fillStyle = '#cfe6ff';
+      ctx.fillRect(CX + Math.cos(a) * G - 4, CY + Math.sin(a) * G - 4, 8, 8); }
+    const k = t / d, perto = 0.86 * G;
+    const x = lerp(-200, W + 200, k), y = CY - perto + ((x - CX) / 700) ** 2 * 520;
+    ctx.strokeStyle = 'rgba(255,170,90,0.7)'; ctx.lineWidth = 4; ctx.beginPath();
+    for (let s = 0; s <= 40; s++) { const xx = lerp(-200, x, s / 40), yy = CY - perto + ((xx - CX) / 700) ** 2 * 520; s ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }
+    ctx.stroke();
+    brilho(x, y, 60, 'rgba(255,170,90,0.6)'); ctx.fillStyle = '#b39b84'; ctx.beginPath(); ctx.ellipse(x, y, 16, 11, 0.5, 0, 6.283); ctx.fill();
+    rotulo('APOPHIS', x, y - 52, 30, '#ffd2a8');
+    rotulo('ANEL DOS SATÉLITES GEOESTACIONÁRIOS', CX, CY + G + 50, 26, '#a9d2ff');
+  },
+  // constelação GPS: 6 planos orbitais com satélites
+  gps(t, d, p) {
+    ceu(t, 0.6);
+    const ER = 190; terra(CX, CY, ER, t, 1, 0.3);
+    for (let pl = 0; pl < 6; pl++) { const rot = pl * Math.PI / 6 + 0.3;
+      ctx.save(); ctx.translate(CX, CY); ctx.rotate(rot);
+      ctx.strokeStyle = 'rgba(140,200,255,0.3)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(0, 0, 470, 150, 0, 0, 6.283); ctx.stroke();
+      for (let s = 0; s < 4; s++) { const a = s * 1.5708 + t * 0.6 + pl; const x = Math.cos(a) * 470, y = Math.sin(a) * 150;
+        if (Math.sin(a) < 0 && Math.hypot(x, y) < ER + 20) continue;
+        brilho(x, y, 24, 'rgba(120,255,180,0.6)'); ctx.fillStyle = '#b7ffd6'; ctx.fillRect(x - 6, y - 6, 12, 12); }
+      ctx.restore(); }
+    if (p.tique) { const f = (t * 2) % 1; rotulo('+38 µs / DIA', CX, CY + 640, 54, `rgba(120,255,180,${0.6 + 0.4 * (f < 0.5)})`); }
+  },
+  // todos os planetas entre a Terra e a Lua, em escala (384.400 km); p.aneis põe Saturno com anéis; p.perigeu encurta a distância
+  planetas(t, d, p) {
+    ceu(t, 0.5);
+    const topo = 140, base = H - 160, dist = (p.perigeu ? 356500 : 384400), esc = (base - topo) / 384400;
+    const yTerra = base, yLua = base - dist * esc;
+    terra(CX, yTerra, 6371 * esc, t, 1, 0.3);
+    lua(CX, yLua, 1737 * esc);
+    rotulo('TERRA', CX + 90, yTerra, 30, '#9fd0ff', 'left'); rotulo('LUA', CX + 90, yLua, 30, '#e8e8e8', 'left');
+    rotulo('DE CENTRO A CENTRO · ' + (p.perigeu ? '356.500' : '384.400') + ' KM', CX, base + 80, 30, '#ffe28a');
+    const P = [['MERCÚRIO', 4879, '#b8b0a6'], ['VÊNUS', 12104, '#e8c98a'], ['MARTE', 6779, '#d0603a'], ['JÚPITER', 139820, '#d9b48a'],
+      ['SATURNO', 116460, '#e6cf98'], ['URANO', 50724, '#9fe0e8'], ['NETUNO', 49244, '#4a78e0']];
+    let y = yTerra;   // medida de centro a centro (é assim que a conta fecha)
+    const n = p.todos ? 7 : Math.min(7, Math.floor(t / (d / 7.5)) + 1);
+    let soma = 0;
+    for (let i = 0; i < n; i++) { const [nome, dia, cor] = P[i]; const r = dia * esc / 2;
+      const kin = p.todos ? 1 : ease((t - i * d / 7.5) / 0.35); const cy = y - r; soma += dia;
+      const xx = lerp(W + 300, CX, kin);
+      if (nome === 'SATURNO' && p.aneis) { ctx.strokeStyle = 'rgba(230,210,160,0.8)'; ctx.lineWidth = 10;
+        ctx.beginPath(); ctx.ellipse(xx, cy, r * 2.3, r * 0.5, -0.1, 0, 6.283); ctx.stroke(); }
+      const g = ctx.createRadialGradient(xx - r * 0.3, cy - r * 0.3, r * 0.1, xx, cy, r); g.addColorStop(0, cor); g.addColorStop(1, '#1a1a22');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(xx, cy, Math.max(r, 3), 0, 6.283); ctx.fill();
+      rotulo(nome, xx - Math.max(r, 3) - 20, cy, 26, '#ffffff', 'right', kin);
+      y -= dia * esc + 2; }
+    if (y < yLua && !p.aneis) { rotulo('NÃO CABE', CX, H / 2, 90, '#ff5a3c'); }
+  },
+  // estrela parecida com o Sol dançando em volta de um ponto escuro e invisível
+  gaia(t, d, p) {
+    ceu(t, 0.8);
+    const k = ease(t / (d * 0.5)), R = 300;
+    const a = t * 0.9, x = CX + Math.cos(a) * R, y = CY + Math.sin(a) * R * 0.45;
+    ctx.strokeStyle = 'rgba(255,220,140,0.3)'; ctx.setLineDash([10, 12]); ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.ellipse(CX, CY, R, R * 0.45, 0, 0, 6.283); ctx.stroke(); ctx.setLineDash([]);
+    if (p.revela) { brilho(CX, CY, 140, `rgba(255,140,60,${0.35 * k})`); ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(CX, CY, 46, 0, 6.283); ctx.fill();
+      ctx.strokeStyle = `rgba(255,190,110,${0.8 * k})`; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(CX, CY, 54, 0, 6.283); ctx.stroke(); }
+    else { ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(CX - 18, CY); ctx.lineTo(CX + 18, CY); ctx.moveTo(CX, CY - 18); ctx.lineTo(CX, CY + 18); ctx.stroke();
+      rotulo('?', CX, CY - 60, 60, '#ffffff', 'center', 0.4 + 0.6 * Math.abs(Math.sin(t * 2))); }
+    sol(x, y, 34);
+  },
+};
+window.desenhar = (cena, t, d, p) => { ctx.setTransform(1, 0, 0, 1, 0, 0); CENAS[cena](t, d, p || {}); };
+</script>
+</body></html>

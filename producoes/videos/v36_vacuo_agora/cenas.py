@@ -1,0 +1,32 @@
+# Gerado por pipeline/gerar_short.py a partir de plano.py.
+FINAL = "SIGA PARA MAIS"
+FIM = 46.69
+AMBIENTE = "drone"
+AMBIENTE_DB = -22
+ETIQUETAS = False
+CORTE_MAX = 2.6
+PROGRESSO = True
+LEGENDA_MV = 230
+FINAL_ALIN, FINAL_MV = 8, 200
+SAIDA = "short_vacuo.mp4"
+CREDITO = 'Pixabay/Kanenori · Pixabay/iddea_photo · Pixabay/Kost9n4 · Pixabay/Bernhard_Schuermann · Pixabay/Drjhony · Pixabay/Mabelle-Elise · Pixabay/Matthias_Groeneveld · Pixabay/adege'
+CENAS = [
+    dict(t=0.00, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_285663.mp4', 'ss': 0}),  # 1 Céu estrelado com a Via Láctea sobre um abrigo na montanha
+    dict(t=1.77, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_283431.mp4', 'ss': 0}),  # 2 Campos de arroz à noite sob as estrelas
+    dict(t=2.55, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs36_02_vv_apaga.mp4', 'ss': 0, 'som': ('hit', -12)}),  # 3 Uma frente de luz apaga as janelas da cidade
+    dict(t=4.25, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_253998.mp4', 'ss': 0}),  # 4 Pai e filho: tudo o que existe
+    dict(t=7.70, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs36_04_vv_campo.mp4', 'ss': 0}),  # 5 Mar de pontos ondulando: o campo de Higgs
+    dict(t=8.83, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs36_05_vv_lhc.mp4', 'ss': 0}),  # 6 Mapa real: anel de 27 km na fronteira França–Suíça
+    dict(t=12.64, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs36_06_vv_detector.mp4', 'ss': 0}),  # 7 Visão do detector com trilhas e torres de energia (ilustração)
+    dict(t=13.99, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_262187.mp4', 'ss': 0}),  # 8 Cientista no laboratório
+    dict(t=16.54, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_144597.mp4', 'ss': 0}),  # 9 Céu estrelado girando
+    dict(t=19.41, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs36_09_vv_morro.mp4', 'ss': 0}),  # 10 Bola no buraquinho do alto do morro: AQUI ESTAMOS
+    dict(t=22.51, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs36_10_vv_rola.mp4', 'ss': 0}),  # 11 A bola rola até o ponto mais baixo
+    dict(t=24.78, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs36_11_vv_bolha.mp4', 'ss': 0, 'som': ('hit', -14)}),  # 12 Nasce a bolha de vácuo novo (hipótese)
+    dict(t=28.44, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs36_12_vv_apagam.mp4', 'ss': 0}),  # 13 As estrelas se apagam dentro da bolha
+    dict(t=31.10, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_159300.mp4', 'ss': 0}),  # 14 Céu noturno estrelado
+    dict(t=33.54, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_126925.mp4', 'ss': 0}),  # 15 Lua atrás das folhas à noite
+    dict(t=34.87, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_258799.mp4', 'ss': 0}),  # 16 Manhã com neblina na floresta
+    dict(t=37.11, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs36_16_vv_numero.mp4', 'ss': 0}),  # 17 Contador até 10^790 anos
+    dict(t=41.49, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_137617.mp4', 'ss': 0}),  # 18 Céu estrelado
+]

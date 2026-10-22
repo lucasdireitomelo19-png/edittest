@@ -1,0 +1,214 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"MX";src:url("../fonts/Montserrat-ExtraBold.ttf")}
+  html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Animações verticais (1080x1920) de "um buraco atravessando a Terra".
+// window.desenhar(cena, t, dur, p): cenas "corte", "tunel", "flutua", "oscila", "rotacao", "centro".
+const W = 1080, H = 1920, CY = H / 2 - 140;   // Terra acima do centro, para a legenda não cobrir
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+function rng(seed) { let s = seed % 2147483647; if (s <= 0) s += 2147483646;
+  return () => (s = s * 16807 % 2147483647) / 2147483647; }
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+const lerp = (a, b, k) => a + (b - a) * k;
+
+const ESTRELAS = (() => { const r = rng(11), a = [];
+  for (let i = 0; i < 700; i++) a.push([r() * W, r() * H, r() ** 3 * 2 + 0.4, r()]); return a; })();
+function espaco(t) {
+  const g = ctx.createRadialGradient(W / 2, H / 2, 100, W / 2, H / 2, H);
+  g.addColorStop(0, '#0a1020'); g.addColorStop(1, '#010206');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  for (const [x, y, r, f] of ESTRELAS) { ctx.globalAlpha = 0.5 + 0.5 * Math.sin(t * 2 + f * 30);
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); }
+  ctx.globalAlpha = 1;
+}
+
+// boneco: corpo simples com cabeça, tronco e membros; pose de queda com braços abertos
+function boneco(x, y, s, ang = 0, braco = 0.6, cor = '#f2f2f2') {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.scale(s, s);
+  ctx.strokeStyle = cor; ctx.fillStyle = cor; ctx.lineCap = 'round'; ctx.lineWidth = 9;
+  ctx.beginPath(); ctx.arc(0, -46, 13, 0, 6.283); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(0, -32); ctx.lineTo(0, 8); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, -24); ctx.lineTo(-30 * Math.cos(braco), -24 - 30 * Math.sin(braco)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, -24); ctx.lineTo(30 * Math.cos(braco), -24 - 30 * Math.sin(braco)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, 8); ctx.lineTo(-14, 42); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, 8); ctx.lineTo(16, 40); ctx.stroke();
+  ctx.restore();
+}
+
+// corte da Terra: camadas com raio em fração do raio da Terra (crosta, manto, núcleo externo, interno)
+const CAMADAS = [[1.0, '#5b4a3a', '#7a6248'], [0.985, '#b4532a', '#d9772f'], [0.546, '#e09a2d', '#f5c04a'], [0.19, '#fff2b0', '#ffe27a']];
+function terraCorte(cx, cy, R, rot = 0, tunelAng = 0, brilho = 1) {
+  ctx.save(); ctx.translate(cx, cy);
+  const halo = ctx.createRadialGradient(0, 0, R * 0.95, 0, 0, R * 1.25);
+  halo.addColorStop(0, 'rgba(90,150,255,0.35)'); halo.addColorStop(1, 'rgba(90,150,255,0)');
+  ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(0, 0, R * 1.25, 0, 6.283); ctx.fill();
+  for (const [f, c1, c2] of CAMADAS) {
+    const g = ctx.createRadialGradient(0, 0, R * f * 0.2, 0, 0, R * f);
+    g.addColorStop(0, c2); g.addColorStop(1, c1);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, R * f, 0, 6.283); ctx.fill();
+  }
+  // brilho do núcleo
+  const n = ctx.createRadialGradient(0, 0, 0, 0, 0, R * 0.4);
+  n.addColorStop(0, `rgba(255,255,230,${0.55 * brilho})`); n.addColorStop(1, 'rgba(255,200,80,0)');
+  ctx.fillStyle = n; ctx.beginPath(); ctx.arc(0, 0, R * 0.4, 0, 6.283); ctx.fill();
+  // oceano e continentes na borda (anel fino)
+  ctx.lineWidth = R * 0.03; ctx.strokeStyle = '#2f6db3'; ctx.beginPath(); ctx.arc(0, 0, R * 1.0, 0, 6.283); ctx.stroke();
+  ctx.strokeStyle = '#4f8a3a';
+  for (let i = 0; i < 9; i++) { const a0 = rot + i * 0.7 + Math.sin(i * 3) * 0.3;
+    ctx.beginPath(); ctx.arc(0, 0, R * 1.0, a0, a0 + 0.25 + (i % 3) * 0.12); ctx.stroke(); }
+  // túnel
+  ctx.rotate(tunelAng);
+  ctx.fillStyle = '#05070c'; ctx.fillRect(-R * 0.035, -R * 1.02, R * 0.07, R * 2.04);
+  ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 2;
+  ctx.strokeRect(-R * 0.035, -R * 1.02, R * 0.07, R * 2.04);
+  ctx.restore();
+}
+function rotulo(txt, x, y, size = 40, cor = '#fff') {
+  ctx.save(); ctx.font = `${size}px MX`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  ctx.lineWidth = 8; ctx.strokeStyle = 'rgba(0,0,0,0.75)'; ctx.strokeText(txt, x, y);
+  ctx.fillStyle = cor; ctx.fillText(txt, x, y); ctx.restore();
+}
+
+// posição na queda: movimento harmônico (sem ar). fase 0 = borda de cima, 0.5 = outro lado
+const posQueda = fase => Math.cos(2 * Math.PI * fase);   // +1 em cima, -1 embaixo (em raios)
+
+const CENAS = {
+  // visão geral: a pessoa pula na boca do túnel e cai; p.de/p.ate = fases da queda; p.zoom aproxima da borda
+  corte(t, d, p) {
+    espaco(t);
+    const R = 430, k = ease(t / d), z = lerp(p.zoom0 ?? 1, p.zoom1 ?? 1, k);
+    ctx.save(); ctx.translate(W / 2, CY); ctx.scale(z, z);
+    const foco = p.foco ?? 0; ctx.translate(0, foco * R);
+    terraCorte(0, 0, R, t * 0.05);
+    const fase = lerp(p.de ?? 0, p.ate ?? 0.25, p.linear ? t / d : ease(t / d));
+    const y = -posQueda(fase) * R * 0.99;
+    // rastro
+    ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 3 / z; ctx.setLineDash([10 / z, 10 / z]);
+    ctx.beginPath(); ctx.moveTo(0, -R); ctx.lineTo(0, y); ctx.stroke(); ctx.setLineDash([]);
+    const giro = (p.giro ?? 0.6) * t;
+    boneco(0, y, 1.1 / Math.max(1, z * 0.6), giro, 0.5 + 0.3 * Math.sin(t * 3));
+    ctx.restore();
+    if (p.relogio) { const min = Math.round(fase * 2 * 38); rotulo(`${String(min).padStart(2, '0')} MIN`, 70, H - 330, 64, '#ffd84a'); }
+  },
+  // primeira pessoa caindo pelo túnel: anéis vindo na direção da câmera, cor esquenta com a profundidade
+  tunel(t, d, p) {
+    const prof = lerp(p.prof0 ?? 0, p.prof1 ?? 0.3, t / d), vel = p.vel ?? 1;
+    const quente = clamp((prof - 0.25) / 0.6, 0, 1);
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+    const cx = W / 2 + Math.sin(t * 1.3) * 18, cy = H / 2 + Math.cos(t * 1.1) * 18;
+    const r = rng(5);
+    for (let i = 60; i >= 0; i--) {
+      const z = ((i - t * 14 * vel) % 60 + 60) % 60 + 0.4, s = 520 / z;
+      const v = 1 - z / 60, lum = 30 + v * 60;
+      const cr = lerp(lum * 1.2, 255 * v + 40, quente), cg = lerp(lum, 120 * v + 20, quente), cb = lerp(lum * 0.8, 30 * v, quente);
+      ctx.fillStyle = `rgb(${cr | 0},${cg | 0},${cb | 0})`;
+      ctx.beginPath(); ctx.ellipse(cx, cy, s * 2.2, s * 2.2, 0, 0, 6.283); ctx.fill();
+      ctx.fillStyle = `rgb(${cr * 0.55 | 0},${cg * 0.5 | 0},${cb * 0.45 | 0})`;
+      ctx.beginPath(); ctx.ellipse(cx, cy, s * 2.05, s * 2.05, 0, 0, 6.283); ctx.fill();
+    }
+    // centro escuro (ou brilhando, perto do núcleo)
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 160);
+    g.addColorStop(0, quente > 0.6 ? `rgba(255,240,190,${quente})` : '#000'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, 160, 0, 6.283); ctx.fill();
+    // linhas de velocidade
+    ctx.strokeStyle = `rgba(255,255,255,${0.15 + 0.25 * vel / 2})`; ctx.lineWidth = 3;
+    for (let i = 0; i < 70; i++) {
+      const a = r() * 6.283, f = ((r() + t * vel * 1.6) % 1), r0 = 120 + f * f * 1100;
+      ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0);
+      ctx.lineTo(cx + Math.cos(a) * (r0 + 40 + f * 160), cy + Math.sin(a) * (r0 + 40 + f * 160)); ctx.stroke();
+    }
+    const vig = ctx.createRadialGradient(W / 2, H / 2, 300, W / 2, H / 2, 1100);
+    vig.addColorStop(0, 'rgba(0,0,0,0)'); vig.addColorStop(1, 'rgba(0,0,0,0.75)');
+    ctx.fillStyle = vig; ctx.fillRect(0, 0, W, H);
+  },
+  // pessoa flutuando dentro do túnel, com objetos soltos flutuando junto (queda livre = sem peso)
+  flutua(t, d, p) {
+    const quente = p.quente ?? 0;
+    const g = ctx.createLinearGradient(0, 0, W, 0);
+    g.addColorStop(0, quente ? '#3a1408' : '#1a1410'); g.addColorStop(0.5, '#05060a'); g.addColorStop(1, quente ? '#3a1408' : '#1a1410');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    // paredes passando (rocha para cima, porque a pessoa cai)
+    const r = rng(3);
+    for (let i = 0; i < 90; i++) {
+      const lado = i % 2 ? 1 : -1, x = W / 2 + lado * (330 + r() * 200), y = ((r() * H * 1.3 - t * 2600) % (H * 1.3) + H * 1.3) % (H * 1.3) - 100;
+      ctx.fillStyle = quente ? `rgba(255,${100 + r() * 80},40,0.5)` : `rgba(${110 + r() * 50},${90 + r() * 40},${70 + r() * 30},0.6)`;
+      ctx.fillRect(x - 40, y, 80 + r() * 60, 6 + r() * 30);
+    }
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 2;
+    for (let i = 0; i < 26; i++) { const x = W / 2 + (r() - 0.5) * 560, y = ((r() * H - t * 3400) % H + H) % H;
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + 220); ctx.stroke(); }
+    const bx = W / 2 + Math.sin(t * 0.9) * 40, by = H / 2 + Math.sin(t * 0.7) * 30;
+    boneco(bx, by, 3.2, Math.sin(t * 0.6) * 0.4 + t * 0.25, 0.9 + 0.2 * Math.sin(t * 1.2));
+    // objetos soltos: celular, boné, moedas
+    const objs = [[-230, -330, '#2a2f3a', 70, 120], [260, -180, '#c03a2a', 90, 50], [-190, 300, '#e0c050', 34, 34], [220, 380, '#e0c050', 30, 30], [120, -420, '#8aa0b8', 50, 30]];
+    objs.forEach(([ox, oy, cor, w, h], i) => {
+      ctx.save(); ctx.translate(bx + ox + Math.sin(t * 0.8 + i) * 25, by + oy + Math.cos(t * 0.7 + i) * 25); ctx.rotate(t * (0.4 + i * 0.15));
+      ctx.fillStyle = cor; ctx.beginPath(); ctx.roundRect(-w / 2, -h / 2, w, h, 10); ctx.fill(); ctx.restore();
+    });
+  },
+  // vai e vem pelo túnel, com relógio; p.ciclos = quantas idas
+  oscila(t, d, p) {
+    espaco(t);
+    const R = 430;
+    terraCorte(W / 2, CY, R, t * 0.05);
+    const ciclos = p.ciclos ?? 1, amort = p.amort ?? 0;
+    const fase = (p.fase0 ?? 0) + ciclos * t / d;
+    const amp = Math.exp(-amort * fase * 4);
+    const y = CY - posQueda(fase) * R * 0.99 * amp;
+    ctx.strokeStyle = 'rgba(255,220,80,0.5)'; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(W / 2, CY - R * amp); ctx.lineTo(W / 2, CY + R * amp); ctx.stroke();
+    for (const s of [-1, 1]) { ctx.fillStyle = '#ffd84a'; ctx.beginPath(); ctx.moveTo(W / 2 - 22, CY + s * (R * amp - 6)); ctx.lineTo(W / 2 + 22, CY + s * (R * amp - 6)); ctx.lineTo(W / 2, CY + s * (R * amp + 30)); ctx.fill(); }
+    boneco(W / 2, y, 1.1, t * 0.8, 0.6);
+  },
+  // Terra vista do polo girando: o túnel gira junto e a pessoa, que mantém a direção, bate na parede
+  rotacao(t, d, p) {
+    espaco(t);
+    const R = 430, cx = W / 2, cy = CY, k = t / d;
+    const rot = k * 0.55;
+    ctx.save(); ctx.translate(cx, cy);
+    const g = ctx.createRadialGradient(0, 0, 50, 0, 0, R);
+    g.addColorStop(0, '#5b8fd0'); g.addColorStop(1, '#1d3f78');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, R, 0, 6.283); ctx.fill();
+    ctx.rotate(rot);
+    ctx.fillStyle = '#4f8a3a';
+    for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.ellipse(Math.cos(i * 1.1) * R * 0.55, Math.sin(i * 1.7) * R * 0.5, 90 + i * 15, 50 + i * 10, i, 0, 6.283); ctx.fill(); }
+    ctx.fillStyle = '#05070c'; ctx.fillRect(-R * 0.04, -R, R * 0.08, R * 2);
+    ctx.restore();
+    // a pessoa cai em linha reta (direção fixa), o túnel gira: ela encosta na parede
+    const prof = ease(k * 1.4) * R * 0.85;
+    const parede = Math.tan(rot) * prof, bate = Math.abs(parede) > R * 0.04;
+    const bx = cx + (bate ? 0 : 0), by = cy - R + prof;
+    // desenha a pessoa no referencial fixo e um "pow" quando bate
+    boneco(bx, by, 1.1, t * 0.5, 0.6);
+    if (bate) { ctx.strokeStyle = '#ffd84a'; ctx.lineWidth = 6;
+      for (let i = 0; i < 8; i++) { const a = i * 0.785; ctx.beginPath(); ctx.moveTo(bx + Math.cos(a) * 30, by + Math.sin(a) * 30); ctx.lineTo(bx + Math.cos(a) * 60, by + Math.sin(a) * 60); ctx.stroke(); } }
+    // seta de rotação
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)'; ctx.lineWidth = 8;
+    ctx.beginPath(); ctx.arc(cx, cy, R + 60, -2.2, -0.9); ctx.stroke();
+    const ax = cx + Math.cos(-0.9) * (R + 60), ay = cy + Math.sin(-0.9) * (R + 60);
+    ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.moveTo(ax + 20, ay - 10); ctx.lineTo(ax - 18, ay - 22); ctx.lineTo(ax - 4, ay + 22); ctx.fill();
+  },
+  // centro da Terra: brilho intenso, calor ondulando
+  centro(t, d, p) {
+    const g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, H * 0.75);
+    g.addColorStop(0, '#fffbe8'); g.addColorStop(0.25, '#ffd46a'); g.addColorStop(0.6, '#e0681e'); g.addColorStop(1, '#3a0d04');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    const r = rng(9);
+    for (let i = 0; i < 160; i++) {
+      const x = r() * W, y = ((r() * H - t * (80 + r() * 160)) % H + H) % H, s = 6 + r() * 40;
+      ctx.globalAlpha = 0.15 + r() * 0.25; ctx.fillStyle = r() < 0.5 ? '#fff3c0' : '#ff9a3a';
+      ctx.beginPath(); ctx.arc(x + Math.sin(t * 2 + i) * 20, y, s, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    boneco(W / 2 + Math.sin(t) * 30, H / 2 + Math.sin(t * 0.8) * 20, 2.6, t * 0.3, 0.9, '#2a1a10');
+  },
+};
+window.desenhar = (cena, t, d, p) => { ctx.setTransform(1, 0, 0, 1, 0, 0); CENAS[cena](t, d, p || {}); };
+</script>
+</body></html>

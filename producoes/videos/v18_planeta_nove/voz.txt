@@ -1,0 +1,4 @@
+elevenlabs=nPczCjzI2devNBz1zQrb
+vel=1.2
+pausa=0.15
+atempo=1.071
