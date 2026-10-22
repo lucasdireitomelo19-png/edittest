@@ -536,13 +536,13 @@ function carimbo(x, y, s, t, t0, rot = -0.18) {   // carimbo vermelho batendo
   ctx.beginPath(); ctx.roundRect(-s * 2.6, -s * 0.85, s * 5.2, s * 1.7, 18); ctx.stroke();
   ctx.font = `${s}px MX`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = VERM2; ctx.fillText('FICTÍCIO', 0, 4); ctx.restore();
 }
-function rotulo(s, a = 1) { pilula(s, CX, 150, 28, 'rgba(0,0,0,0.55)', P.cinza, a); }
+function rotulo(s, a = 1) { pilula(s, CX, 1470, 28, 'rgba(0,0,0,0.55)', P.cinza, a); }
 CENAS.va_80m = (t, d) => {   // 80 metros: pedra ao lado de um prédio de ~25 andares
   fundoA(t, '#101634', '#03040c'); const base = 1380; ctx.fillStyle = '#1c2340'; ctx.fillRect(0, base, W, H - base);
   const hp = 560; ctx.fillStyle = '#2a3356'; ctx.fillRect(620, base - hp, 230, hp); for (let r = 0; r < 14; r++) for (let c = 0; c < 4; c++) { ctx.fillStyle = (r * 7 + c * 3) % 5 ? '#ffd16633' : '#ffd16688'; ctx.fillRect(640 + c * 54, base - hp + 20 + r * 38, 30, 18); }
-  const k = easeOut((t - 0.1) / 0.9), R = 280; pedra(330, base - R * 0.92 - 40 + (1 - k) * -900, R, t * 0.15, 7);
-  const ar = ease((t - 0.7) / 0.4); ctx.strokeStyle = `rgba(255,209,102,${ar})`; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(950, base); ctx.lineTo(950, base - hp); ctx.moveTo(925, base); ctx.lineTo(975, base); ctx.moveTo(925, base - hp); ctx.lineTo(975, base - hp); ctx.stroke();
-  txt('80 m', 950, base - hp - 50, 56, P.ouro, ar); sobe('80 METROS', CX, 330, 120, t, 0.2, P.branco); rotulo('ILUSTRAÇÃO · ESCALA APROXIMADA', ease((t - 0.4) / 0.4)); };
+  const k = easeOut(t / 0.5), R = 280; pedra(330, base - R * 0.92 - 40 + (1 - k) * -900, R, t * 0.15, 7);
+  const ar = ease((t - 0.35) / 0.3); ctx.strokeStyle = `rgba(255,209,102,${ar})`; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(950, base); ctx.lineTo(950, base - hp); ctx.moveTo(925, base); ctx.lineTo(975, base); ctx.moveTo(925, base - hp); ctx.lineTo(975, base - hp); ctx.stroke();
+  txt('80 m', 950, base - hp - 50, 56, P.ouro, ar); sobe('80 METROS', CX, 330, 120, t, 0, P.branco); rotulo('ILUSTRAÇÃO · ESCALA APROXIMADA', ease((t - 0.2) / 0.3)); };
 CENAS.va_19 = (t, d) => {   // medidor enchendo até 19%
   fundoA(t, '#1a0d18', '#050208'); const k = easeOut((t - 0.15) / 1.0), v = 19 * k; anel(CX, 860, 330, 'rgba(255,255,255,0.08)', 46);
   ctx.save(); ctx.shadowColor = VERM2; ctx.shadowBlur = 40; anel(CX, 860, 330, VERM2, 46, -Math.PI / 2, -Math.PI / 2 + 6.283 * v / 100); ctx.restore();
@@ -582,7 +582,7 @@ CENAS.va_desvio = (t, d) => {   // dá pra desviar? empurrão muda o caminho
 function grafYR4(t, d, cai) {   // probabilidade do 2024 YR4 (jan–fev/2025)
   fundoA(t, '#0b1124', '#02040a'); const x0 = 120, x1 = 960, y0 = 1250, y1 = 450, pts = [[0, 1.2], [0.3, 1.3], [0.45, 1.6], [0.6, 2.2], [0.75, 2.6], [0.88, 3.1], [0.9, 1.5], [0.93, 0.28], [0.96, 0.004], [1, 0]];
   ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.lineWidth = 2; for (let v = 0; v <= 3; v++) { const y = y0 - v / 3.3 * (y0 - y1); ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke(); txt(v + '%', x0 - 20, y, 28, P.cinza, 1, 'right', 'MM'); }
-  const lim = cai ? 1 : 0.88, k = cai ? 1 : clamp(ease((t - 0.1) / 1.4), 0, 1) * lim; const sx = u => x0 + u * (x1 - x0), sy = v => y0 - v / 3.3 * (y0 - y1);
+  const lim = cai ? 1 : 0.88, k = cai ? 1 : clamp(ease((t - 0.1) / Math.max(1.4, d * 0.7)), 0, 1) * lim; const sx = u => x0 + u * (x1 - x0), sy = v => y0 - v / 3.3 * (y0 - y1);
   ctx.strokeStyle = VERM2; ctx.lineWidth = 8; ctx.lineJoin = 'round'; ctx.beginPath(); let last = pts[0];
   for (let i = 0; i < pts.length; i++) { const [u, v] = pts[i]; const ku = cai ? Math.min(1, 0.88 + 0.12 * ease((t - 0.2) / 1.2)) : k; if (u > ku) { const [pu, pv] = pts[i - 1]; const f = (ku - pu) / (u - pu); ctx.lineTo(sx(ku), sy(lerp(pv, v, f))); last = [ku, lerp(pv, v, f)]; break; } i ? ctx.lineTo(sx(u), sy(v)) : ctx.moveTo(sx(u), sy(v)); last = [u, v]; } ctx.stroke();
   circ(sx(last[0]), sy(last[1]), 14, P.branco); txt('JAN', x0 + 40, y0 + 50, 28, P.cinza, 1, 'center', 'MM'); txt('FEV 2025', x1 - 80, y0 + 50, 28, P.cinza, 1, 'center', 'MM');
@@ -596,7 +596,7 @@ CENAS.va_recorde = (t, d) => {   // recorde para o tamanho
 CENAS.va_zero = (t, d) => { const [sx, sy, l] = grafYR4(t, d, true); const a = ease((t - 1.0) / 0.4); txt('≈ 0%', CX, 330, 130, P.verde, a); txt('DESCARTADO EM 23/02/2025', CX, 430, 38, P.branco, a, 'center', 'MM');
   ctx.strokeStyle = `rgba(255,209,102,${a})`; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(sx(0.88), 1330); ctx.lineTo(sx(0.88), 1360); ctx.lineTo(sx(0.96), 1360); ctx.lineTo(sx(0.96), 1330); ctx.stroke(); txt('5 DIAS', (sx(0.88) + sx(0.96)) / 2, 1410, 40, P.ouro, a); };
 CENAS.va_ru = (t, d) => {   // mapa real: Chelyabinsk
-  const pr = mapaZoom(t, [40, 50, 6], [61.4, 55.15, 60], 1.8); const [x, y] = pr(61.4, 55.15); pino(x, y, t - 1.6, 'CHELYABINSK', 'RÚSSIA · 15/02/2013'); vinheta(0.5); };
+  const pr = mapaZoom(t, [40, 50, 6], [61.4, 55.15, 60], 1.1); const [x, y] = pr(61.4, 55.15); pino(x, y, t - 0.9, 'CHELYABINSK', 'RÚSSIA · 15/02/2013'); vinheta(0.5); };
 CENAS.va_rastro = (t, d) => {   // bola de fogo riscando o céu da manhã
   const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#2a3a66'); g.addColorStop(0.6, '#d98a5a'); g.addColorStop(1, '#f2c48a'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
   cidade(1560, 4, '#1a1a24', 0.8); const k = ease(t / 1.4), hx = lerp(1150, 360, k), hy = lerp(150, 900, k);
@@ -608,9 +608,9 @@ CENAS.va_feridos = (t, d) => {   // feridos e janelas quebradas
     if (q > 0) { ctx.strokeStyle = '#e8eef8'; ctx.lineWidth = 3; const r = rng(i * 4 + j); ctx.beginPath(); for (let s = 0; s < 4; s++) { ctx.moveTo(x + 55, y + 65); ctx.lineTo(x + 55 + (r() - 0.5) * 110 * q, y + 65 + (r() - 0.5) * 130 * q); } ctx.stroke(); } }
   const n = Math.round(1500 * easeOut((t - 0.4) / 1.2)); txt('~' + fmt(n), CX, 1140, 170, VERM2); txt('FERIDOS', CX, 1260, 64, P.branco, ease((t - 0.6) / 0.3)); txt('~7.200 PRÉDIOS DANIFICADOS', CX, 1340, 36, P.cinza, ease((t - 1.0) / 0.4), 'center', 'MM'); };
 CENAS.va_orbita = (t, d) => {   // DART: a órbita de Dimorphos encolheu 32 min
-  fundoA(t); const cx = CX, cy = 860; circ(cx, cy, 90, '#7a6a5c'); txt('DIDYMOS', cx, cy + 140, 30, P.cinza, 1, 'center', 'MM'); const s = 1 - 0.12 * ease((t - 0.6) / 0.8);
-  anel(cx, cy, 340, 'rgba(255,255,255,0.18)', 3); anel(cx, cy, 340 * s, 'rgba(124,201,138,0.9)', 5); const a = t * 1.3; circ(cx + Math.cos(a) * 340 * s, cy + Math.sin(a) * 340 * s, 26, '#a89584'); if (t > 0.45 && t < 0.75) brilho(cx + Math.cos(a) * 340 * s, cy + Math.sin(a) * 340 * s, 120, 'rgba(255,230,180,0.9)');
-  sobe('ÓRBITA ALTERADA', CX, 300, 82, t, 0.1, P.verde); const m = Math.round(32 * ease((t - 0.6) / 0.8)); txt('−' + m + ' MIN', CX, 1350, 110, P.branco); txt('DIMORPHOS · DART 2022', CX, 1440, 34, P.cinza, 1, 'center', 'MM'); rotulo('ANIMAÇÃO', 1); };
+  fundoA(t); const cx = CX, cy = 860; circ(cx, cy, 90, '#7a6a5c'); txt('DIDYMOS', cx, cy + 140, 30, P.cinza, 1, 'center', 'MM'); const s = 1 - 0.12 * ease((t - 0.15) / 0.6);
+  anel(cx, cy, 340, 'rgba(255,255,255,0.18)', 3); anel(cx, cy, 340 * s, 'rgba(124,201,138,0.9)', 5); const a = t * 1.3; circ(cx + Math.cos(a) * 340 * s, cy + Math.sin(a) * 340 * s, 26, '#a89584'); if (t > 0.05 && t < 0.3) brilho(cx + Math.cos(a) * 340 * s, cy + Math.sin(a) * 340 * s, 120, 'rgba(255,230,180,0.9)');
+  sobe('ÓRBITA ALTERADA', CX, 300, 82, t, 0.1, P.verde); const m = Math.round(32 * ease((t - 0.15) / 0.6)); txt('−' + m + ' MIN', CX, 1350, 110, P.branco); txt('DIMORPHOS · DART 2022', CX, 1440, 34, P.cinza, 1, 'center', 'MM'); rotulo('ANIMAÇÃO', 1); };
 CENAS.va_metade = (t, d) => {   // menos da metade encontrados
   fundoA(t, '#0a0f22', '#020309'); const n = 100, achados = 44; for (let i = 0; i < n; i++) { const r = rng(i + 70), x = 120 + (i % 10) * 93, y = 470 + Math.floor(i / 10) * 86, on = (i * 37) % 100 < achados && r() < 2 && ease((t - 0.3 - (i % 10) * 0.04) / 0.3) > 0.5;
     circ(x, y, 18, on ? P.ouro : 'rgba(255,255,255,0.12)'); if (on) brilho(x, y, 40, 'rgba(255,209,102,0.35)'); }
@@ -622,8 +622,8 @@ CENAS.va_mentira = (t, d) => {   // o PDC27 se desfaz em pixels
 CENAS.va_proximo = (t, d) => {   // o próximo pode ser de verdade
   fundoA(t, '#05070f', '#000'); ctx.save(); ctx.translate(CX, 1250); globoMini(0, 0, 140, t); ctx.restore();
   for (let i = 0; i < 60; i++) { const r = rng(i + 300); circ(r() * W, r() * 900, 3, 'rgba(255,255,255,0.15)'); }
-  const k = ease((t - 0.2) / (d - 0.4)), x = lerp(880, 620, k), y = lerp(260, 900, k); brilho(x, y, 50 + 40 * k, 'rgba(255,90,60,0.6)'); circ(x, y, 9 + 6 * k, '#ffb08a');
-  sobe('O PRÓXIMO', CX, 330, 110, t, 0.2, P.branco); txt('PODE SER DE VERDADE', CX, 440, 56, VERM2, ease((t - 0.6) / 0.4)); };
+  const k = ease((t - 0.2) / (d - 0.4)), x = lerp(900, 640, k), y = lerp(860, 1080, k); brilho(x, y, 50 + 40 * k, 'rgba(255,90,60,0.6)'); circ(x, y, 9 + 6 * k, '#ffb08a');
+  sobe('O PRÓXIMO', CX, 620, 110, t, 0.2, P.branco); txt('PODE SER DE VERDADE', CX, 730, 56, VERM2, ease((t - 0.6) / 0.4)); };
 
 // p.sat (dessaturar) é aplicado depois, no ffmpeg (motor.py): ctx.filter deixa o canvas lento demais
 window.desenhar = (cena, t, dur, p) => { p = p || {}; ctx.save(); ctx.clearRect(0, 0, W, H); CENAS[cena](t, dur, p); ctx.restore(); };

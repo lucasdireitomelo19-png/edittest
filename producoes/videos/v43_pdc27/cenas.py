@@ -1,0 +1,36 @@
+# Gerado por pipeline/gerar_short.py a partir de plano.py.
+FINAL = "SIGA PARA MAIS"
+FIM = 52.41
+AMBIENTE = "drone"
+AMBIENTE_DB = -22
+ETIQUETAS = False
+CORTE_MAX = 2.6
+PROGRESSO = True
+LEGENDA_MV = 230
+FINAL_ALIN, FINAL_MV = 8, 200
+SAIDA = "pdc27.mp4"
+CREDITO = 'Pixabay/Matthias_Groeneveld · NASA · Pixabay/Kanenori'
+DIAS = [(7.95, 'EXERCÍCIO · FICTÍCIO'), (19.06, '')]
+CENAS = [
+    dict(t=0.00, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_00_va_80m.mp4', 'ss': 0}),  # 1 Pedra de 80 m caindo ao lado de um prédio de ~25 andares (ilustração)
+    dict(t=0.98, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_01_va_19.mp4', 'ss': 0}),  # 2 Medidor enchendo até 19%: CHANCE DE IMPACTO
+    dict(t=3.17, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_02_va_data.mp4', 'ss': 0}),  # 3 Calendário: 10 de julho de 2038
+    dict(t=5.29, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_03_va_carimbo.mp4', 'ss': 0, 'som': ('hit', -10)}),  # 4 A ficha do asteroide leva o carimbo vermelho FICTÍCIO
+    dict(t=7.85, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_04_va_nome.mp4', 'ss': 0}),  # 5 Órbita do 2026 PDC27: cenário de treino da NASA
+    dict(t=12.95, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_05_va_mesa.mp4', 'ss': 0}),  # 6 Cientistas e governos em volta da mesa, telão SIMULAÇÃO
+    dict(t=16.87, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_06_va_alerta.mp4', 'ss': 0}),  # 7 Celular com alerta de impacto: simulação, NÃO É REAL
+    dict(t=18.04, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_07_va_desvio.mp4', 'ss': 0}),  # 8 Um empurrão desvia a rota da Terra
+    dict(t=18.96, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_179777.mp4', 'ss': 0}),  # 9 Radiotelescópios reais
+    dict(t=22.53, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_09_va_yr4.mp4', 'ss': 0}),  # 10 Gráfico real do 2024 YR4 subindo até 3,1%
+    dict(t=27.60, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_10_va_recorde.mp4', 'ss': 0}),  # 11 3,1%: RECORDE para um asteroide de ~53 a 67 m
+    dict(t=28.98, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_11_va_zero.mp4', 'ss': 0}),  # 12 A chance despenca para ≈0% em 5 dias
+    dict(t=31.06, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_12_va_rastro.mp4', 'ss': 0}),  # 13 Bola de fogo riscando o céu da manhã: 20 m (animação)
+    dict(t=33.39, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_13_va_ru.mp4', 'ss': 0}),  # 14 Mapa real: zoom até Chelyabinsk, Rússia, 15/02/2013
+    dict(t=34.63, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_14_va_feridos.mp4', 'ss': 0}),  # 15 Janelas estilhaçando: ~1.500 feridos, ~7.200 prédios
+    dict(t=36.31, **{'crop': [824, 236, 350, 626], 'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'sv_14215_DART_WIDE_MP4.mp4', 'ss': 11.3}),  # 16 Imagens reais da câmera da DART chegando em Dimorphos (NASA, recorte sem texto)
+    dict(t=40.04, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_16_va_orbita.mp4', 'ss': 0}),  # 17 Órbita de Dimorphos encolhe: −32 min
+    dict(t=41.34, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_285663.mp4', 'ss': 0}),  # 18 Via Láctea real sobre uma cabana (timelapse)
+    dict(t=42.30, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_18_va_metade.mp4', 'ss': 0}),  # 19 100 pontos, menos da metade acesos: ≥140 m encontrados
+    dict(t=46.38, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_19_va_mentira.mp4', 'ss': 0}),  # 20 O PDC27 se desfaz em pixels, carimbo FICTÍCIO
+    dict(t=48.13, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'pdc_20_va_proximo.mp4', 'ss': 0}),  # 21 Um ponto vermelho vindo em direção à Terra: O PRÓXIMO
+]
