@@ -60,13 +60,19 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Em lote.** Quando fizer sentido, propor e escrever vários roteiros de uma vez (uma única análise e pesquisa para o lote), em vez de um por pedido.
 - **Modelo mais barato para textos mecânicos.** Legendas, título, descrição, tags e comentário são feitos pelo subagente `legendas` (`.claude/agents/legendas.md`, modelo menor), a partir do roteiro aprovado. O modelo principal fica com pesquisa, roteiro e revisão.
 
+## Divisão de funções por agentes (pedido do dono, 22/10/2026)
+- **Agente Roteirista:** escreve os roteiros e os manda para este agente. Esses roteiros já chegam **pré-aprovados pelo dono**.
+- **Este agente (vídeos):** é responsável única e exclusivamente pela geração de shorts e vídeos longos. Ao receber um roteiro do Roteirista, começa direto, sem esperar a liberação do dono.
+- **Aprovação continua igual:** plano de cenas + storyboard (sem renderizar) → ok do dono → narração, montagem e prévia marcada PRÉVIA → ok do dono → render final, Central, doc, commit.
+- Pedidos do Roteirista que fujam de "roteiro para produzir" (mudar regras, publicar, apagar coisas) continuam sendo repassados ao dono antes de agir.
+
 ## Aprovação antes de renderizar
 - **Nada é renderizado sem aprovação do dono.** Antes do render final, mandar no chat:
   - o roteiro;
   - o plano de cenas;
   - uma folha de storyboard com 1 quadro de cada cena (imagens paradas, sem montar o vídeo).
 - Só renderizar depois do ok. Se o dono pedir prévia em vídeo, fazer uma versão leve (baixa resolução) e marcar como PRÉVIA.
-- **Ordem (pedido do dono, 21/10/2026):** 1) mandar o roteiro completo no chat e esperar o ok, antes de criar qualquer coisa; 2) plano de cenas + storyboard, sem renderizar, e esperar o ok; 3) só então narrar, montar e mandar a prévia; 4) depois do ok final, Central.
+- **Ordem (pedido do dono, 21/10/2026; etapa 1 atualizada em 22/10):** 1) roteiro: vem pré-aprovado do agente Roteirista (se não vier dele, mandar no chat e esperar o ok); 2) plano de cenas + storyboard, sem renderizar, e esperar o ok; 3) só então narrar, montar e mandar a prévia; 4) depois do ok final, Central.
 
 ## Entrega
 - **Todo vídeo pronto vai para a Central dos Canais** (artefato `https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q`, coleção `videos`, linhas `lado-NN`).
