@@ -6,19 +6,24 @@
 
 **Título:** `E se você ACORDASSE e todo mundo tivesse sumido? 🌍😶`
 
-**Roteiro** (~140 palavras)
+**Roteiro v2** (pedido do dono: "no começo você fica feliz, vai ter o mundo todo pra você, mas depois o problema vem"). ~150 palavras, ~58 s.
 > Você acorda. E todo mundo do planeta sumiu. Só você.
-> Nas primeiras horas, nada parece errado. A luz ainda funciona. A internet também.
-> Mas não tem ninguém nas usinas. Em poucas horas, as cidades começam a apagar, uma por uma.
-> Em uns dois dias, sem as bombas d'água, o metrô de Nova York já está alagado.
-> Os bichos de estimação ficam sozinhos. Os de fazenda fogem. E a natureza começa a voltar.
-> A gente sabe como isso termina, porque já aconteceu numa cidade inteira: Pripyat, ao lado de Chernobyl, abandonada em 1986. Hoje tem lobos, cavalos selvagens e árvores saindo dos prédios.
-> Em alguns anos, o mato racha o asfalto. Em décadas, as casas de madeira caem. Em séculos, os arranha-céus.
-> Mas tem um detalhe: você não seria o último ser humano. Lá em cima, na Estação Espacial, ainda tem gente. Olhando pra uma Terra completamente escura.
+> No começo, é um sonho. Você entra em qualquer loja e pega o que quiser. Escolhe uma mansão. Dirige uma Ferrari a duzentos por hora, sem ninguém na rua. O mundo inteiro é seu.
+> Mas aí os problemas começam.
+> Não tem ninguém nas usinas. Em poucas horas, as luzes começam a apagar. A internet cai. O seu celular vira um peso de papel.
+> Sem energia, as bombas param, e a água da torneira para de chegar. A comida da geladeira estraga em dias. Você passa a viver de enlatados.
+> Se você se machucar, não tem médico. Uma infecção simples pode te matar.
+> E o pior vem à noite. Nenhuma luz. Nenhum som. Só você.
+> A natureza começa a tomar tudo de volta. Como em Pripyat, ao lado de Chernobyl, abandonada desde 1986.
+> Mas tem um detalhe: você não é o último ser humano. Lá em cima, na Estação Espacial, ainda tem gente. Olhando pra uma Terra completamente escura.
+
+**Arco:** euforia (0–15 s) → virada "os problemas começam" (15 s) → escalada: energia, água, comida, saúde, solidão (15–45 s) → natureza voltando (45–50 s) → virada final no espaço (50–58 s).
+**Ideia de som:** música alegre e acelerada na euforia, que **para seca** no "Mas aí os problemas começam". Daí em diante só drone grave, e silêncio total no "Nenhum som".
 
 ## Base dos fatos (resumo; checagem completa na etapa 2)
 - Redes elétricas caem em horas ou poucos dias sem operadores e sem combustível. É estimativa, por isso a fala diz "em poucas horas… começam".
-- O metrô de Nova York alaga em ~36 h sem as bombas, segundo engenheiros do MTA citados em *O Mundo Sem Nós* (Alan Weisman, 2007).
+- O abastecimento de água depende de bombas elétricas. Sem energia, a água para de chegar em horas ou dias (estimativa).
+- Sem refrigeração, alimentos perecíveis estragam em dias.
 - Pripyat foi evacuada em 1986. A zona de exclusão de Chernobyl hoje tem lobos, linces e cavalos-de-przewalski.
 - A degradação de asfalto, casas e prédios é estimativa (Weisman). A fala usa "anos, décadas, séculos".
 - A Estação Espacial tem tripulação contínua desde novembro de 2000.
