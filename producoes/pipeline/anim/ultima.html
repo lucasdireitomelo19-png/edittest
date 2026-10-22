@@ -497,7 +497,8 @@ CENAS.u_thumb = (t, d) => {
   ctx.strokeText('SÓ', 80, 300); ctx.strokeText('VOCÊ', 80, 520); ctx.shadowBlur = 0; ctx.fillStyle = P.branco; ctx.fillText('SÓ', 80, 300); ctx.fillStyle = P.ouro; ctx.fillText('VOCÊ', 80, 520); ctx.restore();
 };
 
-window.desenhar = (cena, t, dur, p) => { p = p || {}; ctx.save(); ctx.clearRect(0, 0, W, H); if (p.sat !== undefined) ctx.filter = `saturate(${p.sat})`; CENAS[cena](t, dur, p); ctx.restore(); };
+// p.sat (dessaturar) é aplicado depois, no ffmpeg (motor_h): ctx.filter deixa o canvas lento demais
+window.desenhar = (cena, t, dur, p) => { p = p || {}; ctx.save(); ctx.clearRect(0, 0, W, H); CENAS[cena](t, dur, p); ctx.restore(); };
 window.CENAS = CENAS;
 </script>
 </body></html>

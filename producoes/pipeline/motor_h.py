@@ -129,7 +129,8 @@ for i, c in enumerate(CENAS):
         xs = f"(iw-ow)*{px}" + (f"+{a}*sin(47*t)+{a*0.6}*sin(29*t+1)" if a else "")
         ys = f"(ih-oh)*{py}" + (f"+{a*0.8}*sin(41*t+2)+{a*0.5}*sin(23*t)" if a else "")
         f.append(f"crop={W}:{H}:x='max(0,min(iw-ow,{xs}))':y='max(0,min(ih-oh,{ys}))'")
-    f.append(f"setsar=1,fps={FPS}" + ("" if anim else f",eq=contrast=1.06:saturation={c.get('sat', 1.12)}"))
+    sat_anim = c.get("p", {}).get("sat", 1.0) if anim else 1.0   # dessaturação das animações (p.sat)
+    f.append(f"setsar=1,fps={FPS}" + ((f",eq=saturation={sat_anim}" if sat_anim != 1.0 else "") if anim else f",eq=contrast=1.06:saturation={c.get('sat', 1.12)}"))
     if c.get("flash"):
         f.append("fade=t=in:st=0:d=0.15:color=white")
     if c.get("escurecer"):
