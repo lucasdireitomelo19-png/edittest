@@ -1,0 +1,27 @@
+/* Sistema visual dos carrosséis do Lado Sombrio (1080x1350). */
+  @font-face{font-family:M;src:url(../marca/Montserrat-ExtraBold.ttf);font-weight:800}
+  @font-face{font-family:M;src:url(../marca/Montserrat-Medium.ttf);font-weight:500}
+  :root{--bg:#0a0608;--tx:#e9e1d8;--ac:#ff7a1a;--mut:#a89c90}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#222;font-family:M,sans-serif;color:var(--tx)}
+  .s{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--bg);margin-bottom:40px}
+  .foto{position:absolute;background-size:cover;background-repeat:no-repeat}
+  .vel{position:absolute;inset:0}
+  .in{position:absolute;z-index:1;left:80px;right:80px;top:80px;bottom:190px;display:flex;flex-direction:column}
+  .k{font-weight:800;font-size:28px;letter-spacing:.14em;color:var(--ac);text-transform:uppercase}
+  .n{font-weight:800;font-size:30px;color:var(--ac);letter-spacing:.06em}
+  h1{font-weight:800;font-size:110px;line-height:1.0;letter-spacing:-.02em}
+  h2{font-weight:800;font-size:82px;line-height:1.04;letter-spacing:-.015em}
+  p{font-weight:500;font-size:40px;line-height:1.38}
+  .ac{color:var(--ac)}
+  .mut{color:var(--mut)}
+  .puxa{font-weight:800;font-size:32px;color:var(--ac)}
+  .cred{position:absolute;z-index:2;right:80px;bottom:150px;font-weight:500;font-size:20px;color:#8a7f75}
+  .rod{position:absolute;z-index:2;left:80px;right:80px;bottom:72px;height:52px;display:flex;align-items:center;justify-content:space-between}
+  .rod .eu{display:flex;align-items:center;gap:16px;font-weight:500;font-size:26px}
+  .rod img{width:52px;height:52px;border-radius:50%}
+  .rod .c{font-weight:800;font-size:26px;display:flex;align-items:center;gap:14px}
+  .rod .c svg{width:34px;height:34px}
+  .fade{position:absolute;left:0;right:0;bottom:0;height:300px;background:linear-gradient(180deg,rgba(10,6,8,0),var(--bg) 62%)}
+  .bar{position:absolute;left:0;bottom:0;height:8px;width:100%;background:#2a1a12}
+  .bar i{display:block;height:100%;background:var(--ac)}

@@ -1,7 +1,7 @@
 # 5 maneiras do mundo acabar · @ladosombriodouniverso
 
 **Objetivo:** alcance (compartilhamento) · Instagram 1080×1350 · 9 slides
-**Fonte do design:** `producoes/carrosseis/5_fim/carrossel.html` · exportar com `NODE_PATH=$(npm root -g) node render.js`
+**Fonte do design:** `producoes/carrosseis/5_fim/carrossel.html` · exportar com `NODE_PATH=$(npm root -g) node producoes/carrosseis/render.js producoes/carrosseis/5_fim 5-maneiras-do-mundo-acabar`
 **Imagens:** NASA, NASA/Johns Hopkins APL (ilustração DART), NASA/SDO, NASA/ESA/Hubble (créditos em cada slide)
 
 ## Legenda

@@ -1,7 +1,7 @@
 # 6 fatos do espaço que parecem mentira · @ladosombriodouniverso
 
 **Objetivo:** alcance (compartilhamento) · Instagram 1080×1350 · 10 slides
-**Fonte do design:** `producoes/carrosseis/6_fatos/carrossel.html` · exportar com `NODE_PATH=$(npm root -g) node render.js`
+**Fonte do design:** `producoes/carrosseis/6_fatos/carrossel.html` · exportar com `NODE_PATH=$(npm root -g) node producoes/carrosseis/render.js producoes/carrosseis/6_fatos 6-fatos-do-espaco`
 **Imagens:** NASA/JPL, NASA/JPL/Space Science Institute, NASA (ISS), NASA/ESA/Hubble (domínio público, créditos em cada slide)
 
 ## Legenda

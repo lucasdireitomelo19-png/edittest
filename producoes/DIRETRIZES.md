@@ -68,6 +68,12 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
    **Reprovado** → volta para o `roteirista` com o feedback do dono, que revisa (v2, v3…) e reenvia. Repete até aprovar.
 - Subagentes não chamam outros subagentes: quem passa o lote de um agente para o outro é a sessão principal.
 
+## Carrosséis (pedido do dono, 22/10/2026)
+- **O gerador de carrosséis é o subagente `carrosseis`** (`.claude/agents/carrosseis.md`). Ele é responsável por toda a geração de carrosséis do canal.
+- **O roteiro de carrossel do `roteirista` chega aprovado pelo dono:** a geração começa direto, sem pedir confirmação nem mandar roteiro ou storyboard antes. A regra "Aprovação antes de renderizar" abaixo vale para vídeo, não para carrossel.
+- **Entrega para aprovação:** a sessão principal manda no chat **todos os slides** (PNGs 01…N na ordem, nunca uma amostra), a legenda e o primeiro comentário. Se o dono pedir mudança, o pedido volta para o `carrosseis`, que corrige e renderiza de novo, até o "aprovado".
+- **Arquivos:** design em `producoes/carrosseis/<slug>/carrossel.html` (marca em `base.css` e `base.js`), PNGs e `LEGENDA.md` em `output/<slug>/`, exportados com `producoes/carrosseis/render.js`. Manual: `producoes/carrosseis/README.md`.
+
 ## Aprovação antes de renderizar
 - **Nada é renderizado sem aprovação do dono.** Antes do render final, mandar no chat:
   - o roteiro;
