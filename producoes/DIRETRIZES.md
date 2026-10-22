@@ -54,6 +54,12 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Fluxo:** roteiro + checagem de fatos + plano (`plano.py`) + storyboard → narração → `gerar_cenas.py` → `motor_h.py` → revisão por folha de contato → prévia 540p → aprovação → Central.
 - **Central:** cópia 540p < 19,5 MB (duas passagens) para revisão; o arquivo final 1080p vai no chat.
 
+## Fluxo econômico de roteiros (pedido do dono, 22/10/2026)
+- **Entrega em 2 etapas.** Na etapa 1 vão só o **título e o texto narrado**, mais uma linha dizendo por que o tema deve funcionar (métrica ou viral de referência). Cenas, checagem completa e legendas só na etapa 2, **depois do "aprovado"** do dono.
+- **Banco de fatos.** Antes de pesquisar, consultar `producoes/fatos.md`. Pesquisar na internet só o que não estiver lá ou estiver marcado com 🔄. Todo fato novo checado entra no banco, com fonte.
+- **Em lote.** Quando fizer sentido, propor e escrever vários roteiros de uma vez (uma única análise e pesquisa para o lote), em vez de um por pedido.
+- **Modelo mais barato para textos mecânicos.** Legendas, título, descrição, tags e comentário são feitos pelo subagente `legendas` (`.claude/agents/legendas.md`, modelo menor), a partir do roteiro aprovado. O modelo principal fica com pesquisa, roteiro e revisão.
+
 ## Aprovação antes de renderizar
 - **Nada é renderizado sem aprovação do dono.** Antes do render final, mandar no chat:
   - o roteiro;
