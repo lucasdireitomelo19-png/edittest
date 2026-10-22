@@ -521,7 +521,112 @@ CENAS.vz_escura = (t, d) => {   // Terra apagada e a ISS
   const a = t * 0.5 + 3.6, x = CX + Math.cos(a) * 420, y = 1100 + Math.sin(a) * 160 - 380; circ(x, y, 7, P.branco); brilho(x, y, 40, 'rgba(255,255,255,0.8)');
   txt('TRIPULAÇÃO', x, y - 50, 34, P.branco, ease((t - 0.6) / 0.4), 'center', 'MM'); txt('UMA TERRA ESCURA', CX, 380, 64, P.branco, ease((t - 0.3) / 0.5)); };
 
-window.desenhar = (cena, t, dur, p) => { p = p || {}; ctx.save(); ctx.clearRect(0, 0, W, H); if (p.sat !== undefined) ctx.filter = `saturate(${p.sat})`; CENAS[cena](t, dur, p); ctx.restore(); };
+
+// ---------- SHORT · O ASTEROIDE QUE NÃO EXISTE (2026 PDC27) ----------
+const VERM2 = '#ff3b3b';
+function fundoA(t, c1 = '#0d1230', c2 = '#02030a') { fundo(t, 0.9, c1, c2); }
+function ficha(x, y, a, linhas, titulo) {   // ficha técnica estilo radar
+  if (a <= 0) return; ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = 'rgba(8,14,30,0.92)'; ctx.strokeStyle = 'rgba(76,201,240,0.7)'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.roundRect(x - 420, y, 840, 120 + linhas.length * 96, 26); ctx.fill(); ctx.stroke(); ctx.restore();
+  txt(titulo, x, y + 70, 64, P.azul, a); linhas.forEach(([k, v], i) => { txt(k, x - 370, y + 170 + i * 96, 36, P.cinza, a, 'left', 'MM'); txt(v, x + 370, y + 172 + i * 96, 50, P.branco, a, 'right'); });
+}
+function carimbo(x, y, s, t, t0, rot = -0.18) {   // carimbo vermelho batendo
+  const k = (t - t0) / 0.25; if (k < 0) return; const e = k >= 1 ? 1 : 1 + 1.6 * (1 - k); const a = Math.min(1, k * 2);
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(e, e); ctx.globalAlpha = a; ctx.strokeStyle = VERM2; ctx.lineWidth = 12;
+  ctx.beginPath(); ctx.roundRect(-s * 2.6, -s * 0.85, s * 5.2, s * 1.7, 18); ctx.stroke();
+  ctx.font = `${s}px MX`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = VERM2; ctx.fillText('FICTÍCIO', 0, 4); ctx.restore();
+}
+function rotulo(s, a = 1) { pilula(s, CX, 150, 28, 'rgba(0,0,0,0.55)', P.cinza, a); }
+CENAS.va_80m = (t, d) => {   // 80 metros: pedra ao lado de um prédio de ~25 andares
+  fundoA(t, '#101634', '#03040c'); const base = 1380; ctx.fillStyle = '#1c2340'; ctx.fillRect(0, base, W, H - base);
+  const hp = 560; ctx.fillStyle = '#2a3356'; ctx.fillRect(620, base - hp, 230, hp); for (let r = 0; r < 14; r++) for (let c = 0; c < 4; c++) { ctx.fillStyle = (r * 7 + c * 3) % 5 ? '#ffd16633' : '#ffd16688'; ctx.fillRect(640 + c * 54, base - hp + 20 + r * 38, 30, 18); }
+  const k = easeOut((t - 0.1) / 0.9), R = 280; pedra(330, base - R * 0.92 - 40 + (1 - k) * -900, R, t * 0.15, 7);
+  const ar = ease((t - 0.7) / 0.4); ctx.strokeStyle = `rgba(255,209,102,${ar})`; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(950, base); ctx.lineTo(950, base - hp); ctx.moveTo(925, base); ctx.lineTo(975, base); ctx.moveTo(925, base - hp); ctx.lineTo(975, base - hp); ctx.stroke();
+  txt('80 m', 950, base - hp - 50, 56, P.ouro, ar); sobe('80 METROS', CX, 330, 120, t, 0.2, P.branco); rotulo('ILUSTRAÇÃO · ESCALA APROXIMADA', ease((t - 0.4) / 0.4)); };
+CENAS.va_19 = (t, d) => {   // medidor enchendo até 19%
+  fundoA(t, '#1a0d18', '#050208'); const k = easeOut((t - 0.15) / 1.0), v = 19 * k; anel(CX, 860, 330, 'rgba(255,255,255,0.08)', 46);
+  ctx.save(); ctx.shadowColor = VERM2; ctx.shadowBlur = 40; anel(CX, 860, 330, VERM2, 46, -Math.PI / 2, -Math.PI / 2 + 6.283 * v / 100); ctx.restore();
+  txt(Math.round(v) + '%', CX, 880, 210, P.branco); txt('CHANCE DE IMPACTO', CX, 1330, 58, VERM2, ease((t - 0.4) / 0.4)); };
+CENAS.va_data = (t, d) => {   // calendário: 10 de julho de 2038
+  fundoA(t, '#0d1230', '#02030a'); const a = back((t - 0.1) / 0.5); if (a <= 0) return; ctx.save(); ctx.translate(CX, 820); ctx.scale(a, a);
+  ctx.fillStyle = '#f4f1e8'; ctx.beginPath(); ctx.roundRect(-300, -330, 600, 620, 40); ctx.fill(); ctx.fillStyle = VERM2; ctx.beginPath(); ctx.roundRect(-300, -330, 600, 160, [40, 40, 0, 0]); ctx.fill(); ctx.restore();
+  txt('JULHO', CX, 820 - 250 * a, 70 * a, '#fff', 1); txt('10', CX, 860, 300 * a, '#141414'); const y = 2026 + Math.round(12 * ease((t - 0.3) / 0.9)); txt(String(y), CX, 1060, 90 * a, '#333');
+  txt('DATA DO IMPACTO', CX, 1330, 52, P.cinza, ease((t - 0.8) / 0.4)); };
+CENAS.va_carimbo = (t, d) => {   // a ficha "real" leva o carimbo FICTÍCIO
+  fundoA(t); ficha(CX, 420, ease(t / 0.3), [['DIÂMETRO', '~80 m'], ['CHANCE DE IMPACTO', '19%'], ['DATA', '10/07/2038']], '2026 PDC27');
+  const sh = t > 0.6 && t < 0.85 ? (Math.random() - 0.5) * 30 : 0; ctx.save(); ctx.translate(sh, sh); carimbo(CX, 1050, 120, t, 0.6); ctx.restore(); flash(t, 0.62, 0.3); };
+CENAS.va_nome = (t, d) => {   // órbita do cenário de treino
+  fundoA(t); const cx = CX, cy = 860; brilho(cx, cy, 90, 'rgba(255,190,90,0.9)'); circ(cx, cy, 28, P.ouro);
+  anel(cx, cy, 260, 'rgba(76,201,240,0.4)', 3); const ae = t * 0.6 + 1.0; circ(cx + Math.cos(ae) * 260, cy + Math.sin(ae) * 260, 18, P.azul); txt('TERRA', cx + Math.cos(ae) * 260, cy + Math.sin(ae) * 260 - 40, 26, P.azul, 1, 'center', 'MM');
+  ctx.save(); ctx.translate(cx + 120, cy - 40); ctx.rotate(0.5); ctx.setLineDash([14, 12]); ctx.strokeStyle = 'rgba(255,59,59,0.8)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.ellipse(0, 0, 430, 230, 0, 0, 6.283); ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+  const aa = t * 0.5 + 2.4, ax = cx + 120 + Math.cos(0.5) * Math.cos(aa) * 430 - Math.sin(0.5) * Math.sin(aa) * 230, ay = cy - 40 + Math.sin(0.5) * Math.cos(aa) * 430 + Math.cos(0.5) * Math.sin(aa) * 230;
+  pedra(ax, ay, 22, t, 5, '#c9a68a', '#6b4f3c'); sobe('2026 PDC27', CX, 300, 100, t, 0.1, P.branco); txt('CENÁRIO DE TREINO · NASA', CX, 390, 36, P.ouro, ease((t - 0.4) / 0.4), 'center', 'MM'); rotulo('ANIMAÇÃO', 1); };
+CENAS.va_mesa = (t, d) => {   // cientistas e governos ao redor da mesa, telão SIMULAÇÃO
+  fundoZ(t, '#141a2e', '#05070e'); ctx.fillStyle = '#0f2a44'; ctx.beginPath(); ctx.roundRect(140, 280, 800, 420, 20); ctx.fill(); ctx.strokeStyle = P.azul; ctx.lineWidth = 4; ctx.stroke();
+  const p = (t * 0.5) % 1; ctx.strokeStyle = 'rgba(76,201,240,0.5)'; ctx.beginPath(); for (let x = 0; x <= 760; x += 10) { const y = 560 - Math.exp(-(((x / 760) - p) ** 2) * 40) * 160; x ? ctx.lineTo(160 + x, y) : ctx.moveTo(160, y); } ctx.stroke();
+  txt('SIMULAÇÃO', CX, 360, 54, P.azul); ctx.fillStyle = '#2a2f45'; ctx.beginPath(); ctx.ellipse(CX, 1120, 380, 150, 0, 0, 6.283); ctx.fill();
+  for (let i = 0; i < 8; i++) { const a = i / 8 * 6.283 + 0.2, x = CX + Math.cos(a) * 440, y = 1120 + Math.sin(a) * 190, e = back((t - 0.1 - i * 0.07) / 0.4); if (e <= 0) continue; ctx.save(); ctx.translate(x, y); ctx.scale(e, e); silhueta(0, 0, 0.32, i % 2 ? '#c8cde0' : '#8fa2c8'); ctx.restore(); }
+  txt('CIENTISTAS + GOVERNOS', CX, 210, 50, P.branco, ease((t - 0.5) / 0.4)); };
+CENAS.va_alerta = (t, d) => {   // celular com alerta de emergência de exercício
+  fundoZ(t, '#1d0f12', '#060304'); const e = back((t - 0.05) / 0.5); if (e <= 0) return; ctx.save(); ctx.translate(CX, 880); ctx.scale(e, e);
+  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.roundRect(-250, -480, 500, 960, 60); ctx.fill(); ctx.strokeStyle = '#333'; ctx.lineWidth = 8; ctx.stroke(); ctx.restore();
+  const v = Math.sin(t * 30) * (t < 1.2 ? 8 : 0); const a = ease((t - 0.4) / 0.3); ctx.save(); ctx.translate(v, 0); ctx.globalAlpha = a; ctx.fillStyle = 'rgba(230,57,70,0.95)'; ctx.beginPath(); ctx.roundRect(CX - 220, 560, 440, 300, 30); ctx.fill(); ctx.restore();
+  txt('⚠ ALERTA DE IMPACTO', CX + v, 630, 32, '#fff', a); txt('Simulação de treino', CX + v, 700, 30, '#ffe', a, 'center', 'MM'); txt('NÃO É REAL', CX + v, 790, 52, '#fff', a);
+  for (let k = 0; k < 3; k++) { const f = ((t * 1.2 + k / 3) % 1); anel(CX, 880, 300 + f * 300, `rgba(230,57,70,${(1 - f) * 0.4 * a})`, 5); } };
+CENAS.va_desvio = (t, d) => {   // dá pra desviar? empurrão muda o caminho
+  fundoA(t); const ex = CX, ey = 1250; ctx.save(); ctx.translate(ex, ey); globoMini(0, 0, 120, t); ctx.restore();
+  const k = clamp(t / (d - 0.3), 0, 1), push = ease((t - 0.9) / 0.6), x0 = 140, y0 = 260; const tx = lerp(ex, ex + 420, push), ty = lerp(ey, ey - 120, push);
+  ctx.setLineDash([16, 12]); ctx.strokeStyle = push > 0 ? 'rgba(124,201,138,0.8)' : 'rgba(255,59,59,0.8)'; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(tx, ty); ctx.stroke(); ctx.setLineDash([]);
+  const ax = lerp(x0, tx, k * 0.75), ay = lerp(y0, ty, k * 0.75); pedra(ax, ay, 46, t, 5, '#c9a68a', '#6b4f3c');
+  if (t > 0.8 && t < 1.2) { brilho(ax, ay, 120, 'rgba(255,220,150,0.9)'); } sobe('DÁ PRA DESVIAR?', CX, 330, 92, t, 0.1, P.branco); rotulo('ANIMAÇÃO', 1); };
+function grafYR4(t, d, cai) {   // probabilidade do 2024 YR4 (jan–fev/2025)
+  fundoA(t, '#0b1124', '#02040a'); const x0 = 120, x1 = 960, y0 = 1250, y1 = 450, pts = [[0, 1.2], [0.3, 1.3], [0.45, 1.6], [0.6, 2.2], [0.75, 2.6], [0.88, 3.1], [0.9, 1.5], [0.93, 0.28], [0.96, 0.004], [1, 0]];
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.lineWidth = 2; for (let v = 0; v <= 3; v++) { const y = y0 - v / 3.3 * (y0 - y1); ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke(); txt(v + '%', x0 - 20, y, 28, P.cinza, 1, 'right', 'MM'); }
+  const lim = cai ? 1 : 0.88, k = cai ? 1 : clamp(ease((t - 0.1) / 1.4), 0, 1) * lim; const sx = u => x0 + u * (x1 - x0), sy = v => y0 - v / 3.3 * (y0 - y1);
+  ctx.strokeStyle = VERM2; ctx.lineWidth = 8; ctx.lineJoin = 'round'; ctx.beginPath(); let last = pts[0];
+  for (let i = 0; i < pts.length; i++) { const [u, v] = pts[i]; const ku = cai ? Math.min(1, 0.88 + 0.12 * ease((t - 0.2) / 1.2)) : k; if (u > ku) { const [pu, pv] = pts[i - 1]; const f = (ku - pu) / (u - pu); ctx.lineTo(sx(ku), sy(lerp(pv, v, f))); last = [ku, lerp(pv, v, f)]; break; } i ? ctx.lineTo(sx(u), sy(v)) : ctx.moveTo(sx(u), sy(v)); last = [u, v]; } ctx.stroke();
+  circ(sx(last[0]), sy(last[1]), 14, P.branco); txt('JAN', x0 + 40, y0 + 50, 28, P.cinza, 1, 'center', 'MM'); txt('FEV 2025', x1 - 80, y0 + 50, 28, P.cinza, 1, 'center', 'MM');
+  return [sx, sy, last];
+}
+CENAS.va_yr4 = (t, d) => { const [sx, sy, l] = grafYR4(t, d, false); sobe('2024 YR4', CX, 230, 96, t, 0.05, P.branco); pilula('ASTEROIDE REAL', CX, 320, 30, '#2a9d8f', '#fff', ease((t - 0.3) / 0.3));
+  txt((l[1]).toFixed(1).replace('.', ',') + '%', sx(l[0]) - 30, sy(l[1]) - 70, 90, VERM2, 1, 'right'); };
+CENAS.va_recorde = (t, d) => {   // recorde para o tamanho
+  fundoA(t, '#1a1408', '#050402'); const e = back((t - 0.1) / 0.5); txt('3,1%', CX, 760, 260 * Math.max(0, e), P.ouro); sobe('RECORDE', CX, 1020, 110, t, 0.3, P.branco);
+  txt('PARA UM ASTEROIDE DESSE TAMANHO', CX, 1120, 38, P.cinza, ease((t - 0.5) / 0.4), 'center', 'MM'); txt('~53 A 67 METROS', CX, 1190, 44, P.laranja, ease((t - 0.7) / 0.4)); };
+CENAS.va_zero = (t, d) => { const [sx, sy, l] = grafYR4(t, d, true); const a = ease((t - 1.0) / 0.4); txt('≈ 0%', CX, 330, 130, P.verde, a); txt('DESCARTADO EM 23/02/2025', CX, 430, 38, P.branco, a, 'center', 'MM');
+  ctx.strokeStyle = `rgba(255,209,102,${a})`; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(sx(0.88), 1330); ctx.lineTo(sx(0.88), 1360); ctx.lineTo(sx(0.96), 1360); ctx.lineTo(sx(0.96), 1330); ctx.stroke(); txt('5 DIAS', (sx(0.88) + sx(0.96)) / 2, 1410, 40, P.ouro, a); };
+CENAS.va_ru = (t, d) => {   // mapa real: Chelyabinsk
+  const pr = mapaZoom(t, [40, 50, 6], [61.4, 55.15, 60], 1.8); const [x, y] = pr(61.4, 55.15); pino(x, y, t - 1.6, 'CHELYABINSK', 'RÚSSIA · 15/02/2013'); vinheta(0.5); };
+CENAS.va_rastro = (t, d) => {   // bola de fogo riscando o céu da manhã
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#2a3a66'); g.addColorStop(0.6, '#d98a5a'); g.addColorStop(1, '#f2c48a'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  cidade(1560, 4, '#1a1a24', 0.8); const k = ease(t / 1.4), hx = lerp(1150, 360, k), hy = lerp(150, 900, k);
+  ctx.strokeStyle = 'rgba(240,240,240,0.75)'; ctx.lineWidth = 34; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(1150, 150); ctx.lineTo(hx, hy); ctx.stroke();
+  brilho(hx, hy, 160 + (t > 1.4 ? 500 * ease((t - 1.4) / 0.4) : 0), 'rgba(255,250,220,1)'); flash(t, 1.45, 0.6);
+  const a = ease((t - 1.6) / 0.4); txt('20 m', CX, 1180, 160, '#fff', a); rotulo('ANIMAÇÃO', 1); };
+CENAS.va_feridos = (t, d) => {   // feridos e janelas quebradas
+  fundoZ(t, '#1a1414', '#060404'); for (let i = 0; i < 6; i++) for (let j = 0; j < 4; j++) { const x = 140 + i * 145, y = 330 + j * 170; ctx.fillStyle = '#26384f'; ctx.fillRect(x, y, 110, 130); const q = back((t - 0.1 - (i + j) * 0.06) / 0.3);
+    if (q > 0) { ctx.strokeStyle = '#e8eef8'; ctx.lineWidth = 3; const r = rng(i * 4 + j); ctx.beginPath(); for (let s = 0; s < 4; s++) { ctx.moveTo(x + 55, y + 65); ctx.lineTo(x + 55 + (r() - 0.5) * 110 * q, y + 65 + (r() - 0.5) * 130 * q); } ctx.stroke(); } }
+  const n = Math.round(1500 * easeOut((t - 0.4) / 1.2)); txt('~' + fmt(n), CX, 1140, 170, VERM2); txt('FERIDOS', CX, 1260, 64, P.branco, ease((t - 0.6) / 0.3)); txt('~7.200 PRÉDIOS DANIFICADOS', CX, 1340, 36, P.cinza, ease((t - 1.0) / 0.4), 'center', 'MM'); };
+CENAS.va_orbita = (t, d) => {   // DART: a órbita de Dimorphos encolheu 32 min
+  fundoA(t); const cx = CX, cy = 860; circ(cx, cy, 90, '#7a6a5c'); txt('DIDYMOS', cx, cy + 140, 30, P.cinza, 1, 'center', 'MM'); const s = 1 - 0.12 * ease((t - 0.6) / 0.8);
+  anel(cx, cy, 340, 'rgba(255,255,255,0.18)', 3); anel(cx, cy, 340 * s, 'rgba(124,201,138,0.9)', 5); const a = t * 1.3; circ(cx + Math.cos(a) * 340 * s, cy + Math.sin(a) * 340 * s, 26, '#a89584'); if (t > 0.45 && t < 0.75) brilho(cx + Math.cos(a) * 340 * s, cy + Math.sin(a) * 340 * s, 120, 'rgba(255,230,180,0.9)');
+  sobe('ÓRBITA ALTERADA', CX, 300, 82, t, 0.1, P.verde); const m = Math.round(32 * ease((t - 0.6) / 0.8)); txt('−' + m + ' MIN', CX, 1350, 110, P.branco); txt('DIMORPHOS · DART 2022', CX, 1440, 34, P.cinza, 1, 'center', 'MM'); rotulo('ANIMAÇÃO', 1); };
+CENAS.va_metade = (t, d) => {   // menos da metade encontrados
+  fundoA(t, '#0a0f22', '#020309'); const n = 100, achados = 44; for (let i = 0; i < n; i++) { const r = rng(i + 70), x = 120 + (i % 10) * 93, y = 470 + Math.floor(i / 10) * 86, on = (i * 37) % 100 < achados && r() < 2 && ease((t - 0.3 - (i % 10) * 0.04) / 0.3) > 0.5;
+    circ(x, y, 18, on ? P.ouro : 'rgba(255,255,255,0.12)'); if (on) brilho(x, y, 40, 'rgba(255,209,102,0.35)'); }
+  sobe('ASTEROIDES DE 140 m OU MAIS', CX, 300, 50, t, 0.1, P.branco); txt('MENOS DA METADE', CX, 1440, 80, P.ouro, ease((t - 0.9) / 0.4)); txt('JÁ FOI ENCONTRADA', CX, 1520, 40, P.cinza, ease((t - 1.0) / 0.4), 'center', 'MM'); };
+CENAS.va_mentira = (t, d) => {   // o PDC27 se desfaz em pixels
+  fundoA(t); const k = ease((t - 0.3) / 1.2); if (k < 1) { ctx.save(); ctx.globalAlpha = 1 - k; pedra(CX, 860, 220, 0.2, 7, '#c9a68a', '#6b4f3c'); ctx.restore(); }
+  for (let i = 0; i < 160; i++) { const r = rng(i + 9), a = r() * 6.283, d0 = r() * 200; const dd = d0 + k * (300 + r() * 600); if (k > 0) { ctx.fillStyle = `rgba(201,166,138,${1 - k})`; ctx.fillRect(CX + Math.cos(a) * dd, 860 + Math.sin(a) * dd, 12, 12); } }
+  txt('2026 PDC27', CX, 300, 90, P.branco); carimbo(CX, 1350, 90, t, 0.2, -0.1); };
+CENAS.va_proximo = (t, d) => {   // o próximo pode ser de verdade
+  fundoA(t, '#05070f', '#000'); ctx.save(); ctx.translate(CX, 1250); globoMini(0, 0, 140, t); ctx.restore();
+  for (let i = 0; i < 60; i++) { const r = rng(i + 300); circ(r() * W, r() * 900, 3, 'rgba(255,255,255,0.15)'); }
+  const k = ease((t - 0.2) / (d - 0.4)), x = lerp(880, 620, k), y = lerp(260, 900, k); brilho(x, y, 50 + 40 * k, 'rgba(255,90,60,0.6)'); circ(x, y, 9 + 6 * k, '#ffb08a');
+  sobe('O PRÓXIMO', CX, 330, 110, t, 0.2, P.branco); txt('PODE SER DE VERDADE', CX, 440, 56, VERM2, ease((t - 0.6) / 0.4)); };
+
+// p.sat (dessaturar) é aplicado depois, no ffmpeg (motor.py): ctx.filter deixa o canvas lento demais
+window.desenhar = (cena, t, dur, p) => { p = p || {}; ctx.save(); ctx.clearRect(0, 0, W, H); CENAS[cena](t, dur, p); ctx.restore(); };
 window.CENAS = CENAS;
 </script>
 </body></html>
