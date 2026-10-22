@@ -1,0 +1,36 @@
+# Gerado por pipeline/gerar_short.py a partir de plano.py.
+FINAL = "SIGA PARA MAIS"
+FIM = 40.92
+AMBIENTE = "drone"
+AMBIENTE_DB = -22
+ETIQUETAS = False
+CORTE_MAX = 2.6
+PROGRESSO = True
+LEGENDA_MV = 230
+FINAL_ALIN, FINAL_MV = 8, 200
+SAIDA = "short_sem_traje.mp4"
+CREDITO = 'NASA · Pixabay/Mjm31 · Pixabay/Schäferle · Pixabay/Engin_Akyurt · Pixabay/adege · Pixabay/michele_volpin'
+CRONO = (11.99, 26.09, 30.73)
+CENAS = [
+    dict(t=0.00, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'na_spacewalks.mp4', 'ss': 102.0}),  # 1 Astronauta na escotilha da estação (NASA, real)
+    dict(t=1.39, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_01_vp_porta.mp4', 'ss': 0}),  # 2 POV: a porta abre e a pressão cai a 0 kPa
+    dict(t=2.24, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'na_spacewalks.mp4', 'ss': 150.2}),  # 3 Visor de um astronauta em caminhada espacial (NASA, real)
+    dict(t=3.44, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_03_vp_mito.mp4', 'ss': 0, 'som': ('hit', -12)}),  # 4 Explosão de desenho com carimbo MITO
+    dict(t=5.06, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_144961.mp4', 'ss': 0}),  # 5 Contagem de filme antigo
+    dict(t=6.18, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_05_vp_pulmao.mp4', 'ss': 0}),  # 6 Raio-X: pulmões se expandindo, alerta vermelho
+    dict(t=11.06, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_6061.mp4', 'ss': 0}),  # 7 Bolhas de ar subindo
+    dict(t=11.89, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_07_vp_15.mp4', 'ss': 0}),  # 8 15 SEGUNDOS em contagem
+    dict(t=13.55, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_105688.mp4', 'ss': 0}),  # 9 Água fervendo de perto
+    dict(t=15.44, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_09_vp_vapor.mp4', 'ss': 0}),  # 10 Pressão zero: a água vira vapor sem calor
+    dict(t=17.44, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_10_vp_mao.mp4', 'ss': 0}),  # 11 Mão em silhueta inchando (ilustração)
+    dict(t=18.73, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_142698.mp4', 'ss': 0}),  # 12 Cristais de gelo se formando devagar
+    dict(t=20.03, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'na_spacewalks.mp4', 'ss': 135.2}),  # 13 Astronauta sob o Sol na órbita (NASA, real)
+    dict(t=21.54, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_13_vp_termo.mp4', 'ss': 0}),  # 14 Silhueta: lado da sombra frio, lado do Sol queimando
+    dict(t=23.61, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_14_vp_o2.mp4', 'ss': 0}),  # 15 Oxigênio no cérebro caindo
+    dict(t=25.99, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_15_vp_apaga.mp4', 'ss': 0, 'som': ('hit', -10)}),  # 16 A visão escurece pelas bordas e o batimento some
+    dict(t=27.83, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'na_spacewalks.mp4', 'ss': 146.2}),  # 17 Astronautas trabalhando do lado de fora da estação (NASA, real)
+    dict(t=29.16, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_17_vp_90.mp4', 'ss': 0}),  # 18 Até 90 segundos para te puxar de volta (estimativa)
+    dict(t=30.63, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'na_camara11.mp4', 'ss': 9.0}),  # 19 Traje dentro de uma câmara de vácuo humana da NASA (real, atual)
+    dict(t=34.36, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'fm_2154.mp4', 'ss': 0}),  # 20 Lama borbulhando de perto
+    dict(t=37.18, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'vs40_20_vp_1966.mp4', 'ss': 0}),  # 21 1966 · NASA · SOBREVIVEU
+]

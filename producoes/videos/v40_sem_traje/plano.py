@@ -17,10 +17,11 @@ PLANO = [
     ("mas o lado virado pro sol", "mg:vp_termo", "Silhueta: lado da sombra frio, lado do Sol queimando"),
     ("aos quinze segundos", "mg:vp_o2", "Oxigênio no cérebro caindo"),
     ("voce apaga", "mg:vp_apaga", "A visão escurece pelas bordas e o batimento some"),
-    ("se alguem te puxar de volta", "src:na_spacewalks.mp4@146.2", "Astronautas trabalhando do lado de fora da estação (NASA, real)"),
+    ("em ate um minuto e meio", "src:na_spacewalks.mp4@146.2", "Astronautas trabalhando do lado de fora da estação (NASA, real)"),
     ("talvez voce sobreviva", "mg:vp_90", "Até 90 segundos para te puxar de volta (estimativa)"),
-    ("em 1966 um tecnico da nasa", "src:na_camara11.mp4@7.5", "Traje dentro de uma câmara de vácuo humana da NASA (real, atual)"),
+    ("em 1966 um tecnico da nasa", "src:na_camara11.mp4@9", "Traje dentro de uma câmara de vácuo humana da NASA (real, atual)"),
     ("a ultima coisa que ele sentiu", "px:2154", "Lama borbulhando de perto"),
     ("e acordou vivo", "mg:vp_1966", "1966 · NASA · SOBREVIVEU"),
 ]
 SONS = {"primeiro voce nao explode": ("hit", -12), "voce apaga": ("hit", -10)}
+CRONO_ANC = ("agora voce tem uns quinze segundos", "voce apaga", "em 1966")

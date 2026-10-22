@@ -50,8 +50,11 @@ for i, (a, f, ideia) in enumerate(pl.PLANO):
 if jobs:
     jp = os.path.join(pasta, "jobs_anim.json"); json.dump(jobs, open(jp, "w"))
     subprocess.run(["node", os.path.join(BASE, "anim", "render_anim.js"), jp, "vert.html", "1080", "1920"], check=True)
+extra = []
+if getattr(pl, "CRONO_ANC", None):
+    extra.append("CRONO = (" + ", ".join(f"{tempo(a)[0]:.2f}" for a in pl.CRONO_ANC) + ")")
 cab = [f"# Gerado por pipeline/gerar_short.py a partir de plano.py.", 'FINAL = "SIGA PARA MAIS"', f"FIM = {FIM}", 'AMBIENTE = "drone"', "AMBIENTE_DB = -22",
        "ETIQUETAS = False", "CORTE_MAX = 2.6", "PROGRESSO = True", "LEGENDA_MV = 230", "FINAL_ALIN, FINAL_MV = 8, 200", f'SAIDA = "{saida}"',
-       f"CREDITO = {' · '.join(creditos)!r}", "CENAS = ["]
+       f"CREDITO = {' · '.join(creditos)!r}", *extra, "CENAS = ["]
 open(os.path.join(pasta, "cenas.py"), "w").write("\n".join(cab + linhas + ["]"]) + "\n")
 print("FIM", FIM, "| cenas", len(linhas), "| animações", len(jobs))

@@ -259,12 +259,21 @@ elif sons:
             f"amix=inputs={len(sons) + 1}:normalize=0:duration=first"
 else:
     audio = voz
+# CRONO = (t0, t1): cronômetro no canto que conta 00:00 -> 00:15 entre t0 e t1 e depois pisca em vermelho
+crono = ""
+if getattr(cfg, "CRONO", None):
+    c0, c1, c2 = (tuple(cfg.CRONO) + (FIM,))[:3]; fonte = os.path.join(FONTS, "Montserrat-ExtraBold.ttf")
+    base = f"fontfile={fonte}:fontsize=72:x=w-tw-60:y=70:box=1:boxcolor=black@0.55:boxborderw=18"
+    crono = (f"drawtext={base}:fontcolor=white:enable='lt(t,{c1})':"
+             f"text='00\\:%{{eif\\:min(15\\,max(0\\,(t-{c0})*15/{c1 - c0}))\\:d\\:2}}',"
+             f"drawtext={base}:fontcolor=0xE63946:enable='gte(t,{c1})*lt(t,{c2})*lt(mod(t,0.6),0.4)':text='00\\:15',")
 saida = os.path.join(pasta, cfg.SAIDA)
 run(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-i", os.path.join(pasta, "narracao.mp3"), *entradas,
      "-filter_complex",
      audio + f",atrim=0:{FIM},loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.84:level=disabled[a];"
      f"[0:v]vignette=angle=0.55,noise=alls=5:allf=t,ass={ass_path}:fontsdir={FONTS}," +
      (f"drawbox=x=0:y=0:w='iw*t/{FIM}':h=10:color=0xFFE500@0.9:t=fill," if getattr(cfg, "PROGRESSO", False) else "") +
+     crono +
      f"fade=t=out:st={FIM - 0.4}:d=0.4,trim=0:{FIM}[v]",
      "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "medium", "-crf", "19",
      "-r", str(FPS), "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-t", f"{FIM}",
