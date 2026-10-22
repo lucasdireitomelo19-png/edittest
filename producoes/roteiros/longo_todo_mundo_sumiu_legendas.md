@@ -23,14 +23,14 @@ Você é a ÚLTIMA pessoa da Terra: hora por hora, até o fim
 Oito bilhões de pessoas somem durante a noite e sobra só você. O que acontece com a cidade nas primeiras horas, nos dias, nos anos e nos séculos seguintes? O vídeo segue essa linha do tempo, da euforia do primeiro dia até o que sobra da humanidade, e termina olhando para o espaço.
 
 Capítulos:
-0:00 Gancho
-0:35 Hora 1: o paraíso
-1:35 Dia 1 e 2: as luzes se apagam
-2:40 Semana 1: a primeira noite de verdade
-3:50 Mês 1: o mundo começa a quebrar
-5:00 Ano 1: a natureza toma de volta
-6:05 Séculos: o que sobra da humanidade
-7:05 Final: você não é o último
+0:00 Acordar sozinho
+0:24 Hora 1: o mundo é seu
+1:10 Dia 1: o apagão
+2:24 Noite 1: o silêncio
+3:22 Semanas depois
+4:19 Ano 1: a natureza volta
+5:20 Séculos: o que fica
+6:09 Mas espera…
 
 Se você fosse o último ser humano, o que faria primeiro? Conta nos comentários.
 

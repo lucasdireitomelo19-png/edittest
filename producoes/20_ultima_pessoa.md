@@ -1,5 +1,7 @@
 # 20 · Você é a ÚLTIMA pessoa da Terra: hora por hora, até o fim (lado-51, longo)
 
+- **Entregue:** Central lado-51 (Pronto, cópia 540p + thumb A + 6 legendas); final 1080p enviado no chat em 22/10.
+
 - Vídeo longo 1920x1080, 7:04 · voz Brian (ElevenLabs vel 1.1, sem atempo) · 97 cenas (26 reais / 71 animações próprias, nenhuma repetida) · −14 LUFS.
 - Roteiro: `roteiros/longo_todo_mundo_sumiu.md` (outra sessão, aprovado). Legendas de postagem: `roteiros/longo_todo_mundo_sumiu_legendas.md` (capítulos corrigidos para os tempos reais abaixo).
 - Animações: `pipeline/anim/ultima.html` (cenas `u_*`). Plano: `videos/v42_ultima_pessoa/plano.py` → `gerar_cenas.py` → `cenas.py` → `motor_h.py`.
