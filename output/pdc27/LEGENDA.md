@@ -1,7 +1,8 @@
-# 19% de chance. 2038. E ele NÃO existe. · @ladosombriodouniverso
+# Esse asteroide tem 19% de chance de bater na Terra em 2038. E ele NÃO existe. · @ladosombriodouniverso
 
 **Roteiro:** `producoes/roteiros/lote_2026-10-22_pdc27.md`, roteiro #2 (aprovado pelo dono em 22/10/2026, v1)
 **Formato:** Instagram 1080×1350 · 9 slides
+**Capa (v2, pedido do dono em 22/10):** "Esse asteroide tem 19% de chance de bater na Terra em 2038. E ele NÃO existe."
 **Fonte do design:** `producoes/carrosseis/pdc27/carrossel.html` · exportar com `NODE_PATH=$(npm root -g) node producoes/carrosseis/render.js producoes/carrosseis/pdc27`
 **Imagens:** luzes da Terra vistas da ISS (NASA, iss040e091231); centro de controle da DART (NASA/Johns Hopkins APL); missão DART, ilustração (NASA/Johns Hopkins APL); asteroide da capa, ficha de radar, gráfico, Chelyabinsk e céu do slide 8 são ilustrações próprias.
 
