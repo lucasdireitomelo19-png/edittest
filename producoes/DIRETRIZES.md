@@ -60,6 +60,14 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Em lote.** Quando fizer sentido, propor e escrever vários roteiros de uma vez (uma única análise e pesquisa para o lote), em vez de um por pedido.
 - **Modelo mais barato para textos mecânicos.** Legendas, título, descrição, tags e comentário são feitos pelo subagente `legendas` (`.claude/agents/legendas.md`, modelo menor), a partir do roteiro aprovado. O modelo principal fica com pesquisa, roteiro e revisão.
 
+## Fluxo de agentes: Pesquisas → Roteirista → geradores (pedido do dono, 22/10/2026)
+1. **Pesquisas** entrega o lote de temas. Esses temas **já estão aprovados pelo dono**: vão direto para o subagente `roteirista` (`.claude/agents/roteirista.md`), sem pedir nova aprovação.
+2. **Roteirista** escreve os roteiros (Short, longo ou carrossel) com ângulo, tom de voz e **potencial viral (nota 0–10 e 🔥)** num arquivo `producoes/roteiros/lote_*.md`.
+3. A sessão principal **manda no chat** cada roteiro com o potencial viral e espera o dono.
+4. **Aprovado** → envia direto para o gerador certo: vídeo (Short ou longo) segue o fluxo de produção de vídeo destas diretrizes; carrossel vai para o gerador de carrosséis. Os textos de postagem ficam com o subagente `legendas`.
+   **Reprovado** → volta para o `roteirista` com o feedback do dono, que revisa (v2, v3…) e reenvia. Repete até aprovar.
+- Subagentes não chamam outros subagentes: quem passa o lote de um agente para o outro é a sessão principal.
+
 ## Aprovação antes de renderizar
 - **Nada é renderizado sem aprovação do dono.** Antes do render final, mandar no chat:
   - o roteiro;
