@@ -246,7 +246,7 @@ voz = ("[1:a]aresample=44100,highpass=f=75,equalizer=f=170:t=q:w=1:g=2.5,equaliz
        "aecho=0.9:0.6:35|60:0.10|0.06,aformat=channel_layouts=stereo,"
        f"apad,atrim=0:{FIM}")
 if AMBIENTE:
-    entradas += ["-i", os.path.join(SFX, f"{AMBIENTE}.wav")]
+    entradas += ["-i", os.path.join(pasta, AMBIENTE) if AMBIENTE.endswith(".wav") else os.path.join(SFX, f"{AMBIENTE}.wav")]
     na = len(sons) + 2
     voz += ",asplit[voz][chave];"
     mix += (f"[{na}:a]atrim=0:{FIM},volume={getattr(cfg, 'AMBIENTE_DB', -10)}dB[amb0];"
@@ -267,6 +267,12 @@ if getattr(cfg, "CRONO", None):
     crono = (f"drawtext={base}:fontcolor=white:enable='lt(t,{c1})':"
              f"text='00\\:%{{eif\\:min(15\\,max(0\\,(t-{c0})*15/{c1 - c0}))\\:d\\:2}}',"
              f"drawtext={base}:fontcolor=0xE63946:enable='gte(t,{c1})*lt(t,{c2})*lt(mod(t,0.6),0.4)':text='00\\:15',")
+# DIAS = [(t, "DIA 1"), ...]: rótulo fixo no canto que troca nos tempos dados
+if getattr(cfg, "DIAS", None):
+    fonte = os.path.join(FONTS, "Montserrat-ExtraBold.ttf"); ds = list(cfg.DIAS) + [(FIM, "")]
+    for (ta, rot), (tb, _) in zip(ds, ds[1:]):
+        crono += (f"drawtext=fontfile={fonte}:fontsize=58:x=w-tw-60:y=70:box=1:boxcolor=black@0.55:boxborderw=16:"
+                  f"fontcolor=0xFF8A3D:enable='between(t,{ta},{tb})':text='{rot}',")
 saida = os.path.join(pasta, cfg.SAIDA)
 run(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-i", os.path.join(pasta, "narracao.mp3"), *entradas,
      "-filter_complex",

@@ -33,6 +33,7 @@ for i, (a, f, ideia) in enumerate(pl.PLANO):
     if tipo == "mg":
         arq = f"{pref}_{i:02d}_{nome}.mp4"; p = {}
         if nome in MARCAS: p["ts"] = [round(tempo(m)[0] - ts[i], 2) for m in MARCAS[nome]]
+        if a in getattr(pl, "SAT", {}): p["sat"] = pl.SAT[a]
         jobs.append(dict(saida=os.path.join(SRC, arq), cena=nome, dur=round(dur + 0.4, 2), p=p))
         o.update(tag="anim", zoom=(1.0, 1.03), sat=1.0, fixo=True)
     else:
@@ -51,6 +52,11 @@ if jobs:
     jp = os.path.join(pasta, "jobs_anim.json"); json.dump(jobs, open(jp, "w"))
     subprocess.run(["node", os.path.join(BASE, "anim", "render_anim.js"), jp, "vert.html", "1080", "1920"], check=True)
 extra = []
+if getattr(pl, "DIAS_ANC", None):
+    extra.append("DIAS = " + repr([(round(tempo(a)[0], 2), r) for a, r in pl.DIAS_ANC]))
+for nome_cfg in ("VIRADA_ANC", "SILENCIO_ANC"):
+    if getattr(pl, nome_cfg, None):
+        extra.append(f"{nome_cfg[:-4]} = " + repr(tuple(round(tempo(a)[0], 2) for a in getattr(pl, nome_cfg))))
 if getattr(pl, "CRONO_ANC", None):
     extra.append("CRONO = (" + ", ".join(f"{tempo(a)[0]:.2f}" for a in pl.CRONO_ANC) + ")")
 cab = [f"# Gerado por pipeline/gerar_short.py a partir de plano.py.", 'FINAL = "SIGA PARA MAIS"', f"FIM = {FIM}", 'AMBIENTE = "drone"', "AMBIENTE_DB = -22",

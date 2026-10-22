@@ -29,3 +29,5 @@ SAT = {"mas ai os problemas comecam": 0.75, "nao tem ninguem nas usinas": 0.6, "
        "a comida da geladeira": 0.4, "se voce se machucar": 0.35, "nenhum som": 0.2, "a natureza comeca": 0.4, "mas tem um detalhe": 0.5, "olhando pra uma terra": 0.4}
 DIAS_ANC = [("voce acorda", "DIA 1"), ("a internet cai", "DIA 2"), ("a comida da geladeira", "DIA 7"), ("a natureza comeca", "1 ANO")]
 SONS = {"mas ai os problemas comecam": ("hit", -10)}
+VIRADA_ANC = ("mas ai os problemas comecam",)
+SILENCIO_ANC = ("nenhum som", "a natureza comeca")
