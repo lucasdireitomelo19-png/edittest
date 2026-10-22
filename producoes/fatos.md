@@ -13,6 +13,11 @@ Pesquise na internet só o que **não** estiver aqui ou o que pode ter mudado (m
 - **Chelyabinsk 2013:** ~20 m, ~7.200 prédios danificados, ~1.500 feridos.
 - **Defesa planetária:** >90% dos NEOs com mais de 1 km encontrados, nenhum com risco em 100 anos. Dos com ≥140 m, menos da metade conhecidos (NASA/CNEOS).
 
+## Vulcões
+- **Yellowstone:** três supererupções, há ~2,1 milhões, ~1,3 milhão e ~640 mil anos. Chance anual de nova erupção formadora de caldeira ≈ **1 em 730.000**, e o USGS diz que pode nunca acontecer (USGS, Q&A sobre supervulcões, conferido em 21/10/2026).
+- **Tambora (1815):** causou o "ano sem verão" de 1816, com neve em junho na Nova Inglaterra e fome na Europa. Não era supervulcão.
+- **Toba (~74 mil anos):** erupção muitas vezes maior que a do Tambora. A hipótese de gargalo populacional humano é contestada: em Pinnacle Point e Vleesbaai (África do Sul) a ocupação foi contínua (Smith et al., *Nature* 2018).
+
 ## Sol e clima espacial
 - Luz Sol–Terra em **8 min 20 s**. A gravidade se propaga na velocidade da luz (GW170817).
 - Volume de ~**1,3 milhão de Terras**, **99,86%** da massa do Sistema Solar. Circunferência de 4,38 milhões de km: 14,6 s para a luz, ~203 dias de avião a 900 km/h.
@@ -41,9 +46,11 @@ Pesquise na internet só o que **não** estiver aqui ou o que pode ter mudado (m
 - **Betelgeuse:** ~640–1.000 raios solares (≈ 3,5 UA, além de Marte), a ~550–700 anos-luz. Não é ameaça.
 - **T Coronae Borealis** 🔄: nova recorrente a ~3.000 anos-luz, explosões em 1866 e 1946. Escurecimento pré-explosão desde mar/2023. **Até 21/10/2026, ainda não explodiu.** Sobe da magnitude ~10 para ~2 em horas.
 - **Supernova perigosa:** só a menos de ~25–50 anos-luz, e não há candidata nessa distância. Ferro-60 no fundo do mar de ~2–3 milhões de anos (Wallner 2016).
-- **Raio gama:** a ~6.500 anos-luz destruiria ~1/3 do ozônio. Extinção do Ordoviciano por raio gama é **hipótese**.
+- **Raio gama:** a ~6.500 anos-luz destruiria ~1/3 do ozônio. Extinção do Ordoviciano (~445 mi de anos, ~85% das espécies, quase todas marinhas) por raio gama é **hipótese** (Melott et al. 2004).
+- **GRB 221009A ("BOAT"):** em 09/10/2022, a explosão de raios gama mais brilhante já registrada (Fermi, Swift), a ~2 bilhões de anos-luz (algumas fontes dizem 2,4). Perturbou a ionosfera da Terra por horas. Estimativa de uma assim a cada ~10.000 anos.
+- **Buraco negro solitário OGLE-2011-BLG-0462:** primeiro isolado confirmado (Hubble + microlente, Sahu et al. 2022), ~5 mil anos-luz, ~45 km/s, ~7 massas solares (há estimativa concorrente menor). A 45 km/s, de Netuno ao Sol levaria ~3,2 anos.
 - **Andrômeda** 🔄: aproxima-se a ~110 km/s (~400 mil km/h), ~1 trilhão de estrelas. 2025 (Sawala, *Nature Astronomy*): ~50% de fusão em 10 bilhões de anos. 2026 (arXiv 2603.22863): ~90%, mediana de ~6,5 bilhões de anos (pré-publicação).
-- **Vácuo falso:** a massa do Higgs (2012) é compatível com um universo metaestável. A bolha viajaria na velocidade da luz. O tempo esperado é muito maior que a idade do universo. **Hipótese.**
+- **Vácuo falso:** a massa do Higgs (2012, LHC, anel de 27 km na fronteira França–Suíça perto de Genebra) é compatível com um universo metaestável. A bolha viajaria na velocidade da luz. Estimativa de ~10^790 anos (correção de 2024, Quanta Magazine). **Hipótese.**
 - Universo com ~13,8 bilhões de anos. *Homo sapiens* com ~300 mil anos. Expansão acelerada descoberta em 1998.
 
 ## Corpo humano e relatividade
