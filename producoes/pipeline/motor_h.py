@@ -185,6 +185,9 @@ for i, c in enumerate(CENAS):
     if cr: ev.append(f"Dialogue: 1,{ts(t0)},{ts(t1)},Credito,,0,0,0,,{cr}")
     if c.get("texto"):
         ev.append(f"Dialogue: 2,{ts(t0 + 0.1)},{ts(t1)},Destaque,,0,0,0,," r"{\fad(150,150)}" + c["texto"])
+# CANTO = [(t0, t1, "texto")]: marcador fixo no canto (ex.: população / hora do dia)
+for t0, t1, txt in getattr(cfg, "CANTO", []):
+    ev.append(f"Dialogue: 1,{ts(t0)},{ts(t1)},Canto,,0,0,0,,{txt}")
 if getattr(cfg, "FINAL", ""):
     fim_voz = palavras[-1]["t"] + palavras[-1]["d"]
     ev.append(f"Dialogue: 4,{ts(fim_voz + 0.2)},{ts(FIM)},Final,,0,0,0,," r"{\fad(400,0)}" + cfg.FINAL)
@@ -201,6 +204,7 @@ Style: Destaque,Montserrat Thin ExtraBold,72,&H0040C8FF,&H00FFFFFF,&H00000000,&H
 Style: Final,Montserrat Thin ExtraBold,96,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,0,0,0,0,100,100,3,0,1,6,4,5,100,100,0,1
 Style: Real,Montserrat Thin ExtraBold,26,&H00FFFFFF,&H00FFFFFF,&H001E1EE6,&H00000000,0,0,0,0,100,100,2,0,3,8,0,7,50,50,45,1
 Style: Anim,Montserrat Thin ExtraBold,22,&H00FFFFFF,&H00FFFFFF,&H70000000,&H00000000,0,0,0,0,100,100,2,0,3,7,0,7,50,50,45,1
+Style: Canto,Montserrat Thin ExtraBold,26,&H0066D1FF,&H00FFFFFF,&H00000000,&H90000000,0,0,0,0,100,100,2,0,1,2.5,1,7,50,50,100,1
 Style: Credito,Montserrat Thin ExtraBold,20,&H50FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,1,0,1,1.5,0,9,40,40,40,1
 
 [Events]
