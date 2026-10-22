@@ -1,12 +1,11 @@
 # Longo (8 min) · E se você acordasse e todo mundo tivesse sumido?
 
-**Status:** ETAPA 1 (título + texto). Aguardando aprovação do dono. Plano de cenas, storyboard, checagem completa e legendas vêm na etapa 2.
+**Status:** texto APROVADO pelo dono (22/10), com o **título B**. Etapa 2 abaixo, depois storyboard e prévia para aprovação antes do render.
 **Por que deve funcionar:** é a versão longa do Short POV aprovado. O formato "você no centro" é o campeão do canal (5.790 views, 88% de retenção), e o arco euforia → problemas segura o espectador. O vídeo segue uma linha do tempo (hora 1 → séculos), como uma contagem, que é o padrão aprovado de longos. E puxa para o espaço no fim.
 **Formato:** ~1.180 palavras (~8 min com a voz Brian), 7 capítulos com cartão próprio ("HORA 1", "DIA 2"…), mistura de motion graphics e vídeo real.
 
-**Título (A/B):**
-- A: `E se você ACORDASSE e todo mundo tivesse sumido? (o que aconteceria com você)`
-- B: `Você é a ÚLTIMA pessoa da Terra: hora por hora, até o fim`
+**Título (aprovado):** `Você é a ÚLTIMA pessoa da Terra: hora por hora, até o fim`
+**Thumbnail:** silhueta sozinha no meio de uma avenida enorme e vazia ao entardecer, cidade apagada ao fundo. Texto: "SÓ VOCÊ".
 
 ---
 
@@ -102,3 +101,32 @@
 - **Pegadas na Lua:** sem vento nem água, podem durar milhões de anos (NASA). O que as apaga é o micrometeorito, muito lentamente.
 - **Voyager 1 e 2:** fora da heliosfera, levam o Disco de Ouro (1977).
 - **Estação Espacial:** tripulação contínua desde nov/2000, a ~400 km de altura, com cápsulas acopladas para retorno de emergência (Soyuz/Dragon), que pousam com paraquedas (Dragon no mar).
+
+## Etapa 2 · Plano de cenas
+**Mistura:** ~80% motion graphics e ~20% vídeo real (o mesmo formato pedido pelo dono para o Short do tema). Nenhuma cena repetida, troca de elemento a cada 2–4 s e câmera sempre em movimento.
+**Estilo:** o MG aprovado do longo "5 maneiras" (base `pipeline/anim/mundo.html`). Paleta quente e saturada na "Hora 1", que dessatura capítulo a capítulo até quase monocromática; no final, volta um tom azul de esperança.
+**Elementos fixos:**
+- Cartão de capítulo ("HORA 1", "DIA 2", "SEMANA 1", "MÊS 1", "ANO 1", "SÉCULOS").
+- Relógio ou calendário no canto, avançando.
+- Medidor "POPULAÇÃO DA TERRA: 1".
+
+| Capítulo | Motion graphics | Vídeo real |
+|---|---|---|
+| Gancho | Despertador e celular com "0 MENSAGENS"; globo com contador "8.000.000.000 → 1"; ligação "chamando…" sem resposta | Avenida vazia em drone ao amanhecer |
+| Hora 1 · O paraíso | Carrinho enchendo, etiquetas "R$ 0", chave de cobertura girando, velocímetro "0 → 200 KM/H", taça de vinho, onda de eco saindo do estádio | Carro esportivo em estrada vazia; estádio vazio |
+| Dia 1–2 · Luzes se apagam | Painel de usina em alerta vermelho; mapa noturno real (Natural Earth) apagando em cascata; Wi-Fi caindo; bateria do celular esvaziando; corte da cidade mostrando a bomba d'água parando; túnel do metrô enchendo (contador "50 MILHÕES DE LITROS/DIA"); usina nuclear com termômetro e "?" | Cidade apagando à noite |
+| Semana 1 · A primeira noite | Janela com a cidade escura; o céu revela a Via Láctea em animação; estatística "1/3 DA HUMANIDADE NÃO VÊ ISSO"; rádio com dial girando e onda de chiado plana; balão de fala vazio | Via Láctea real em timelapse (céu escuro) |
+| Mês 1 · O mundo quebra | Mapa com pontos de incêndio se espalhando; ícones de animais saindo de fazendas; matilha em silhueta; latas e arroz com "ANOS DE COMIDA"; ícones de dente, corte e apêndice virando alerta "SEM MÉDICO" (estilizado, sem sangue) | Fumaça de incêndio ao longe (sem vítimas) |
+| Ano 1 · A natureza volta | Bomba de gasolina com "VALIDADE: ~6 MESES"; Ferrari coberta de poeira e folhas; timelapse estilizado de mato rachando asfalto e trepadeira subindo prédio; mapa com pino "PRIPYAT · 1986" e contador "49.000 → 0"; satélite riscando o céu | Pripyat hoje (roda-gigante, prédios com árvores, animais selvagens) |
+| Séculos · O que sobra | Linha do tempo "décadas → séculos" com casa de madeira caindo, ponte enferrujando, corte do concreto rachando por dentro, cidade virando colina de floresta; pirâmide intacta; pegada na Lua com "MILHÕES DE ANOS"; Voyager com o Disco de Ouro | Pegada da Apollo (NASA); Voyager (animação NASA) |
+| Final · Você não é o último | Câmera sobe da Terra escura até a órbita; ISS com janela e silhuetas; risco de fogo no céu e paraquedas abrindo; bolha de rádio se expandindo, "+100 ANOS-LUZ"; Terra pequena e azul com fade | ISS sobre a Terra (NASA); cápsula com paraquedas no mar (NASA) |
+
+**Som:**
+- Trilha original alegre e acelerada na "Hora 1", com corte seco no "Mas o mundo não funciona sozinho".
+- Drone grave crescendo daí em diante.
+- Silêncio total de ~1,5 s em "Só chiado" e em "Nenhuma voz".
+- Tema calmo e esperançoso no final.
+
+**Segurança:** sem corpos, sangue ou ferimento realista; incêndio só ao longe; doença só em ícones.
+**Legendas:** subagente `legendas`, descrição **sem fontes**, com capítulos (timestamps) na descrição do YouTube.
+**Derivados:** 3 Shorts ("A primeira noite: a Via Láctea", "O que mata você primeiro", "Você não é o último").
