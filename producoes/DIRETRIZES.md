@@ -61,12 +61,23 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Modelo mais barato para textos mecânicos.** Legendas, título, descrição, tags e comentário são feitos pelo subagente `legendas` (`.claude/agents/legendas.md`, modelo menor), a partir do roteiro aprovado. O modelo principal fica com pesquisa, roteiro e revisão.
 
 ## Fluxo de agentes: Pesquisas → Roteirista → geradores (pedido do dono, 22/10/2026)
-1. **Pesquisas** entrega o lote de temas. Esses temas **já estão aprovados pelo dono**: vão direto para o subagente `roteirista` (`.claude/agents/roteirista.md`), sem pedir nova aprovação.
+Os agentes aparecem no **Prédio dos Agentes** (`https://claude.ai/artifact/MYN7cXDqxFUwnWPJCYtSWM`).
+
+| Agente | O que é | Onde |
+|---|---|---|
+| Pesquisas | subagente `pesquisa` | `.claude/agents/pesquisa.md` |
+| Roteirista | subagente `roteirista` | `.claude/agents/roteirista.md` |
+| Gerador de Vídeos (Shorts e longos) | sessão do Claude | `session_01RMuyuTR7uKM4etrPUUhNcQ` |
+| Gerador de Carrosséis (Instagram) | sessão do Claude | `session_019KYTeVZcURhxGac3ijKjZn` |
+| Legendas (textos de postagem) | subagente `legendas` | `.claude/agents/legendas.md` |
+
+1. **Pesquisas** entrega o lote de temas com os fatos checados. Esses temas **já estão aprovados pelo dono**: vão direto para o `roteirista`, sem pedir nova aprovação.
 2. **Roteirista** escreve os roteiros (Short, longo ou carrossel) com ângulo, tom de voz e **potencial viral (nota 0–10 e 🔥)** num arquivo `producoes/roteiros/lote_*.md`.
 3. A sessão principal **manda no chat** cada roteiro com o potencial viral e espera o dono.
-4. **Aprovado** → envia direto para o gerador certo: vídeo (Short ou longo) segue o fluxo de produção de vídeo destas diretrizes; carrossel vai para o gerador de carrosséis. Os textos de postagem ficam com o subagente `legendas`.
+4. **Aprovado** → a sessão principal faz commit e push do arquivo e manda o roteiro (texto completo + caminho do arquivo e branch) com `send_message` para a sessão certa: Short ou longo para o **Gerador de Vídeos**, carrossel para o **Gerador de Carrosséis**. A mensagem diz que o roteiro já está aprovado pelo dono, e o gerador segue as etapas destas diretrizes a partir do plano de cenas (o storyboard e a prévia ainda passam pelo dono antes do render). Os textos de postagem ficam com o subagente `legendas`.
    **Reprovado** → volta para o `roteirista` com o feedback do dono, que revisa (v2, v3…) e reenvia. Repete até aprovar.
-- Subagentes não chamam outros subagentes: quem passa o lote de um agente para o outro é a sessão principal.
+- Subagentes não chamam outros agentes: quem passa o trabalho de um para o outro é a sessão principal.
+- Se a sessão de um gerador tiver sido arquivada, peça ao dono o ID da nova sessão e atualize a tabela acima.
 
 ## Aprovação antes de renderizar
 - **Nada é renderizado sem aprovação do dono.** Antes do render final, mandar no chat:
