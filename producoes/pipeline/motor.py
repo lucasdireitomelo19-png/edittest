@@ -43,7 +43,8 @@ if CORTE_MAX:
                 if "ss" in d:
                     d["ss"] = round(c.get("ss", 0) + dur * k / n * c.get("vel", 1.0), 3)
                 if c.get("fixo"):          # animação com o assunto no centro: só punch-in, sem mudar o quadro
-                    d.setdefault("punch", True); novas.append(d); continue
+                    if not c.get("sem_punch"): d.setdefault("punch", True)
+                    novas.append(d); continue
                 z0, z1 = c.get("zoom", (1.07, 1.15))
                 d["zoom"] = (round(z1 + 0.08 * (k % 2 == 1), 3), round(z1 + 0.14 * (k % 2 == 1) - 0.02 * (k % 2 == 0), 3))
                 px, py = c.get("pan", (0.5, 0.5))

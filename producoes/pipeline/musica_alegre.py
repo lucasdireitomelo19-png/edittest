@@ -10,7 +10,9 @@ hz = lambda m: 440 * 2 ** ((m - 69) / 12)
 def env(n, a=0.005, d=0.25):
     x = np.arange(n) / SR; return np.minimum(1, x / a) * np.exp(-x / d)
 def put(sig, t0):
-    i = int(t0 * SR); j = min(N, i + len(sig)); mix[i:j] += sig[:j - i]
+    i = int(t0 * SR)
+    if i >= N: return
+    j = min(N, i + len(sig)); mix[i:j] += sig[:j - i]
 rng = np.random.default_rng(3)
 PROG = [[60, 64, 67, 72], [55, 59, 62, 67], [57, 60, 64, 69], [53, 57, 60, 65]]   # C G Am F
 nb = int(DUR / b) + 1
