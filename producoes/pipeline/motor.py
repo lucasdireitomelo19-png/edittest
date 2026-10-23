@@ -186,7 +186,7 @@ for i, c in enumerate(ORIG):
             casas = 1 if isinstance(b, float) and not float(b).is_integer() else 0
             num = f"{v:,.{casas}f}".replace(",", "X").replace(".", ",").replace("X", ".")
             ev.append(f"Dialogue: 2,{ts(ta)},{ts(tb)},Contador,,0,0,0,,{num}{suf}")
-    if c.get("tag") and getattr(cfg, "ETIQUETAS", True):
+    if c.get("tag") and getattr(cfg, "ETIQUETAS", True) and not (getattr(cfg, "ETIQUETAS", True) == "videos" and c["tag"] == "anim"):   # "videos": só nas cenas que não são animação própria
         estilo, texto = ROTULOS[c["tag"]]
         ev.append(f"Dialogue: 1,{ts(t0)},{ts(t1)},{estilo},,0,0,0,,{texto}")
     if c.get("circulo"):
@@ -273,7 +273,7 @@ if getattr(cfg, "DIAS", None):
     fonte = os.path.join(FONTS, "Montserrat-ExtraBold.ttf"); ds = list(cfg.DIAS) + [(FIM, "")]
     for (ta, rot), (tb, _) in zip(ds, ds[1:]):
         if not rot: continue   # rótulo vazio = canto limpo nesse trecho
-        crono += (f"drawtext=fontfile={fonte}:fontsize=58:x=w-tw-60:y=70:box=1:boxcolor=black@0.55:boxborderw=16:"
+        crono += (f"drawtext=fontfile={fonte}:fontsize={getattr(cfg, 'DIAS_TAM', 58)}:x=w-tw-60:y=70:box=1:boxcolor=black@0.55:boxborderw=16:"
                   f"fontcolor=0xFF8A3D:enable='between(t,{ta},{tb})':text='{rot}',")
 saida = os.path.join(pasta, cfg.SAIDA)
 run(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-i", os.path.join(pasta, "narracao.mp3"), *entradas,
