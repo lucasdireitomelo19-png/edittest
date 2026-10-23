@@ -1,0 +1,37 @@
+# Gerado por pipeline/gerar_short.py a partir de plano.py.
+FINAL = "SIGA PARA MAIS"
+FIM = 49.95
+AMBIENTE = "drone"
+AMBIENTE_DB = -22
+ETIQUETAS = 'videos'
+CORTE_MAX = 2.6
+PROGRESSO = True
+LEGENDA_MV = 230
+FINAL_ALIN, FINAL_MV = 8, 200
+SAIDA = "andromeda.mp4"
+CREDITO = 'NASA · ESA/Hubble & NASA'
+DIAS = [(17.25, 'SIMULAÇÃO NASA · CHANCE ESTIMADA: 50–90%')]
+DIAS_TAM = 36
+CENAS = [
+    dict(t=0.00, **{'crop': [1496, 0, 1212, 2160], 'tag': 'sim', 'zoom': (1.0, 1.12), 'src': 'sv_30955_colisao.mp4', 'ss': 31.0}),  # 1 As duas galáxias se aproximando (simulação NASA)
+    dict(t=2.38, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_01_vn_rota.mp4', 'ss': 0}),  # 2 Via Láctea e Andrômeda ligadas por uma linha vermelha: SEM DESVIO
+    dict(t=3.82, **{'crop': [0, 134, 1080, 1056], 'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'sv_14847_vert.mp4', 'ss': 111.0}),  # 3 Andrômeda real, mosaico do Hubble (NASA/ESA)
+    dict(t=5.30, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_03_vn_trilhao.mp4', 'ss': 0}),  # 4 Contador: 1.000.000.000.000 ESTRELAS
+    dict(t=7.98, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_04_vn_velo.mp4', 'ss': 0}),  # 5 400.000 KM/H, ≈110 km por segundo
+    dict(t=10.24, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_05_vn_mancha.mp4', 'ss': 0}),  # 6 Céu da Terra hoje: Andrômeda é uma manchinha circulada
+    dict(t=12.39, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_06_vn_cresce.mp4', 'ss': 0}),  # 7 Andrômeda crescendo no céu, +0 → +3 BI DE ANOS (ilustração)
+    dict(t=15.28, **{'tag': 'sim', 'zoom': (1.0, 1.12), 'src': 'na_ceu_andromeda_375.jpg', 'ss': 0, 'texto': '+3,75 BI DE ANOS'}),  # 8 Céu da Terra em 3,75 bilhões de anos (simulação NASA/STScI, 2012)
+    dict(t=17.14, **{'crop': [1496, 0, 1212, 2160], 'tag': 'sim', 'zoom': (1.0, 1.12), 'src': 'sv_30955_colisao.mp4', 'ss': 37.0, 'texto': '+4 BI DE ANOS', 'som': ('hit', -9)}),  # 9 O primeiro choque das galáxias (simulação NASA)
+    dict(t=18.27, **{'crop': [1496, 0, 1212, 2160], 'tag': 'sim', 'zoom': (1.0, 1.12), 'src': 'sv_30955_colisao.mp4', 'ss': 43.5}),  # 10 Os discos se deformando, braços arrancados (simulação NASA)
+    dict(t=20.43, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_10_vn_fogo.mp4', 'ss': 0}),  # 11 O céu explode em estrelas novas (ilustração)
+    dict(t=22.74, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_11_vn_sol.mp4', 'ss': 0}),  # 12 O Sol arremessado pra fora do disco
+    dict(t=26.68, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_12_vn_terra.mp4', 'ss': 0}),  # 13 Sol e Terra viajando juntos
+    dict(t=27.68, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_13_vn_estrelas.mp4', 'ss': 0}),  # 14 Duas nuvens de estrelas se atravessando sem bater
+    dict(t=30.43, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_14_vn_espaco.mp4', 'ss': 0}),  # 15 Sol → Próxima Centauri: 4,2 ANOS-LUZ
+    dict(t=32.50, **{'crop': [1496, 0, 1212, 2160], 'tag': 'sim', 'zoom': (1.0, 1.12), 'src': 'sv_30955_colisao.mp4', 'ss': 60.0, 'texto': '+6 BI DE ANOS'}),  # 16 A galáxia fundida, sem braços (simulação NASA)
+    dict(t=34.38, **{'tag': 'real', 'zoom': (1.0, 1.12), 'src': 'hb_eliptica.jpg', 'ss': 0, 'texto': 'EXEMPLO DE GALÁXIA ELÍPTICA'}),  # 17 Galáxia elíptica real NGC 3610 (Hubble), exemplo
+    dict(t=37.00, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_17_vn_casa.mp4', 'ss': 0}),  # 18 A espiral da Via Láctea some: DEIXA DE EXISTIR
+    dict(t=39.84, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_18_vn_terra_ok.mp4', 'ss': 0}),  # 19 A Terra intacta, com check verde
+    dict(t=41.70, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_19_vn_oceano.mp4', 'ss': 0}),  # 20 Sol mais brilhante, oceanos evaporando em ~1 bi de anos
+    dict(t=44.63, **{'tag': 'anim', 'zoom': (1.0, 1.03), 'sat': 1.0, 'fixo': True, 'src': 'and_20_vn_fim.mp4', 'ss': 0}),  # 21 A galáxia nova brilhando sobre uma Terra vazia
+]

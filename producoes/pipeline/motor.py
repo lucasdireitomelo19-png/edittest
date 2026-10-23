@@ -273,8 +273,9 @@ if getattr(cfg, "DIAS", None):
     fonte = os.path.join(FONTS, "Montserrat-ExtraBold.ttf"); ds = list(cfg.DIAS) + [(FIM, "")]
     for (ta, rot), (tb, _) in zip(ds, ds[1:]):
         if not rot: continue   # rótulo vazio = canto limpo nesse trecho
+        arq_rot = os.path.join(pasta, "tmp", f"canto_{ta:.2f}.txt"); open(arq_rot, "w", encoding="utf-8").write(rot)   # textfile: evita escapar ':' e '%'
         crono += (f"drawtext=fontfile={fonte}:fontsize={getattr(cfg, 'DIAS_TAM', 58)}:x=w-tw-60:y=70:box=1:boxcolor=black@0.55:boxborderw=16:"
-                  f"fontcolor=0xFF8A3D:enable='between(t,{ta},{tb})':text='{rot}',")
+                  f"fontcolor=0xFF8A3D:enable='between(t,{ta},{tb})':expansion=none:textfile={arq_rot},")
 saida = os.path.join(pasta, cfg.SAIDA)
 run(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-i", os.path.join(pasta, "narracao.mp3"), *entradas,
      "-filter_complex",

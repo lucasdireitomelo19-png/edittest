@@ -29,6 +29,6 @@ PLANO = [
 TEXTOS = {"ate o dia em que ela toma": "+3,75 BI DE ANOS", "ai vem o impacto": "+4 BI DE ANOS", "no fim sobra uma galaxia so": "+6 BI DE ANOS",
           "gigante sem bracos": "EXEMPLO DE GALÁXIA ELÍPTICA"}
 DIAS_ANC = [("ai vem o impacto", "SIMULAÇÃO NASA · CHANCE ESTIMADA: 50–90%")]
-DIAS_TAM = 30
+DIAS_TAM = 36
 ETIQUETAS = "videos"
 SONS = {"ai vem o impacto": ("hit", -9)}
