@@ -9,7 +9,7 @@
 ---
 
 ## 1 · A Via Láctea está em ROTA DE COLISÃO
-**Formato:** Longo, 1920x1080, ~7,5 min (~1.120 palavras), 7 capítulos com cartão próprio   **Status:** aguardando aprovação (v1)
+**Formato:** Longo, 1920x1080, ~7,5 min (~1.120 palavras), 7 capítulos com cartão próprio   **Status:** APROVADO pelo dono (23/10, v1)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: aproveita o gancho e a premissa que o dono já aprovou no Short (rota de colisão), e cada capítulo é um degrau visual da simulação da NASA (o céu muda, o impacto, uma galáxia só), com uma reviravolta científica no meio para segurar quem já conhece a história. Ponto mais fraco: o evento é distante, e por isso o final traz a pergunta para a Terra e para o Sol.
 **Ângulo:** cronologia do choque ("o que acontece quando ela chegar"), com um capítulo de reviravolta ("e se ela errar?"). Isso segue a preferência do dono no Short: premissa da colisão e ritmo intenso, com a dúvida dita uma vez, de forma honesta, sem virar o centro.
 **Tom de voz:** épico, sombrio, direto, com assombro.
