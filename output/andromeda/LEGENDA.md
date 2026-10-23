@@ -2,7 +2,7 @@
 
 **Roteiro:** `producoes/roteiros/carrossel_andromeda.md` (aprovado pelo dono em 23/10/2026, v1)
 **Formato:** Instagram 1080×1350 · 9 slides
-**Status:** aguardando aprovação do dono
+**Status:** APROVADO pelo dono (23/10/2026), pronto para postar
 **Fonte do design:** `producoes/carrosseis/andromeda/carrossel.html` · exportar com `NODE_PATH=$(npm root -g) node producoes/carrosseis/render.js producoes/carrosseis/andromeda`
 **Imagens:**
 - Andrômeda (slides 1–2, imagem real): NASA, ESA, R. van der Marel e T. Brown (STScI), Digitized Sky Survey; ESA/Hubble opo1220k, CC BY 4.0.
