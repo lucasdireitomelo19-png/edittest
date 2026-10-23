@@ -9,25 +9,27 @@
 ---
 
 ## 1 · O supervulcão do Japão está RECARREGANDO
-**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v2)
+**v1 → v2 (dono, 23/10):** o gancho ficou bem mais apelativo, com o "monstro" escondido no mar, o recorde e o "está recarregando" já nos primeiros 4 s. A frase repetida do meio virou "O monstro está enchendo de novo".
 **Potencial viral:** 🔥🔥 7/10 · Ponto mais forte: um supervulcão que volta a encher, com notícia recente (manchete do ScienceDaily em 22–23/10) e números que impressionam. Ponto mais fraco: a virada honesta ("não há sinal de erupção") esfria o final, e quase não existe footage real de uma caldeira submarina, então o vídeo depende de animação. Um título com número ("7.300 anos") ou um final que puxe debate subiria a nota.
 **Ângulo:** ameaça que volta + "os cientistas acabaram de descobrir", com uma virada honesta que vira motivo de vigilância.
 **Tom de voz:** sombrio, tenso, jornalístico, sem exagero.
 **Ganchos considerados:**
 1. "Embaixo do mar do Japão, o vulcão que fez a maior erupção dos últimos 10 mil anos está enchendo de novo." (Pesquisas)
 2. "A última vez que ele explodiu foi há 7.300 anos. Os cientistas acabaram de ver o magma voltando." (Pesquisas)
-3. "Embaixo do mar do Japão, um supervulcão está enchendo de magma. De novo."
+3. "Embaixo do mar do Japão, um supervulcão está enchendo de magma. De novo." (v1)
+4. "Esse mar esconde um monstro. O vulcão que fez a maior explosão da Terra desde a Era do Gelo. E ele está recarregando." (v2)
 
-Escolhido: o **3**, curto e com o "De novo." como soco. O recorde e a data do 1 e do 2 vêm na segunda frase.
+Escolhido na v2: o **4**. A imagem do mar calmo com "esconde um monstro" prende no primeiro segundo, o recorde dá a escala e "está recarregando" fecha a ameaça antes dos 5 s.
 
 **Título:** `O supervulcão do Japão está RECARREGANDO 🌋`
 
-> Embaixo do mar do Japão, um supervulcão está enchendo de magma. De novo.
-> O nome dele é Kikai. E a última vez que ele explodiu, há sete mil e trezentos anos, foi a maior erupção da Terra desde o fim da Era do Gelo.
+> Esse mar esconde um monstro. O vulcão que fez a maior explosão da Terra desde a Era do Gelo. E ele está recarregando.
+> O nome dele é Kikai, no sul do Japão. A última erupção foi há sete mil e trezentos anos.
 > Mais de cem quilômetros cúbicos de rocha derretida, de uma vez. Uma avalanche de gás e cinza fervendo atravessou o mar. Os depósitos cobriram mais de quatro mil e quinhentos quilômetros quadrados.
 > Agora, cientistas da Universidade de Kobe olharam pra dentro dele. Dispararam ondas sísmicas no mar e espalharam sensores no fundo do oceano.
 > E acharam um reservatório gigante de magma. No mesmo lugar da última erupção. E, pelo que tudo indica, com magma novo chegando.
-> Ou seja: o supervulcão está recarregando.
+> O monstro está enchendo de novo.
 > Mas calma. Recarregar não é explodir. Os cientistas dizem que não tem nenhum sinal de erupção agora.
 > E é justamente por isso que estão vigiando. Porque, se ele acordar, o mundo quer saber antes.
 
