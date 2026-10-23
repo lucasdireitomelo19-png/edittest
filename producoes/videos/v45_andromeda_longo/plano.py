@@ -43,7 +43,8 @@ PLANO = [
     ("enquanto voce assistiu", "px:181014", "Via Láctea real com um meteoro riscando (timelapse)"),
     # ---------------- CAP 2 ----------------
     ("saber que ela vem", "mg:cap2", "Cartão: CAPÍTULO 2 · O DIA EM QUE A NASA FEZ AS CONTAS · 1923 → 2012"),
-    ("pra isso nao basta", "mg:a_lado", "De lado ou de frente: passa raspando × colisão"),
+    ("pra isso nao basta", "px:66121", "Observador real com uma lente gigante apontada"),
+    ("se andromeda estiver deslizando", "mg:a_lado", "De lado ou de frente: passa raspando × colisão"),
     ("esse movimento e minusculo", "mg:a_minusculo", "Estrelas se deslocando um tiquinho entre fotos (ilustração)"),
     ("durante anos os astronomos", f"{W47}@31{C47}", "Hubble e Gaia no espaço (ilustração NASA)"),
     ("em 2012 a nasa anunciou", "mg:a_anuncio", "NASA, 31/05/2012: A VIA LÁCTEA ESTÁ DESTINADA A UMA COLISÃO DE FRENTE"),
@@ -59,6 +60,7 @@ PLANO = [
     ("e ai a via lactea comeca", "mg:a_deforma", "A Via Láctea se deforma: OS BRAÇOS SE ESTICAM"),
     ("uns cem milhoes de anos depois", f"{W47}@52.5{C47}", "O céu em chamas de estrelas novas (simulação NASA/STScI 2012)"),
     ("quando as duas galaxias se aproximam", "mg:a_gas", "Nuvens de gás esmagadas: GÁS ESMAGADO = ESTRELAS NOVAS"),
+    ("e onde o gas e esmagado", f"{S30}@33{C30}", "As galáxias brilhando ao se aproximar (simulação NASA)"),
     ("muitas por toda parte", "mg:a_fogo", "O céu cheio de estrelas nascendo: +3,85 BI DE ANOS (ilustração)"),
     ("se alguem estiver olhando", "mg:a_ninguem_viu", "Um céu que nenhum ser humano viu: BRILHANTE, VIVO, FORA DE CONTROLE"),
     # ---------------- CAP 4 ----------------
@@ -102,6 +104,7 @@ PLANO = [
     ("mas a grande nuvem", f"{W47}@69{C47}", "A Grande Nuvem de Magalhães no céu (ilustração NASA)"),
     ("e a historia nao acabou", f"{W47}@84{C47}", "Galáxias pequenas dançando em volta das grandes (simulação NASA)"),
     ("em 2026 outra equipe", "mg:a_2026", "2026: ~90%, fusão por volta de 6,5 bi de anos, PRÉ-PUBLICAÇÃO"),
+    ("com a fusao por volta", f"{W47}@19{C47}", "Outra simulação de fusão (simulação NASA)"),
     ("so que esse estudo", "mg:a_grafico", "2012 de frente · 2025 ~50% · 2026 ~90%*"),
     ("entao hoje a resposta honesta", "mg:a_honesta", "ELA PROVAVELMENTE VEM. MAS NINGUÉM PODE GARANTIR."),
     # ---------------- CAP 7 ----------------
