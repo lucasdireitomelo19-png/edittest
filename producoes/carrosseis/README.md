@@ -24,3 +24,4 @@ NODE_PATH=$(npm root -g) node producoes/carrosseis/render.js producoes/carrossei
 | 6 fatos do espaço que parecem mentira | `6_fatos/` | `output/6-fatos-do-espaco/` |
 | 5 maneiras do mundo acabar | `5_fim/` | `output/5-maneiras-do-mundo-acabar/` |
 | Esse asteroide tem 19% de chance… e NÃO existe (PDC27) ✅ aprovado | `pdc27/` | `output/pdc27/` |
+| Nossa galáxia está em ROTA DE COLISÃO (Andrômeda) | `andromeda/` | `output/andromeda/` |
