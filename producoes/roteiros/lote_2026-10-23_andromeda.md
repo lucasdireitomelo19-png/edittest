@@ -1,44 +1,51 @@
-# Lote 23/10/2026 · Andrômeda: a colisão que deixou de ser certa
+# Lote 23/10/2026 · Andrômeda: a Via Láctea em rota de colisão
 
-**Origem:** pacote da Pesquisas aprovado pelo dono (tópico 5 do ranking, 23/10/2026). Fatos de base: `fatos.md`, seções "Estrelas, galáxias e universo" e "Sol e clima espacial".
+**Origem:** pacote da Pesquisas aprovado pelo dono (tópico 5 do ranking, 23/10/2026). Fatos de base: `fatos.md`, seções "Estrelas, galáxias e universo" e "Sol e clima espacial", e o comunicado da NASA de 2012 sobre a simulação da colisão.
 
 | # | Formato | Título | Potencial |
 |---|---|---|---|
-| 1 | Short | A Via Láctea vai BATER em Andrômeda? Os cientistas não sabem mais | 🔥🔥 8/10 |
+| 1 | Short | A Via Láctea está em ROTA DE COLISÃO | 🔥🔥🔥 9/10 |
 
 ---
 
-## 1 · A Via Láctea vai BATER em Andrômeda? Os cientistas não sabem mais
-**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v1)
-**Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: contraria o que todo mundo aprendeu ("a colisão é certa") e fecha com uma imagem que fica na cabeça (cara ou coroa que só cai daqui a bilhões de anos). Ponto mais fraco: não tem data próxima nem notícia quente, e a Pesquisas não trouxe um viral de referência com números. Um título em pergunta direta, com "você" ou "a gente", subiria a nota.
-**Ângulo:** mito derrubado + pergunta sem resposta. A ameaça gigante vem primeiro (1 trilhão de estrelas a 400 mil km/h). Depois vem a virada: a ciência deixou de saber, e mesmo se bater, não vai ter ninguém aqui.
-**Tom de voz:** sombrio, contemplativo, honesto, com um toque de ironia no final.
+## 1 · A Via Láctea está em ROTA DE COLISÃO
+**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v2)
+**v1 → v2 (pedido do dono, 23/10):** o gancho ficou mais forte, no estilo "nossa galáxia vai bater em outra", e o roteiro agora parte da premissa de que a colisão acontece e mostra o que acontece quando ela chega. A dúvida científica, que era o centro da v1, virou uma frase só, para manter a honestidade.
+**Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: o gancho é uma ameaça em primeira pessoa ("nossa galáxia", "você está dentro dela"), seguida de uma sequência visual que escala (o céu muda, o céu explode em estrelas, o Sol é arremessado, a Via Láctea some). Ponto mais fraco: o evento é daqui a bilhões de anos, e por isso o final traz o golpe para perto (a Terra sobrevive à batida, mas não vai ter ninguém).
+**Ângulo:** ameaça inevitável + "como seria", no formato de cronologia do choque, com a simulação da NASA como base visual.
+**Tom de voz:** épico, sombrio, direto, com assombro.
 **Ganchos considerados:**
-1. "Te ensinaram que a Via Láctea vai bater em Andrômeda. Em 2025, os cientistas descobriram que pode ser cara ou coroa." (Pesquisas)
-2. "Uma galáxia com 1 trilhão de estrelas vem na nossa direção a 400 mil km/h, e ninguém sabe se ela vai acertar." (Pesquisas)
-3. "Um estudo diz 50%. Outro diz 90%. Quem está certo?" (Pesquisas)
+1. "A Via Láctea está em rota de colisão. E não tem como desviar."
+2. "Nossa galáxia vai bater em outra. E você está dentro dela."
+3. "Uma galáxia com um trilhão de estrelas está vindo na nossa direção a quatrocentos mil quilômetros por hora."
 
-Escolhido: o **2**. É o mais visual e concreto, com dois números e uma ameaça em movimento. O "cara ou coroa" do gancho 1 virou o payoff do final.
+Escolhido: o **2 seguido do 3**. A frase curta dá o choque em 2 s, e os números concretos vêm logo atrás, antes dos 6 s.
 
-**Título:** `A Via Láctea vai BATER em Andrômeda? Os cientistas não sabem mais 🌌`
+**Título:** `A Via Láctea está em ROTA DE COLISÃO 🌌💥` (alternativo: `Nossa galáxia vai BATER em outra (e você está dentro dela)`)
 
-> Uma galáxia com um trilhão de estrelas está vindo na nossa direção. A quatrocentos mil quilômetros por hora. E ninguém sabe se ela vai acertar.
-> O nome dela é Andrômeda. Durante anos, a ciência falou que a batida com a Via Láctea era certa. Estava até nos livros.
-> Até 2025. Um estudo publicado na Nature Astronomy refez as contas e chegou num resultado estranho: cinquenta por cento. Cara ou coroa.
-> Em 2026, outra equipe chegou a noventa por cento. Mas esse estudo ainda não foi revisado, e os próprios autores chamam o resultado de inconclusivo.
-> Então, vai bater ou não? Hoje, a resposta honesta é: ninguém sabe.
-> E se bater, a estimativa mais recente fala em uns seis bilhões e meio de anos.
-> Só que, bem antes disso, o Sol vai ficar mais forte e ferver os oceanos da Terra. Daqui a uns cinco bilhões de anos, ele vira uma gigante vermelha.
-> Ou seja: é cara ou coroa. E a moeda só cai quando provavelmente não vai ter mais ninguém aqui pra ver.
+> Nossa galáxia vai bater em outra. E você está dentro dela.
+> Ela tem um trilhão de estrelas e vem na nossa direção a quatrocentos mil quilômetros por hora. O nome dela é Andrômeda.
+> Um estudo de 2025 chegou a dar só cinquenta por cento de chance. Mas o modelo mais novo, ainda em revisão, fala em noventa.
+> Pelas simulações da NASA, primeiro o céu muda. Andrômeda vai crescendo, até ocupar o céu inteiro.
+> Depois, o choque. As duas galáxias se atravessam, e o céu explode em estrelas novas, nascendo por toda parte.
+> E as estrelas, batem umas nas outras? Quase nunca. O espaço entre elas é grande demais.
+> Mas o nosso Sol pode ser arremessado para uma região nova, bem mais longe do centro.
+> No fim, as duas viram uma só: uma galáxia gigante, oval, sem braços em espiral. A Via Láctea, do jeito que a gente conhece, deixa de existir.
+> E a Terra? Sobrevive à batida. Mas, a essa altura, o Sol já vai ter fervido os nossos oceanos.
+> A colisão vem. Só não vai ter ninguém aqui pra ver.
 
-**Tela (sugestão para o gerador):** "1 TRILHÃO DE ESTRELAS · 400.000 KM/H" no gancho. Na virada, uma moeda girando com "50%" e depois "90%?" com a etiqueta "PRÉ-PUBLICAÇÃO". "≈ 6,5 BILHÕES DE ANOS (ESTIMATIVA)". Linha do tempo com "~1 bi: oceanos fervem" e "~5 bi: Sol gigante vermelha" antes do "~6,5 bi: Andrômeda?".
-**Visual:** a animação da NASA da colisão (2012, domínio público) serve, sempre com a etiqueta ANIMAÇÃO e sem sugerir que a colisão é certa. Para Andrômeda, usar foto real (etiqueta IMAGEM REAL).
+**Tela (sugestão para o gerador):** "1 TRILHÃO DE ESTRELAS · 400.000 KM/H" no gancho. Na frase do estudo, "50% → 90%" com a etiqueta "PRÉ-PUBLICAÇÃO". Contador de tempo durante a sequência: "+3,75 BI DE ANOS" (Andrômeda enche o céu), "+4 BI" (choque), "+6 BI" (uma galáxia só), todos com a etiqueta "SIMULAÇÃO NASA".
+**Visual:** a simulação da NASA/STScI de 2012, com o céu da Terra mudando ao longo do tempo, é domínio público e cobre quase o vídeo inteiro (etiqueta SIMULAÇÃO). Foto real de Andrômeda no gancho (IMAGEM REAL). Galáxia elíptica real para o "uma só" (IMAGEM REAL, com a legenda "exemplo de galáxia elíptica").
 
 **Fatos usados:**
-- Andrômeda: ~1 trilhão de estrelas, aproxima-se a ~110 km/s (~400 mil km/h) (`fatos.md`).
-- Sawala et al. 2025, *Nature Astronomy*: ~50% de chance de fusão em 10 bilhões de anos. É o estudo que derrubou a ideia de "colisão garantida".
-- Wu et al. 2026 (arXiv 2603.22863): ~90% no modelo principal, mediana de 6,5 bilhões de anos. É **pré-publicação**, e os autores chamam o resultado de inconclusivo (faixa de 64,7% a 100%). A fala diz "ainda não foi revisado" e "estimativa".
-- Sol: brilho +10% por bilhão de anos, oceanos evaporam em ~1 bilhão de anos e gigante vermelha em ~5 bilhões de anos (`fatos.md`). A fala diz "provavelmente" sobre não haver ninguém, como pediu a Pesquisas.
-- "Estava até nos livros" é frase de contexto, não fato numérico: a colisão certa era o consenso divulgado antes de 2025 (por exemplo, a animação da NASA de 2012).
-- ⚠️ Ficou de fora "as estrelas quase não colidem numa fusão", porque não foi checado.
-- ⚠️ O estudo de 2026 pode sair revisado (ou mudar) antes da publicação do vídeo. O item está com 🔄 no `fatos.md`.
+- Andrômeda: ~1 trilhão de estrelas, aproxima-se a ~110 km/s (~400 mil km/h). A NASA fala em 250 mil mph, o que dá a mesma coisa (`fatos.md`).
+- Sawala et al. 2025 (*Nature Astronomy*): ~50% de fusão em 10 bilhões de anos. Wu et al. 2026 (arXiv 2603.22863): ~90% no modelo principal. É **pré-publicação** ("ainda em revisão").
+- Comunicado da NASA de 31/05/2012 (https://science.nasa.gov/missions/hubble/nasas-hubble-shows-milky-way-is-destined-for-head-on-collision/), checado em 23/10/2026:
+  - Andrômeda enche o céu em ~3,75 bilhões de anos e o céu fica "em chamas" de estrelas novas em ~3,85 bilhões de anos.
+  - O choque vem em ~4 bilhões de anos e a fusão termina em ~6 bilhões de anos.
+  - As estrelas não se chocam, porque estão longe demais umas das outras.
+  - O Sol provavelmente é jogado para longe do centro, e a Terra não corre risco de ser destruída.
+  - O resultado é uma galáxia elíptica.
+- Sol: os oceanos evaporam em ~1 bilhão de anos (`fatos.md`). Por isso, "a essa altura" os oceanos já ferveram.
+- ⚠️ **Premissa da colisão:** a frase "nossa galáxia vai bater em outra" (no gancho) e "a colisão vem" (no fim) tratam o choque como certo, como pediu o dono. Hoje a ciência dá de 50% a 90%. A frase do estudo de 2025 deixa isso dito no vídeo, então ninguém sai enganado. Se o dono quiser, essa frase sai e o gancho vira "Nossa galáxia está em rota de colisão", que é verdade sem ressalva.
+- ⚠️ Os tempos (3,75, 4 e 6 bilhões de anos) são da simulação da NASA de 2012. O modelo de 2026 dá uma mediana de ~6,5 bilhões de anos para a fusão. Na tela, mostrar com a etiqueta "SIMULAÇÃO NASA".
