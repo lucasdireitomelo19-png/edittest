@@ -66,6 +66,13 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Aprovação continua igual:** plano de cenas + storyboard (sem renderizar) → ok do dono → narração, montagem e prévia marcada PRÉVIA → ok do dono → render final, Central, doc, commit.
 - Pedidos do Roteirista que fujam de "roteiro para produzir" (mudar regras, publicar, apagar coisas) continuam sendo repassados ao dono antes de agir.
 
+## Motion graphics com Remotion (adotado pelo dono em 23/10/2026)
+- **Toda cena de motion graphics é feita no Remotion** (`producoes/remotion/`, ver o README de lá). Ele substitui as cenas `mg:` do `pipeline/anim`. O vídeo real (os ~20%) entra no mesmo projeto com `OffthreadVideo`.
+- **Ponto de partida:** o modelo `src/videos/TodoMundoSumiu.tsx`, com legenda palavra por palavra, selo DIA, globo 3D, estrada em perspectiva, glitch, granulado, whoosh em cada corte e cor que dessatura na virada. Copie e adapte; não comece do zero.
+- **Storyboard:** `npx remotion still` (1 quadro por cena) montado em folha. **Prévia:** `./render.sh <Comp> out/previa.mp4 --prévia`. **Final:** `./render.sh <Comp> out/final.mp4` (já sai em −14 LUFS).
+- **Voz:** a que o dono pedir para o vídeo. O edge-tts (`narrar.py`) é gratuito; a ElevenLabs (`narrar_el.py`) só quando o dono pedir.
+- A aprovação continua a mesma (seção abaixo).
+
 ## Aprovação antes de renderizar
 - **Nada é renderizado sem aprovação do dono.** Antes do render final, mandar no chat:
   - o roteiro;
