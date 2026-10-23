@@ -9,7 +9,7 @@
 ---
 
 ## 1 · A Via Láctea está em ROTA DE COLISÃO
-**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v4)
+**Formato:** Short (~55 s, ~150 palavras)   **Status:** APROVADO pelo dono (23/10, v4)
 **v3 → v4 (dono, 23/10):** gancho mantido. O meio ficou mais intenso: verbos de impacto (rasgando, pega fogo, arrancado, arremessado), frases curtas e uma escalada em degraus (mancha no céu → toma o céu → impacto → Sol arremessado → a Via Láctea some). A frase dos estudos (50% e 90%) saiu da narração, que perdia o ritmo, e virou texto na tela.
 **v2 → v3 (dono, 23/10):** saiu "E você está dentro dela", que soava estranho e apelativo. O gancho junta as duas ideias que o dono deu: "rota de colisão" + "bater em outra".
 **v1 → v2 (pedido do dono, 23/10):** o gancho ficou mais forte, no estilo "nossa galáxia vai bater em outra", e o roteiro agora parte da premissa de que a colisão acontece e mostra o que acontece quando ela chega. A dúvida científica, que era o centro da v1, virou uma frase só, para manter a honestidade.
