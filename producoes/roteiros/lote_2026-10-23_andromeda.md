@@ -10,7 +10,7 @@
 
 ## 1 · A Via Láctea está em ROTA DE COLISÃO
 **Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v4)
-**v3 → v4 (dono, 23/10):** gancho mantido. O meio ficou mais intenso: verbos de impacto (rasgando, esmagam, arrancado, arremessado), frases curtas e uma escalada em degraus (mancha no céu → toma o céu → impacto → Sol arremessado → a Via Láctea some). A frase dos estudos (50% e 90%) saiu da narração, que perdia o ritmo, e virou texto na tela.
+**v3 → v4 (dono, 23/10):** gancho mantido. O meio ficou mais intenso: verbos de impacto (rasgando, pega fogo, arrancado, arremessado), frases curtas e uma escalada em degraus (mancha no céu → toma o céu → impacto → Sol arremessado → a Via Láctea some). A frase dos estudos (50% e 90%) saiu da narração, que perdia o ritmo, e virou texto na tela.
 **v2 → v3 (dono, 23/10):** saiu "E você está dentro dela", que soava estranho e apelativo. O gancho junta as duas ideias que o dono deu: "rota de colisão" + "bater em outra".
 **v1 → v2 (pedido do dono, 23/10):** o gancho ficou mais forte, no estilo "nossa galáxia vai bater em outra", e o roteiro agora parte da premissa de que a colisão acontece e mostra o que acontece quando ela chega. A dúvida científica, que era o centro da v1, virou uma frase só, para manter a honestidade.
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: o gancho é uma ameaça em primeira pessoa ("nossa galáxia") que não dá para evitar ("não tem como desviar"), seguida de uma sequência visual que escala (o céu muda, o céu explode em estrelas, o Sol é arremessado, a Via Láctea some). Ponto mais fraco: o evento é daqui a bilhões de anos, e por isso o final traz o golpe para perto (a Terra sobrevive à batida, mas não vai ter ninguém).
@@ -29,10 +29,10 @@ Escolhido na v3: a fusão do **1 e do 2** ("Nossa galáxia está em rota de coli
 > O nome dela é Andrômeda. Um trilhão de estrelas, vindo direto pra cá. A quatrocentos mil quilômetros por hora.
 > Hoje, ela é só uma mancha fraca no céu. Mas ela está crescendo. Devagar. Sem parar.
 > Até o dia em que ela toma o céu inteiro.
-> Aí vem o impacto. Duas galáxias se rasgando por dentro. Nuvens gigantes de gás se esmagam, e o céu pega fogo com estrelas novas, nascendo por toda parte.
-> Nas simulações, o Sol é arrancado do lugar e arremessado pra longe, junto com tudo o que gira em volta dele.
+> Aí vem o impacto. Duas galáxias se rasgando por dentro. O céu pega fogo com estrelas novas.
+> Nas simulações, o Sol é arrancado do lugar e arremessado pra longe. Com a Terra junto.
 > E o mais estranho? As estrelas quase não se tocam. O espaço entre elas é grande demais.
-> Depois de bilhões de anos de caos, sobra uma galáxia só. Gigante. Sem braços. Sem espiral.
+> No fim, sobra uma galáxia só. Gigante. Sem braços. Sem espiral.
 > A Via Láctea, a nossa casa, deixa de existir.
 > A Terra até sobrevive à batida. Mas, a essa altura, o Sol já vai ter fervido os nossos oceanos.
 > A colisão vem. Só não vai ter ninguém aqui pra ver.
