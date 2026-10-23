@@ -9,7 +9,7 @@
 ---
 
 ## 1 · Nossa galáxia está em ROTA DE COLISÃO
-**Formato:** Carrossel (Instagram, 1080x1350, 9 slides)   **Status:** aguardando aprovação (v1)
+**Formato:** Carrossel (Instagram, 1080x1350, 9 slides)   **Status:** APROVADO pelo dono (23/10, v1)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: é a cronologia visual do choque (o céu muda, o impacto, uma galáxia só), um conteúdo que se salva para mostrar a alguém, com o gancho já aprovado no Short. Ponto mais fraco: carrossel ainda não tem histórico no canal, então o tema não ganha ponto de "já performou aqui".
 **Ângulo:** ameaça inevitável + "como vai ser", slide a slide, em linha do tempo. A dúvida científica aparece num slide só, perto do fim, como reviravolta.
 **Tom de voz:** épico, sombrio, direto.
