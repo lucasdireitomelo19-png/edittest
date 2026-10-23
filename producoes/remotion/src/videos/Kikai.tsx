@@ -46,7 +46,7 @@ const Titulo: React.FC<{texto: string; cor?: string; y?: number; size?: number; 
         // quebra de linha só entre palavras; as letras entram uma a uma com mola
         <span key={j} style={{display: 'inline-block', whiteSpace: 'nowrap', margin: '0 0.14em'}}>
           {pal.split('').map((c, i) => {
-            const s = spring({frame: f - delay - (n++) * 1.0, fps, config: {damping: 11, mass: 0.5}});
+            const s = spring({frame: f - delay - (n++) * 0.35, fps, config: {damping: 13, mass: 0.4}});
             return <span key={i} style={{display: 'inline-block', opacity: s, transform: `translateY(${(1 - s) * 60}px) scale(${0.6 + 0.4 * s})`}}>{c}</span>;
           })}
         </span>
@@ -251,8 +251,8 @@ const Piroclastico: React.FC = () => {
 const Area: React.FC = () => {
   const f = useCurrentFrame();
   const n = 100;
-  const cheio = Math.round(interpolate(f, [2, 34], [0, n], clamp));
-  const v = Math.round(interpolate(f, [2, 34], [0, 4500], clamp));
+  const cheio = Math.round(interpolate(f, [2, 24], [0, n], clamp));
+  const v = Math.round(interpolate(f, [2, 24], [0, 4500], clamp));
   return (
     <AbsoluteFill style={{background: 'linear-gradient(180deg, #14100e, #2a1e16)'}}>
       <div style={{position: 'absolute', left: 140, top: 560, width: 800, display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: 8}}>

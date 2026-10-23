@@ -70,7 +70,7 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Toda cena de motion graphics é feita no Remotion** (`producoes/remotion/`, ver o README de lá). Ele substitui as cenas `mg:` do `pipeline/anim`. O vídeo real (os ~20%) entra no mesmo projeto com `OffthreadVideo`.
 - **Ponto de partida:** o modelo `src/videos/TodoMundoSumiu.tsx`, com legenda palavra por palavra, selo DIA, globo 3D, estrada em perspectiva, glitch, granulado, whoosh em cada corte e cor que dessatura na virada. Copie e adapte; não comece do zero.
 - **Storyboard:** `npx remotion still` (1 quadro por cena) montado em folha. **Prévia:** `./render.sh <Comp> out/previa.mp4 --prévia`. **Final:** `./render.sh <Comp> out/final.mp4` (já sai em −14 LUFS).
-- **Voz:** a que o dono pedir para o vídeo. O edge-tts (`narrar.py`) é gratuito; a ElevenLabs (`narrar_el.py`) só quando o dono pedir.
+- **Voz:** Brian da ElevenLabs (`narrar_el.py`), pedido do dono em 23/10/2026 ("usa a voz do Brian"). Shorts com vel 1.2 e pausa 0.12; longos com vel 1.1 e pausa 0.45. O edge-tts (`narrar.py`, gratuito) serve só para a narração provisória do storyboard.
 - A aprovação continua a mesma (seção abaixo).
 
 ## Aprovação antes de renderizar
