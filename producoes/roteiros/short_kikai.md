@@ -9,7 +9,7 @@
 ---
 
 ## 1 · O supervulcão do Japão está RECARREGANDO
-**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v2)
+**Formato:** Short (~55 s, ~150 palavras)   **Status:** APROVADO pelo dono (23/10, v2)
 **v1 → v2 (dono, 23/10):** o gancho ficou bem mais apelativo, com o "monstro" escondido no mar, o recorde e o "está recarregando" já nos primeiros 4 s. A frase repetida do meio virou "O monstro está enchendo de novo".
 **Potencial viral:** 🔥🔥 7/10 · Ponto mais forte: um supervulcão que volta a encher, com notícia recente (manchete do ScienceDaily em 22–23/10) e números que impressionam. Ponto mais fraco: a virada honesta ("não há sinal de erupção") esfria o final, e quase não existe footage real de uma caldeira submarina, então o vídeo depende de animação. Um título com número ("7.300 anos") ou um final que puxe debate subiria a nota.
 **Ângulo:** ameaça que volta + "os cientistas acabaram de descobrir", com uma virada honesta que vira motivo de vigilância.
