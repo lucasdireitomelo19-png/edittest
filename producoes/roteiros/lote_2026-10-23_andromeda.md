@@ -9,9 +9,10 @@
 ---
 
 ## 1 · A Via Láctea está em ROTA DE COLISÃO
-**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v2)
+**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v3)
+**v2 → v3 (dono, 23/10):** saiu "E você está dentro dela", que soava estranho e apelativo. O gancho junta as duas ideias que o dono deu: "rota de colisão" + "bater em outra".
 **v1 → v2 (pedido do dono, 23/10):** o gancho ficou mais forte, no estilo "nossa galáxia vai bater em outra", e o roteiro agora parte da premissa de que a colisão acontece e mostra o que acontece quando ela chega. A dúvida científica, que era o centro da v1, virou uma frase só, para manter a honestidade.
-**Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: o gancho é uma ameaça em primeira pessoa ("nossa galáxia", "você está dentro dela"), seguida de uma sequência visual que escala (o céu muda, o céu explode em estrelas, o Sol é arremessado, a Via Láctea some). Ponto mais fraco: o evento é daqui a bilhões de anos, e por isso o final traz o golpe para perto (a Terra sobrevive à batida, mas não vai ter ninguém).
+**Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: o gancho é uma ameaça em primeira pessoa ("nossa galáxia") que não dá para evitar ("não tem como desviar"), seguida de uma sequência visual que escala (o céu muda, o céu explode em estrelas, o Sol é arremessado, a Via Láctea some). Ponto mais fraco: o evento é daqui a bilhões de anos, e por isso o final traz o golpe para perto (a Terra sobrevive à batida, mas não vai ter ninguém).
 **Ângulo:** ameaça inevitável + "como seria", no formato de cronologia do choque, com a simulação da NASA como base visual.
 **Tom de voz:** épico, sombrio, direto, com assombro.
 **Ganchos considerados:**
@@ -19,11 +20,11 @@
 2. "Nossa galáxia vai bater em outra. E você está dentro dela."
 3. "Uma galáxia com um trilhão de estrelas está vindo na nossa direção a quatrocentos mil quilômetros por hora."
 
-Escolhido: o **2 seguido do 3**. A frase curta dá o choque em 2 s, e os números concretos vêm logo atrás, antes dos 6 s.
+Escolhido na v3: a fusão do **1 e do 2** ("Nossa galáxia está em rota de colisão com outra. E não tem como desviar."), seguida dos números do 3.
 
-**Título:** `A Via Láctea está em ROTA DE COLISÃO 🌌💥` (alternativo: `Nossa galáxia vai BATER em outra (e você está dentro dela)`)
+**Título:** `A Via Láctea está em ROTA DE COLISÃO 🌌💥` (alternativo: `Nossa galáxia vai BATER em outra`)
 
-> Nossa galáxia vai bater em outra. E você está dentro dela.
+> Nossa galáxia está em rota de colisão com outra. E não tem como desviar.
 > Ela tem um trilhão de estrelas e vem na nossa direção a quatrocentos mil quilômetros por hora. O nome dela é Andrômeda.
 > Um estudo de 2025 chegou a dar só cinquenta por cento de chance. Mas o modelo mais novo, ainda em revisão, fala em noventa.
 > Pelas simulações da NASA, primeiro o céu muda. Andrômeda vai crescendo, até ocupar o céu inteiro.
