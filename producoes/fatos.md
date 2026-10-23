@@ -2,7 +2,7 @@
 
 Fatos já conferidos em fonte primária ou confiável, para reaproveitar nos roteiros **sem pesquisar de novo**.
 Pesquise na internet só o que **não** estiver aqui ou o que pode ter mudado (marcado com 🔄). Ao checar um fato novo, acrescente-o aqui com fonte e data.
-Última revisão: 22/10/2026 (varredura geral set–out/2026).
+Última revisão: 23/10/2026 (varredura geral de 22/10 + pesquisa para vídeo longo: objetos interestelares, Grande Atração, Encélado, Vênus, NEO Surveyor).
 
 ## Asteroides e impactos
 - **Apophis:** ~340 m. Passa a ~32.000 km da superfície em **13/04/2029 (sexta-feira)**, mais perto que os satélites geoestacionários, visível a olho nu em parte do planeta. Pico de risco de **2,7%** em dez/2004. Sem risco por pelo menos 100 anos (NASA/JPL, 2021). A missão OSIRIS-APEX vai visitá-lo.
@@ -77,6 +77,18 @@ Pesquise na internet só o que **não** estiver aqui ou o que pode ter mudado (m
 - **Candidato a 4I** (Rubin, relatado por amador, enviado ao MPC em 09/06/2026): **não confirmado**. "Polar-IM" (meteoro interestelar de 01/04/2026, Loeb): **contestado**.
 - **ISS:** Crew-13 lançada em 01/10/2026 (chegou em <8 h, recorde dos EUA); Crew-12 amerissou em 08/10/2026 após 237 dias. ~10 pessoas no espaço (Orbital Radar).
 - **Céu (Brasil), próximos 2 meses:** Vênus em conjunção inferior em 23/10; Táuridas do Sul 4–5/11; Leônidas 17–18/11 (Lua ~45%); Superlua cheia 24/11 e 24/12; Urano em oposição 25/11; Marte perto de Júpiter 16/11; Geminidas 13–14/12 (Lua ~21%, taxa menor no hemisfério sul); Úrsidas 21–22/12. **Sem eclipses em nov–dez/2026** (Starwalk). Próximo eclipse solar total: 12/08/2027, Espanha (não visível no Brasil). Nenhum cometa visível a olho nu achado; 161P/Hartley–IRAS só em telescópio.
+
+## Pesquisa para vídeo longo (23/10/2026) 🔄
+- **ʻOumuamua (1I):** descoberto em **19/10/2017** pelo Pan-STARRS1 (Havaí); até ~400 m, comprimento ~10× a largura; brilho varia 10× a cada rotação de 7,3 h; **87,3 km/s** no periélio (09/09/2017); sem coma de poeira, mas com leve aceleração não gravitacional (NASA, página do objeto). Explicação mais citada: **hidrogênio preso no gelo** liberado ao aquecer (Bergner e Seligman, *Nature*, 2023); concorrente: gelo de **nitrogênio** (Jackson e Desch; data da publicação **não confirmada**). Ambas são **hipóteses**, nenhuma explica tudo (Sci. American).
+- **2I/Borisov:** achado pelo amador Gennady Borisov (Crimeia), em **30/08/2019** (Wikipedia diz 29/08; maioria das fontes diz 30). Primeiro cometa interestelar confirmado, com coma; ~110.000 mph (NASA). Tamanho: fontes divergem (≤0,5 km a 2–3 km).
+- **3I/ATLAS:** descoberto em **01/07/2025** (ATLAS, Chile), imagens de arquivo desde 14/06/2025; terceiro objeto interestelar; periélio ~**1,4 UA** (~210 milhões de km) em ~30/10/2025, mínimo de **~1,8 UA** da Terra (~270 milhões de km), sem ameaça; diâmetro máx. ~5,6 km (Hubble, até 20/08/2025), podendo ser só ~440 m (NASA).
+- **Grande Atração / Laniakea:** Laniakea definida em 2014 (Tully, Courtois, Hoffman, Pomarède, *Nature*). Com Cosmicflows-4, a Via Láctea fica dentro de Laniakea só ~**40%** das vezes e tende a ser associada à bacia de **Shapley** (Valade et al., *Nature Astronomy*, 2024; arXiv 2409.17261 de 25/09/2024). A bacia de Shapley é a 2ª maior achada; a maior é a da Grande Muralha de Sloan. Velocidade da Via Láctea em direção à Grande Atração: **não confirmada** em fonte primária (não usar "600 km/s").
+- **Encélado:** *Science Advances*, **25/09/2026** (Freie Univ. Berlin; Postberg e Khawaja): gotículas sobem por fissuras (até ~1.000 km/h) e congelam devagar, separando sais e orgânicos, o que facilitaria achar biossinaturas; em laboratório a arqueia *Methanothermococcus okinawensis* cresceu em condições tipo Encélado (pH 10–11). **Não prova vida** (EarthSky 01/10/2026). Missão L4 da ESA (pouso em Encélado): lançamento previsto ~**2042**, chegada início dos 2050; ainda em estudo, aprovação de orçamento **não confirmada**.
+- **Europa Clipper:** chegada a Júpiter em **abril/2030**, 49 sobrevoos de Europa (fonte secundária; conferir no site da NASA).
+- **Vênus (missões):** EnVision (ESA) no mínimo em nov/2031; VERITAS no mínimo 2031 e DAVINCI sob risco de orçamento (Space.com; Planetary Society) 🔄. Vênus pode ter tido água líquida por ~2 bilhões de anos (**hipótese**, modelos).
+- **NEO Surveyor:** prazo formal de lançamento até **jun/2028**, meta interna set/2027, custo ~US$ 1,2 bilhão; situação em 2026 **não confirmada** 🔄.
+- **Betelgeuse como supernova (simulação de Goldberg e Bauer, 2020):** brilho de meia-Lua por ~3 meses, visível de dia ~1 ano, a olho nu à noite por anos; explosão pode ocorrer em até ~100.000 anos (**estimativa**).
+- **Hera:** ESA confirma chegada em **novembro/2026** (um mês antes do plano original), manobra de espaço profundo em fev/2026; CubeSats Milani e Juventas. Dia exato **não confirmado** (EPSC 2026, sessão de 07/09/2026).
 
 ## Corpo humano e relatividade
 - **Espaço sem traje:** ninguém explode. Saliva ferve e o corpo incha (ebulismo). Prender o ar rompe os pulmões. Perde-se a consciência em **~10–15 s**. Sobrevivência até ~90 s (dados de animais, estimativa para humanos). Não há congelamento instantâneo, mas há queimadura do Sol. **Jim LeBlanc (NASA, 1966)** ficou consciente ~14 s, sentiu a saliva borbulhando e sobreviveu.
