@@ -1,0 +1,374 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"MX";src:url("../fonts/Montserrat-ExtraBold.ttf")}
+  @font-face{font-family:"MM";src:url("Montserrat-Medium.ttf")}
+  html,body{margin:0;background:#070b1a;overflow:hidden}canvas{display:block}
+</style>
+<script src="geo/topojson-client.min.js"></script>
+<script src="geo/land.js"></script>
+<script src="geo/paises.js"></script>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// Motion graphics do longo "A Via Láctea está em rota de colisão" (Andrômeda, 1920x1080). Helpers iguais aos de mundo.html.
+// Cada cena é única. Mapas com dados reais (Natural Earth via world-atlas).
+const W = 1920, H = 1080, CX = W / 2, CY = H / 2;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const P = { bg1: '#070b1a', bg2: '#121a3a', mar: '#0e2a47', mar2: '#0a1f36', terra: '#2c4a5e', terra2: '#3d6178', borda: '#6f90a8',
+  laranja: '#f4a261', verm: '#e76f51', ouro: '#ffd166', branco: '#f4f1e8', cinza: '#8a93b8', escuro: '#1b2240', azul: '#4cc9f0',
+  magma: '#ff6b2c', rocha: '#5a4636', rocha2: '#3e3027', verde: '#7cc98a', roxo: '#9b7bff' };
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+const easeOut = x => { x = clamp(x, 0, 1); return 1 - (1 - x) ** 3; };
+const back = x => { x = clamp(x, 0, 1); const c = 1.7; return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2; };
+const lerp = (a, b, k) => a + (b - a) * k;
+const RAD = Math.PI / 180;
+function rng(seed) { let a = Math.imul(seed + 1, 2654435761) >>> 0; return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const EST = (() => { const r = rng(23), a = []; for (let i = 0; i < 420; i++) a.push([r() * W, r() * H, r() * 1.6 + 0.3, r()]); return a; })();
+const fmt = n => Math.round(n).toLocaleString('pt-BR');
+
+function fundo(t, estrelas = 1, c1 = P.bg2, c2 = P.bg1) {
+  const g = ctx.createRadialGradient(CX, CY * 0.8, 100, CX, CY, W * 0.75); g.addColorStop(0, c1); g.addColorStop(1, c2);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  if (estrelas > 0) for (const [x, y, r, f] of EST) { ctx.globalAlpha = estrelas * (0.25 + 0.35 * Math.abs(Math.sin(t * 0.9 + f * 30)));
+    ctx.fillStyle = P.branco; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill(); }
+  ctx.globalAlpha = 1;
+}
+function vinheta(a = 0.55) {
+  const g = ctx.createRadialGradient(CX, CY, H * 0.45, CX, CY, W * 0.68); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${a})`);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+}
+function txt(s, x, y, size, cor = P.branco, a = 1, alinh = 'center', fonte = 'MX') {
+  ctx.save(); ctx.globalAlpha = a; ctx.font = `${size}px ${fonte}`; ctx.textAlign = alinh; ctx.textBaseline = 'middle';
+  ctx.fillStyle = cor; ctx.fillText(s, x, y); ctx.restore();
+}
+function sobe(s, x, y, size, t, t0 = 0, cor = P.branco, alinh = 'center', fonte = 'MX') {
+  const e = back((t - t0) / 0.5); if (e <= 0) return;
+  ctx.save(); ctx.globalAlpha = clamp(e, 0, 1); ctx.translate(0, (1 - e) * 40); txt(s, x, y, size, cor, 1, alinh, fonte); ctx.restore();
+}
+function pilula(s, x, y, size, fundoCor, cor, a = 1) {
+  ctx.save(); ctx.globalAlpha = a; ctx.font = `${size}px MX`; const w = ctx.measureText(s).width + size * 1.2, h = size * 1.7;
+  ctx.fillStyle = fundoCor; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, h / 2); ctx.fill();
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = cor; ctx.fillText(s, x, y + 2); ctx.restore();
+}
+function brilho(x, y, r, cor, a = 1) {
+  ctx.save(); ctx.globalAlpha = a; const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, cor); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, 2 * r, 2 * r); ctx.restore();
+}
+function circ(x, y, r, cor) { ctx.fillStyle = cor; ctx.beginPath(); ctx.arc(x, y, Math.max(0, r), 0, 6.283); ctx.fill(); }
+function anel(x, y, r, cor, lw, a0 = 0, a1 = 6.283) { ctx.strokeStyle = cor; ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(x, y, Math.max(0, r), a0, a1); ctx.stroke(); }
+function flash(t, t0, d = 0.5) { const k = (t - t0) / d; if (k < 0 || k > 1) return; ctx.fillStyle = `rgba(255,250,235,${(1 - k) ** 2})`; ctx.fillRect(0, 0, W, H); }
+function pino(x, y, t, rotulo, sub, cor = P.verm) {
+  const e = back(t / 0.5); if (e <= 0) return;
+  for (let k = 0; k < 2; k++) { const f = ((t * 0.7 + k * 0.5) % 1); anel(x, y, 10 + f * 60, `rgba(231,111,81,${(1 - f) * 0.8})`, 3); }
+  ctx.save(); ctx.translate(x, y); ctx.scale(e, e); circ(0, 0, 13, cor); circ(0, 0, 5, P.branco); ctx.restore();
+  if (rotulo) { const a = ease((t - 0.3) / 0.4); ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = P.branco; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x + 16, y - 16); ctx.lineTo(x + 70, y - 70); ctx.lineTo(x + 110, y - 70); ctx.stroke(); ctx.restore();
+    txt(rotulo, x + 120, y - 74, 46, P.branco, a, 'left'); if (sub) txt(sub, x + 122, y - 30, 30, P.ouro, a, 'left', 'MM'); }
+}
+// pedra irregular com crateras
+function pedra(x, y, R, rot, seed = 3, cor1 = '#6b5d52', cor2 = '#463b33') {
+  const r = rng(seed); const pts = []; for (let i = 0; i < 28; i++) pts.push(1 + (r() - 0.5) * 0.28);
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+  const g = ctx.createRadialGradient(-R * 0.35, -R * 0.35, R * 0.1, 0, 0, R * 1.1); g.addColorStop(0, cor1); g.addColorStop(1, cor2);
+  ctx.fillStyle = g; ctx.beginPath(); pts.forEach((k, i) => { const a = i / 28 * 6.283; const px = Math.cos(a) * R * k, py = Math.sin(a) * R * k * 0.86; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }); ctx.closePath(); ctx.fill();
+  for (let i = 0; i < 7; i++) { const a = r() * 6.283, d = r() * 0.6 * R, rr = R * (0.06 + r() * 0.1); circ(Math.cos(a) * d, Math.sin(a) * d * 0.86, rr, 'rgba(0,0,0,0.22)'); }
+  ctx.restore();
+}
+
+// ---------------- geografia ----------------
+const LAND = topojson.feature(TOPO_LAND, TOPO_LAND.objects.land);
+const FRONT = topojson.mesh(TOPO_PAISES, TOPO_PAISES.objects.countries, (a, b) => a !== b);
+const polys = []; for (const f of (LAND.features || [LAND])) { const g = f.geometry || f; if (g.type === 'Polygon') polys.push(g.coordinates); else for (const c of g.coordinates) polys.push(c); }
+const merc = lat => Math.log(Math.tan(Math.PI / 4 + clamp(lat, -85, 85) * RAD / 2)) / RAD;
+// mapa Mercator: centro (lon0, lat0), k = px por grau
+function mapa(lon0, lat0, k, opc = {}) {
+  const pr = (lon, lat) => [CX + (lon - lon0) * k, CY - (merc(lat) - merc(lat0)) * k];
+  ctx.fillStyle = opc.mar || P.mar2; ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.strokeStyle = 'rgba(120,150,190,0.12)'; ctx.lineWidth = 1;
+  const passo = k > 40 ? 5 : k > 12 ? 10 : 20;
+  for (let L = -180; L <= 180; L += passo) { const [x] = pr(L, 0); ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+  for (let L = -80; L <= 80; L += passo) { const [, y] = pr(0, L); ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  ctx.restore();
+  const p = new Path2D();
+  for (const poly of polys) for (const ring of poly) { let prev = null; ring.forEach(([lon, lat], i) => {
+    const [x, y] = pr(lon, lat); (i && Math.abs(lon - prev) < 180) ? p.lineTo(x, y) : p.moveTo(x, y); prev = lon; }); p.closePath(); }
+  ctx.fillStyle = opc.terra || P.terra; ctx.fill(p);
+  ctx.strokeStyle = opc.costa || P.borda; ctx.lineWidth = 1.4; ctx.stroke(p);
+  if (opc.fronteiras !== false) { ctx.save(); ctx.strokeStyle = 'rgba(200,220,240,0.25)'; ctx.lineWidth = 1; ctx.beginPath();
+    for (const line of FRONT.coordinates) line.forEach(([lon, lat], i) => { const [x, y] = pr(lon, lat); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); ctx.restore(); }
+  return pr;
+}
+// zoom suave de mapa: de (lon,lat,k) para (lon,lat,k)
+function mapaZoom(t, a, b, d = 2.6, opc) { const e = ease(t / d); const k = Math.exp(lerp(Math.log(a[2]), Math.log(b[2]), e));
+  return mapa(lerp(a[0], b[0], e), lerp(a[1], b[1], e), k, opc); }
+// globo ortográfico
+function globo(cx, cy, R, lon0, lat0, opc = {}) {
+  const f0 = lat0 * RAD;
+  const pr = (lon, lat) => { const l = (lon - lon0) * RAD, f = lat * RAD;
+    const cosc = Math.sin(f0) * Math.sin(f) + Math.cos(f0) * Math.cos(f) * Math.cos(l);
+    let x = Math.cos(f) * Math.sin(l), y = Math.cos(f0) * Math.sin(f) - Math.sin(f0) * Math.cos(f) * Math.cos(l);
+    if (cosc < 0) { const n = Math.hypot(x, y) || 1; x /= n; y /= n; }
+    return [cx + x * R, cy - y * R, cosc >= 0]; };
+  const g = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.3, R * 0.1, cx, cy, R);
+  g.addColorStop(0, opc.mar1 || '#1d5a85'); g.addColorStop(1, opc.mar2 || '#0b2440');
+  circ(cx, cy, R, g);
+  ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.283); ctx.clip();
+  const p = new Path2D();
+  for (const poly of polys) for (const ring of poly) { let alguma = false; const pts = ring.map(([lo, la]) => { const q = pr(lo, la); if (q[2]) alguma = true; return q; });
+    if (!alguma) continue; pts.forEach(([x, y], i) => i ? p.lineTo(x, y) : p.moveTo(x, y)); p.closePath(); }
+  ctx.fillStyle = opc.terra || '#3f7a5a'; ctx.fill(p);
+  const s = ctx.createRadialGradient(cx - R * 0.4, cy - R * 0.4, R * 0.2, cx, cy, R * 1.05);
+  s.addColorStop(0, 'rgba(255,255,255,0.08)'); s.addColorStop(0.7, 'rgba(0,0,0,0)'); s.addColorStop(1, 'rgba(0,0,0,0.55)');
+  ctx.fillStyle = s; ctx.fillRect(cx - R, cy - R, 2 * R, 2 * R); ctx.restore();
+  anel(cx, cy, R + 4, opc.atm || 'rgba(120,200,255,0.35)', 8);
+  return pr;
+}
+// silhueta de cidade
+function cidade(base, seed, cor, alt = 1, x0 = 0, x1 = W) {
+  const r = rng(seed); ctx.fillStyle = cor; let x = x0;
+  while (x < x1) { const w = 30 + r() * 70, h = (40 + r() * 160 + (r() < 0.12 ? 160 : 0)) * alt; ctx.fillRect(x, base - h, w - 4, h); x += w; }
+  ctx.fillRect(x0, base, x1 - x0, H - base);
+}
+// camadas de rocha em corte
+function estratos(y0, t) {
+  const cores = ['#6b5340', '#5c4636', '#4c3a2e', '#3f3027', '#332720'];
+  for (let i = 0; i < 5; i++) { ctx.fillStyle = cores[i]; ctx.beginPath(); ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 40) ctx.lineTo(x, y0 + i * 95 + Math.sin(x * 0.004 + i) * 14); ctx.lineTo(W, H); ctx.fill(); }
+}
+function grama(y, cor = '#2e4a2c') { ctx.fillStyle = cor; ctx.fillRect(0, y - 10, W, 14); }
+
+// ---------------- cenas ----------------
+function globoMini(x, y, R, t) { const g = ctx.createRadialGradient(x - R * 0.3, y - R * 0.3, 2, x, y, R); g.addColorStop(0, '#5fb0e0'); g.addColorStop(1, '#123a66'); circ(x, y, R, g);
+  ctx.save(); ctx.beginPath(); ctx.arc(x, y, R, 0, 6.283); ctx.clip(); ctx.fillStyle = '#4f9a6a'; for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.ellipse(x + Math.sin(t * 0.5 + i * 1.7) * R * 0.6, y + (i - 1.5) * R * 0.45, R * 0.35, R * 0.18, i, 0, 6.283); ctx.fill(); } ctx.restore(); }
+function galaxia(x, y, R, t, a = 1) { if (a <= 0) return; ctx.save(); ctx.globalAlpha = a; ctx.translate(x, y); ctx.rotate(t * 0.1); ctx.scale(1, 0.55);
+  for (let i = 0; i < 380; i++) { const r = rng(i + 77), br = i % 2, rr = Math.sqrt(r()) * R, an = rr / R * 5 + br * Math.PI + (r() - 0.5) * 0.7; circ(Math.cos(an) * rr, Math.sin(an) * rr, 1.4 + r() * 1.6, `rgba(${200 + r() * 55},${200 + r() * 40},255,${0.5 + r() * 0.4})`); }
+  brilho(0, 0, R * 0.4, 'rgba(255,240,210,0.9)'); ctx.restore(); }
+const CENAS = {};
+const LAR = '#ff8a3d';
+function fundoU(c1 = '#1a1430', c2 = '#05040c') { const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, c1); g.addColorStop(1, c2); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
+function pessoa(x, y, s, cor) { circ(x, y - 46 * s, 20 * s, cor); ctx.fillStyle = cor; ctx.beginPath(); ctx.roundRect(x - 22 * s, y - 22 * s, 44 * s, 70 * s, 18 * s); ctx.fill(); }
+function titulo2(a, b, t, cor = P.branco, cor2 = LAR) { sobe(a, CX, 150, 64, t, 0.1, cor); if (b) txt(b, CX, 215, 32, cor2, ease((t - 0.3) / 0.4), 'center', 'MM'); }
+const VERM2 = '#ff3b3b', ROSA = '#ff7ab0';
+function m31(x, y, R, ang = -0.6, a = 1) {   // Andrômeda estilizada: disco inclinado, núcleo e faixas de poeira
+  if (a <= 0 || R <= 0) return; ctx.save(); ctx.globalAlpha = a; ctx.translate(x, y); ctx.rotate(ang); ctx.scale(1, 0.32);
+  const g = ctx.createRadialGradient(0, 0, 0, 0, 0, R); g.addColorStop(0, 'rgba(255,244,220,0.95)'); g.addColorStop(0.18, 'rgba(240,220,190,0.6)'); g.addColorStop(0.6, 'rgba(160,170,210,0.25)'); g.addColorStop(1, 'rgba(120,140,200,0)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, R, 0, 6.283); ctx.fill(); ctx.strokeStyle = 'rgba(40,30,30,0.35)'; ctx.lineWidth = Math.max(1, R * 0.025);
+  for (const k of [0.45, 0.62, 0.78]) { ctx.beginPath(); ctx.ellipse(0, R * 0.04, R * k, R * k * 0.82, 0, 3.4, 6.0); ctx.stroke(); } ctx.restore(); if (R > 6) brilho(x, y, R * 0.12, `rgba(255,248,230,${0.9 * a})`);
+}
+function vialactea(x, y, R, t, a = 1, giro = 0) { galaxia(x, y, R, t * 0.3 + giro, a); }
+function horizonte(cor = '#05060a', y0 = 900) { ctx.fillStyle = cor; ctx.beginPath(); ctx.moveTo(0, H); for (let x = 0; x <= W; x += 40) ctx.lineTo(x, y0 - 50 * Math.sin(x * 0.004 + 1) - 25 * Math.sin(x * 0.017)); ctx.lineTo(W, H); ctx.fill(); }
+function ceuNoite(t, faixa = 1) { const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#03050d'); g.addColorStop(0.8, '#0d1430'); g.addColorStop(1, '#1b2040'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  for (const [x, y, r, a] of EST) circ(x, y * 0.85, r, `rgba(255,255,255,${0.25 + 0.5 * a})`);
+  if (faixa) { ctx.save(); ctx.translate(1250, 420); ctx.rotate(1.1); const gb = ctx.createLinearGradient(0, -230, 0, 230); gb.addColorStop(0, 'rgba(170,160,220,0)'); gb.addColorStop(0.5, `rgba(200,190,235,${0.2 * faixa})`); gb.addColorStop(1, 'rgba(170,160,220,0)'); ctx.fillStyle = gb; ctx.fillRect(-1400, -230, 2800, 460);
+    for (let i = 0; i < 1300; i++) { const r = rng(i + 500); circ((r() - 0.5) * 2800, (r() + r() + r() - 1.5) * 140, 0.6 + r() * 1.5, `rgba(255,250,240,${(0.15 + r() * 0.45) * faixa})`); } ctx.restore(); } }
+function cartao(x, y, w, h, a, borda = 'rgba(76,201,240,0.7)') { if (a <= 0) return; ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = 'rgba(8,14,30,0.92)'; ctx.strokeStyle = borda; ctx.lineWidth = 3; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, 24); ctx.fill(); ctx.stroke(); ctx.restore(); }
+function carimbo(x, y, s, t, t0, texto, cor = VERM2, rot = -0.12) { const k = (t - t0) / 0.25; if (k < 0) return; const e = k >= 1 ? 1 : 1 + 1.4 * (1 - k);
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(e, e); ctx.globalAlpha = Math.min(1, k * 2); ctx.font = `${s}px MX`; const w = ctx.measureText(texto).width + s; ctx.strokeStyle = cor; ctx.lineWidth = 8; ctx.beginPath(); ctx.roundRect(-w / 2, -s * 0.8, w, s * 1.6, 14); ctx.stroke();
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = cor; ctx.fillText(texto, 0, 4); ctx.restore(); }
+function etiq(s, a = 1) { pilula(s, CX, 840, 26, 'rgba(0,0,0,0.6)', P.cinza, a); }
+
+// ---------- cartão de capítulo ----------
+CENAS.a_cap = (t, d, p) => {
+  fundoU(p.c1 || '#141030', '#030208'); const r = rng(p.seed || 3); for (let i = 0; i < 120; i++) { const x = r() * W, y = ((r() * H - t * (15 + r() * 30)) % H + H) % H; circ(x, y, r() * 2.2 + 0.4, `rgba(200,210,255,${0.15 + r() * 0.3})`); }
+  if (p.num) txt('CAPÍTULO ' + p.num, CX, CY - 190, 40, p.cor || P.azul, ease((t - 0.05) / 0.3), 'center', 'MM');
+  const k = easeOut((t - 0.2) / 0.6); ctx.fillStyle = p.cor || P.azul; ctx.fillRect(CX - 460 * k, CY + 50, 920 * k, 6);
+  ctx.font = '118px MX'; const tam = Math.min(118, 118 * 1700 / ctx.measureText(p.titulo).width); sobe(p.titulo, CX, CY - 60, tam, t, 0.1, P.branco); if (p.cont) pilula(p.cont, CX, CY + 150, 54, 'rgba(0,0,0,0.55)', p.cor || P.ouro, ease((t - 0.45) / 0.3)); vinheta(0.6); };
+
+// ---------- GANCHO ----------
+CENAS.a_rota = (t, d) => {   // duas galáxias numa reta de colisão
+  fundo(t, 1, '#0a0d24', '#020309'); const k = ease((t - 0.1) / (d - 0.2)); vialactea(470, 600, 300, t, 1); txt('VIA LÁCTEA', 470, 860, 40, P.azul);
+  m31(lerp(1520, 1440, k), 420, 330, -0.5); txt('ANDRÔMEDA', 1480, 200, 40, P.ouro); ctx.setLineDash([20, 16]); ctx.strokeStyle = 'rgba(255,59,59,0.85)'; ctx.lineWidth = 6;
+  const e = ease((t - 0.2) / 0.9); ctx.beginPath(); ctx.moveTo(1380, 450); ctx.lineTo(lerp(1380, 640, e), lerp(450, 570, e)); ctx.stroke(); ctx.setLineDash([]); pilula('ROTA DE COLISÃO', CX, 150, 52, 'rgba(230,57,70,0.95)', '#fff', ease((t - 0.7) / 0.3)); };
+CENAS.a_numeros = (t, d) => {   // 1 trilhão de estrelas · 400.000 km/h
+  fundo(t, 1.2, '#0d0f26', '#020309'); for (let i = 0; i < 1100; i++) { const r = rng(i + 900), a = r() * 6.283, rr = Math.sqrt(r()) * 380 * ease((t - (i % 40) * 0.01) / 0.8); circ(560 + Math.cos(a) * rr, 470 + Math.sin(a) * rr * 0.42, 1.2 + r() * 1.4, `rgba(255,${220 + r() * 35},${190 + r() * 60},${0.4 + r() * 0.5})`); }
+  brilho(560, 470, 130, 'rgba(255,240,210,0.8)'); txt(fmt(1e12 * easeOut((t - 0.1) / 1.0)), 1380, 360, 84, P.branco); txt('ESTRELAS', 1380, 440, 44, P.ouro, ease((t - 0.3) / 0.3));
+  txt(fmt(400000 * easeOut((t - 0.6) / 0.9)) + ' KM/H', 1380, 600, 84, VERM2, ease((t - 0.6) / 0.3)); txt('DIRETO PRA CÁ', 1380, 680, 38, P.cinza, ease((t - 0.9) / 0.3), 'center', 'MM'); };
+CENAS.a_passos = (t, d) => {   // a simulação passo a passo: 3 quadros
+  fundo(t, 0.6, '#0a0d24', '#020309'); const it = [['O CÉU MUDA', 0], ['O IMPACTO', 1], ['UMA GALÁXIA SÓ', 2]];
+  it.forEach(([s, i]) => { const a = back((t - 0.2 - i * 0.35) / 0.5); if (a <= 0) return; const x = 420 + i * 540; ctx.save(); ctx.translate(x, 440); ctx.scale(a, a); cartao(0, 0, 440, 360, 1);
+    if (i === 0) { m31(-30, -20, 150, -0.5); } else if (i === 1) { vialactea(-70, 10, 110, t, 1); m31(60, -30, 120, 0.4, 0.9); brilho(0, -10, 90, 'rgba(255,120,150,0.5)'); } else { brilho(0, -10, 150, 'rgba(255,225,180,0.8)'); brilho(0, -10, 50, 'rgba(255,245,225,1)'); }
+    ctx.restore(); txt(s, x, 690, 40, P.branco, a); if (i < 2) txt('→', x + 270, 440, 60, P.cinza, a); }); etiq('SIMULAÇÕES NASA', ease((t - 0.3) / 0.3)); };
+CENAS.a_virada = (t, d) => {   // no meio do caminho a ciência mudou
+  fundo(t, 0.6, '#14081c', '#040208'); const anos = [['2012', P.azul], ['2025', P.ouro], ['2026', ROSA]]; ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(360, 520); ctx.lineTo(1560, 520); ctx.stroke();
+  anos.forEach(([a, c], i) => { const e = back((t - 0.2 - i * 0.3) / 0.4); if (e <= 0) return; const x = 460 + i * 500; circ(x, 520, 20 * e, c); txt(a, x, 450, 64, c, e); txt(['COLISÃO', '50%?', '90%?'][i], x, 620, 44, P.branco, e); });
+  sobe('A CIÊNCIA MUDOU DE IDEIA', CX, 250, 72, t, 1.1, P.branco); };
+
+// ---------- CAP 1 · ELA JÁ ESTÁ VINDO ----------
+CENAS.a_constelacao = (t, d) => {   // a mancha perto da constelação de Andrômeda
+  ceuNoite(t, 0.4); const st = [[760, 560], [900, 470], [1040, 420], [1180, 350], [960, 560], [1110, 540]]; const a = ease((t - 0.2) / 0.5);
+  ctx.strokeStyle = `rgba(120,170,255,${0.6 * a})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(760, 560); ctx.lineTo(900, 470); ctx.lineTo(1040, 420); ctx.lineTo(1180, 350); ctx.moveTo(900, 470); ctx.lineTo(960, 560); ctx.lineTo(1110, 540); ctx.stroke();
+  st.forEach(([x, y]) => { brilho(x, y, 14, 'rgba(255,255,255,0.9)'); circ(x, y, 4, '#fff'); }); txt('CONSTELAÇÃO DE ANDRÔMEDA', 970, 290, 40, P.azul, a);
+  m31(1010, 640, 34, -0.7, 0.8); const b = ease((t - 0.8) / 0.4); anel(1010, 640, 60, `rgba(255,209,102,${b})`, 4); txt('A MANCHA', 1010, 740, 36, P.ouro, b); horizonte(); };
+CENAS.a_nuvem = (t, d) => {   // não é uma nuvem: é uma galáxia
+  fundo(t, 1, '#0a0d24', '#020309'); const k = ease((t - 0.2) / (d - 0.4)); m31(CX, 470, lerp(60, 520, k), -0.55);
+  txt('NÃO É UMA NUVEM', CX, 140, 64, P.cinza, 1 - ease((t - 1.0) / 0.3)); txt('É UMA GALÁXIA INTEIRA', CX, 140, 72, P.ouro, ease((t - 1.0) / 0.3)); };
+CENAS.a_1923 = (t, d) => {   // a placa fotográfica de 1923, a estrela que pisca
+  ctx.fillStyle = '#d9d3c4'; ctx.fillRect(0, 0, W, H); const r = rng(19); for (let i = 0; i < 900; i++) circ(r() * W, r() * H, r() * 2.6 + 0.3, `rgba(20,20,20,${0.2 + r() * 0.6})`);
+  const g = ctx.createRadialGradient(900, 520, 0, 900, 520, 520); g.addColorStop(0, 'rgba(10,10,10,0.75)'); g.addColorStop(1, 'rgba(10,10,10,0)'); ctx.fillStyle = g; ctx.save(); ctx.translate(900, 520); ctx.rotate(-0.6); ctx.scale(1, 0.35); ctx.translate(-900, -520); ctx.fillRect(300, 0, 1200, 1080); ctx.restore();
+  const p = 0.5 + 0.5 * Math.sin(t * 5); circ(1250, 360, 6 + 5 * p, '#111'); const a = ease((t - 0.6) / 0.3); anel(1250, 360, 46, `rgba(200,30,30,${a})`, 5);
+  txt('UMA ESTRELA QUE PISCA', 1250, 260, 40, '#8a1c1c', a); pilula('5 DE OUTUBRO DE 1923 · MONTE WILSON', CX, 120, 34, 'rgba(0,0,0,0.75)', '#fff', ease((t - 0.2) / 0.3)); etiq('RECONSTITUIÇÃO ILUSTRATIVA', 1); };
+CENAS.a_cefeida = (t, d) => {   // a cefeida: brilho sobe e desce num ritmo fixo
+  fundo(t, 0.5, '#0a0d24', '#020309'); const f = 0.5 + 0.5 * Math.sin(t * 4); brilho(480, 470, 120 + 120 * f, 'rgba(255,220,150,0.9)'); circ(480, 470, 40 + 20 * f, '#fff3d6');
+  ctx.strokeStyle = P.ouro; ctx.lineWidth = 5; ctx.beginPath(); for (let x = 0; x <= 760; x += 6) { const tt = t - (760 - x) / 300; const y = 470 - 120 * Math.sin(tt * 4); x ? ctx.lineTo(980 + x, y) : ctx.moveTo(980, y); } ctx.stroke();
+  txt('BRILHO', 1360, 290, 34, P.cinza, 1, 'center', 'MM'); sobe('RITMO FIXO', 1360, 700, 60, t, 0.3, P.ouro); txt('CEFEIDA', 480, 220, 64, P.branco); };
+CENAS.a_regua = (t, d) => {   // o ritmo vira régua de distância
+  fundo(t, 0.5, '#0a0d24', '#020309'); const a = ease((t - 0.1) / 0.4); txt('RITMO', 360, 300, 56, P.ouro, a); txt('→', 620, 300, 60, P.cinza, ease((t - 0.4) / 0.3)); txt('BRILHO REAL', 960, 300, 56, P.branco, ease((t - 0.5) / 0.3)); txt('→', 1300, 300, 60, P.cinza, ease((t - 0.8) / 0.3)); txt('DISTÂNCIA', 1600, 300, 56, P.azul, ease((t - 0.9) / 0.3));
+  const k = ease((t - 1.0) / 0.8); ctx.fillStyle = '#e8c766'; ctx.fillRect(260, 520, 1400 * k, 70); for (let i = 0; i <= 20; i++) { const x = 260 + i * 70; if (x > 260 + 1400 * k) break; ctx.fillStyle = '#3a2e10'; ctx.fillRect(x, 520, 4, i % 5 ? 30 : 50); } txt('UMA RÉGUA NO CÉU', CX, 700, 48, P.branco, ease((t - 1.4) / 0.4)); };
+CENAS.a_longe = (t, d) => {   // longe demais para ser da Via Láctea
+  fundo(t, 0.6, '#0a0d24', '#020309'); vialactea(260, 540, 170, t, 1); txt('VIA LÁCTEA', 260, 740, 34, P.azul); const k = ease((t - 0.3) / 1.0);
+  ctx.setLineDash([14, 12]); ctx.strokeStyle = P.branco; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(440, 540); ctx.lineTo(lerp(440, 1560, k), 540); ctx.stroke(); ctx.setLineDash([]); if (k > 0.95) { m31(1680, 540, 150, -0.5); txt('ANDRÔMEDA', 1680, 740, 34, P.ouro); }
+  txt('~2,5 MILHÕES DE ANOS-LUZ', 1000, 470, 60, P.branco, ease((t - 1.0) / 0.4)); sobe('OUTRA GALÁXIA', CX, 180, 76, t, 1.3, P.ouro); };
+CENAS.a_luz = (t, d) => {   // a luz saiu antes de existir o Homo sapiens
+  fundo(t, 0.5, '#0a0d24', '#020309'); const x0 = 200, x1 = 1720, y = 520; ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  const k = ease((t - 0.2) / 1.4); circ(lerp(x0, x1, k), y, 14, P.ouro); brilho(lerp(x0, x1, k), y, 60, 'rgba(255,209,102,0.6)'); txt('2,5 MILHÕES DE ANOS ATRÁS', x0 + 140, y - 70, 32, P.ouro, 1, 'left', 'MM'); txt('HOJE', x1, y - 70, 36, P.branco);
+  const xs = x1 - (x1 - x0) * 0.12, a = ease((t - 1.2) / 0.4); ctx.fillStyle = `rgba(124,201,138,${a})`; ctx.fillRect(xs, y - 18, x1 - xs, 36); txt('HOMO SAPIENS · ~300 MIL ANOS', xs - 20, y + 80, 34, P.verde, a, 'right', 'MM');
+  sobe('A LUZ QUE VOCÊ VÊ', CX, 220, 66, t, 0.1, P.branco); };
+CENAS.a_aproxima = (t, d) => {   // ela chega mais perto enquanto você assiste
+  fundo(t, 0.6, '#140a18', '#030206'); const km = 110 * t; txt('+' + fmt(km) + ' KM', CX, 460, 150, P.branco); txt('MAIS PERTO DESDE O COMEÇO DESTA CENA', CX, 580, 38, P.cinza, 1, 'center', 'MM'); txt('110 KM POR SEGUNDO', CX, 220, 60, VERM2, ease((t - 0.2) / 0.3)); };
+
+// ---------- CAP 2 · O DIA EM QUE A NASA FEZ AS CONTAS ----------
+CENAS.a_lado = (t, d) => {   // de frente ou de lado: movimento lateral muda tudo
+  fundo(t, 0.6, '#0a0d24', '#020309'); vialactea(400, 620, 160, t, 1); m31(1500, 330, 150, -0.5); const k = ease((t - 0.3) / 1.2);
+  ctx.lineWidth = 5; ctx.setLineDash([16, 12]); ctx.strokeStyle = 'rgba(124,201,138,0.9)'; ctx.beginPath(); ctx.moveTo(1500, 330); ctx.quadraticCurveTo(900, 220, lerp(1500, 260, k), lerp(330, 280, k)); ctx.stroke(); txt('DESLIZANDO PRO LADO: PASSA RASPANDO', 1100, 160, 36, P.verde, ease((t - 0.6) / 0.3), 'center', 'MM');
+  ctx.strokeStyle = 'rgba(255,59,59,0.9)'; ctx.beginPath(); ctx.moveTo(1500, 330); ctx.lineTo(lerp(1500, 420, k), lerp(330, 610, k)); ctx.stroke(); ctx.setLineDash([]); txt('SEM MOVIMENTO LATERAL: DE FRENTE', 1100, 760, 36, VERM2, ease((t - 0.9) / 0.3), 'center', 'MM'); etiq('ESQUEMA ILUSTRATIVO', 1); };
+CENAS.a_minusculo = (t, d) => {   // o deslocamento minúsculo medido pelo Hubble ao longo de anos
+  fundo(t, 0.3, '#05070f', '#000'); for (let i = 0; i < 60; i++) { const r = rng(i + 61), x = 260 + r() * 1400, y = 160 + r() * 600, dx = (Math.floor(t * 1.5) % 2) * 4; circ(x + dx, y, 3 + r() * 2, '#e8e8f0'); }
+  cartao(CX, 740, 900, 90, 1); txt('ANOS DE FOTOS DO HUBBLE · DESLOCAMENTO MINÚSCULO', CX, 742, 30, P.azul, 1, 'center', 'MM'); etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_anuncio = (t, d) => {   // 2012: a NASA anuncia a colisão de frente
+  fundo(t, 0.4, '#06101e', '#02040a'); cartao(CX, 470, 1200, 520, ease(t / 0.3)); txt('NASA · 31 DE MAIO DE 2012', CX, 290, 40, P.azul, ease(t / 0.3), 'center', 'MM');
+  sobe('A VIA LÁCTEA ESTÁ DESTINADA', CX, 420, 64, t, 0.2, P.branco); sobe('A UMA COLISÃO DE FRENTE', CX, 510, 64, t, 0.4, VERM2); txt('COM ANDRÔMEDA', CX, 610, 44, P.cinza, ease((t - 0.6) / 0.3), 'center', 'MM'); };
+CENAS.a_4bi = (t, d) => {   // linha do tempo até o choque
+  fundo(t, 0.5, '#0a0d24', '#020309'); const x0 = 200, x1 = 1720, y = 540; ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  const k = ease((t - 0.2) / 1.2); ctx.strokeStyle = P.ouro; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(lerp(x0, x1, k), y); ctx.stroke(); txt('HOJE', x0, y + 70, 36, P.branco); txt((4 * k).toFixed(1).replace('.', ',') + ' BI DE ANOS', lerp(x0, x1, k), y - 60, 44, P.ouro);
+  if (k > 0.97) { brilho(x1, y, 80, 'rgba(255,90,90,0.8)'); txt('O CHOQUE', x1 - 40, y + 80, 44, VERM2, 1, 'right'); } };
+CENAS.a_simulou = (t, d) => {   // simularam o céu da Terra até o fim
+  ceuNoite(t, 1); m31(780, 400, lerp(40, 260, ease((t - 0.2) / (d - 0.4))), -0.6); horizonte(); sobe('O CÉU DA TERRA, PASSO A PASSO', CX, 140, 60, t, 0.2, P.branco); etiq('ILUSTRAÇÃO', 1); };
+
+// ---------- CAP 3 · O CÉU VAI MUDAR ----------
+CENAS.a_cresce = (t, d) => {   // bilhões de anos: a mancha cresce
+  const k = ease(t / d); ceuNoite(t, 1); m31(720, 420, lerp(60, 300, k), -0.6); horizonte(); pilula('+' + (3 * k).toFixed(1).replace('.', ',') + ' BI DE ANOS', CX, 110, 44, 'rgba(0,0,0,0.6)', P.ouro, 1); etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_deforma = (t, d) => {   // a Via Láctea se deforma pela gravidade de Andrômeda
+  fundo(t, 0.6, '#0a0d24', '#020309'); const k = ease((t - 0.2) / (d - 0.4)); ctx.save(); ctx.translate(820, 560); ctx.transform(1, 0.25 * k, 0.4 * k, 1, 0, 0); vialactea(0, 0, 300 + 80 * k, t, 1); ctx.restore(); m31(1500, 330, 300, -0.4, 0.8);
+  for (let i = 0; i < 5; i++) { ctx.strokeStyle = `rgba(255,209,102,${0.5 * k})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(1100, 400 + i * 40); ctx.lineTo(1300, 360 + i * 20); ctx.stroke(); }
+  sobe('OS BRAÇOS SE ESTICAM', CX, 140, 66, t, 0.3, P.branco); etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_gas = (t, d) => {   // nuvens de gás esmagadas: nascem estrelas
+  fundo(t, 0.4, '#120818', '#030206'); const k = ease((t - 0.2) / 1.2); for (let i = 0; i < 40; i++) { const r = rng(i + 40), y = 260 + r() * 520; brilho(lerp(80, 860, k) + r() * 120, y, 70, 'rgba(255,120,170,0.25)'); brilho(lerp(1840, 1060, k) - r() * 120, y, 70, 'rgba(120,170,255,0.25)'); }
+  if (k > 0.9) for (let i = 0; i < 60; i++) { const r = rng(i + 160), s = ease((t - 1.4 - r() * 0.8) / 0.3); if (s <= 0) continue; const x = 860 + r() * 200, y = 260 + r() * 520; brilho(x, y, 40 * s, 'rgba(255,255,255,0.8)'); circ(x, y, 3, '#fff'); }
+  sobe('GÁS ESMAGADO = ESTRELAS NOVAS', CX, 140, 60, t, 0.2, P.branco); etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_fogo = (t, d) => {   // o céu pega fogo
+  ceuNoite(t, 0.8); m31(760, 380, 420, -0.4, 0.9); for (let i = 0; i < 110; i++) { const r = rng(i + 70), x = r() * W, y = 60 + r() * 760, s = ease((t - r() * 1.4) / 0.5); if (s <= 0) continue; brilho(x, y, (40 + r() * 110) * s, `rgba(${r() < 0.5 ? '255,90,150' : '120,170,255'},0.5)`); circ(x, y, 3 * s, '#fff'); }
+  horizonte(); pilula('+3,85 BI DE ANOS', CX, 110, 44, 'rgba(0,0,0,0.6)', ROSA, 1); etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_ninguem_viu = (t, d) => {   // um céu que nenhum ser humano viu
+  ceuNoite(t, 0.6); m31(960, 360, 520, -0.3, 0.85); for (let i = 0; i < 60; i++) { const r = rng(i + 7); brilho(r() * W, 60 + r() * 700, 30 + r() * 60, `rgba(255,120,170,${0.25 + 0.15 * Math.sin(t * 3 + i)})`); }
+  horizonte('#030305'); txt('BRILHANTE. VIVO.', CX, 640, 64, P.branco, ease((t - 0.3) / 0.4)); txt('FORA DE CONTROLE.', CX, 730, 64, VERM2, ease((t - 0.9) / 0.4)); etiq('ILUSTRAÇÃO', 1); };
+
+// ---------- CAP 4 · O IMPACTO ----------
+CENAS.a_contas = (t, d) => {   // centenas de bilhões x um trilhão
+  fundo(t, 0.6, '#0a0d24', '#020309'); vialactea(500, 480, 260, t, 1); m31(1420, 480, 320, -0.4); txt('CENTENAS DE BILHÕES', 500, 760, 44, P.azul, ease((t - 0.2) / 0.3)); txt('~1 TRILHÃO', 1420, 760, 44, P.ouro, ease((t - 0.4) / 0.3)); txt('×', CX, 480, 120, VERM2, ease((t - 0.6) / 0.3)); };
+CENAS.a_nao_tocam = (t, d) => {   // as estrelas quase não se tocam
+  fundo(t, 0.3, '#06081a', '#010205'); const k = ease(t / d); for (let i = 0; i < 160; i++) { const r = rng(i + 140); circ(lerp(-300, W + 300, k) + (r() - 0.5) * 900, 140 + r() * 720, 6, 'rgba(120,180,255,0.9)'); const q = rng(i + 400); circ(lerp(W + 300, -300, k) + (q() - 0.5) * 900, 140 + q() * 720, 6, 'rgba(255,209,102,0.9)'); }
+  sobe('AS ESTRELAS QUASE NÃO SE TOCAM', CX, 120, 62, t, 0.2, P.branco); etiq('SIMULAÇÃO ILUSTRATIVA', 1); };
+CENAS.a_gude = (t, d) => {   // escala: Sol como bola de gude, a vizinha a centenas de km
+  fundo(t, 0.3, '#0a0d24', '#020309'); const g = ctx.createRadialGradient(340, 480, 4, 360, 500, 70); g.addColorStop(0, '#fff6c8'); g.addColorStop(1, '#e0a030'); circ(360, 500, 60, g); txt('SOL = BOLA DE GUDE', 360, 640, 40, P.ouro);
+  const k = ease((t - 0.4) / 1.2); ctx.setLineDash([14, 12]); ctx.strokeStyle = P.branco; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(440, 500); ctx.lineTo(lerp(440, 1660, k), 500); ctx.stroke(); ctx.setLineDash([]);
+  if (k > 0.95) { circ(1700, 500, 10, '#ff8a6a'); txt('ESTRELA MAIS PERTO', 1700, 590, 34, '#ff8a6a'); } txt('CENTENAS DE QUILÔMETROS', 1050, 420, 60, P.branco, ease((t - 1.1) / 0.4)); etiq('ESCALA APROXIMADA', 1); };
+CENAS.a_enxame = (t, d) => {   // dois enxames que se cruzam sem as abelhas se encostarem
+  fundo(t, 0.2, '#0f1408', '#030401'); const k = ease(t / d); for (let i = 0; i < 120; i++) { const r = rng(i + 11), q = rng(i + 311); const x1 = lerp(-200, W + 200, k) + (r() - 0.5) * 700 + Math.sin(t * 9 + i) * 8, y1 = 220 + r() * 560 + Math.cos(t * 8 + i) * 8; const x2 = lerp(W + 200, -200, k) + (q() - 0.5) * 700 + Math.sin(t * 7 + i) * 8, y2 = 220 + q() * 560;
+    ctx.fillStyle = '#e8b030'; ctx.beginPath(); ctx.ellipse(x1, y1, 9, 6, 0, 0, 6.283); ctx.fill(); ctx.fillStyle = '#7ab0ff'; ctx.beginPath(); ctx.ellipse(x2, y2, 9, 6, 0, 0, 6.283); ctx.fill(); }
+  sobe('DOIS ENXAMES SE CRUZANDO', CX, 120, 60, t, 0.2, P.branco); etiq('ANALOGIA', 1); };
+CENAS.a_orbitas = (t, d) => {   // as órbitas são embaralhadas
+  fundo(t, 0.4, '#0a0d24', '#020309'); const k = ease((t - 0.3) / (d - 0.5)); for (let i = 0; i < 14; i++) { const r = rng(i + 90), R = 60 + i * 26; ctx.strokeStyle = `rgba(${i % 2 ? '120,180,255' : '255,209,102'},0.5)`; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.ellipse(CX + (r() - 0.5) * 300 * k, 500 + (r() - 0.5) * 160 * k, R * (1 + (r() - 0.5) * k), R * (0.55 + (r() - 0.5) * 0.6 * k), (r() - 0.5) * 3 * k, 0, 6.283); ctx.stroke(); }
+  sobe('ÓRBITAS EMBARALHADAS', CX, 120, 66, t, 0.2, P.branco); etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_sol_fora = (t, d) => {   // o Sol arremessado para longe do centro
+  fundo(t, 0.6, '#0a0d24', '#020309'); vialactea(760, 520, 360, t, 0.95); m31(900, 430, 300, 0.9, 0.5); const k = easeOut((t - 0.3) / (d - 0.5)), x = lerp(900, 1700, k), y = lerp(560, 230, k) + Math.sin(k * 3) * 40;
+  ctx.strokeStyle = 'rgba(255,209,102,0.6)'; ctx.lineWidth = 4; ctx.setLineDash([10, 10]); ctx.beginPath(); ctx.moveTo(900, 560); ctx.quadraticCurveTo(1300, 520, x, y); ctx.stroke(); ctx.setLineDash([]); brilho(x, y, 50, 'rgba(255,200,90,0.9)'); circ(x, y, 12, P.ouro); txt('SOL + TERRA', x - 20, y + 54, 32, P.ouro, 1, 'right');
+  sobe('ARREMESSADO PRA LONGE DO CENTRO', CX, 110, 56, t, 0.2, P.branco); etiq('SIMULAÇÃO ILUSTRATIVA', 1); };
+CENAS.a_sistema = (t, d) => {   // com a Terra junto, e todos os planetas
+  fundo(t, 0.3, '#05070f', '#000'); for (let i = 0; i < 60; i++) { const r = rng(i + 71), y = r() * H, x = ((r() * W + t * 900 * (0.4 + r())) % (W + 300)) - 150; ctx.strokeStyle = `rgba(255,255,255,${0.15 + r() * 0.3})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - 140, y); ctx.stroke(); }
+  brilho(CX, 500, 130, 'rgba(255,190,90,0.9)'); circ(CX, 500, 46, P.ouro); [[120, 6, P.cinza], [170, 9, '#e0c080'], [230, 10, P.azul], [290, 8, '#d06040'], [380, 20, '#d8b890'], [460, 17, '#e8d8a0']].forEach(([R, s, c], i) => { anel(CX, 500, R, 'rgba(255,255,255,0.12)', 2); const a = t * (1.6 - i * 0.2) + i; circ(CX + Math.cos(a) * R, 500 + Math.sin(a) * R * 0.45, s, c); });
+  sobe('COM A TERRA JUNTO. E TODOS OS PLANETAS.', CX, 110, 54, t, 0.2, P.branco); };
+CENAS.a_seguro = (t, d) => {   // a NASA: a Terra não corre risco de ser destruída
+  fundo(t, 0.6, '#0a0d24', '#020309'); ctx.save(); ctx.translate(620, 500); ctx.scale(2.4, 2.4); globoMini(0, 0, 100, t); ctx.restore();
+  const a = back((t - 0.4) / 0.4); if (a > 0) { ctx.save(); ctx.translate(820, 290); ctx.scale(a, a); circ(0, 0, 60, P.verde); ctx.strokeStyle = '#fff'; ctx.lineWidth = 12; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(-26, 0); ctx.lineTo(-6, 20); ctx.lineTo(28, -20); ctx.stroke(); ctx.restore(); }
+  txt('NASA:', 1330, 400, 50, P.azul, ease((t - 0.3) / 0.3)); txt('A TERRA NÃO CORRE RISCO', 1330, 480, 50, P.branco, ease((t - 0.4) / 0.3)); txt('DE SER DESTRUÍDA', 1330, 550, 50, P.branco, ease((t - 0.5) / 0.3)); };
+CENAS.a_ceu_outro = (t, d) => {   // um céu que não é mais o dela
+  ceuNoite(t, 0); for (let i = 0; i < 40; i++) { const r = rng(i + 3); brilho(r() * W, 60 + r() * 700, 30 + r() * 80, `rgba(255,${180 + r() * 60},200,0.25)`); } brilho(1300, 300, 300, 'rgba(255,220,180,0.35)'); horizonte('#020203');
+  txt('UM CÉU QUE NÃO É MAIS O DELA', CX, 140, 60, P.branco, ease((t - 0.3) / 0.4)); etiq('ILUSTRAÇÃO', 1); };
+
+// ---------- CAP 5 · UMA GALÁXIA SÓ ----------
+CENAS.a_ida_volta = (t, d) => {   // batem, se afastam, voltam, batem de novo
+  fundo(t, 0.5, '#0a0d24', '#020309'); const k = clamp(t / (d - 0.2), 0, 1); const s = Math.cos(k * Math.PI * 3) * (1 - k) * 600; vialactea(CX - s / 2 - 40, 480, 160, t, 1); m31(CX + s / 2 + 40, 480, 180, -0.4);
+  if (Math.abs(s) < 60) brilho(CX, 480, 160, 'rgba(255,140,170,0.5)'); ['1º CHOQUE', '2º', '3º…'].forEach((c, i) => txt(c, 560 + i * 400, 800, 40, k > i * 0.3 ? P.ouro : 'rgba(255,255,255,0.2)')); sobe('ELAS VOLTAM. E BATEM DE NOVO.', CX, 120, 60, t, 0.1, P.branco); etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_espiral_eliptica = (t, d) => {   // espiral → elíptica
+  fundo(t, 0.5, '#0a0d24', '#020309'); const k = ease((t - 0.4) / (d - 0.8)); vialactea(560, 500, 260, t, 1 - k); if (k > 0) { brilho(560, 500, 260 * k, `rgba(255,225,180,${0.6 * k})`); brilho(560, 500, 80 * k, `rgba(255,245,225,${0.9 * k})`); }
+  txt('SEM BRAÇOS', 1350, 380, 60, P.branco, ease((t - 0.6) / 0.3)); txt('SEM ESPIRAL', 1350, 470, 60, P.branco, ease((t - 0.9) / 0.3)); txt('GALÁXIA ELÍPTICA', 1350, 600, 70, P.ouro, ease((t - 1.3) / 0.3)); txt('ESTRELAS VELHAS', 1350, 680, 36, P.cinza, ease((t - 1.5) / 0.3), 'center', 'MM'); };
+CENAS.a_triangulo = (t, d) => {   // o terceiro convidado: a galáxia do Triângulo
+  fundo(t, 0.6, '#0a0d24', '#020309'); vialactea(620, 560, 220, t, 1); m31(1050, 420, 260, -0.4, 0.9); const k = ease((t - 0.3) / (d - 0.5)); const x = lerp(1720, 1250, k), y = lerp(180, 360, k);
+  galaxia(x, y, 70, t * 2, 1); txt('TRIÂNGULO (M33)', x, y - 90, 36, P.verde); ctx.setLineDash([10, 10]); ctx.strokeStyle = 'rgba(124,201,138,0.7)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(1720, 180); ctx.lineTo(x, y); ctx.stroke(); ctx.setLineDash([]);
+  sobe('UM TERCEIRO CONVIDADO', CX, 110, 62, t, 0.1, P.branco); txt('CHANCE PEQUENA DE BATER NA GENTE PRIMEIRO', CX, 820, 34, P.cinza, ease((t - 1.2) / 0.4), 'center', 'MM'); };
+
+// ---------- CAP 6 · E SE ELA ERRAR? ----------
+CENAS.a_consenso = (t, d) => {   // documentário, livro e escola
+  fundo(t, 0.4, '#141018', '#050307'); [['▶', 'DOCUMENTÁRIO'], ['📖', 'LIVRO'], ['🎓', 'ESCOLA']].forEach(([ic, s], i) => { const a = back((t - 0.2 - i * 0.3) / 0.4); if (a <= 0) return; const x = 480 + i * 480; ctx.save(); ctx.translate(x, 440); ctx.scale(a, a); circ(0, 0, 120, '#26304a'); ctx.restore(); txt(ic, x, 450, 100 * a, '#fff'); txt(s, x, 640, 44, P.branco, a); });
+  txt('"VAI BATER EM ANDRÔMEDA"', CX, 160, 56, P.ouro, ease((t - 0.1) / 0.3)); txt('POR MAIS DE 10 ANOS', CX, 780, 40, P.cinza, ease((t - 1.0) / 0.3), 'center', 'MM'); };
+CENAS.a_sawala = (t, d) => {   // o estudo de 2025
+  fundo(t, 0.4, '#06101e', '#02040a'); cartao(CX, 450, 1220, 560, ease(t / 0.3)); txt('NATURE ASTRONOMY · 2025', CX, 250, 40, P.azul, ease(t / 0.3), 'center', 'MM');
+  sobe('TILL SAWALA E EQUIPE', CX, 380, 66, t, 0.2, P.branco); txt('UNIVERSIDADE DE HELSINQUE', CX, 460, 40, P.cinza, ease((t - 0.4) / 0.3), 'center', 'MM'); txt('DADOS DO HUBBLE + GAIA · INCERTEZAS INCLUÍDAS', CX, 580, 38, P.ouro, ease((t - 0.7) / 0.3), 'center', 'MM'); };
+CENAS.a_milhares = (t, d) => {   // milhares de simulações: um leque de caminhos
+  fundo(t, 0.3, '#05070f', '#000'); vialactea(380, 540, 140, t, 1); const k = ease((t - 0.1) / 1.2); for (let i = 0; i < 160; i++) { const r = rng(i + 13), dy = (r() - 0.5) * 900, junta = r() < 0.5; ctx.strokeStyle = junta ? 'rgba(255,90,90,0.25)' : 'rgba(124,201,138,0.25)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(1700, 300); ctx.quadraticCurveTo(1100, 300 + dy * 0.3, lerp(1700, junta ? 420 : 560, k), lerp(300, junta ? 540 : 540 + dy, k)); ctx.stroke(); }
+  m31(1700, 300, 120, -0.4); sobe('MILHARES DE SIMULAÇÕES', CX, 110, 64, t, 0.1, P.branco); etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_cara_coroa = (t, d) => {   // só ~50%: cara ou coroa
+  fundo(t, 0.4, '#1a1408', '#050402'); const k = easeOut((t - 0.1) / 1.0); anel(620, 480, 230, 'rgba(255,255,255,0.08)', 40); anel(620, 480, 230, P.ouro, 40, -Math.PI / 2, -Math.PI / 2 + 6.283 * 0.5 * k);
+  txt(Math.round(50 * k) + '%', 620, 500, 150, P.branco); txt('DE CHANCE DE FUSÃO', 1380, 400, 50, P.branco, ease((t - 0.4) / 0.3)); txt('NOS PRÓXIMOS 10 BI DE ANOS', 1380, 470, 40, P.cinza, ease((t - 0.6) / 0.3), 'center', 'MM'); txt('CARA OU COROA', 1380, 620, 74, P.ouro, ease((t - 1.0) / 0.3)); };
+CENAS.a_vizinhos = (t, d) => {   // o Triângulo empurra, a Grande Nuvem puxa
+  fundo(t, 0.5, '#0a0d24', '#020309'); vialactea(900, 560, 200, t, 1); m31(1350, 300, 200, -0.4); galaxia(1700, 160, 60, t * 2, 1); txt('TRIÂNGULO', 1700, 250, 32, P.verde);
+  const a = ease((t - 0.3) / 0.4); ctx.strokeStyle = `rgba(124,201,138,${a})`; ctx.lineWidth = 10; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(1620, 200); ctx.lineTo(1420, 290); ctx.stroke(); txt('EMPURRA', 1560, 320, 36, P.verde, a);
+  brilho(380, 640, 70, 'rgba(200,200,255,0.6)'); circ(380, 640, 14, '#dfe4ff'); txt('GRANDE NUVEM', 380, 720, 32, P.azul); txt('DE MAGALHÃES', 380, 760, 32, P.azul); const b = ease((t - 0.9) / 0.4); ctx.strokeStyle = `rgba(76,201,240,${b})`; ctx.beginPath(); ctx.moveTo(720, 600); ctx.lineTo(480, 630); ctx.stroke(); txt('PUXA PRA FORA DO CAMINHO', 520, 520, 36, P.azul, b); sobe('DOIS VIZINHOS', CX, 100, 62, t, 0.1, P.branco); txt('ESQUEMA ILUSTRATIVO', CX, 165, 26, P.cinza, 1, 'center', 'MM'); };
+CENAS.a_2026 = (t, d) => {   // 2026: outra equipe, ~90%, ainda pré-publicação
+  fundo(t, 0.4, '#14081c', '#040208'); cartao(CX, 450, 1220, 560, ease(t / 0.3), 'rgba(255,122,176,0.7)'); txt('2026 · OUTRO MODELO', CX, 250, 40, ROSA, ease(t / 0.3), 'center', 'MM');
+  const k = easeOut((t - 0.3) / 1.0); txt('~' + Math.round(90 * k) + '%', CX, 420, 150, P.branco); txt('FUSÃO POR VOLTA DE 6,5 BI DE ANOS', CX, 560, 40, P.cinza, ease((t - 0.8) / 0.3), 'center', 'MM'); carimbo(1460, 660, 46, t, 1.1, 'PRÉ-PUBLICAÇÃO', P.ouro); };
+CENAS.a_grafico = (t, d) => {   // 50% → 90%: as estimativas mudaram
+  fundo(t, 0.4, '#0a0d24', '#020309'); const base = 780, alt = 560; [['2012', 100, P.azul, 'DE FRENTE'], ['2025', 50, P.ouro, '~50%'], ['2026', 90, ROSA, '~90%*']].forEach(([a, v, c, s], i) => { const x = 520 + i * 440, k = ease((t - 0.2 - i * 0.3) / 0.6), h = alt * v / 100 * k;
+    ctx.fillStyle = c; ctx.fillRect(x - 90, base - h, 180, h); txt(a, x, base + 50, 40, P.branco); txt(s, x, base - h - 40, 44, c, k); }); txt('* PRÉ-PUBLICAÇÃO · OS AUTORES DIZEM QUE NÃO FECHA A QUESTÃO', CX, 880, 28, P.cinza, ease((t - 1.3) / 0.3), 'center', 'MM'); };
+CENAS.a_honesta = (t, d) => {   // a resposta honesta
+  fundo(t, 0.6, '#0a0d24', '#020309'); sobe('ELA PROVAVELMENTE VEM.', CX, 400, 84, t, 0.2, P.branco); sobe('MAS NINGUÉM PODE GARANTIR.', CX, 520, 70, t, 0.8, P.ouro); };
+
+// ---------- CAP 7 · QUEM VAI ESTAR AQUI PRA VER ----------
+CENAS.a_sol_brilha = (t, d) => {   // +10% de brilho por bilhão de anos
+  fundoU('#2a1206', '#0a0302'); const k = ease((t - 0.2) / (d - 0.4)); brilho(520, 500, 260 + 160 * k, 'rgba(255,170,70,0.9)'); circ(520, 500, 150 + 30 * k, '#ffd27a');
+  [0, 1, 2, 3].forEach(i => { const a = ease((t - 0.3 - i * 0.3) / 0.3); ctx.fillStyle = `rgba(255,209,102,${a})`; const h = 90 + i * 60; ctx.fillRect(1100 + i * 170, 760 - h, 120, h); txt('+' + i + ' BI', 1160 + i * 170, 800, 32, P.branco, a); }); txt('+10% DE BRILHO A CADA BILHÃO DE ANOS', 1350, 200, 44, P.ouro, ease((t - 0.2) / 0.3), 'center', 'MM'); };
+CENAS.a_oceanos = (t, d) => {   // ~1 bi de anos: os oceanos fervem
+  fundoU('#3a1206', '#0a0302'); const k = ease(t / d); brilho(CX, 120, 700, 'rgba(255,150,60,0.7)'); ctx.save(); ctx.translate(CX, 600); ctx.scale(2.6, 2.6); globoMini(0, 0, 100, t); ctx.restore();
+  ctx.fillStyle = `rgba(160,90,40,${0.75 * k})`; ctx.beginPath(); ctx.arc(CX, 600, 262, 0, 6.283); ctx.fill(); for (let i = 0; i < 40; i++) { const r = rng(i + 30), x = CX + (r() - 0.5) * 460, y = 340 - ((t * 120 + r() * 300) % 300); circ(x, y, 18 + r() * 20, 'rgba(255,255,255,0.12)'); }
+  pilula('~1 BILHÃO DE ANOS', CX, 110, 46, 'rgba(0,0,0,0.6)', P.laranja, 1); txt('OS OCEANOS FERVEM', CX, 920 - 80, 60, P.branco, ease((t - 0.3) / 0.3)); };
+CENAS.a_gigante = (t, d) => {   // ~5 bi: gigante vermelha, antes de a fusão terminar
+  fundo(t, 0.3, '#14060a', '#030102'); const x0 = 200, x1 = 1720, y = 760; ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  [[1, 'OCEANOS FERVEM', P.laranja], [4, 'CHOQUE', VERM2], [5, 'GIGANTE VERMELHA', '#ff5a3a'], [6, 'FUSÃO TERMINA', P.ouro]].forEach(([v, s, c], i) => { const x = x0 + (x1 - x0) * v / 6.5, a = ease((t - 0.2 - i * 0.25) / 0.3); circ(x, y, 14 * a, c); txt('+' + v + ' BI', x, y + 60, 32, P.branco, a); txt(s, x, y - 50 - (i % 2) * 50, 30, c, a, 'center', 'MM'); });
+  const k = ease((t - 0.8) / (d - 1.0)); brilho(CX, 340, 120 + 200 * k, 'rgba(255,80,40,0.8)'); circ(CX, 340, 60 + 140 * k, '#ff6a3a'); };
+CENAS.a_terra_seca = (t, d) => {   // Andrômeda sobre uma Terra seca (ilustração)
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#05040a'); g.addColorStop(0.75, '#2a1810'); g.addColorStop(1, '#3a2012'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); for (const [x, y, r, a] of EST) circ(x, y * 0.7, r, `rgba(255,255,255,${0.2 + 0.5 * a})`);
+  m31(900, 330, 620, -0.35, 0.95); ctx.fillStyle = '#4a2a16'; ctx.fillRect(0, 820, W, 260); ctx.strokeStyle = 'rgba(20,10,5,0.8)'; ctx.lineWidth = 3; const r = rng(5); for (let i = 0; i < 90; i++) { const x = r() * W, y = 830 + r() * 250; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + (r() - 0.5) * 160, y + (r() - 0.5) * 40); ctx.stroke(); }
+  etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_vazio = (t, d) => {   // o céu mais bonito sobre um planeta vazio
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#05040a'); g.addColorStop(1, '#2a1810'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); brilho(CX, 300, 520, 'rgba(255,225,180,0.5)'); brilho(CX, 300, 160, 'rgba(255,245,225,0.85)');
+  ctx.fillStyle = '#2a170c'; ctx.beginPath(); ctx.moveTo(0, H); for (let x = 0; x <= W; x += 30) ctx.lineTo(x, 800 - 40 * Math.sin(x * 0.004)); ctx.lineTo(W, H); ctx.fill(); txt('UM PLANETA VAZIO', CX, 640, 70, P.branco, ease((t - 0.4) / 0.4)); etiq('ILUSTRAÇÃO', 1); };
+CENAS.a_preto = (t, d) => { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); };
+
+// ---------- THUMBNAIL ----------
+CENAS.a_thumb = (t, d) => {
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#03040c'); g.addColorStop(1, '#141a36'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); for (const [x, y, r, a] of EST) circ(x, y, r * 1.2, `rgba(255,255,255,${0.3 + 0.6 * a})`);
+  m31(1200, 430, 900, -0.55, 1); brilho(1200, 430, 240, 'rgba(255,240,210,0.6)'); ctx.fillStyle = '#020204'; ctx.beginPath(); ctx.moveTo(0, H); for (let x = 0; x <= W; x += 30) ctx.lineTo(x, 900 - 60 * Math.sin(x * 0.004 + 1) - 30 * Math.sin(x * 0.02)); ctx.lineTo(W, H); ctx.fill();
+  ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round'; ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 30;
+  const pinta = (s2, x, y, tam, cor, lw) => { ctx.font = `${tam}px MX`; ctx.lineWidth = lw; ctx.strokeStyle = '#000'; ctx.strokeText(s2, x, y); ctx.fillStyle = cor; ctx.fillText(s2, x, y); };
+  pinta('ROTA DE', 70, 200, 190, '#ffffff', 24); pinta('COLISÃO', 70, 390, 190, '#ff2a2a', 24); ctx.restore(); pilula('1 TRILHÃO DE ESTRELAS', 420, 560, 46, '#e63946', '#fff', 1); };
+
+// p.sat (dessaturar) é aplicado depois, no ffmpeg (motor_h): ctx.filter deixa o canvas lento demais
+window.desenhar = (cena, t, dur, p) => { p = p || {}; ctx.save(); ctx.clearRect(0, 0, W, H); CENAS[cena](t, dur, p); ctx.restore(); };
+window.CENAS = CENAS;
+</script>
+</body></html>
