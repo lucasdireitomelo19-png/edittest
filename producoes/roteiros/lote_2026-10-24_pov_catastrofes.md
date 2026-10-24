@@ -101,7 +101,8 @@ Escolhido: o **2**, que coloca a rotina primeiro e quebra na segunda frase. O "j
 ---
 
 ## 3 · Já teve TSUNAMI no Brasil?
-**Formato:** Short (~53 s, ~145 palavras)   **Status:** APROVADO pelo dono (24/10, v2)
+**Formato:** Short (~53 s, ~145 palavras)   **Status:** v3 aguardando o ok do dono (a v2 foi aprovada em 24/10)
+**v2 → v3 (checagem da Pesquisas, 24/10):** as alturas de ~1,7–1,9 m não estão no artigo (só na imprensa) e saíram. Entram as cartas de 1756 ("o mar entrou uma légua terra adentro" em Lucena e Tamandaré), que são evidência histórica e deixam o meio mais forte. O final perdeu os "dois metros".
 **v1 → v2 (dono, 24/10):** gancho mais apelativo, que anuncia primeiro o que vai acontecer com você ("um meteoro vai explodir em cima da sua cidade") e só depois mostra a cena e o fato real. A virada honesta do fim continua.
 **Potencial viral:** 🔥 6/10 · Ponto mais forte: é uma curiosidade local que contraria o senso comum ("o Brasil nunca teve tsunami"), e brasileiro comenta e compartilha. Ponto mais fraco: a evidência é hipótese, o visual real é pobre (mapas e gravuras) e o final não pode exagerar. Um título com data e lugar subiria a nota, como `Em 1755, um TSUNAMI pode ter chegado em Pernambuco`.
 **Ângulo:** POV histórico ("você está na praia em 1755") + mito derrubado, com a honestidade de "ainda é hipótese".
@@ -118,13 +119,14 @@ Escolhido: o **2**. O POV com o mar subindo sem motivo dá o arrepio, e o "1755"
 > Um tsunami vai atingir a praia onde você está. E essa praia fica no Brasil.
 > O mar começa a subir. Sem tempestade. Sem vento.
 > É primeiro de novembro de 1755. No mesmo dia, do outro lado do oceano, um terremoto destruiu Lisboa. E empurrou uma onda que atravessou o Atlântico.
-> Ela chegou mesmo aqui? Cientistas acharam areia do mar onde ela não devia estar, em Pontinhas, Pernambuco. E estimam ondas de quase dois metros em Tamandaré, Pernambuco, e em Lucena, na Paraíba.
-> Ainda não é certeza. É uma hipótese. Mas uma hipótese séria.
+> Ela chegou mesmo aqui? Cartas da época contam que, em Lucena, na Paraíba, e em Tamandaré, em Pernambuco, o mar entrou uma légua terra adentro. Vários quilômetros.
+> E em 2022, cientistas acharam em Pontinhas, Pernambuco, camadas de areia do mar onde ela não devia estar.
+> Ainda não é prova. Os cientistas chamam de possível evidência. Mas é uma pista séria.
 > Ou seja: o Brasil pode, sim, já ter tido um tsunami.
-> E pode acontecer de novo? O Atlântico pode mandar ondas até aqui. Mas o Brasil fica longe das grandes falhas, e as ondas estimadas foram de uns dois metros.
-> Não é o mega-tsunami dos filmes. Mas, numa praia lotada, dois metros de mar entrando sem aviso já é o bastante.
+> E pode acontecer de novo? O Atlântico pode mandar ondas até aqui. Mas o Brasil fica longe das grandes falhas que criam os tsunamis gigantes.
+> Não é o mega-tsunami dos filmes. Mas, numa praia lotada, o mar entrando sem aviso já é o bastante.
 
-**Tela:** "01/11/1755"; mapa real do Atlântico com pino em Lisboa e uma linha da onda até o Nordeste; "≈ 1,7–1,9 M (ESTIMATIVA)"; "HIPÓTESE" fixo no canto durante o trecho do Brasil.
+**Tela:** "01/11/1755"; mapa real do Atlântico com pino em Lisboa e uma linha da onda até o Nordeste; "CARTA DE 1756: \"1 LÉGUA TERRA ADENTRO\""; "HIPÓTESE" fixo no canto durante o trecho do Brasil.
 **Visual:**
 - Praia do Nordeste com o mar subindo (footage real de maré, com etiqueta "ilustrativo").
 - Gravuras de Lisboa em 1755 (domínio público).
@@ -133,8 +135,11 @@ Escolhido: o **2**. O POV com o mar subindo sem motivo dá o arrepio, e o "1755"
 
 **Fatos usados:**
 - 01/11/1755: o terremoto de Lisboa e o tsunami que atravessou o Atlântico são conhecimento histórico consolidado. Não citei número de mortos nem magnitude.
-- Dourado et al.: possível depósito de areia marinha em Pontinhas (PE) e ondas estimadas em ~1,7–1,9 m em Lucena (PB) e Tamandaré (PE). Registro em https://biblios.ciencias.ulisboa.pt/detalhes/55490. É **hipótese plausível**, e a fala diz "ainda não é certeza".
-- ⚠️ **Fonte a confirmar:** a revista onde Dourado et al. foi publicado não está confirmada. A Pesquisas sugeriu checar antes de gravar, e se o dono aprovar, eu peço essa checagem.
+- **Dourado et al.**, "Possible evidence of the 1755 CE transatlantic tsunami in Brazil", *Journal of South American Earth Sciences* (jun/2022), DOI 10.1016/j.jsames.2022.103823, com revisão por pares. Confirmado pela Pesquisas em 24/10 via Crossref e resumo.
+  - Areia marinha grossa em duas camadas em Pontinhas (PE). Os autores tratam a ligação com 1755 como "possível".
+  - Carta de mar/1756 (Arquivo Histórico Ultramarino): "Em Lucena e Tamandaré, a enchente do terremoto entrou pela terra adentro coisa de uma légua".
+  - Uma légua da época tinha mais de 5 km, então "vários quilômetros" está correto.
+  - ⚠️ As alturas de ~1,7–1,9 m **não** estão no artigo (só na imprensa) e foram removidas.
 - ⚠️ **"No mesmo dia":** o tsunami atravessa o Atlântico em horas, e o roteiro não diz quantas.
 - ⚠️ **O que não entra:** Cumbre Vieja (hipótese contestada).
 - ⚠️ **"O mar começa a subir":** é a cena do POV, e o texto logo depois deixa claro que é hipótese.
