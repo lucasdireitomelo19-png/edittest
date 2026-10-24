@@ -101,7 +101,7 @@ Escolhido: o **2**, que coloca a rotina primeiro e quebra na segunda frase. O "j
 ---
 
 ## 3 · Já teve TSUNAMI no Brasil?
-**Formato:** Short (~53 s, ~145 palavras)   **Status:** v3 aguardando o ok do dono (a v2 foi aprovada em 24/10)
+**Formato:** Short (~56 s, ~154 palavras)   **Status:** v3 aguardando o ok do dono (a v2 foi aprovada em 24/10)
 **v2 → v3 (checagem da Pesquisas, 24/10):** as alturas de ~1,7–1,9 m não estão no artigo (só na imprensa) e saíram. Entram as cartas de 1756 ("o mar entrou uma légua terra adentro" em Lucena e Tamandaré), que são evidência histórica e deixam o meio mais forte. O final perdeu os "dois metros".
 **v1 → v2 (dono, 24/10):** gancho mais apelativo, que anuncia primeiro o que vai acontecer com você ("um meteoro vai explodir em cima da sua cidade") e só depois mostra a cena e o fato real. A virada honesta do fim continua.
 **Potencial viral:** 🔥 6/10 · Ponto mais forte: é uma curiosidade local que contraria o senso comum ("o Brasil nunca teve tsunami"), e brasileiro comenta e compartilha. Ponto mais fraco: a evidência é hipótese, o visual real é pobre (mapas e gravuras) e o final não pode exagerar. Um título com data e lugar subiria a nota, como `Em 1755, um TSUNAMI pode ter chegado em Pernambuco`.
@@ -122,7 +122,6 @@ Escolhido: o **2**. O POV com o mar subindo sem motivo dá o arrepio, e o "1755"
 > Ela chegou mesmo aqui? Cartas da época contam que, em Lucena, na Paraíba, e em Tamandaré, em Pernambuco, o mar entrou uma légua terra adentro. Vários quilômetros.
 > E em 2022, cientistas acharam em Pontinhas, Pernambuco, camadas de areia do mar onde ela não devia estar.
 > Ainda não é prova. Os cientistas chamam de possível evidência. Mas é uma pista séria.
-> Ou seja: o Brasil pode, sim, já ter tido um tsunami.
 > E pode acontecer de novo? O Atlântico pode mandar ondas até aqui. Mas o Brasil fica longe das grandes falhas que criam os tsunamis gigantes.
 > Não é o mega-tsunami dos filmes. Mas, numa praia lotada, o mar entrando sem aviso já é o bastante.
 
