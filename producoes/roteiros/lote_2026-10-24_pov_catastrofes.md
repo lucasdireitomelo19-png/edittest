@@ -12,7 +12,7 @@
 ---
 
 ## 1 · POV: o ANO SEM VERÃO chegou
-**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~58 s, ~160 palavras; se passar de 61 s, sai "A plantação morreu de frio.")   **Status:** aguardando aprovação (v1)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: o "1 em 6 neste século" de um estudo da *Nature* transforma uma história de 1816 numa ameaça com prazo, e o POV faz o espectador sentir frio e fome. Ponto mais fraco: o tema "ano sem verão" não tem viral de referência no nicho, e quase não existe footage real de 1816.
 **Ângulo:** POV no passado (1816) que vira ameaça no presente ("1 em 6"), com virada honesta: o perigo é a fragilidade do mundo, não um vulcão marcado.
 **Tom de voz:** frio, tenso, íntimo.
@@ -56,7 +56,7 @@ Escolhido: o **2**, que expande o 1 em frases curtas. A neve em junho é a image
 ---
 
 ## 2 · POV: um meteoro EXPLODE sobre a sua cidade
-**Formato:** Short (~52 s, ~145 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~56 s, ~155 palavras)   **Status:** aguardando aprovação (v1)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: aconteceu de verdade, com vídeo real, e o POV ("você tira o celular do bolso… a janela explode") coloca o espectador dentro da cena. O estudo da *Nature* ("bem mais comum do que se pensava") dá o medo. Ponto mais fraco: Chelyabinsk já é conhecido. A novidade está na frequência e no "ninguém viu chegar".
 **Ângulo:** POV no presente, com a revelação "isso já aconteceu", seguida da frequência real e de uma virada honesta (quase sempre cai em lugar vazio, e os telescópios novos existem por isso).
 **Tom de voz:** urgente, cinematográfico, seco.
@@ -98,7 +98,7 @@ Escolhido: o **2**, que coloca a rotina primeiro e quebra na segunda frase. O "j
 ---
 
 ## 3 · Já teve TSUNAMI no Brasil?
-**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~53 s, ~145 palavras)   **Status:** aguardando aprovação (v1)
 **Potencial viral:** 🔥 6/10 · Ponto mais forte: é uma curiosidade local que contraria o senso comum ("o Brasil nunca teve tsunami"), e brasileiro comenta e compartilha. Ponto mais fraco: a evidência é hipótese, o visual real é pobre (mapas e gravuras) e o final não pode exagerar. Um título com data e lugar subiria a nota, como `Em 1755, um TSUNAMI pode ter chegado em Pernambuco`.
 **Ângulo:** POV histórico ("você está na praia em 1755") + mito derrubado, com a honestidade de "ainda é hipótese".
 **Tom de voz:** misterioso, calmo, com tensão crescente.
