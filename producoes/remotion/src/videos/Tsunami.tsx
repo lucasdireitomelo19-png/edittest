@@ -62,7 +62,7 @@ const Sobe: React.FC<{src: string; de: number; ate: number; etiqueta: string; ti
       <Sombra />
       <Etiqueta texto={etiqueta} real />
       <Titulo texto={titulo} y={330} size={100} cor={CIANO} />
-      {sub && <Texto y={500} size={40} cor="#fff" delay={8}>{sub}</Texto>}
+      {sub && <Texto y={580} size={44} cor="#fff" delay={8}>{sub}</Texto>}
     </AbsoluteFill>
   );
 };
@@ -96,8 +96,8 @@ const Mapa: React.FC<{onda?: boolean; pinos?: boolean; falhas?: boolean; titulo?
   const f = useCurrentFrame();
   const {durationInFrames: d} = useVideoConfig();
   const e = zoomNE ? interpolate(f, [0, d * 0.7], [0, 1], {...clamp, easing: Easing.inOut(Easing.cubic)}) : 0;
-  const k = Math.exp(interpolate(e, [0, 1], [Math.log(17), Math.log(120)]));
-  const pr = proj(interpolate(e, [0, 1], [-22, -35.5]), interpolate(e, [0, 1], [15, -7.8]), k, 1000);
+  const k = Math.exp(interpolate(e, [0, 1], [Math.log(14), Math.log(120)]));
+  const pr = proj(interpolate(e, [0, 1], [-22, -35.5]), interpolate(e, [0, 1], [18, -7.8]), k, 960);
   const [lx, ly] = pr(...LISBOA);
   const [tx, ty] = pr(...TAMANDARE);
   const [cx, cy] = pr(...LUCENA);
@@ -283,8 +283,8 @@ const Bastante: React.FC = () => (
 
 // selo fixo no canto durante o trecho do Brasil
 const Selo: React.FC = () => (
-  <div style={{position: 'absolute', right: 40, top: 230, padding: '10px 22px', borderRadius: 14, border: `4px solid ${OURO}`, background: 'rgba(0,0,0,.6)',
-    fontFamily: FONTE, fontSize: 36, color: OURO, letterSpacing: 3}}>HIPÓTESE</div>
+  <div style={{position: 'absolute', right: 40, top: 200, padding: '8px 18px', borderRadius: 14, border: `4px solid ${OURO}`, background: 'rgba(0,0,0,.6)',
+    fontFamily: FONTE, fontSize: 30, color: OURO, letterSpacing: 3}}>HIPÓTESE</div>
 );
 
 const CENAS = [Praia, NoBrasil, MarSobe, SemVento, Data, MesmoDia, Lisboa, Travessia, Chegou, Cartas, Pinos, Legua, Km, Pontinhas, Areia, Prova, Possivel, Pista,
