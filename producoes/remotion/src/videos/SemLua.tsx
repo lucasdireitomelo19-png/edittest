@@ -143,8 +143,8 @@ const Carimbo: React.FC<{alvo: string; d?: number}> = ({alvo, d = 10}) => {
   const s = spring({frame: f - d, fps: FPS, config: {damping: 9, mass: 0.7}});
   return (
     <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 50%, #1a1414, #050404 70%)', justifyContent: 'center', alignItems: 'center'}}>
-      <div style={{fontFamily: FONTE, fontSize: 150, color: '#cfd2da', opacity: 0.8}}>{alvo}</div>
-      <div style={{position: 'absolute', padding: '18px 60px', border: `12px solid ${VERMELHO}`, borderRadius: 20, fontFamily: FONTE, fontSize: 170, color: VERMELHO,
+      <div style={{position: 'absolute', top: 260, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: 140, color: '#cfd2da', opacity: 0.85}}>{alvo}</div>
+      <div style={{position: 'absolute', top: 470, padding: '18px 60px', border: `12px solid ${VERMELHO}`, borderRadius: 20, fontFamily: FONTE, fontSize: 170, color: VERMELHO,
         transform: `rotate(-12deg) scale(${interpolate(s, [0, 1], [2.4, 1])})`, opacity: s, letterSpacing: 10}}>MITO</div>
     </AbsoluteFill>
   );
@@ -161,7 +161,7 @@ const Relogio: React.FC<{x: number; y: number; r: number; rot?: string; h?: stri
         <circle cx={x} cy={y} r={14} fill={OURO} />
       </svg>
       <div style={{position: 'absolute', left: x - 200, width: 400, top: y + r + 24, textAlign: 'center', fontFamily: FONTE, fontSize: 56, color: '#fff'}}>{h}</div>
-      {rot && <div style={{position: 'absolute', left: x - 220, width: 440, top: y - r - 80, textAlign: 'center', fontFamily: FONTE, fontSize: 40, color: OURO}}>{rot}</div>}
+      {rot && <div style={{position: 'absolute', left: x - 260, width: 520, top: y - r - 80, textAlign: 'center', fontFamily: FONTE, fontSize: 36, color: OURO, whiteSpace: 'nowrap'}}>{rot}</div>}
     </>
   );
 };
@@ -382,7 +382,7 @@ const Motor: React.FC = () => {
     </AbsoluteFill>
   );
 };
-const Ninguem: React.FC = () => <Grande t="QUANTO? ?" sub="NINGUÉM SABE DIZER" cor={OURO} s={180} />;
+const Ninguem: React.FC = () => <Grande t="QUANTO?" sub="NINGUÉM SABE DIZER" cor={OURO} s={180} />;
 const Respira: React.FC = () => <Clip src="r50784.mp4" ini={7} etq="IMAGEM REAL · MAR" t="PAROU DE RESPIRAR FUNDO" />;
 
 // ---------- noite 1 ----------
@@ -402,7 +402,7 @@ const PorDoSol: React.FC = () => {
 };
 const Paisagem: React.FC<{luz: number; titulo: string; sub?: string}> = ({luz, titulo, sub}) => (
   <Ceu n={luz > 0.5 ? 60 : 260} cor={`linear-gradient(180deg, rgb(${8 + 30 * luz},${12 + 40 * luz},${30 + 70 * luz}), #020308)`}>
-    {luz > 0.5 && <Disco x={1500} y={220} r={70} />}
+    {luz > 0.5 && <Disco x={1640} y={420} r={70} />}
     <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
       <path d="M0 760 Q300 680 640 740 T1280 720 T1920 750 L1920 1080 L0 1080 Z" fill={`rgb(${10 + 40 * luz},${14 + 46 * luz},${18 + 50 * luz})`} />
       <path d="M860 1080 Q930 900 960 760" stroke={`rgba(220,210,180,${0.05 + 0.5 * luz})`} strokeWidth={60} fill="none" />
@@ -415,7 +415,7 @@ const Paisagem: React.FC<{luz: number; titulo: string; sub?: string}> = ({luz, t
   </Ceu>
 );
 const LuaCheia: React.FC = () => <Paisagem luz={1} titulo="A LUZ DA LUA CHEIA" sub="DÁ PRA VER O CAMINHO E O ROSTO DE QUEM ESTÁ DO LADO" />;
-const Suficiente: React.FC = () => <Clip src="r7093.mp4" ini={5} etq="IMAGEM REAL · LUA CHEIA" t="FRACA, MAS SUFICIENTE" z={[1.2, 1.4]} />;
+const Suficiente: React.FC = () => <Clip src="r50784.mp4" ini={3} etq="IMAGEM REAL · LUA SOBRE O MAR" t="FRACA, MAS SUFICIENTE" />;
 const SoEstrelas: React.FC = () => <Clip src="r31569.mp4" ini={4} etq="IMAGEM REAL · SÓ ESTRELAS" t="SOBRAM SÓ AS ESTRELAS" />;
 const Lux: React.FC = () => {
   const f = useCurrentFrame();
@@ -976,7 +976,7 @@ const Canto: React.FC = () => {
   );
 };
 const Hipoteses: React.FC = () => (
-  <div style={{position: 'absolute', top: 100, right: 50, padding: '6px 16px', borderRadius: 10, border: `3px solid ${OURO}`, background: 'rgba(0,0,0,.6)', fontFamily: FONTE, fontSize: 26, color: OURO, letterSpacing: 3}}>HIPÓTESES</div>
+  <div style={{position: 'absolute', bottom: 150, right: 50, padding: '6px 16px', borderRadius: 10, border: `3px solid ${OURO}`, background: 'rgba(0,0,0,.6)', fontFamily: FONTE, fontSize: 26, color: OURO, letterSpacing: 3}}>HIPÓTESES</div>
 );
 const Entrada: React.FC<{children: React.ReactNode}> = ({children}) => {
   const f = useCurrentFrame();
