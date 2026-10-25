@@ -1031,3 +1031,68 @@ export const Thumb: React.FC = () => (
     <div style={{position: 'absolute', left: 96, top: 150, padding: '10px 24px', borderRadius: 14, background: 'rgba(0,0,0,.6)', border: `3px solid ${OURO}`, fontFamily: FONTE, fontSize: 48, color: OURO}}>HORA 1</div>
   </AbsoluteFill>
 );
+
+// ---------- thumbnails mais apelativas (A: a Lua se desfazendo · B: céu vazio com seta) ----------
+const Estrelas: React.FC<{n?: number; h?: number}> = ({n = 180, h = 1080}) => (
+  <>{Array.from({length: n}, (_, i) => (
+    <div key={i} style={{position: 'absolute', left: random('qx' + i) * 1920, top: random('qy' + i) * h, width: 2 + random('qs' + i) * 4, height: 2 + random('qs' + i) * 4, borderRadius: 3, background: '#fff', opacity: 0.35 + 0.65 * random('qo' + i)}} />
+  ))}</>
+);
+const TextoThumb: React.FC<{l1: string; l2: string; x?: number; y?: number; s?: number}> = ({l1, l2, x = 80, y = 250, s = 230}) => (
+  <div style={{position: 'absolute', left: x, top: y, fontFamily: FONTE, fontSize: s, lineHeight: 0.92, letterSpacing: -6, WebkitTextStroke: '10px #000', paintOrder: 'stroke fill', textShadow: '0 14px 40px rgba(0,0,0,.9)'}}>
+    <div style={{color: '#fff'}}>{l1}</div><div style={{color: OURO}}>{l2}</div>
+  </div>
+);
+const Selo1: React.FC = () => (
+  <div style={{position: 'absolute', left: 92, top: 110, padding: '12px 30px', borderRadius: 16, background: VERMELHO, fontFamily: FONTE, fontSize: 56, color: '#fff', letterSpacing: 3, transform: 'rotate(-3deg)', boxShadow: '0 10px 30px rgba(0,0,0,.6)'}}>HORA 1</div>
+);
+export const ThumbA: React.FC = () => {
+  const R = 470, cx = 1330, cy = 540, N = 26, img = staticFile('semlua/nasa_GSFC_20171208_Archive_e000868.jpg');
+  const E = (2 * R) / 0.846;  // o disco ocupa 84,8% da foto (margem preta em volta)
+  const sz = (2 * R) / N;
+  const tiles: React.ReactNode[] = [];
+  for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+    const tx = (i + 0.5) / N, ty = (j + 0.5) / N;
+    const dx = tx * 2 - 1, dy = ty * 2 - 1;
+    if (dx * dx + dy * dy > 0.8 || tx < 0.5) continue;
+    const k = (tx - 0.5) / 0.5;
+    if (random('r' + i + '-' + j) < 0.25 + k * 0.35) continue;
+    const off = 40 + k * k * (260 + random('d' + i + j) * 420);
+    tiles.push(<div key={i + '-' + j} style={{position: 'absolute', left: cx - R + i * sz + off, top: cy - R + j * sz + (random('v' + i + j) - 0.5) * off * 0.7, width: sz, height: sz, borderRadius: 3,
+      backgroundImage: `url(${img})`, backgroundSize: `${E}px ${E}px`, backgroundPosition: `${-(i * sz) - (E - 2 * R) / 2}px ${-(j * sz) - (E - 2 * R) / 2}px`,
+      opacity: 1 - k * 0.6, transform: `rotate(${(random('a' + i + j) - 0.5) * 70 * k}deg) scale(${1 - k * 0.4})`, boxShadow: '0 0 8px rgba(0,0,0,.6)'}} />);
+  }
+  return (
+    <AbsoluteFill style={{background: 'radial-gradient(circle at 70% 50%, #15306e, #03050f 65%)', overflow: 'hidden'}}>
+      <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
+      <Estrelas />
+      <div style={{position: 'absolute', left: cx - R - 80, top: cy - R - 80, width: 2 * R + 160, height: 2 * R + 160, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,250,230,.3), transparent 68%)'}} />
+      <Img src={img} style={{position: 'absolute', left: cx - E / 2, top: cy - E / 2, width: E, height: E, clipPath: `circle(${R}px at 50% 50%)`,
+        WebkitMaskImage: 'linear-gradient(90deg, #000 52%, transparent 62%)', maskImage: 'linear-gradient(90deg, #000 52%, transparent 62%)'}} />
+      {tiles}
+      <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(3,5,15,.85) 0%, rgba(3,5,15,.35) 40%, transparent 55%)'}} />
+      <TextoThumb l1="A LUA" l2="SUMIU" y={300} s={250} />
+      <Selo1 />
+    </AbsoluteFill>
+  );
+};
+export const ThumbB: React.FC = () => (
+  <AbsoluteFill style={{background: '#000'}}>
+    <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
+    <OffthreadVideo src={staticFile('semlua/r50784.mp4')} startFrom={60} muted style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1) brightness(.8) contrast(1.3)'}} />
+    <AbsoluteFill style={{background: '#2457d6', mixBlendMode: 'multiply'}} />
+    <AbsoluteFill style={{background: 'linear-gradient(180deg, #030a24 0%, #0a2366 30%, rgba(10,35,102,0) 34%)'}} />
+    <Estrelas n={160} h={330} />
+    <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
+      <defs><radialGradient id="hb"><stop offset="0.55" stopColor="rgba(120,220,255,0)" /><stop offset="1" stopColor="rgba(120,220,255,.55)" /></radialGradient></defs>
+      <circle cx={1430} cy={330} r={290} fill="url(#hb)" />
+      <circle cx={1430} cy={330} r={230} fill="rgba(0,0,0,.25)" stroke="#fff" strokeWidth={14} strokeDasharray="36 26" />
+      <text x={1430} y={430} textAnchor="middle" fontFamily={FONTE} fontSize={300} fill={VERMELHO} stroke="#000" strokeWidth={10} paintOrder="stroke">?</text>
+      <path d="M930 700 Q1080 640 1170 520" stroke={VERMELHO} strokeWidth={34} fill="none" strokeLinecap="round" />
+      <path d="M1130 470 L1215 480 L1185 565 Z" fill={VERMELHO} />
+    </svg>
+    <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(0,0,0,.65), transparent 50%)'}} />
+    <TextoThumb l1="CADÊ" l2="A LUA?" y={330} s={240} />
+    <Selo1 />
+  </AbsoluteFill>
+);
