@@ -681,7 +681,7 @@ const Cobre: React.FC = () => {
   const f = useCurrentFrame();
   const {durationInFrames: d} = useVideoConfig();
   const x = interpolate(f, [0, d * 0.7], [1250, 960], {...clamp, easing: Easing.out(Easing.cubic)});
-  const tot = interpolate(x, [1000, 960], [0, 1], clamp);
+  const tot = interpolate(x, [960, 1000], [1, 0], clamp);
   return (
     <AbsoluteFill style={{background: `rgb(${70 - 66 * tot},${130 - 124 * tot},${190 - 178 * tot})`}}>
       <div style={{position: 'absolute', left: 960 - 160, top: 540 - 160, width: 320, height: 320, borderRadius: 160, background: 'radial-gradient(circle, #fff3c0, #ffb347)', boxShadow: `0 0 ${40 + 160 * tot}px ${tot > 0.9 ? '#fff' : '#ffd27a'}`}} />
