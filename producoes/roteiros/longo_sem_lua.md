@@ -54,7 +54,7 @@ Escolhido: o **1**, com o mito do 3 como promessa no fim do gancho ("uma das coi
 > Sem ela, longe das luzes da cidade, sobram só as estrelas. E isso é de dezenas a milhares de vezes mais escuro.
 > Toda noite vira noite de lua nova. Pra sempre.
 > E não é só a noite. Lembra da última vez que você viu a Lua de dia, pálida no meio do céu azul? Ou da lua cheia nascendo enorme e laranja no horizonte? Acabou. O céu agora tem o Sol, as estrelas, e um vazio.
-> Por milhares de anos, a humanidade contou o tempo pela Lua. A ideia de mês nasceu de olhar as fases dela crescendo e minguando no céu.
+> Por milhares de anos, a humanidade contou o tempo pela Lua. As fases dela, crescendo e minguando a cada vinte e nove dias e meio, foram o calendário de muitos povos.
 > Hoje, você olha pra cima e o relógio mais antigo da humanidade parou.
 
 ### 2:35 · Semanas: a vida que segue a Lua
@@ -76,7 +76,7 @@ Escolhido: o **1**, com o mito do 3 como promessa no fim do gancho ("uma das coi
 
 ### 4:30 · Séculos: o último eclipse
 > Mas tem coisas que somem pra sempre.
-> Um eclipse solar total só existe por causa de uma coincidência absurda. O Sol é umas quatrocentas vezes maior que a Lua. E está umas quatrocentas vezes mais longe.
+> Um eclipse solar total só existe por causa de uma coincidência absurda. O Sol é cerca de quatrocentas vezes mais largo que a Lua. Mas também está cerca de quatrocentas vezes mais longe.
 > Por isso, no céu, os dois parecem ter o mesmo tamanho. E de vez em quando, a Lua cobre o Sol inteirinho. O dia vira noite por alguns minutos.
 > Sem a Lua, nunca mais. Nenhum eclipse total. Nenhum anel de fogo do Sol aparecendo no meio da tarde.
 > E aqui vai uma coisa curiosa: com a Lua de verdade, isso também vai acabar. Ela está se afastando. Daqui a uns seiscentos milhões de anos, ela vai parecer pequena demais pra cobrir o Sol inteiro.
@@ -93,11 +93,11 @@ Escolhido: o **1**, com o mito do 3 como promessa no fim do gancho ("uma das coi
 ### 6:35 · Mas espera… (a saturação volta inteira)
 > Mas espera. Olha pro céu de novo.
 > Ela está lá.
-> A Lua não sumiu. Ela está se afastando, sim: três vírgula oito centímetros por ano. Mais ou menos a velocidade com que a sua unha cresce.
+> A Lua não sumiu. Ela está se afastando, sim: três vírgula oito centímetros por ano. Mais ou menos a velocidade com que a sua unha cresce, segundo a NASA.
 > E esse afastamento lento mudou a sua vida mais do que você imagina. Há um bilhão e quatrocentos milhões de anos, um dia na Terra tinha só umas dezoito horas. Foi a Lua, puxando, freando e se afastando, que esticou o seu dia até as vinte e quatro horas de hoje.
 > As marés. As noites claras. Os corais. Os eclipses. O próprio tamanho do seu dia.
 > Aquela bola de pedra que parece só enfeite no céu moldou o mundo onde você vive.
-> E a gente está voltando pra lá. Em abril de 2026, quatro astronautas deram a volta nela. A primeira viagem de gente até a Lua em mais de cinquenta anos.
+> E a gente está voltando pra lá. Em abril de 2026, quatro astronautas foram até ela e deram a volta, sem pousar. A primeira vez em mais de cinquenta anos.
 > E ela ainda está ali. Hoje à noite, olha pra cima.
 
 ---
@@ -123,8 +123,10 @@ Escolhido: o **1**, com o mito do 3 como promessa no fim do gancho ("uma das coi
 - **Eixo:** Laskar, Joutel e Robutel, *Nature* 361:615 (1993): ~0° a ~85°, caótico. Lissauer, Barnes e Chambers, *Icarus* (2011/2012): ~20–25° por centenas de milhões de anos, e "uma lua grande não parece necessária". A divergência aparece na fala. Os "10 a 45°" de jornal não entram.
 - **Dia de 18 h há ~1,4 bilhão de anos:** Meyers e Malinverno, *PNAS* 2018.
 - **Oceano profundo:** a JAMSTEC (12/10/2018) liga a mistura por maré no Pacífico profundo à circulação oceânica global. Não existe número "Lua vs. Sol", e por isso a fala diz "ninguém sabe dizer quanto".
-- **Artemis II:** lançada em 01/04/2026, com 4 astronautas, voo ao redor da Lua (`fatos.md`). A última missão tripulada à Lua foi a Apollo 17 (1972), daí "mais de cinquenta anos".
-- ⚠️ **"400 vezes maior / 400 vezes mais longe":** relação divulgada pela NASA, mas fora do `fatos.md`. Peço à Pesquisas para confirmar antes da narração.
-- ⚠️ **"A velocidade com que a sua unha cresce":** comparação usada pela NASA para os 3,8 cm/ano, também fora do `fatos.md`. Mesma checagem.
-- ⚠️ **"A ideia de mês nasceu das fases da Lua":** o mês sinódico tem ~29,5 dias e os calendários lunares antigos são história consolidada. Mesmo assim, entra na checagem.
+- **Artemis II:** lançada em 01/04/2026, com 4 astronautas, sobrevoo da Lua sem pouso (`fatos.md`). A última missão tripulada à Lua antes dela foi a Apollo 17 (dez/1972), daí "mais de cinquenta anos".
+- **Checagem da Pesquisas (25/10):**
+  - "Cerca de 400× mais largo / 400× mais longe": NASA APOD, 18/08/1999. As razões reais são ≈400 no diâmetro e ≈389 na distância média, por isso "cerca de".
+  - Unha: analogia da própria NASA ("Five Things to Know about the Moon", 3,8 cm/ano).
+  - Mês sinódico de 29,53 dias e fases como base de calendários lunares (NASA). Sem afirmação de etimologia.
+  - Artemis II: sobrevoo tripulado sem pouso, em 01/04/2026, a primeira missão tripulada até a Lua desde a Apollo 17 (dez/1972).
 - ⚠️ **"Foi a Lua… que esticou o seu dia":** o freio de maré vem principalmente da Lua (o Sol contribui menos). Formulação aceitável, sem número.
