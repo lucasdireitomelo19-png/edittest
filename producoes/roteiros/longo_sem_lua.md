@@ -9,7 +9,7 @@
 ---
 
 ## 1 · A Terra PERDEU a Lua
-**Formato:** Longo, 1920x1080, ~7,5 min (~1.110 palavras), gancho + 7 capítulos com cartão próprio, POV em 2ª pessoa   **Status:** aguardando aprovação (v1)
+**Formato:** Longo, 1920x1080, ~7,5 min (~1.110 palavras), gancho + 7 capítulos com cartão próprio, POV em 2ª pessoa   **Status:** APROVADO pelo dono (25/10, v1). Pedido do dono: sem storyboard nem prévia; entregar já renderizado, pronto para postar.
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: repete o molde que está indo bem no canal (POV + linha do tempo + "Mas espera…") num "e se" clássico com público comprovado (o "What if the moon went away?" do SolarBalls passa de 9 milhões de views em tracker de terceiros), e tem um mito para derrubar no meio, o "dia de 6 horas". Ponto mais fraco: não tem catástrofe imediata. A tensão vem da perda e do mistério, e não da destruição, o que segura menos que o "Última pessoa".
 **Ângulo:** POV de perda ("você olha pro céu e ela não está lá") numa linha do tempo que cresce de horas para milhões de anos, com um mito derrubado no meio e a virada "Mas espera… ela está lá".
 **Tom de voz:** contemplativo, sombrio, íntimo, com assombro.
