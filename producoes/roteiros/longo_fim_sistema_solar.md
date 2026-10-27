@@ -9,7 +9,7 @@
 ---
 
 ## 1 · A Terra vai morrer DUAS vezes
-**Formato:** Longo, 1920x1080, ~7,5 min (~1.140 palavras), gancho + 8 capítulos com cartão próprio, POV em 2ª pessoa   **Status:** aguardando aprovação (v1)
+**Formato:** Longo, 1920x1080, ~7,5 min (~1.140 palavras), gancho + 8 capítulos com cartão próprio, POV em 2ª pessoa   **Status:** APROVADO pelo dono (27/10, v1)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: o molde vencedor do canal (POV, linha do tempo, "Mas espera…") com uma novidade real, um estudo de junho de 2026 que muda o final que todo mundo conhece, e uma escala que vai de 1 bilhão a um número com mil e cem zeros. Ponto mais fraco: o canal já tem o Short v33 do mesmo tema. A novidade da "segunda morte" precisa ficar clara no título e na thumb para não parecer repetido.
 **Ângulo:** POV na linha do tempo do fim ("você vê tudo acontecer"), com duas mortes da Terra (a da vida e a do Sol) e a reviravolta de 2026 no meio. A virada final é que planetas sobrevivem à morte das estrelas, e o Sol vira matéria-prima de novos mundos.
 **Tom de voz:** épico, sombrio, contemplativo, com assombro.
