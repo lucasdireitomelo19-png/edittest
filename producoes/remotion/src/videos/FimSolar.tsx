@@ -776,3 +776,49 @@ export const Thumb: React.FC = () => (
     <div style={{position: 'absolute', left: 80, top: 150, padding: '12px 30px', borderRadius: 16, background: VERMELHO, fontFamily: FONTE, fontSize: 56, color: '#fff', letterSpacing: 3, transform: 'rotate(-3deg)', boxShadow: '0 10px 30px rgba(0,0,0,.6)'}}>2026</div>
   </AbsoluteFill>
 );
+
+// ---------- thumbnails "fim de tudo" (pedido do dono em 27/10: algo como o fim do universo) ----------
+const TextoGrande: React.FC<{l1: string; l2: string; x?: number; y?: number; s?: number; c2?: string}> = ({l1, l2, x = 70, y = 300, s = 230, c2 = OURO}) => (
+  <div style={{position: 'absolute', left: x, top: y, fontFamily: FONTE, fontSize: s, lineHeight: 0.9, letterSpacing: -6, WebkitTextStroke: '12px #000', paintOrder: 'stroke fill', textShadow: '0 16px 50px rgba(0,0,0,.95)'}}>
+    <div style={{color: '#fff'}}>{l1}</div><div style={{color: c2}}>{l2}</div>
+  </div>
+);
+const Fita: React.FC<{t: string; x?: number; y?: number}> = ({t, x = 80, y = 150}) => (
+  <div style={{position: 'absolute', left: x, top: y, padding: '12px 30px', borderRadius: 16, background: VERMELHO, fontFamily: FONTE, fontSize: 52, color: '#fff', letterSpacing: 3, transform: 'rotate(-3deg)', boxShadow: '0 10px 30px rgba(0,0,0,.6)'}}>{t}</div>
+);
+// A: o "olho" da nebulosa da Hélice (o que sobra de uma estrela como o Sol) com a Terra torrada à deriva
+export const ThumbA: React.FC = () => (
+  <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
+    <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
+    <Img src={staticFile('fimsol/nasa_PIA15658.jpg')} style={{position: 'absolute', left: 560, top: -330, width: 1740, height: 1740, filter: 'saturate(1.6) contrast(1.2) brightness(1.1)'}} />
+    <AbsoluteFill style={{background: 'linear-gradient(90deg, #000 0%, rgba(0,0,0,.85) 30%, rgba(0,0,0,0) 58%)'}} />
+    <TerraFoto x={1580} y={850} R={150} />
+    <TextoGrande l1="O FIM" l2="DE TUDO" y={290} s={240} />
+    <Fita t="ATÉ O ÚLTIMO ÁTOMO" />
+  </AbsoluteFill>
+);
+// B: a Terra rachada ao meio: metade viva, metade torrada, na frente do Sol gigante
+export const ThumbB: React.FC = () => {
+  const R = 330, x = 1250, y = 560, E = (2 * R) / 0.666;
+  const foto = staticFile('fimsol/nasa_as17-148-22727.jpg');
+  const img = (filtro: string, clip: string) => <div style={{position: 'absolute', left: x - R, top: y - R, width: 2 * R, height: 2 * R, borderRadius: '50%', overflow: 'hidden'}}><Img src={foto} style={{position: 'absolute', left: R - E * 0.501, top: R - E * 0.508, width: E, height: E, filter: filtro, clipPath: clip}} /></div>;
+  const cx = E * 0.501, cy = E * 0.508;
+  return (
+    <AbsoluteFill style={{background: 'radial-gradient(circle at 85% 50%, #4a0c04, #050102 70%)', overflow: 'hidden'}}>
+      <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
+      <div style={{position: 'absolute', left: 1950 - 1150, top: 540 - 1150, width: 2300, height: 2300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,80,30,.6) 58%, rgba(255,80,30,0) 72%)'}} />
+      <Bola x={1950} y={540} r={800} bg={GIGANTE} />
+      {img('saturate(1.3) contrast(1.1)', `polygon(0 0, ${cx + 20}px 0, ${cx - 30}px ${cy * 0.6}px, ${cx + 25}px ${cy}px, ${cx - 20}px ${cy * 1.4}px, ${cx + 10}px ${E}px, 0 ${E}px)`)}
+      {img('sepia(1) saturate(3.4) hue-rotate(-32deg) brightness(.75) contrast(1.4)', `polygon(${cx + 20}px 0, ${E}px 0, ${E}px ${E}px, ${cx + 10}px ${E}px, ${cx - 20}px ${cy * 1.4}px, ${cx + 25}px ${cy}px, ${cx - 30}px ${cy * 0.6}px)`)}
+      <div style={{position: 'absolute', left: x - R, top: y - R, width: 2 * R, height: 2 * R, borderRadius: '50%', clipPath: `circle(${R}px at ${R}px ${R}px)`,
+        background: 'radial-gradient(circle at 25% 50%, transparent 40%, rgba(0,0,0,.6) 80%)', boxShadow: 'inset -30px 0 60px rgba(255,120,40,.6)'}} />
+      <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
+        <defs><clipPath id="tb"><circle cx={x} cy={y} r={R} /></clipPath></defs>
+        <path clipPath="url(#tb)" d={`M${x + 20 * R / cx} ${y - R} L${x - 30 * R / cx} ${y - R + 0.6 * R} L${x + 25 * R / cx} ${y} L${x - 20 * R / cx} ${y + 0.4 * R} L${x + 10 * R / cx} ${y + R}`} stroke="#ffb040" strokeWidth={9} fill="none" style={{filter: 'drop-shadow(0 0 12px #ff6a1a)'}} />
+      </svg>
+      <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(0,0,0,.85), rgba(0,0,0,.35) 35%, rgba(0,0,0,0) 55%)'}} />
+      <TextoGrande l1="COMO TUDO" l2="VAI ACABAR" y={330} s={175} c2="#ff7a2a" />
+      <Fita t="NOVO ESTUDO 2026" />
+    </AbsoluteFill>
+  );
+};
