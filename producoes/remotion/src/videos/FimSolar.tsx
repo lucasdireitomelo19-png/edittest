@@ -169,10 +169,10 @@ const DuasMortes: React.FC = () => {
   const a = useSpring(2), b = useSpring(16);
   return (
     <AbsoluteFill style={{background: `radial-gradient(circle at 50% 45%, #1a1014, ${NOITE} 70%)`}}>
-      <div style={{position: 'absolute', left: 260, top: 360, width: 620, textAlign: 'center', fontFamily: FONTE, opacity: a}}>
+      <div style={{position: 'absolute', left: 160, top: 360, width: 760, textAlign: 'center', fontFamily: FONTE, opacity: a}}>
         <div style={{fontSize: 46, color: OURO}}>1ª MORTE</div><div style={{fontSize: 120, color: '#fff'}}>A VIDA</div>
       </div>
-      <div style={{position: 'absolute', left: 1040, top: 360, width: 620, textAlign: 'center', fontFamily: FONTE, opacity: b}}>
+      <div style={{position: 'absolute', left: 1000, top: 360, width: 760, textAlign: 'center', fontFamily: FONTE, opacity: b}}>
         <div style={{fontSize: 46, color: VERMELHO}}>2ª MORTE</div><div style={{fontSize: 120, color: '#fff'}}>O PLANETA</div>
       </div>
     </AbsoluteFill>
@@ -515,7 +515,7 @@ const Camadas: React.FC = () => {
 };
 const Nebulosa: React.FC = () => (
   <AbsoluteFill>
-    <Foto src="fimsol/nasa_southern_ring_nebula.jpg" etq="IMAGEM REAL · NEBULOSA DO ANEL DO SUL (EXEMPLO) · WEBB/NASA" />
+    <Foto src="fimsol/nasa_southern_ring_nebula.jpg" etq="IMAGEM REAL · NEBULOSA DO ANEL DO SUL (EXEMPLO) · WEBB/NASA" pos="22% center" z={[1.15, 1.25]} />
     <div style={{position: 'absolute', left: 80, top: 130, padding: '10px 30px', borderRadius: 14, background: 'rgba(0,0,0,.6)', border: `4px solid ${OURO}`, fontFamily: FONTE, fontSize: 70, color: OURO}}>TALVEZ</div>
   </AbsoluteFill>
 );
@@ -584,7 +584,7 @@ const Esfria: React.FC = () => {
   return <Ceu n={120}><Ana x={960} y={560} r={180} cor={cor} /><Tit t="ANÃ NEGRA: FRIA, ESCURA, INVISÍVEL" s={76} /><Etq t="ILUSTRAÇÃO · HIPÓTESE" /></Ceu>;
 };
 const MilTrilhoes: React.FC = () => <Grande t="10¹⁵ ANOS" sub="MIL TRILHÕES DE ANOS (HIPÓTESE)" cor="#9aa8c2" s={200} fundo="#000" />;
-const Nenhuma2: React.FC = () => <Grande t="NENHUMA EXISTE HOJE" sub="O UNIVERSO É JOVEM DEMAIS" s={140} fundo="#000" />;
+const Nenhuma2: React.FC = () => <Grande t="NENHUMA EXISTE HOJE" sub="O UNIVERSO É JOVEM DEMAIS" s={120} fundo="#000" />;
 const MilZeros: React.FC = () => {
   const f = useCurrentFrame();
   const zeros = '0'.repeat(1100);
@@ -605,13 +605,13 @@ const Humanidade: React.FC = () => {
   const p = interpolate(f, [4, 30], [0, 1], clamp);
   return (
     <AbsoluteFill style={{background: `linear-gradient(180deg, #0a1020, ${NOITE})`}}>
-      <Barra x={260} y={420} w={1300} h={70} p={p} cor={OURO} rot="O FIM DO SOL" val="BILHÕES DE ANOS" />
-      <Barra x={260} y={660} w={1300} h={70} p={0.004 + 0 * p} cor={CIANO} rot="A HUMANIDADE" val="~300 MIL ANOS" />
+      <Barra x={200} y={420} w={1150} h={70} p={p} cor={OURO} rot="O FIM DO SOL" val="BILHÕES DE ANOS" />
+      <Barra x={200} y={660} w={1150} h={70} p={0.004 + 0 * p} cor={CIANO} rot="A HUMANIDADE" val="~300 MIL ANOS" />
       <Tit t="TUDO ISSO LEVA BILHÕES DE ANOS" s={76} />
     </AbsoluteFill>
   );
 };
-const Sobrevivem: React.FC = () => <Grande t="PLANETAS SOBREVIVEM" sub="À MORTE DAS ESTRELAS" cor={VERDE} s={150} />;
+const Sobrevivem: React.FC = () => <Grande t="PLANETAS SOBREVIVEM" sub="À MORTE DAS ESTRELAS" cor={VERDE} s={124} />;
 const Wd1856: React.FC = () => <Clip src="fimsol/sv_wd1856.mp4" etq="ILUSTRAÇÃO · WD 1856 b · NASA" t="A 80 ANOS-LUZ DAQUI" z={[1, 1.08]} sub="UM PLANETA DO TAMANHO DE JÚPITER EM VOLTA DE UMA ANÃ BRANCA" />;
 const Horas34: React.FC = () => {
   const f = useCurrentFrame();
@@ -692,7 +692,7 @@ const Estavel: React.FC = () => <Curva parcial />;
 const CalorSobe: React.FC = () => <Grande t="E O CALOR CONTINUA SUBINDO" cor="#ff7a4a" s={130} fundo="radial-gradient(circle at 50% 45%, #2a0c06, #050202 70%)" />;
 const AlguemNaTerra: React.FC = () => <Clip src="fimsol/r328726.mp4" ini={6} etq="IMAGEM REAL · ILUSTRATIVA" t="SE ALGUÉM AINDA ESTIVESSE AQUI…" />;
 const Ordem: React.FC = () => <Grande t="JÚPITER E SATURNO" sub="OS GIGANTES QUE MANTINHAM TUDO EM ORDEM" cor={OURO} s={150} />;
-const CemBi: React.FC = () => <Grande t="~100 BILHÕES DE ANOS" sub="O SISTEMA SOLAR JÁ SE DESFEZ (ESTIMATIVA)" cor="#9aa8c2" s={150} fundo="#000" />;
+const CemBi: React.FC = () => <Grande t="~100 BILHÕES DE ANOS" sub="O SISTEMA SOLAR JÁ SE DESFEZ (ESTIMATIVA)" cor="#9aa8c2" s={130} fundo="#000" />;
 const EsfriandoBranca: React.FC = () => <Ceu n={120}><Ana x={960} y={560} r={150} /><Tit t="A ANÃ BRANCA VAI ESFRIANDO" /><Etq t="ILUSTRAÇÃO" /></Ceu>;
 const Absurdo: React.FC = () => <Grande t="UM NÚMERO ABSURDO?" cor={OURO} s={150} fundo="#000" />;
 const Calculos: React.FC = () => <Card topo="ALGUNS CÁLCULOS · HIPÓTESE" meio="ANÃS NEGRAS MAIS PESADAS" rodape="BEM MAIORES QUE A DO SOL" cor={OURO} />;
