@@ -1,0 +1,2 @@
+voz=pt-BR-AntonioNeural
+pausa=0.45

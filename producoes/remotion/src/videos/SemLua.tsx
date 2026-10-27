@@ -7,15 +7,12 @@ import {
   ancoras, Palavra, fr, Titulo, Texto, orto, caminhoGlobo, useSpring, clamp, FONTE, OURO, CIANO, VERMELHO, VERDE, FPS,
 } from '../comum';
 import palavras from './semlua.palavras.json';
-import mundo from './dados/mundo.json';
 
 const W = palavras as Palavra[];
-const LUA = '#e8e4da';
-const NOITE = '#04060d';
-const MUNDO = mundo as number[][][];
+import {LUA, NOITE, MUNDO, Etq, Tit, Sub, Escuro, Clip, Foto, Ceu, Contorno, Disco, Terra, Barra, Glitch, Card, Grande, Carimbo, Relogio, criarLongo, Cap} from '../longo';
 
 // ---------- capítulos ----------
-const CAPS = [
+const CAPS: Cap[] = [
   {canto: 'SEM LUA · HORA 0', sat: 1},
   {canto: 'SEM LUA · HORA 1', sat: 0.85, titulo: 'HORA 1', sub: 'O MAR PARA DE RESPIRAR'},
   {canto: 'SEM LUA · NOITE 1', sat: 0.7, titulo: 'NOITE 1', sub: 'O ESCURO DE VERDADE'},
@@ -25,146 +22,6 @@ const CAPS = [
   {canto: 'SEM LUA · +1 MILHÃO DE ANOS', sat: 0.35, titulo: 'MILHÕES DE ANOS', sub: 'O EIXO DA TERRA'},
   {canto: 'A LUA ESTÁ AQUI', sat: 1, titulo: 'MAS ESPERA…', sub: ''},
 ];
-
-// ---------- peças horizontais ----------
-const Etq: React.FC<{t: string; real?: boolean}> = ({t, real}) => (
-  <div style={{position: 'absolute', top: 44, right: 50, padding: '7px 18px', borderRadius: 24, background: real ? 'rgba(230,57,70,.9)' : 'rgba(0,0,0,.55)',
-    color: real ? '#fff' : '#aab4cc', fontFamily: FONTE, fontSize: 22, letterSpacing: 3}}>{real ? '● ' : ''}{t}</div>
-);
-const Tit: React.FC<{t: string; cor?: string; y?: number; s?: number; d?: number}> = ({t, cor, y = 120, s = 84, d = 0}) => <Titulo texto={t} cor={cor} y={y} size={s} delay={d} />;
-const Sub: React.FC<{children: React.ReactNode; y: number; s?: number; cor?: string; d?: number}> = ({children, y, s = 40, cor, d = 8}) => <Texto y={y} size={s} cor={cor} delay={d}>{children}</Texto>;
-const Escuro: React.FC = () => <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,.5), transparent 30%, transparent 65%, rgba(0,0,0,.6))'}} />;
-const Clip: React.FC<{src: string; ini?: number; z?: [number, number]; etq: string; t?: string; cor?: string; sub?: string}> = ({src, ini = 0, z = [1.03, 1.12], etq, t, cor, sub}) => {
-  const f = useCurrentFrame();
-  const {durationInFrames: d} = useVideoConfig();
-  return (
-    <AbsoluteFill style={{overflow: 'hidden'}}>
-      <OffthreadVideo src={staticFile('semlua/' + src)} startFrom={fr(ini)} muted style={{width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${interpolate(f, [0, d], z)})`}} />
-      <Escuro />
-      <Etq t={etq} real={etq.startsWith('IMAGEM REAL')} />
-      {t && <Tit t={t} cor={cor} />}
-      {sub && <Sub y={250}>{sub}</Sub>}
-    </AbsoluteFill>
-  );
-};
-const Foto: React.FC<{src: string; etq: string; t?: string; z?: [number, number]; pos?: string; sub?: string}> = ({src, etq, t, z = [1.02, 1.12], pos = 'center', sub}) => {
-  const f = useCurrentFrame();
-  const {durationInFrames: d} = useVideoConfig();
-  return (
-    <AbsoluteFill style={{overflow: 'hidden', background: '#000'}}>
-      <Img src={staticFile('semlua/' + src)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: pos, transform: `scale(${interpolate(f, [0, d], z)})`}} />
-      <Escuro />
-      <Etq t={etq} real />
-      {t && <Tit t={t} />}
-      {sub && <Sub y={250}>{sub}</Sub>}
-    </AbsoluteFill>
-  );
-};
-const Ceu: React.FC<{n?: number; cor?: string; children?: React.ReactNode}> = ({n = 160, cor = `radial-gradient(circle at 50% 120%, #0c1a33, ${NOITE} 70%)`, children}) => {
-  const f = useCurrentFrame();
-  return (
-    <AbsoluteFill style={{background: cor, overflow: 'hidden'}}>
-      {Array.from({length: n}, (_, i) => (
-        <div key={i} style={{position: 'absolute', left: random('x' + i) * 1920, top: random('y' + i) * 1080, width: 3 + random('s' + i) * 3, height: 3 + random('s' + i) * 3, borderRadius: 3,
-          background: '#fff', opacity: (0.3 + 0.7 * random('o' + i)) * (0.75 + 0.25 * Math.sin(f * 0.08 + i))}} />
-      ))}
-      {children}
-    </AbsoluteFill>
-  );
-};
-const Contorno: React.FC<{x: number; y: number; r: number; o?: number}> = ({x, y, r, o = 1}) => (
-  <svg width={1920} height={1080} style={{position: 'absolute', inset: 0, opacity: o}}>
-    <circle cx={x} cy={y} r={r} fill="none" stroke="rgba(255,255,255,.85)" strokeWidth={5} strokeDasharray="14 14" />
-  </svg>
-);
-const Disco: React.FC<{x: number; y: number; r: number; cor?: string; o?: number; brilho?: boolean}> = ({x, y, r, cor = LUA, o = 1, brilho = true}) => (
-  <div style={{position: 'absolute', left: x - r, top: y - r, width: 2 * r, height: 2 * r, borderRadius: '50%', opacity: o,
-    background: `radial-gradient(circle at 38% 35%, #fffdf6, ${cor} 45%, #9a958a)`, boxShadow: brilho ? `0 0 ${r * 0.8}px rgba(255,250,230,.45)` : undefined}} />
-);
-const Terra: React.FC<{x?: number; y?: number; R?: number; lon?: number; lat?: number; incl?: number; eixo?: boolean}> = ({x = 960, y = 560, R = 260, lon, lat = 10, incl = 0, eixo}) => {
-  const f = useCurrentFrame();
-  const g = orto(lon ?? f * 0.7, lat, R, R + 40, R + 40);
-  const S = 2 * R + 80;
-  return (
-    <svg width={S} height={S} style={{position: 'absolute', left: x - S / 2, top: y - S / 2, overflow: 'visible', transform: `rotate(${incl}deg)`}}>
-      {eixo && <line x1={R + 40} y1={-30} x2={R + 40} y2={S + 30} stroke={OURO} strokeWidth={6} strokeDasharray="16 10" />}
-      <circle cx={R + 40} cy={R + 40} r={R} fill="#0b3a66" />
-      <path d={caminhoGlobo(MUNDO, g)} fill="#3f7a56" />
-      <circle cx={R + 40} cy={R + 40} r={R} fill="none" stroke="rgba(120,200,255,.5)" strokeWidth={5} />
-    </svg>
-  );
-};
-const Barra: React.FC<{x: number; y: number; w: number; h: number; p: number; cor: string; rot: string; val: string}> = ({x, y, w, h, p, cor, rot, val}) => (
-  <>
-    <div style={{position: 'absolute', left: x, top: y, width: w, height: h, borderRadius: 14, background: 'rgba(255,255,255,.08)'}} />
-    <div style={{position: 'absolute', left: x, top: y, width: w * p, height: h, borderRadius: 14, background: cor}} />
-    <div style={{position: 'absolute', left: x, top: y - 58, fontFamily: FONTE, fontSize: 40, color: '#fff'}}>{rot}</div>
-    <div style={{position: 'absolute', left: x + w + 30, top: y + h / 2 - 28, fontFamily: FONTE, fontSize: 50, color: cor}}>{val}</div>
-  </>
-);
-const Glitch: React.FC<{t: string; cor?: string; s?: number}> = ({t, cor = '#e8f4ff', s = 150}) => {
-  const f = useCurrentFrame();
-  const g = f < 9;
-  return (
-    <AbsoluteFill style={{background: NOITE, justifyContent: 'center', alignItems: 'center'}}>
-      {g && Array.from({length: 7}, (_, i) => (
-        <div key={i} style={{position: 'absolute', left: 0, right: 0, top: random('gy' + f + i) * 1080, height: 14 + random('gh' + i + f) * 50,
-          background: i % 2 ? 'rgba(255,210,63,.3)' : 'rgba(0,220,255,.3)', transform: `translateX(${(random('gx' + i + f) - 0.5) * 300}px)`}} />
-      ))}
-      <div style={{fontFamily: FONTE, fontSize: s, color: cor, textAlign: 'center', lineHeight: 1.05, padding: '0 80px', transform: `translateX(${g ? (random('d' + f) - 0.5) * 40 : 0}px)`}}>{t}</div>
-    </AbsoluteFill>
-  );
-};
-const Card: React.FC<{topo: string; meio: string; rodape?: string; cor?: string}> = ({topo, meio, rodape, cor = CIANO}) => {
-  const s = useSpring(0);
-  return (
-    <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 40%, #0f1e33, #03060c 75%)'}}>
-      <div style={{position: 'absolute', left: 460, top: 260, width: 1000, padding: '60px 0', borderRadius: 30, background: 'rgba(8,14,30,.92)',
-        border: `3px solid ${cor}`, opacity: s, transform: `scale(${0.9 + 0.1 * s})`, textAlign: 'center', fontFamily: FONTE}}>
-        <div style={{fontSize: 38, color: cor, letterSpacing: 4}}>{topo}</div>
-        <div style={{marginTop: 30, fontSize: 86, color: '#fff', lineHeight: 1.05}}>{meio}</div>
-        {rodape && <div style={{marginTop: 30, fontSize: 34, color: OURO}}>{rodape}</div>}
-      </div>
-    </AbsoluteFill>
-  );
-};
-const Grande: React.FC<{t: string; sub?: string; cor?: string; fundo?: string; s?: number}> = ({t, sub, cor = '#fff', fundo = `radial-gradient(circle at 50% 45%, #121a2c, ${NOITE} 70%)`, s = 200}) => {
-  const p = useSpring(0, {damping: 11, mass: 0.6});
-  return (
-    <AbsoluteFill style={{background: fundo}}>
-      <div style={{position: 'absolute', top: 330, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: s, color: cor, letterSpacing: -4,
-        transform: `scale(${0.8 + 0.2 * p})`, opacity: p, textShadow: '0 10px 50px rgba(0,0,0,.6)'}}>{t}</div>
-      {sub && <Sub y={330 + s + 30} s={46}>{sub}</Sub>}
-    </AbsoluteFill>
-  );
-};
-const Carimbo: React.FC<{alvo: string; d?: number}> = ({alvo, d = 10}) => {
-  const f = useCurrentFrame();
-  const s = spring({frame: f - d, fps: FPS, config: {damping: 9, mass: 0.7}});
-  return (
-    <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 50%, #1a1414, #050404 70%)', justifyContent: 'center', alignItems: 'center'}}>
-      <div style={{position: 'absolute', top: 260, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: 140, color: '#cfd2da', opacity: 0.85}}>{alvo}</div>
-      <div style={{position: 'absolute', top: 470, padding: '18px 60px', border: `12px solid ${VERMELHO}`, borderRadius: 20, fontFamily: FONTE, fontSize: 170, color: VERMELHO,
-        transform: `rotate(-12deg) scale(${interpolate(s, [0, 1], [2.4, 1])})`, opacity: s, letterSpacing: 10}}>MITO</div>
-    </AbsoluteFill>
-  );
-};
-const Relogio: React.FC<{x: number; y: number; r: number; rot?: string; h?: string; vel?: number}> = ({x, y, r, rot, h = '24 H', vel = 1}) => {
-  const f = useCurrentFrame();
-  const a = f * 3 * vel;
-  return (
-    <>
-      <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
-        <circle cx={x} cy={y} r={r} fill="#0e1626" stroke="#cfd8e8" strokeWidth={10} />
-        {Array.from({length: 24}, (_, i) => { const b = (i / 24) * Math.PI * 2; return <line key={i} x1={x + Math.cos(b) * r * 0.86} y1={y + Math.sin(b) * r * 0.86} x2={x + Math.cos(b) * r * 0.95} y2={y + Math.sin(b) * r * 0.95} stroke="#cfd8e8" strokeWidth={i % 6 ? 3 : 8} />; })}
-        <line x1={x} y1={y} x2={x + Math.cos(((a - 90) * Math.PI) / 180) * r * 0.75} y2={y + Math.sin(((a - 90) * Math.PI) / 180) * r * 0.75} stroke={OURO} strokeWidth={10} strokeLinecap="round" />
-        <circle cx={x} cy={y} r={14} fill={OURO} />
-      </svg>
-      <div style={{position: 'absolute', left: x - 200, width: 400, top: y + r + 24, textAlign: 'center', fontFamily: FONTE, fontSize: 56, color: '#fff'}}>{h}</div>
-      {rot && <div style={{position: 'absolute', left: x - 260, width: 520, top: y - r - 80, textAlign: 'center', fontFamily: FONTE, fontSize: 36, color: OURO, whiteSpace: 'nowrap'}}>{rot}</div>}
-    </>
-  );
-};
 
 // ---------- cenas: gancho ----------
 const Some: React.FC = () => {
@@ -212,7 +69,7 @@ const LuaNova: React.FC = () => (
 );
 const Sumiu: React.FC = () => <Ceu><Contorno x={960} y={520} r={180} /><Titulo texto="SUMIU." y={440} size={150} /></Ceu>;
 const Imagina: React.FC = () => <Glitch t="ISSO NUNCA VAI ACONTECER. MAS IMAGINA." s={110} />;
-const Nasce: React.FC = () => <Clip src="r128118.mp4" etq="IMAGEM REAL · LUA" t="O QUE VEM DEPOIS" />;
+const Nasce: React.FC = () => <Clip src="semlua/r128118.mp4" etq="IMAGEM REAL · LUA" t="O QUE VEM DEPOIS" />;
 const Distancia: React.FC = () => {
   const f = useCurrentFrame();
   const p = interpolate(f, [4, 40], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
@@ -258,8 +115,8 @@ const Mentira: React.FC = () => {
 };
 
 // ---------- hora 1: marés ----------
-const Mar: React.FC = () => <Clip src="r50784.mp4" etq="IMAGEM REAL · MAR" t="NÃO ESTÁ NO CÉU. ESTÁ NO MAR." />;
-const Mares: React.FC = () => <Clip src="sv_mares.mp4" etq="VISUALIZAÇÃO NASA · MODELO DE MARÉS" t="DUAS VEZES POR DIA" />;
+const Mar: React.FC = () => <Clip src="semlua/r50784.mp4" etq="IMAGEM REAL · MAR" t="NÃO ESTÁ NO CÉU. ESTÁ NO MAR." />;
+const Mares: React.FC = () => <Clip src="semlua/sv_mares.mp4" etq="VISUALIZAÇÃO NASA · MODELO DE MARÉS" t="DUAS VEZES POR DIA" />;
 const Bojo: React.FC<{lua?: number; titulo: string}> = ({lua = 1, titulo}) => {
   const f = useCurrentFrame();
   const e = 1 + 0.32 * lua + 0.04 * Math.sin(f * 0.1);
@@ -305,8 +162,8 @@ const Regua: React.FC = () => {
     </AbsoluteFill>
   );
 };
-const Praia: React.FC = () => <Clip src="r218828.mp4" etq="IMAGEM REAL · MARÉ BAIXA" t="O MAR PARECE… PARADO" />;
-const Lama: React.FC = () => <Clip src="r308390.mp4" etq="IMAGEM REAL · FAIXA DE MARÉ" t="SOBE UM POUCO, DESCE UM POUCO" />;
+const Praia: React.FC = () => <Clip src="semlua/r218828.mp4" etq="IMAGEM REAL · MARÉ BAIXA" t="O MAR PARECE… PARADO" />;
+const Lama: React.FC = () => <Clip src="semlua/r308390.mp4" etq="IMAGEM REAL · FAIXA DE MARÉ" t="SOBE UM POUCO, DESCE UM POUCO" />;
 const Faixa: React.FC<{p?: number; titulo: string}> = ({p = 1, titulo}) => {
   const f = useCurrentFrame();
   const k = p < 1 ? interpolate(f, [6, 36], [1, p], clamp) : 1;
@@ -321,7 +178,7 @@ const Faixa: React.FC<{p?: number; titulo: string}> = ({p = 1, titulo}) => {
   );
 };
 const Areia: React.FC = () => <Faixa titulo="A FAIXA QUE APARECIA E SUMIA" />;
-const Caranguejo: React.FC = () => <Clip src="r314737.mp4" etq="IMAGEM REAL · ILUSTRATIVA" t="CARANGUEJOS, MEXILHÕES, ESTRELAS-DO-MAR" />;
+const Caranguejo: React.FC = () => <Clip src="semlua/r314737.mp4" etq="IMAGEM REAL · ILUSTRATIVA" t="CARANGUEJOS, MEXILHÕES, ESTRELAS-DO-MAR" />;
 const Encolhe: React.FC = () => <Faixa p={0.33} titulo="ENCOLHE PARA 1/3" />;
 const Fundo: React.FC = () => {
   const f = useCurrentFrame();
@@ -383,7 +240,7 @@ const Motor: React.FC = () => {
   );
 };
 const Ninguem: React.FC = () => <Grande t="QUANTO?" sub="NINGUÉM SABE DIZER" cor={OURO} s={180} />;
-const Respira: React.FC = () => <Clip src="r50784.mp4" ini={7} etq="IMAGEM REAL · MAR" t="PAROU DE RESPIRAR FUNDO" />;
+const Respira: React.FC = () => <Clip src="semlua/r50784.mp4" ini={7} etq="IMAGEM REAL · MAR" t="PAROU DE RESPIRAR FUNDO" />;
 
 // ---------- noite 1 ----------
 const PorDoSol: React.FC = () => {
@@ -415,8 +272,8 @@ const Paisagem: React.FC<{luz: number; titulo: string; sub?: string}> = ({luz, t
   </Ceu>
 );
 const LuaCheia: React.FC = () => <Paisagem luz={1} titulo="A LUZ DA LUA CHEIA" sub="DÁ PRA VER O CAMINHO E O ROSTO DE QUEM ESTÁ DO LADO" />;
-const Suficiente: React.FC = () => <Clip src="r50784.mp4" ini={3} etq="IMAGEM REAL · LUA SOBRE O MAR" t="FRACA, MAS SUFICIENTE" />;
-const SoEstrelas: React.FC = () => <Clip src="r31569.mp4" ini={4} etq="IMAGEM REAL · SÓ ESTRELAS" t="SOBRAM SÓ AS ESTRELAS" />;
+const Suficiente: React.FC = () => <Clip src="semlua/r50784.mp4" ini={3} etq="IMAGEM REAL · LUA SOBRE O MAR" t="FRACA, MAS SUFICIENTE" />;
+const SoEstrelas: React.FC = () => <Clip src="semlua/r31569.mp4" ini={4} etq="IMAGEM REAL · SÓ ESTRELAS" t="SOBRAM SÓ AS ESTRELAS" />;
 const Lux: React.FC = () => {
   const f = useCurrentFrame();
   const a = interpolate(f, [2, 20], [0, 1], clamp), b = interpolate(f, [16, 30], [0, 0.02], clamp);
@@ -455,7 +312,7 @@ const DeDia: React.FC = () => {
     </AbsoluteFill>
   );
 };
-const Laranja: React.FC = () => <Clip src="r128118.mp4" ini={3} etq="IMAGEM REAL · LUA NASCENDO" t="ENORME E LARANJA NO HORIZONTE" />;
+const Laranja: React.FC = () => <Clip src="semlua/r128118.mp4" ini={3} etq="IMAGEM REAL · LUA NASCENDO" t="ENORME E LARANJA NO HORIZONTE" />;
 const Vazio: React.FC = () => (
   <Ceu>
     <div style={{position: 'absolute', left: 160, top: 700, width: 160, height: 160, borderRadius: 80, background: '#ffb347', boxShadow: '0 0 100px #ff8a3a'}} />
@@ -475,7 +332,7 @@ const Osso: React.FC = () => {
     </AbsoluteFill>
   );
 };
-const Fases: React.FC = () => <Clip src="sv_fases.mp4" etq="VISUALIZAÇÃO NASA · DADOS DO LRO" t="29,5 DIAS" z={[1, 1.05]} />;
+const Fases: React.FC = () => <Clip src="semlua/sv_fases.mp4" etq="VISUALIZAÇÃO NASA · DADOS DO LRO" t="29,5 DIAS" z={[1, 1.05]} />;
 const Calendario: React.FC = () => {
   const f = useCurrentFrame();
   return (
@@ -504,8 +361,8 @@ const Parou: React.FC = () => (
 );
 
 // ---------- semanas: corais ----------
-const Coral1: React.FC = () => <Clip src="r263235.mp4" etq="IMAGEM REAL · RECIFE DE CORAL" t="QUEM MAIS VAI SENTIR FALTA" />;
-const Coral2: React.FC = () => <Clip src="r263244.mp4" etq="IMAGEM REAL · RECIFE DE CORAL" t="UMA VEZ POR ANO" />;
+const Coral1: React.FC = () => <Clip src="semlua/r263235.mp4" etq="IMAGEM REAL · RECIFE DE CORAL" t="QUEM MAIS VAI SENTIR FALTA" />;
+const Coral2: React.FC = () => <Clip src="semlua/r263244.mp4" etq="IMAGEM REAL · RECIFE DE CORAL" t="UMA VEZ POR ANO" />;
 const NoiteCerta: React.FC = () => (
   <AbsoluteFill style={{background: `radial-gradient(circle at 50% 45%, #121a2c, ${NOITE} 70%)`}}>
     <div style={{position: 'absolute', left: 560, top: 330, width: 500, height: 540, borderRadius: 30, background: '#f4f1ea', overflow: 'hidden'}}>
@@ -536,7 +393,7 @@ const Desova: React.FC<{n: number; titulo: string}> = ({n, titulo}) => {
 const Soltam: React.FC = () => <Desova n={140} titulo="MILHÕES DE CORAIS AO MESMO TEMPO" />;
 const Nevasca: React.FC = () => <Desova n={420} titulo="UMA NEVASCA DE BAIXO PRA CIMA" />;
 const Janela: React.FC = () => <Grande t="10–30 MIN" sub="A JANELA DA DESOVA" cor={OURO} />;
-const ComoSabem: React.FC = () => <Clip src="r263244.mp4" ini={7} etq="IMAGEM REAL · RECIFE DE CORAL" t="COMO ELES SABEM A HORA?" />;
+const ComoSabem: React.FC = () => <Clip src="semlua/r263244.mp4" ini={7} etq="IMAGEM REAL · RECIFE DE CORAL" t="COMO ELES SABEM A HORA?" />;
 const Arco: React.FC<{some?: boolean}> = ({some}) => {
   const f = useCurrentFrame();
   const p = interpolate(f, [4, 44], [0, 1], clamp);
@@ -634,8 +491,8 @@ const Contrario: React.FC = () => <Grande t="É O CONTRÁRIO" sub="A LUA DEIXA O
 const Guarda: React.FC = () => <Grande t="GUARDA ESSA." sub="ELA VOLTA NO FINAL" cor={CIANO} s={150} />;
 
 // ---------- séculos: eclipse ----------
-const Eclipse1: React.FC = () => <Foto src="nasa_GRC-2024-C-02640.jpg" etq="IMAGEM REAL · ECLIPSE TOTAL · 08/04/2024 · NASA" t="COISAS QUE SOMEM PRA SEMPRE" />;
-const Eclipse2: React.FC = () => <Foto src="nasa_GRC-2024-C-02616.jpg" etq="IMAGEM REAL · ECLIPSE TOTAL · 08/04/2024 · NASA" t="UMA COINCIDÊNCIA ABSURDA" z={[1.1, 1.25]} />;
+const Eclipse1: React.FC = () => <Foto src="semlua/nasa_GRC-2024-C-02640.jpg" etq="IMAGEM REAL · ECLIPSE TOTAL · 08/04/2024 · NASA" t="COISAS QUE SOMEM PRA SEMPRE" />;
+const Eclipse2: React.FC = () => <Foto src="semlua/nasa_GRC-2024-C-02616.jpg" etq="IMAGEM REAL · ECLIPSE TOTAL · 08/04/2024 · NASA" t="UMA COINCIDÊNCIA ABSURDA" z={[1.1, 1.25]} />;
 const Largo: React.FC = () => {
   const s = useSpring(4, {damping: 14, mass: 0.6});
   return (
@@ -804,9 +661,9 @@ const QuemCerto: React.FC = () => {
 const Escala: React.FC = () => <Grande t="MILHÕES DE ANOS" sub="NÃO DIAS" cor={OURO} s={160} />;
 
 // ---------- mas espera ----------
-const Espera: React.FC = () => <Clip src="r128118.mp4" ini={6} etq="IMAGEM REAL · LUA" t="MAS ESPERA. OLHA PRO CÉU DE NOVO." />;
-const EstaLa: React.FC = () => <Clip src="r7093.mp4" ini={2} etq="IMAGEM REAL · LUA" t="ELA ESTÁ LÁ." z={[1.1, 1.35]} />;
-const NaoSumiu: React.FC = () => <Clip src="sv_fases.mp4" ini={6} etq="VISUALIZAÇÃO NASA · DADOS DO LRO" t="A LUA NÃO SUMIU" z={[1, 1.05]} />;
+const Espera: React.FC = () => <Clip src="semlua/r128118.mp4" ini={6} etq="IMAGEM REAL · LUA" t="MAS ESPERA. OLHA PRO CÉU DE NOVO." />;
+const EstaLa: React.FC = () => <Clip src="semlua/r7093.mp4" ini={2} etq="IMAGEM REAL · LUA" t="ELA ESTÁ LÁ." z={[1.1, 1.35]} />;
+const NaoSumiu: React.FC = () => <Clip src="semlua/sv_fases.mp4" ini={6} etq="VISUALIZAÇÃO NASA · DADOS DO LRO" t="A LUA NÃO SUMIU" z={[1, 1.05]} />;
 const Cm: React.FC = () => {
   const f = useCurrentFrame();
   const p = interpolate(f, [4, 40], [0, 1], clamp);
@@ -870,11 +727,11 @@ const Lista: React.FC = () => {
     </AbsoluteFill>
   );
 };
-const Pedra: React.FC = () => <Foto src="nasa_art002e021278.jpg" etq="IMAGEM REAL · A TERRA VISTA DA ORION (ARTEMIS II) · NASA" t="ELA MOLDOU O MUNDO ONDE VOCÊ VIVE" />;
-const Volta: React.FC = () => <Foto src="nasa_art002e021278.jpg" etq="IMAGEM REAL · A TERRA VISTA DA ORION (ARTEMIS II) · NASA" t="E A GENTE ESTÁ VOLTANDO PRA LÁ" z={[1.25, 1.4]} pos="top" />;
-const Voltando: React.FC = () => <Foto src="nasa_SLS_MAF_20260401_ArtemisIILaunch_05.jpg" etq="IMAGEM REAL · LANÇAMENTO DA ARTEMIS II · 01/04/2026 · NASA" t="4 ASTRONAUTAS. A VOLTA NA LUA." />;
+const Pedra: React.FC = () => <Foto src="semlua/nasa_art002e021278.jpg" etq="IMAGEM REAL · A TERRA VISTA DA ORION (ARTEMIS II) · NASA" t="ELA MOLDOU O MUNDO ONDE VOCÊ VIVE" />;
+const Volta: React.FC = () => <Foto src="semlua/nasa_art002e021278.jpg" etq="IMAGEM REAL · A TERRA VISTA DA ORION (ARTEMIS II) · NASA" t="E A GENTE ESTÁ VOLTANDO PRA LÁ" z={[1.25, 1.4]} pos="top" />;
+const Voltando: React.FC = () => <Foto src="semlua/nasa_SLS_MAF_20260401_ArtemisIILaunch_05.jpg" etq="IMAGEM REAL · LANÇAMENTO DA ARTEMIS II · 01/04/2026 · NASA" t="4 ASTRONAUTAS. A VOLTA NA LUA." />;
 const Cinquenta: React.FC = () => <Grande t="1972 → 2026" sub="A PRIMEIRA VEZ EM MAIS DE 50 ANOS" cor={OURO} s={170} />;
-const Olha: React.FC = () => <Clip src="r128118.mp4" ini={9} etq="IMAGEM REAL · LUA" t="HOJE À NOITE, OLHA PRA CIMA." z={[1.0, 1.2]} />;
+const Olha: React.FC = () => <Clip src="semlua/r128118.mp4" ini={9} etq="IMAGEM REAL · LUA" t="HOJE À NOITE, OLHA PRA CIMA." z={[1.0, 1.2]} />;
 
 const Fim: React.FC = () => {
   const s = useSpring(4);
@@ -912,104 +769,13 @@ const PLANO: [string, React.FC][][] = [
     ['e esse afastamento lento', Lento], ['ha um bilhao e quatrocentos', Bilhao], ['foi a lua puxando', Esticou], ['as mares as noites claras', Lista], ['aquela bola de pedra', Pedra],
     ['e a gente esta voltando', Volta], ['em abril de 2026', Voltando], ['a primeira vez em mais', Cinquenta], ['e ela ainda esta ali', Olha]],
 ];
-const FRASES = PLANO.flat().map(([a]) => a);
-const CENAS = PLANO.flat().map(([, c]) => c);
-const CAP_DA_CENA = PLANO.flatMap((cap, k) => cap.map(() => k));
-const CORTES = ancoras(W, FRASES);
-const T = CORTES.map((i, k) => (k === 0 ? 0 : fr(W[i].t) - 1));
-const ULT = W[W.length - 1];
-const FALA = fr(ULT.t + ULT.d + 1.0);
-const FIM = FALA + fr(4);
-export const DURACAO = FIM;
-const GAP = fr(2.2);
-const INICIO_CAP = PLANO.map((_, k) => T[CAP_DA_CENA.indexOf(k)]);
-const HIP_INI = T[FRASES.indexOf('em 1993 um estudo')], HIP_FIM = T[FRASES.indexOf('mas espera olha pro ceu')] - GAP;
-
-// cartão de capítulo: cobre o silêncio antes da 1ª fala e sai no começo dela
-const CartaoCap: React.FC<{k: number}> = ({k}) => {
-  const f = useCurrentFrame();
-  const {durationInFrames: d} = useVideoConfig();
-  const c = CAPS[k];
-  const o = interpolate(f, [0, 6, d - 10, d], [0, 1, 1, 0], clamp);
-  const s = spring({frame: f - 4, fps: FPS, config: {damping: 14}});
-  return (
-    <AbsoluteFill style={{background: NOITE, opacity: o, justifyContent: 'center', alignItems: 'center'}}>
-      <div style={{width: 420 * s, height: 4, background: OURO, marginBottom: 40}} />
-      <div style={{fontFamily: FONTE, fontSize: 130, color: '#fff', letterSpacing: 4}}>{c.titulo}</div>
-      {c.sub && <div style={{fontFamily: FONTE, fontSize: 48, color: OURO, marginTop: 20, letterSpacing: 3, opacity: s}}>{c.sub}</div>}
-    </AbsoluteFill>
-  );
-};
-// legenda por frase (no máximo ~9 palavras por bloco)
-const BLOCOS = (() => {
-  const out: {ini: number; fim: number; txt: string}[] = [];
-  let cur: number[] = [];
-  const fecha = () => { if (cur.length) out.push({ini: fr(W[cur[0]].t), fim: fr(W[cur[cur.length - 1]].t + W[cur[cur.length - 1]].d) + 6, txt: cur.map((i) => W[i].w).join(' ')}); cur = []; };
-  W.forEach((w, i) => {
-    if (CORTES.includes(i) && cur.length) fecha();
-    cur.push(i);
-    const fimFrase = /[.?!…:]$/.test(w.w) || (/,$/.test(w.w) && cur.length >= 6) || cur.length >= 9;
-    if (fimFrase) fecha();
-  });
-  fecha();
-  out.forEach((b, k) => { if (k < out.length - 1) b.fim = Math.min(b.fim, out[k + 1].ini); });
-  return out;
-})();
-const Legenda: React.FC = () => {
-  const f = useCurrentFrame();
-  const b = BLOCOS.find((x) => f >= x.ini && f < x.fim);
-  if (!b) return null;
-  return (
-    <div style={{position: 'absolute', bottom: 60, left: 160, right: 160, textAlign: 'center'}}>
-      <span style={{fontFamily: FONTE, fontSize: 50, color: '#fff', padding: '8px 22px', borderRadius: 12, background: 'rgba(0,0,0,.55)', lineHeight: 1.35,
-        boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone'}}>{b.txt}</span>
-    </div>
-  );
-};
-const Canto: React.FC = () => {
-  const f = useCurrentFrame();
-  const k = INICIO_CAP.reduce((acc, t, i) => (f >= t - GAP ? i : acc), 0);
-  const volta = k === 7;
-  return (
-    <div style={{position: 'absolute', top: 44, left: 50, padding: '8px 20px', borderRadius: 12, background: 'rgba(0,0,0,.5)', border: `2px solid ${volta ? VERDE : OURO}`,
-      fontFamily: FONTE, fontSize: 28, color: volta ? VERDE : OURO, letterSpacing: 3}}>{volta ? '● ' : ''}{CAPS[k].canto}</div>
-  );
-};
-const Hipoteses: React.FC = () => (
-  <div style={{position: 'absolute', bottom: 150, right: 50, padding: '6px 16px', borderRadius: 10, border: `3px solid ${OURO}`, background: 'rgba(0,0,0,.6)', fontFamily: FONTE, fontSize: 26, color: OURO, letterSpacing: 3}}>HIPÓTESES</div>
-);
-const Entrada: React.FC<{children: React.ReactNode}> = ({children}) => {
-  const f = useCurrentFrame();
-  const o = interpolate(f, [0, 6], [0, 1], clamp);
-  return <AbsoluteFill style={{opacity: o}}>{children}</AbsoluteFill>;
-};
-
-export const Video: React.FC = () => (
-  <AbsoluteFill style={{background: '#000'}}>
-    <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
-    {CENAS.map((C, i) => {
-      const ini = T[i];
-      const fim = i < CENAS.length - 1 ? T[i + 1] : FALA;
-      const sat = CAPS[CAP_DA_CENA[i]].sat;
-      return (
-        <Sequence key={i} from={ini} durationInFrames={fim - ini}>
-          <AbsoluteFill style={{filter: sat < 1 ? `saturate(${sat})` : undefined}}><Entrada><C /></Entrada></AbsoluteFill>
-        </Sequence>
-      );
-    })}
-    <Sequence from={FALA} durationInFrames={FIM - FALA}><Fim /></Sequence>
-    {INICIO_CAP.slice(1).map((t, k) => <Sequence key={'c' + k} from={t - GAP - 3} durationInFrames={GAP + 22}><CartaoCap k={k + 1} /></Sequence>)}
-    <Sequence durationInFrames={FALA}><Canto /></Sequence>
-    <Sequence from={HIP_INI} durationInFrames={HIP_FIM - HIP_INI}><Hipoteses /></Sequence>
-    <Legenda />
-    <Audio src={staticFile('semlua/narracao.mp3')} />
-    <Audio src={staticFile('semlua/musica.mp3')} volume={(f) => interpolate(f, [0, 30, INICIO_CAP[7] - GAP, INICIO_CAP[7], FIM - 60, FIM], [0, 0.16, 0.16, 0.24, 0.24, 0], clamp)} />
-    {INICIO_CAP.slice(1).map((t, k) => <Sequence key={'w' + k} from={t - GAP - 8} durationInFrames={30}><Audio src={staticFile('sfx/whoosh.wav')} volume={0.25} /></Sequence>)}
-    <Sequence from={T[FRASES.indexOf('nao e bem assim')] + 10}><Audio src={staticFile('sfx/hit.wav')} volume={0.5} /></Sequence>
-    <Sequence from={T[FRASES.indexOf('o dia de seis horas e historia')] + 4}><Audio src={staticFile('sfx/hit.wav')} volume={0.4} /></Sequence>
-    <Sequence from={INICIO_CAP[7]}><Audio src={staticFile('sfx/hit.wav')} volume={0.4} /></Sequence>
-  </AbsoluteFill>
-);
+const L = criarLongo({
+  W, plano: PLANO, caps: CAPS, audio: 'semlua/narracao.mp3', musica: 'semlua/musica.mp3', volta: 7, fim: Fim,
+  selos: [{texto: 'HIPÓTESES', de: 'em 1993 um estudo', ate: 'mas espera olha pro ceu'}],
+  hits: [{frase: 'nao e bem assim', off: 10, vol: 0.5}, {frase: 'o dia de seis horas e historia', off: 4}],
+});
+export const Video = L.Video;
+export const DURACAO = L.DURACAO;
 
 // ---------- thumbnail ----------
 export const Thumb: React.FC = () => (
