@@ -4,12 +4,12 @@
 
 | # | Formato | Título | Potencial |
 |---|---|---|---|
-| 1 | Longo (~7 min) | A Terra vai morrer DUAS vezes, e o final é diferente do que te contaram | 🔥🔥🔥 9/10 |
+| 1 | Longo (~7,3 min) | A Terra vai morrer DUAS vezes, e o final é diferente do que te contaram | 🔥🔥🔥 9/10 |
 
 ---
 
 ## 1 · A Terra vai morrer DUAS vezes
-**Formato:** Longo, 1920x1080, ~7 min (~1.080 palavras), gancho + 8 capítulos com cartão próprio, POV em 2ª pessoa   **Status:** aguardando aprovação (v1)
+**Formato:** Longo, 1920x1080, ~7,3 min (~1.120 palavras), gancho + 8 capítulos com cartão próprio, POV em 2ª pessoa   **Status:** aguardando aprovação (v1)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: o molde vencedor do canal (POV, linha do tempo, "Mas espera…") com uma novidade real, um estudo de junho de 2026 que muda o final que todo mundo conhece, e uma escala que vai de 1 bilhão a um número com mil e cem zeros. Ponto mais fraco: o canal já tem o Short v33 do mesmo tema. A novidade da "segunda morte" precisa ficar clara no título e na thumb para não parecer repetido.
 **Ângulo:** POV na linha do tempo do fim ("você vê tudo acontecer"), com duas mortes da Terra (a da vida e a do Sol) e a reviravolta de 2026 no meio. A virada final é que planetas sobrevivem à morte das estrelas, e o Sol vira matéria-prima de novos mundos.
 **Tom de voz:** épico, sombrio, contemplativo, com assombro.
@@ -52,14 +52,15 @@ Seguindo a Pesquisas, nenhum dos dois crava "sobrevive" nem "é engolida".
 > Daqui a cerca de um bilhão de anos, você respira fundo. E não tem ar.
 > Um estudo publicado em 2021, na Nature Geoscience, calculou quanto tempo dura o oxigênio da nossa atmosfera. A resposta: mais ou menos um bilhão de anos.
 > Depois disso, a Terra vira um mundo de metano. Sem oxigênio pra respirar. Sem camada de ozônio pra segurar a radiação do Sol. A luz ultravioleta chega direto no chão.
-> E isso não acontece aos poucos, ao longo de bilhões de anos. Quando começa, o oxigênio despenca rápido, numa virada só.
+> E não é aos poucos. Depois de bilhões de anos estável, o oxigênio despenca, rápido pra escala da Terra, numa virada só. De volta a níveis de antes da vida complexa.
 > E o calor continua subindo. Alguns modelos mostram a água dos oceanos começando a escapar pro espaço, devagar, como vapor que nunca mais volta.
 > O céu azul que você conhece vai ser só lembrança.
 
 ### 2:05 · +2 bilhões de anos: a última planta
 > As plantas tentam resistir.
-> Estudos recentes calcularam até quando. As primeiras a desistir são as que mais aguentam calor hoje. Depois, todas as outras.
-> Em algum momento entre um e dois bilhões de anos, faz calor demais pra qualquer planta.
+> Com o Sol mais quente, as rochas vão sugando o gás carbônico do ar. E as plantas vivem desse gás.
+> As plantas comuns, que são quase toda a vegetação do planeta, morrem primeiro. As mais resistentes, como o milho e a cana, aguentam mais. Até que, por volta de um bilhão e trezentos e cinquenta milhões de anos, nem elas conseguem mais fazer fotossíntese.
+> Depois disso, é o calor que acaba com o resto. Antes dos dois bilhões de anos, faz calor demais pra qualquer planta.
 > A última folha verde da Terra seca. E sem plantas, não sobra nada pra comer, nada pra respirar, nada pra viver.
 > Essa é a primeira morte da Terra. O planeta continua lá, girando. Mas morto.
 
@@ -133,7 +134,7 @@ Seguindo a Pesquisas, nenhum dos dois crava "sobrevive" nem "é engolida".
   - Haqq-Misra e Wolf (*JGR Atmospheres* 2026, arXiv 2605.22404): a fotossíntese C4 acaba em ~1,35 bilhão de anos, e faz calor demais para todas as plantas em ~1,87 bilhão (E).
   - Graham, Halevy e Abbot (PSJ 2024): de 1 a ~1,86 bilhão (E).
   - A fala diz "entre um e dois bilhões".
-  - ⚠️ "As primeiras a desistir são as que mais aguentam calor hoje" é a minha leitura de que as plantas C4 (adaptadas a calor e seca) param primeiro no modelo, porque dependem de CO₂ baixo. **Peço confirmação à Pesquisas.** Se não bater, troco por "As primeiras a desistir são um grupo de plantas que inclui o milho e a cana".
+  - **Checagem da Pesquisas (27/10), frase corrigida:** com o CO₂ caindo, as C3 (~95% da vegetação) morrem primeiro, com limite de ~150 ppm (Lovelock e Whitfield 1982). As C4 (milho, cana) aguentam até ~10 ppm e param em ~1,35 bilhão de anos por falta de CO₂. Depois vem o calor: ~1,68 bilhão para a maioria e ~1,87 bilhão para todas.
 - **Instabilidade:**
   - Laskar e Gastineau (*Nature* 2009): ~1% das soluções com Mercúrio instável e possíveis colisões em menos de 5 bilhões de anos (E).
   - Kaib e Raymond (arXiv 2505.04737): estrelas passando aumentam o risco, e a estabilidade fica em ~98,5–99% (E).
@@ -152,7 +153,7 @@ Seguindo a Pesquisas, nenhum dos dois crava "sobrevive" nem "é engolida".
 - **KMT-2020-BLG-0414L:** planeta de ~1,9 massa terrestre em volta de uma anã branca, a ~4.000 anos-luz (Zhang et al., *Nature Astronomy* 2024). A fala diz "pode ser um retrato", que é analogia.
 - **Humanidade:** ~300 mil anos (*Homo sapiens*).
 - **Sol na metade da vida:** idade de ~4,6 bilhões de anos e ~5 bilhões até o fim do hidrogênio do núcleo (NASA), por isso "mais ou menos na metade".
-- ⚠️ **"O oxigênio despenca rápido, numa virada só":** Ozaki e Reinhard descrevem a desoxigenação como rápida depois de iniciada. **Peço confirmação à Pesquisas** da formulação.
+- **Desoxigenação:** "sharply", "rápida" (Ozaki e Reinhard, resumo arXiv 2103.02694), na escala geológica. A fala diz "rápido pra escala da Terra". Os "10 mil anos" de fonte secundária não entram.
 - ⚠️ **"Parede vermelha no horizonte":** consequência geométrica de um Sol com mais de 200 raios solares visto a ~1 UA, sem número na fala.
 - **Anãs brancas com restos de planetas:** 25–50% das próximas (AAS Nova, 18/02/2026). "Ver a poeira na luz da estrela" = metais pesados no espectro, que é a forma como esses restos são detectados.
 - **O que não entra:** o flash do hélio (sem fonte para o Sol) e Europa e Titã "habitáveis" no futuro.
