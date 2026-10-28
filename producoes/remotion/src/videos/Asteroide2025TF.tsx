@@ -65,7 +65,7 @@ const Estacao: React.FC = () => {
       <Real src="tf/iss_terra.mp4" zoom={[1.0, 1.08]} />
       <Sombra />
       <Rocha p={interpolate(f, [0, 30], [0.1, 0.9], clamp)} x0={1200} y0={500} x1={-150} y1={900} r={14} />
-      <Etiqueta texto="IMAGEM REAL · VISTA DA ISS · NASA · PEDRA: ANIMAÇÃO" real />
+      <Etiqueta texto="IMAGEM REAL · ISS/NASA · PEDRA: ANIMAÇÃO" real />
       <Titulo texto="NA ALTURA DA ESTAÇÃO ESPACIAL" y={330} size={88} cor={OURO} />
     </AbsoluteFill>
   );
@@ -236,7 +236,8 @@ const NenhumViu: React.FC = () => (
     <Real src="tf/radio.mp4" ini={7} zoom={[1.15, 1.25]} />
     <Sombra />
     <Etiqueta texto="IMAGEM REAL · RADIOTELESCÓPIO ILUSTRATIVO" real />
-    <Titulo texto="NENHUM TELESCÓPIO VIU ANTES" y={330} size={92} cor={VERMELHO} />
+    <AbsoluteFill style={{background: "linear-gradient(180deg, rgba(0,0,0,.65), transparent 40%)"}} />
+    <Titulo texto="NENHUM TELESCÓPIO VIU ANTES" y={330} size={92} cor="#fff" />
   </AbsoluteFill>
 );
 const Em2013: React.FC = () => {
@@ -256,7 +257,7 @@ const DoSol: React.FC = () => {
     <AbsoluteFill style={{background: 'linear-gradient(180deg, #0a1630, #2a3a66 60%, #e08a5a)', overflow: 'hidden'}}>
       <div style={{position: 'absolute', left: 820 - 260, top: 420 - 260, width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, #fffbe0, rgba(255,220,120,.6) 30%, transparent 70%)'}} />
       <Rocha p={interpolate(f, [0, 45], [0.1, 0.8], clamp)} x0={820} y0={420} x1={200} y1={1300} r={16} />
-      <Titulo texto="VINDO DA DIREÇÃO DO SOL" y={1360} size={84} />
+      <Titulo texto="VINDO DA DIREÇÃO DO SOL" y={1120} size={84} />
       <Etiqueta texto="ANIMAÇÃO" />
     </AbsoluteFill>
   );
@@ -309,8 +310,8 @@ const Cacar: React.FC = () => {
     <AbsoluteFill style={{background: 'linear-gradient(180deg, #02040c, #0c1630 70%)', overflow: 'hidden'}}>
       <Estrelas n={120} />
       <svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
-        <path d={`M540 1500 L${540 + Math.cos(a - 0.12) * 1500} ${1500 + Math.sin(a - 0.12) * 1500} L${540 + Math.cos(a + 0.12) * 1500} ${1500 + Math.sin(a + 0.12) * 1500} Z`} fill="rgba(76,201,240,.12)" />
-        <rect x={340} y={1500} width={400} height={420} fill="#c8ccd6" /><path d="M340 1500 A200 200 0 0 1 740 1500 Z" fill="#e4e7ee" />
+        <path d={`M540 1100 L${540 + Math.cos(a - 0.12) * 1500} ${1100 + Math.sin(a - 0.12) * 1500} L${540 + Math.cos(a + 0.12) * 1500} ${1100 + Math.sin(a + 0.12) * 1500} Z`} fill="rgba(76,201,240,.12)" />
+        <rect x={390} y={1180} width={300} height={260} fill="#5a6070" /><path d="M390 1180 A150 150 0 0 1 690 1180 Z" fill="#7a8090" />
       </svg>
       <Rocha p={interpolate(f, [0, 60], [0.2, 0.6], clamp)} x0={1100} y0={500} x1={-100} y1={800} r={10} />
       <Titulo texto="PRA CAÇAR JUSTAMENTE ESSAS" y={300} size={90} cor={OURO} />

@@ -54,7 +54,7 @@ const Gancho: React.FC = () => {
       <Sol />
       <Aviao x={interpolate(f, [0, 40], [700, 420])} y={1350 + Math.sin(f * 0.6) * 18} s={1.1} rot={Math.sin(f * 0.5) * 6} />
       {f % 9 < 3 && <AbsoluteFill style={{background: 'rgba(255,60,60,.18)'}} />}
-      <Etiqueta texto="IMAGEM REAL · SOL VISTO PELO SDO · NASA · AVIÃO: ILUSTRAÇÃO" real />
+      <Etiqueta texto="SOL REAL · SDO/NASA · AVIÃO: ILUSTRAÇÃO" real />
       <Titulo texto="O SOL PODE BAGUNÇAR" y={330} size={104} cor={OURO} />
     </AbsoluteFill>
   );
@@ -91,7 +91,7 @@ const Grade: React.FC<{n: number; titulo: string; sub?: string}> = ({n, titulo, 
   );
 };
 const SeisMil: React.FC = () => <Grade n={240} titulo="~6.000" sub="AVIÕES PRA CORRIGIR" />;
-const Data: React.FC = () => <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 40%, #1a1206, #050302 75%)'}}><Titulo texto="30/10/2025" y={760} size={190} cor={VERMELHO} /></AbsoluteFill>;
+const Data: React.FC = () => <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 40%, #1a1206, #050302 75%)'}}><Titulo texto="30/10/2025" y={780} size={150} cor={VERMELHO} /></AbsoluteFill>;
 const Voo: React.FC = () => <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 40%, #1a1206, #050302 75%)'}}><Card topo="30/10/2025" meio="JETBLUE 1230" rodape="CANCÚN → NEWARK" cor={VERMELHO} /></AbsoluteFill>;
 const A320: React.FC = () => {
   const f = useCurrentFrame();
@@ -154,7 +154,7 @@ const Alerta: React.FC = () => (
   <AbsoluteFill>
     <Sol />
     <AbsoluteFill style={{background: 'rgba(0,0,0,.35)'}} />
-    <Card topo="AIRBUS:" meio="“PODE CORROMPER DADOS”" rodape="ESSENCIAIS PROS COMANDOS DE VOO" cor={VERMELHO} y={1060} />
+    <Card topo="AIRBUS:" meio="“PODE CORROMPER DADOS”" rodape="ESSENCIAIS PROS COMANDOS DE VOO" cor={VERMELHO} y={760} />
     <Etiqueta texto="IMAGEM REAL · SOL VISTO PELO SDO · NASA" real />
   </AbsoluteFill>
 );
@@ -235,14 +235,7 @@ const Bit: React.FC = () => {
     </AbsoluteFill>
   );
 };
-const Errada: React.FC = () => (
-  <AbsoluteFill>
-    <Real src="aviao/codigo.mp4" />
-    <Sombra />
-    <Etiqueta texto="ANIMAÇÃO" />
-    <Titulo texto="INFORMAÇÃO ERRADA" y={330} size={120} cor={VERMELHO} />
-  </AbsoluteFill>
-);
+const Errada: React.FC = () => <Glitch texto="INFORMAÇÃO ERRADA" size={140} cor={VERMELHO} />;
 const Corrigido: React.FC = () => {
   const s = useSpring(2, {damping: 9, mass: 0.6});
   return (
@@ -260,8 +253,9 @@ const ProximoVoo: React.FC = () => (
     <Real src="aviao/asa.mp4" ini={6} zoom={[1.1, 1.15]} />
     <Sombra />
     <Etiqueta texto="IMAGEM REAL · ILUSTRATIVA" real />
-    <Titulo texto="SEU PRÓXIMO VOO NÃO ESTÁ EM RISCO" y={330} size={86} cor={VERDE} />
-    <Texto y={560} size={42} cor="#fff" delay={6}>POR ISSO</Texto>
+    <AbsoluteFill style={{background: "linear-gradient(180deg, rgba(0,0,0,.6), transparent 40%)"}} />
+    <Titulo texto="SEU PRÓXIMO VOO NÃO ESTÁ EM RISCO" y={330} size={86} cor="#fff" />
+    <Texto y={560} size={46} cor={VERDE} delay={6}>POR ISSO</Texto>
   </AbsoluteFill>
 );
 const CeuVazio: React.FC = () => {
