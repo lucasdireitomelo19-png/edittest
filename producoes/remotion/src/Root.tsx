@@ -7,6 +7,9 @@ import {Video as Tsunami, DURACAO as DUR_TSUNAMI} from './videos/Tsunami';
 import {Video as Asteroide2025TF, DURACAO as DUR_2025TF} from './videos/Asteroide2025TF';
 import {Video as SolAviao, DURACAO as DUR_SOLAVIAO} from './videos/SolAviao';
 import {Video as LuzesOlhos, DURACAO as DUR_LUZES} from './videos/LuzesOlhos';
+import {Video as MinasVietna, DURACAO as DUR_MINAS} from './videos/MinasVietna';
+import {Video as Amaterasu, DURACAO as DUR_AMATERASU} from './videos/Amaterasu';
+import {Video as MarteRadiacao, DURACAO as DUR_MARTE} from './videos/MarteRadiacao';
 import {Video as FimSolar, Thumb as ThumbFimSolar, ThumbA as ThumbFimSolarA, ThumbB as ThumbFimSolarB, DURACAO as DUR_FIMSOLAR} from './videos/FimSolar';
 import {Video as SemLua, Thumb as ThumbSemLua, ThumbA as ThumbSemLuaA, ThumbB as ThumbSemLuaB, DURACAO as DUR_SEMLUA} from './videos/SemLua';
 
@@ -27,6 +30,9 @@ export const Root = () => (
     <Still id="ThumbFimSolarB" component={ThumbFimSolarB} width={1920} height={1080} />
     <Composition id="Asteroide2025TF" component={Asteroide2025TF} durationInFrames={DUR_2025TF} fps={30} width={1080} height={1920} />
     <Composition id="LuzesOlhos" component={LuzesOlhos} durationInFrames={DUR_LUZES} fps={30} width={1080} height={1920} />
+    <Composition id="MinasVietna" component={MinasVietna} durationInFrames={DUR_MINAS} fps={30} width={1080} height={1920} />
+    <Composition id="Amaterasu" component={Amaterasu} durationInFrames={DUR_AMATERASU} fps={30} width={1080} height={1920} />
+    <Composition id="MarteRadiacao" component={MarteRadiacao} durationInFrames={DUR_MARTE} fps={30} width={1080} height={1920} />
     <Composition id="SolAviao" component={SolAviao} durationInFrames={DUR_SOLAVIAO} fps={30} width={1080} height={1920} />
     <Composition id="Tsunami" component={Tsunami} durationInFrames={DUR_TSUNAMI} fps={30} width={1080} height={1920} />
   </>
