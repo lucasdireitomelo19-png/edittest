@@ -55,7 +55,7 @@ Escolhido: o **1**. O contraste é imediato e dá para mostrar no 1º segundo (c
 ---
 
 ## 2 · Um asteroide passou na ALTURA da Estação Espacial
-**Formato:** Short (~52 s, ~140 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~56 s, ~155 palavras)   **Status:** aguardando aprovação (v1)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: um asteroide real e datado, quase na altura da ISS, visto só depois de passar, que é o padrão campeão do canal (asteroide + data). Ponto mais fraco: a pedra era minúscula e sem perigo, e a virada honesta precisa dizer isso. Chelyabinsk segura o medo real.
 **Ângulo:** "passou e ninguém viu", com escala crescente (uma pedra de 2 m que passou × uma de 20 m que explodiu).
 **Tom de voz:** seco, urgente, investigativo.
@@ -98,7 +98,7 @@ Escolhido: o **2**, com o número do 1 logo em seguida. "Altura da Estação Esp
 ---
 
 ## 3 · O SOL pode bagunçar os comandos de um avião
-**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~55 s, ~153 palavras)   **Status:** aguardando aprovação (v1)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: liga o espaço a algo do dia a dia (voar de avião), com um caso real e recente e um número enorme (6 mil aviões corrigidos). Ponto mais fraco: a honestidade exige "pode" e "a imprensa ligou", porque não está provado que o Sol causou a queda daquele voo. O medo tem que vir do alerta da Airbus, não do incidente.
 **Ângulo:** ameaça invisível do espaço no meio do cotidiano, com a virada "foi corrigido, e agora os engenheiros projetam pensando no Sol".
 **Tom de voz:** tenso, jornalístico, sem alarmismo.
@@ -112,9 +112,9 @@ Escolhido: o **2**. O gancho 1 afirma "sem ninguém tocar nos comandos", e isso 
 **Título:** `O SOL pode bagunçar os comandos de um avião ✈️☀️`
 
 > O Sol pode bagunçar os comandos de um avião. E a Airbus teve que corrigir seis mil deles.
-> Trinta de outubro de 2025. Um A320 da JetBlue, voando de Cancún pra Newark, perde altitude de repente. Pouso de emergência na Flórida. Mais de quinze pessoas vão pro hospital.
+> Trinta de outubro de 2025. Um A320 da JetBlue perde altitude de repente. Pouso de emergência na Flórida. Mais de quinze pessoas vão pro hospital.
 > Um mês depois, a Airbus solta um alerta: a radiação intensa do Sol pode corromper dados essenciais pros comandos de voo. A imprensa ligou o alerta àquele voo.
-> A reação foi imediata. A agência europeia de aviação emitiu uma diretiva de emergência. Cerca de seis mil aviões da família A320 precisaram de correção. A imensa maioria foi consertada em poucos dias.
+> A reação foi imediata. A agência europeia de aviação emitiu uma diretiva de emergência. Cerca de seis mil aviões da família A320 precisaram de correção.
 > Como o Sol faz isso? Ele dispara partículas cheias de energia. Algumas atravessam o avião e acertam um chip. Um único dado trocado pode virar uma informação errada.
 > O problema foi corrigido. O seu próximo voo não está em risco por isso.
 > Mas o céu não é vazio. E agora os aviões são projetados pensando no Sol.
