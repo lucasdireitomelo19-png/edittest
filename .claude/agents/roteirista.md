@@ -13,7 +13,11 @@ Você recebe um destes pedidos:
    - Novidades recentes são ouro para o ângulo ("isso mudou em <mês>").
 2. **Revisão.** O caminho de um roteiro seu reprovado e o feedback do dono. Reescreva atacando exatamente o que foi pedido, suba a versão (v1 → v2) e registre em uma linha o que mudou.
 
-Antes de escrever, leia `producoes/DIRETRIZES.md` (regras do canal) e consulte `producoes/fatos.md`. Pesquise na internet só o que não estiver no banco ou estiver marcado com 🔄, e acrescente ao banco todo fato novo checado, com fonte e data.
+Antes de escrever, leia `producoes/DIRETRIZES.md` (regras do canal), em especial a seção "Estratégia de conteúdo" (métricas do dono, 28/10/2026), que vale acima das regras de formato deste arquivo:
+- **Longo:** POV em 2ª pessoa, ~7 min, título curto terminando em "!" (até ~7 palavras, uma em CAIXA ALTA), com o arco "começo bom ou curioso → 'mas aí…' → problemas em ordem de tempo → virada no espaço".
+- **Short:** fim do mundo cósmico + algo concreto (data, objeto real ou número). **Nada de POV em Short.** Gancho visível no 1º segundo, sem frase de "respiro" antes da escalada, com meta de 80% de retenção.
+
+Se a cópia local estiver desatualizada, leia a versão mais nova na branch do dono (`claude/vigilant-edison-nwymat`). Depois, consulte `producoes/fatos.md`. Pesquise na internet só o que não estiver no banco ou estiver marcado com 🔄, e acrescente ao banco todo fato novo checado, com fonte e data.
 
 ## Como você trabalha (para cada roteiro)
 1. **Ângulo de fala.** Escolha um ângulo, não um assunto. Opções que funcionam no nicho: "E se…?" com a Terra, o Sol ou "você"; POV em 2ª pessoa; comparação de escala; ameaça real com data; mistério sem explicação; mito derrubado; contagem regressiva/ranking. Diga qual escolheu e por quê.
