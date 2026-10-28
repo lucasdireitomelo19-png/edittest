@@ -6,14 +6,14 @@
 
 | # | Formato | Título | Potencial |
 |---|---|---|---|
-| 1 | Short | A cápsula pousou PERFEITA. A tripulação, não. | 🔥🔥🔥 9/10 |
+| 1 | Short | ~~A cápsula pousou PERFEITA. A tripulação, não.~~ (descartado) | 🔥🔥🔥 9/10 |
 | 3 | Short | O SOL pode bagunçar os comandos de um avião | 🔥🔥 8/10 |
 | 2 | Short | Um asteroide passou na ALTURA da Estação Espacial | 🔥🔥 8/10 |
 
 ---
 
 ## 1 · A cápsula pousou PERFEITA. A tripulação, não.
-**Formato:** Short (~55 s, ~150 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~55 s, ~150 palavras)   **Status:** DESCARTADO pelo dono (28/10)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: um caso real, pouco conhecido no Brasil, com data e nomes, e um gancho de contraste imediato ("pousou perfeita… já estavam mortos"). A virada honesta dá sentido à tragédia. Ponto mais fraco: não é "fim do mundo cósmico" e sim tragédia humana no espaço, então foge um pouco da linha campeã. O contraste visual (cápsula intacta × escotilha aberta) deve segurar.
 **Ângulo:** tragédia real em contagem de minutos, com respeito, e a virada "é por causa deles que…".
 **Tom de voz:** sombrio, contido, respeitoso.
@@ -55,7 +55,7 @@ Escolhido: o **1**. O contraste é imediato e dá para mostrar no 1º segundo (c
 ---
 
 ## 2 · Um asteroide passou na ALTURA da Estação Espacial
-**Formato:** Short (~56 s, ~155 palavras)   **Status:** aguardando aprovação (v2)
+**Formato:** Short (~56 s, ~155 palavras)   **Status:** APROVADO pelo dono (28/10, v2)
 **v1 → v2 (esclarecimento da Pesquisas, 28/10):**
 - altitude "cerca de 400 km" (JPL ~409 km × ESA 428 ± 7 km);
 - visto "poucas horas depois" (as fontes divergem sobre qual telescópio viu primeiro);
@@ -104,7 +104,7 @@ Escolhido: o **2**, com o número do 1 logo em seguida. "Altura da Estação Esp
 ---
 
 ## 3 · O SOL pode bagunçar os comandos de um avião
-**Formato:** Short (~55 s, ~153 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~55 s, ~153 palavras)   **Status:** APROVADO pelo dono (28/10, v1)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: liga o espaço a algo do dia a dia (voar de avião), com um caso real e recente e um número enorme (6 mil aviões corrigidos). Ponto mais fraco: a honestidade exige "pode" e "a imprensa ligou", porque não está provado que o Sol causou a queda daquele voo. O medo tem que vir do alerta da Airbus, não do incidente.
 **Ângulo:** ameaça invisível do espaço no meio do cotidiano, com a virada "foi corrigido, e agora os engenheiros projetam pensando no Sol".
 **Tom de voz:** tenso, jornalístico, sem alarmismo.
