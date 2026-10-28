@@ -101,7 +101,8 @@ Escolhido: o **2**, que coloca a rotina primeiro e quebra na segunda frase. O "j
 ---
 
 ## 3 · Já teve TSUNAMI no Brasil?
-**Formato:** Short (~56 s, ~154 palavras)   **Status:** APROVADO pelo dono (24/10, v3)
+**Formato:** Short (~56 s, ~154 palavras)   **Status:** APROVADO pelo dono (28/10, v4 sem POV)
+**v3 → v4 (dono, 28/10):** sai o POV, que a Estratégia de conteúdo proíbe em Short. Novo gancho: "Em 1755, o mar invadiu Pernambuco. E a culpa foi de um terremoto em Portugal." O resto continua igual.
 **v2 → v3 (checagem da Pesquisas, 24/10):** as alturas de ~1,7–1,9 m não estão no artigo (só na imprensa) e saíram. Entram as cartas de 1756 ("o mar entrou uma légua terra adentro" em Lucena e Tamandaré), que são evidência histórica e deixam o meio mais forte. O final perdeu os "dois metros".
 **v1 → v2 (dono, 24/10):** gancho mais apelativo, que anuncia primeiro o que vai acontecer com você ("um meteoro vai explodir em cima da sua cidade") e só depois mostra a cena e o fato real. A virada honesta do fim continua.
 **Potencial viral:** 🔥 6/10 · Ponto mais forte: é uma curiosidade local que contraria o senso comum ("o Brasil nunca teve tsunami"), e brasileiro comenta e compartilha. Ponto mais fraco: a evidência é hipótese, o visual real é pobre (mapas e gravuras) e o final não pode exagerar. Um título com data e lugar subiria a nota, como `Em 1755, um TSUNAMI pode ter chegado em Pernambuco`.
@@ -114,11 +115,10 @@ Escolhido: o **2**, que coloca a rotina primeiro e quebra na segunda frase. O "j
 
 Escolhido: o **2**. O POV com o mar subindo sem motivo dá o arrepio, e o "1755" vem logo em seguida.
 
-**Título:** `Já teve TSUNAMI no Brasil? 🌊🇧🇷`
+**Título:** `Em 1755, um TSUNAMI pode ter chegado ao Brasil 🌊🇧🇷` (v4; antes: `Já teve TSUNAMI no Brasil?`)
 
-> Um tsunami vai atingir a praia onde você está. E essa praia fica no Brasil.
-> O mar começa a subir. Sem tempestade. Sem vento.
-> É primeiro de novembro de 1755. No mesmo dia, do outro lado do oceano, um terremoto destruiu Lisboa. E empurrou uma onda que atravessou o Atlântico.
+> Em 1755, o mar invadiu Pernambuco. E a culpa foi de um terremoto em Portugal.
+> Primeiro de novembro de 1755. Um terremoto destruiu Lisboa. E empurrou uma onda que atravessou o Atlântico inteiro.
 > Ela chegou mesmo aqui? Cartas da época contam que, em Lucena, na Paraíba, e em Tamandaré, em Pernambuco, o mar entrou uma légua terra adentro. Vários quilômetros.
 > E em 2022, cientistas acharam em Pontinhas, Pernambuco, camadas de areia do mar onde ela não devia estar.
 > Ainda não é prova. Os cientistas chamam de possível evidência. Mas é uma pista séria.
