@@ -14,7 +14,7 @@
 ---
 
 ## 1 · Astronautas veem LUZES de olhos fechados (HOJE)
-**Formato:** Short (~54 s, ~149 palavras)   **Status:** aguardando aprovação (v2, ganchos mais fortes a pedido do dono, 28/10)
+**Formato:** Short (~54 s, ~149 palavras)   **Status:** APROVADO pelo dono (28/10, v2)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: um fato estranho, real e verificável (Apollo 11, 15, 16 e 17), com um gancho sensorial que dá para mostrar no 1º segundo (tela preta com clarões). Ponto mais fraco: a causa exata não está resolvida, então o final se apoia na ideia de que "a radiação te atravessa", e não numa revelação fechada.
 **Ângulo:** mistério real em escalada (relato → teste → detector → ainda hoje), com uma virada que traz para o corpo do espectador sem POV.
 **Tom de voz:** misterioso, sombrio, preciso.
@@ -56,7 +56,7 @@ Escolhido: o **2**, a versão do 1 sem POV. Tela preta com flashes no 1º segund
 ---
 
 ## 2 · O SOL explodiu minas no Vietnã em 1972 (29/10)
-**Formato:** Short (~57 s, ~159 palavras)   **Status:** aguardando aprovação (v2, ganchos mais fortes a pedido do dono, 28/10)
+**Formato:** Short (~57 s, ~159 palavras)   **Status:** APROVADO pelo dono (28/10, v2)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: um caso real e quase desconhecido, com imagem forte (minas explodindo sozinhas) e uma reviravolta histórica (a Lua estava vazia por pura sorte). Ponto mais fraco: o espectador precisa entender o que é uma tempestade solar em 1 frase.
 **Ângulo:** mistério militar → culpado no espaço → "quase pegou astronautas", com uma virada para Marte.
 **Tom de voz:** tenso, cinematográfico, histórico.
@@ -95,7 +95,7 @@ Escolhido: o **2**, que é o mais visual (explosões no mar no 1º segundo) e gu
 ---
 
 ## 3 · Uma partícula de ORIGEM desconhecida atingiu a Terra (29/10)
-**Formato:** Short (~57 s, ~159 palavras)   **Status:** aguardando aprovação (v2, ganchos mais fortes a pedido do dono, 28/10)
+**Formato:** Short (~57 s, ~159 palavras)   **Status:** APROVADO pelo dono (28/10, v2)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: um mistério real e recente (publicado na *Science*), com número absurdo e uma citação de cientista ("não existe nada lá"). Ponto mais fraco: conceito abstrato e sem perigo, e o visual depende de animação (chuva de partículas, mapa do céu).
 **Ângulo:** um objeto real com energia absurda, uma direção impossível e um mistério sem resposta.
 **Tom de voz:** misterioso, crescente, com assombro.
@@ -135,7 +135,7 @@ Escolhido: o **2**, mais curto e com a mesma promessa do 1. A chuva de partícul
 ---
 
 ## 4 · Ir a MARTE já estoura o limite de radiação da NASA (29/10)
-**Formato:** Short (~53 s, ~145 palavras)   **Status:** aguardando aprovação (v2, ganchos mais fortes a pedido do dono, 28/10)
+**Formato:** Short (~53 s, ~145 palavras)   **Status:** APROVADO pelo dono (28/10, v2)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: liga um sonho popular (ir a Marte) a um número concreto que derruba o sonho (passa do limite antes de pousar). Ponto mais fraco: muitos números (mSv, dias), então a tela precisa simplificar com uma barra enchendo.
 **Ângulo:** um "problema que ninguém conta" com um número que vai enchendo e uma virada de engenharia.
 **Tom de voz:** sério, direto, um pouco sombrio.
