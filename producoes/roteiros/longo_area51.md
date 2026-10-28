@@ -10,7 +10,7 @@
 ---
 
 ## 1 · Você chegou na cerca da ÁREA 51!
-**Formato:** Longo, 1920x1080, ~7 min (~1.010 palavras), abertura em POV + 8 capítulos com selo fixo   **Status:** aguardando aprovação (v1)
+**Formato:** Longo, 1920x1080, ~7 min (~1.010 palavras), abertura em POV + 8 capítulos com selo fixo   **Status:** APROVADO pelo dono (28/10, v1). Título A por padrão (o dono não escolheu; segue a Estratégia de conteúdo).
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: tema de busca altíssima, publicado na véspera do Halloween, com documentos reais que derrubam o mito e um segredo verdadeiro mais sombrio que o mito (os trabalhadores doentes e o decreto presidencial). Ponto mais fraco: não é o POV minuto a minuto que é o carro-chefe do canal. O POV fica só na abertura e no capítulo da cerca, porque depois do portão tudo seria invenção.
 **Ângulo:** "verdade × mito", com selo em cada capítulo, e a virada de que o segredo real não é alienígena.
 **Tom de voz:** investigativo, sombrio, cético, sem deboche.
