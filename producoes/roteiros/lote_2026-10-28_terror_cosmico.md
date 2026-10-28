@@ -55,7 +55,13 @@ Escolhido: o **1**. O contraste é imediato e dá para mostrar no 1º segundo (c
 ---
 
 ## 2 · Um asteroide passou na ALTURA da Estação Espacial
-**Formato:** Short (~56 s, ~155 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~56 s, ~155 palavras)   **Status:** aguardando aprovação (v2)
+**v1 → v2 (esclarecimento da Pesquisas, 28/10):**
+- altitude "cerca de 400 km" (JPL ~409 km × ESA 428 ± 7 km);
+- visto "poucas horas depois" (as fontes divergem sobre qual telescópio viu primeiro);
+- tamanho de 1 a 3 m (ESA);
+- Chelyabinsk "vinha da direção do Sol" (Jenniskens, NASA Ames/SETI, na cobertura dos artigos da *Science* de 2013, KQED).
+
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: um asteroide real e datado, quase na altura da ISS, visto só depois de passar, que é o padrão campeão do canal (asteroide + data). Ponto mais fraco: a pedra era minúscula e sem perigo, e a virada honesta precisa dizer isso. Chelyabinsk segura o medo real.
 **Ângulo:** "passou e ninguém viu", com escala crescente (uma pedra de 2 m que passou × uma de 20 m que explodiu).
 **Tom de voz:** seco, urgente, investigativo.
@@ -69,15 +75,15 @@ Escolhido: o **2**, com o número do 1 logo em seguida. "Altura da Estação Esp
 **Título:** `Um asteroide passou na ALTURA da Estação Espacial ☄️`
 
 > Um asteroide passou na altura da Estação Espacial. E ninguém viu chegar.
-> Primeiro de outubro de 2025. Uma rocha chamada 2025 TF passou a quatrocentos e nove quilômetros da superfície, em cima da Antártida, a mais de vinte quilômetros por segundo.
+> Primeiro de outubro de 2025. Uma rocha chamada 2025 TF passou a cerca de quatrocentos quilômetros da superfície, em cima da Antártida, a mais de vinte quilômetros por segundo.
 > Foi a segunda passagem mais próxima já registrada.
-> E a primeira vez que um telescópio viu essa pedra foi quase seis horas depois que ela já tinha passado.
-> Calma: ela tinha uns dois metros. Se tivesse entrado na atmosfera, ia se desfazer lá em cima. Sem perigo.
+> E a primeira vez que um telescópio viu essa pedra foi poucas horas depois que ela já tinha passado.
+> Calma: ela tinha de um a três metros. Se tivesse entrado na atmosfera, ia se desfazer lá em cima. Sem perigo.
 > Mas pensa no que isso quer dizer. Uma pedra cruzou a altura dos astronautas, e nenhum telescópio do planeta viu antes.
-> Em 2013, outra pedra chegou sem aviso. Essa tinha uns vinte metros. Explodiu sobre Chelyabinsk, na Rússia. Mais de sete mil prédios danificados. Mil e quinhentos feridos.
+> Em 2013, outra pedra chegou sem aviso. Vinha da direção do Sol, e ninguém viu. Essa tinha uns vinte metros. Explodiu sobre Chelyabinsk, na Rússia. Mais de sete mil prédios danificados. Mil e quinhentos feridos.
 > As pequenas a gente ainda perde. É por isso que novos telescópios estão sendo construídos pra caçar justamente essas.
 
-**Tela:** "01/10/2025 · 2025 TF"; "409 KM"; "~2 M · SEM PERIGO"; "VISTO ~6 H DEPOIS"; "CHELYABINSK 2013 · ~20 M · 1.500 FERIDOS".
+**Tela:** "01/10/2025 · 2025 TF"; "~400 KM"; "1–3 M · SEM PERIGO"; "VISTO HORAS DEPOIS"; "CHELYABINSK 2013 · ~20 M · 1.500 FERIDOS".
 **Visual:**
 - Animação da órbita da ISS com a trajetória do asteroide cruzando (ANIMAÇÃO).
 - Antártida em mapa real (anim/geo).
@@ -91,7 +97,7 @@ Escolhido: o **2**, com o número do 1 logo em seguida. "Altura da Estação Esp
 - 2ª passagem mais próxima já registrada; a 1ª é a do 2020 VT4 (Watchers).
 - ~1,2–2,7 m, sem perigo.
 - Chelyabinsk: ~20 m, ~7.200 prédios danificados, ~1.500 feridos (`fatos.md`).
-- ⚠️ **Contradição no pacote:** o item 5 diz que um observatório brasileiro achou o objeto "cerca de 1 dia antes da passagem", mas o item 2 diz que a primeira observação foi depois. Parece se referir a outro objeto. **Ficou de fora** até a Pesquisas esclarecer. Também ficou de fora "veio do lado do Sol", que é da mesma fonte, e por isso o roteiro diz só "ninguém viu chegar".
+- **Contradição resolvida (Pesquisas, 28/10):** o SONEAR e o "lado do Sol" do pacote eram do 2019 OK, não do 2025 TF. O 2025 TF foi visto "a few hours after it had passed Earth" (ESA), e o "lado do Sol" dele **não foi confirmado**, então não entra. Chelyabinsk vindo da direção do Sol: confirmado (Jenniskens/KQED).
 - ⚠️ **"Na altura da Estação Espacial":** a ISS orbita a ~400–420 km. A fala diz "na altura", e não "mais perto que", porque a diferença é pequena e varia.
 - ⚠️ **O que não entra:** 2019 OK (o tamanho é estimativa) e energia de impacto (as fontes divergem).
 
