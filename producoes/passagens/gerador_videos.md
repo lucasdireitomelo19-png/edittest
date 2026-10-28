@@ -1,6 +1,6 @@
 # Passagem · Gerador de Vídeos (Produção de Vídeo)
 
-Atualizado em 28/10/2026, na troca da conversa `session_01RMuyuTR7uKM4etrPUUhNcQ` por uma nova.
+Atualizado em 28/10/2026 pela conversa `session_014uAw8CBbLDWXsKRFv4J98p`, que substituiu a `session_01RMuyuTR7uKM4etrPUUhNcQ`.
 Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que o pedido envolver.
 
 ## Papel
@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-62.
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-66.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Painel:** https://claude.ai/artifact/MYN7cXDqxFUwnWPJCYtSWM (avisos: ver `CLAUDE.md`).
 - **Agentes:**
@@ -17,10 +17,11 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 - **Roteiros novos** ficam na branch `claude/practical-cannon-ly7fw1`, em `producoes/roteiros/`. Use `git fetch origin claude/practical-cannon-ly7fw1` e depois `git show origin/claude/practical-cannon-ly7fw1:<arquivo>`.
 
 ## Chaves (nunca imprima o valor; cole direto no comando)
-- **ElevenLabs** (voz Brian): a chave não fica no repositório. Peça ao dono, ou procure se ela está nas Network secrets.
-  - Restam ~2,1 mil caracteres; a cota renova em 18/11/2026.
+- **ElevenLabs** (voz Brian): a chave não fica no repositório. O dono passou uma nova em 28/10 (começa com `sk_`; o código hex que não começa com `sk_` é só o ID da chave e não funciona). Se a conversa for nova, peça de novo.
+  - Plano starter, 30.102 caracteres por ciclo. Restam ~3,9 mil depois do tsunami v4; a cota renova em 18/11/2026.
   - **Não dá para o longo da Área 51** (~6 mil caracteres). Avise o dono antes de narrar.
-- **Pixabay:** a chave antiga dá 401 e o proxy não injeta outra. Use a biblioteca local `pipeline/src/*.mp4` (534 clipes: `na_*` NASA, `pb_*` Pixabay, `es_*` ESO), NASA Images e SVS (`pipeline/svs.py`).
+- **Pixabay:** dá erro de chave (o proxy não injeta). A biblioteca `pipeline/src/*.mp4` **não vem** num container novo (é ignorada pelo git), nem os mp4 de `remotion/public/*`.
+- **Imagens que funcionam:** NASA Images (`images-api.nasa.gov`, `asset/<id>`), SVS (`pipeline/svs.py`) e gravuras históricas do Rijksmuseum (`data.rijksmuseum.nl/search/collection?imageAvailable=true&title=...`, Linked Art → `iiif.micr.io/<id>/full/1600,/0/default.jpg`, domínio público). O Wikimedia Commons deu 429 a sessão inteira.
 
 ## Regras do dono que valem
 - Entrega direta na versão final, sem storyboard nem prévia ("Não quero mais prévia, quero só o vídeo na versão final", 28/10).
@@ -55,41 +56,10 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
   - nada de cena de respiro antes da escalada.
 
 ## Estado atual e pendências (em ordem)
-1. **Lote radiação #2–#4, para 29/10.**
-   - O roteiro é `producoes/roteiros/lote_2026-10-28_radiacao.md` (branch practical-cannon). As notas de tela de cada um estão lá.
-   - As narrações Brian já estão prontas:
-     - `videos/v55_minas_vietna` (47,5 s);
-     - `videos/v56_amaterasu` (46,4 s);
-     - `videos/v57_marte_radiacao` (42,6 s).
-   - Falta:
-     1. copiar `narracao.mp3` e `palavras.json` para `remotion/public/<pasta>`;
-     2. escrever `MinasVietna.tsx`, `Amaterasu.tsx` e `MarteRadiacao.tsx` e registrar no `Root.tsx`;
-     3. fazer a revisão interna e o render final;
-     4. criar as linhas lado-63, lado-64 e lado-65;
-     5. escrever os docs 32, 33 e 34.
-   - **#2 Minas no Vietnã:**
-     - mapa do Vietnã com pino em Haiphong;
-     - SDO com a etiqueta "imagem de outra erupção" (`na_sdo_erupcao` tem título da NASA no início, então use ss > 5);
-     - mar em `pb_ondas_tempestade` e `pb_en_tempestade_mar` (real), explosões como ilustração;
-     - Lua vazia em `na_lua_apollo17`.
-     - Não dizer "teria morrido".
-   - **#3 Amaterasu:**
-     - chuva de partículas em MG sobre `pb_deserto` (real) logo no 1º segundo;
-     - hipóteses marcadas como hipótese.
-   - **#4 Marte:**
-     - barra de dose estourando no 1º segundo;
-     - imagens NASA: PIA14831 (cruzeiro MSL, ILUSTRAÇÃO), PIA16101 ou PIA16077 (solo de Marte, real) e PIA23302 (humanos em Marte, ILUSTRAÇÃO).
-2. **Short do tsunami v4 (sem POV), aprovado em 28/10.**
-   - Roteiro #3 em `producoes/roteiros/lote_2026-10-24_pov_catastrofes.md` (branch practical-cannon). Substitui a v3 (`src/videos/Tsunami.tsx` e `public/tsunami` são reaproveitáveis).
-   - Título: "Em 1755, um TSUNAMI pode ter chegado ao Brasil 🌊🇧🇷".
-   - Tela:
-     - "01/11/1755";
-     - mapa com pino em Lisboa e a onda até o Nordeste;
-     - "CARTA DE 1756: '1 LÉGUA TERRA ADENTRO'";
-     - "HIPÓTESE" fixo no trecho do Brasil.
-   - Gravuras de Lisboa de 1755 (domínio público).
-   - Precisa de narração nova (~800 caracteres).
-3. **Longo da Área 51, publicação na sexta 30/10.**
+0. **Entregues em 28/10** (Central como Pronto, MP4 no chat, docs 32–35, LadoSombrio avisado):
+   - lado-63 Minas no Vietnã, lado-64 Amaterasu e lado-65 Marte (lote radiação #2–#4, para 29/10);
+   - lado-66 Tsunami 1755 v4 sem POV.
+1. **Longo da Área 51, publicação na sexta 30/10.**
    - Roteiro em `producoes/roteiros/longo_area51.md` (branch practical-cannon), ~7 min, 8 capítulos "verdade × mito".
    - Selos por capítulo:
      - 1, 4, 5 e 6: DOCUMENTADO;
@@ -105,6 +75,6 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
      - não pode: Google Earth, Maxar, AP/Getty, Lazar/KLAS ou filmes.
    - Nunca afirmar alienígenas.
    - **Bloqueio:** a cota do ElevenLabs não basta. É preciso perguntar ao dono (nova cota/chave ou edge-tts provisório).
-4. **Escolhas do dono em aberto:**
+2. **Escolhas do dono em aberto:**
    - thumb do lado-58 (A ou B, stills ThumbA e ThumbB em `SemLua`);
    - troca do título do lado-58 (sugestão: "Você acorda e a Lua SUMIU!").

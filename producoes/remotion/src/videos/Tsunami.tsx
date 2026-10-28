@@ -1,10 +1,10 @@
-// Short POV "Já teve TSUNAMI no Brasil?" (Lisboa 1755). Roteiro do Roteirista, pré-aprovado pelo dono.
-// Texto v3 (cartas de 1756 + Dourado et al., J. South Am. Earth Sci. 2022). SÓ STORYBOARD até o dono aprovar a v3. Tempo das palavras estimado.
-// "HIPÓTESE" fica fixo no canto durante o trecho do Brasil.
+// Short "Em 1755, um TSUNAMI pode ter chegado ao Brasil" (Lisboa 1755). Roteiro do Roteirista (lote POV catástrofes #3), v4 sem POV, aprovado pelo dono em 28/10.
+// Texto v4 (cartas de 1756 + Dourado et al., J. South Am. Earth Sci. 2022). Entrega direta na versão final, voz Brian.
+// "HIPÓTESE" fica fixo no canto durante o trecho do Brasil. Gravuras de 1755: Rijksmuseum (domínio público). Praias: ilustração própria (sem clipe real disponível).
 import React from 'react';
-import {AbsoluteFill, Sequence, interpolate, spring, useCurrentFrame, useVideoConfig, random, Easing} from 'remotion';
+import {AbsoluteFill, Img, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig, random, Easing} from 'remotion';
 import {
-  Short, montar, Palavra, Titulo, Texto, Etiqueta, Real, Sombra, Glitch, Pino, proj, caminho,
+  Short, montar, Palavra, Titulo, Texto, Etiqueta, Sombra, Glitch, Pino, proj, caminho,
   useSpring, shake, clamp, FONTE, OURO, CIANO, VERMELHO, VERDE, FPS,
 } from '../comum';
 import palavras from './tsunami.palavras.json';
@@ -12,8 +12,8 @@ import atlantico from './dados/atlantico.json';
 
 const W = palavras as Palavra[];
 const FRASES = [
-  'um tsunami vai atingir', 'e essa praia fica no brasil', 'o mar comeca a subir', 'sem tempestade', 'e primeiro de novembro', 'no mesmo dia',
-  'um terremoto destruiu lisboa', 'e empurrou uma onda', 'ela chegou mesmo aqui', 'cartas da epoca contam', 'em lucena na paraiba', 'o mar entrou uma legua',
+  'em 1755 o mar', 'invadiu pernambuco', 'e a culpa foi', 'de um terremoto em portugal', 'primeiro de novembro', 'de 1755 um terremoto', 'destruiu lisboa',
+  'e empurrou uma onda', 'que atravessou o atlantico', 'ela chegou mesmo aqui', 'cartas da epoca contam', 'em lucena na paraiba', 'o mar entrou uma legua',
   'varios quilometros', 'e em 2022 cientistas', 'camadas de areia do mar', 'ainda nao e prova', 'os cientistas chamam', 'mas e uma pista seria',
   'e pode acontecer de novo', 'o atlantico pode mandar', 'mas o brasil fica longe', 'que criam os tsunamis gigantes', 'nao e o mega tsunami',
   'mas numa praia lotada', 'o mar entrando sem aviso', 'ja e o bastante',
@@ -26,57 +26,62 @@ const LISBOA: [number, number] = [-9.14, 38.72];
 const TAMANDARE: [number, number] = [-35.1, -8.76];
 const LUCENA: [number, number] = [-34.87, -6.9];
 
-const Praia: React.FC = () => (
-  <AbsoluteFill>
-    <Real src="tsunami/r332784.mp4" ini={1} />
-    <Sombra />
-    <Etiqueta texto="IMAGEM REAL · PRAIA ILUSTRATIVA" real />
-    <Titulo texto="UM TSUNAMI VAI ATINGIR SUA PRAIA" y={330} size={88} />
-  </AbsoluteFill>
-);
-const NoBrasil: React.FC = () => {
-  const s = useSpring(4, {damping: 9, mass: 0.6});
+// praia do Nordeste ilustrada: mar no alto, areia embaixo; `agua` 0..1 = quanto o mar já avançou na areia
+const PraiaMG: React.FC<{agua: number; pessoas?: boolean}> = ({agua, pessoas}) => {
+  const f = useCurrentFrame();
+  const y = 980 + agua * 760;
+  const borda = Array.from({length: 28}, (_, k) => `L${k * 40} ${y + Math.sin(k * 0.7 + f * 0.25) * 14}`).join(' ');
   return (
-    <AbsoluteFill>
-      <Real src="tsunami/r998.mp4" ini={2} />
-      <Sombra />
-      <Etiqueta texto="IMAGEM REAL · ILUSTRATIVA" real />
-      <Titulo texto="E ESSA PRAIA FICA" y={330} size={92} />
-      <div style={{position: 'absolute', top: 470, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: 170, color: VERDE,
-        transform: `scale(${0.6 + 0.4 * s})`, opacity: s, textShadow: `0 0 30px rgba(0,0,0,.8), 0 8px 0 ${OURO}`}}>NO BRASIL</div>
+    <svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
+      <defs>
+        <linearGradient id="pceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#3a7ab8" /><stop offset="1" stopColor="#bfe0f0" /></linearGradient>
+        <linearGradient id="pmar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#1c6a8a" /><stop offset="1" stopColor="#3aa0b8" /></linearGradient>
+      </defs>
+      <rect width={1080} height={760} fill="url(#pceu)" />
+      <circle cx={820} cy={300} r={90} fill="#fff4c0" />
+      <rect y={760} width={1080} height={1160} fill="#e6d2a0" />
+      {Array.from({length: 5}, (_, i) => <path key={'c' + i} d={`M${60 + i * 230} 760 q 20 -160 70 -230`} stroke="#3a5a2a" strokeWidth={10} fill="none" />)}
+      {Array.from({length: 5}, (_, i) => <circle key={'f' + i} cx={130 + i * 230} cy={530} r={46} fill="#2f6a2a" />)}
+      {pessoas && Array.from({length: 14}, (_, i) => { const x = 60 + random('px' + i) * 960, yy = 1150 + random('py' + i) * 600, cor = ['#e8401a', '#ffd23f', '#4cc9f0', '#3ddc84'][i % 4];
+        return <g key={'p' + i} opacity={yy < y ? 0.15 : 1}>{i % 3 === 0 ? <><line x1={x} y1={yy} x2={x} y2={yy - 110} stroke="#555" strokeWidth={5} /><path d={`M${x - 70} ${yy - 100} Q${x} ${yy - 170} ${x + 70} ${yy - 100} Z`} fill={cor} /></> : <><circle cx={x} cy={yy - 60} r={14} fill="#7a4a2a" /><rect x={x - 12} y={yy - 46} width={24} height={46} rx={8} fill={cor} /></>}</g>; })}
+      <path d={`M0 760 L1080 760 L1080 ${y} ${borda} L0 ${y} Z`} fill="url(#pmar)" />
+      <path d={`M0 ${y} ${borda}`} stroke="rgba(255,255,255,.9)" strokeWidth={10} fill="none" />
+    </svg>
+  );
+};
+const Gancho: React.FC = () => {
+  const f = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{transform: shake(f, 6)}}>
+      <PraiaMG agua={interpolate(f, [0, 50], [0.1, 0.55], {...clamp, easing: Easing.out(Easing.quad)})} />
+      <Titulo texto="1755: O MAR INVADIU" y={300} size={100} cor="#0b2a44" />
+      <Etiqueta texto="ILUSTRAÇÃO" />
     </AbsoluteFill>
   );
 };
-// água subindo por cima de uma imagem
-const Sobe: React.FC<{src: string; de: number; ate: number; etiqueta: string; titulo: string; sub?: string}> = ({src, de, ate, etiqueta, titulo, sub}) => {
+const Pernambuco: React.FC = () => {
+  const f = useCurrentFrame();
+  const s = useSpring(2, {damping: 9, mass: 0.6});
+  return (
+    <AbsoluteFill style={{transform: shake(f, 8, 'p')}}>
+      <PraiaMG agua={interpolate(f, [0, 30], [0.5, 0.85], clamp)} />
+      <div style={{position: 'absolute', top: 320, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: 118, color: '#fff', transform: `scale(${0.6 + 0.4 * s})`, opacity: s,
+        WebkitTextStroke: '5px #0b2a44', paintOrder: 'stroke fill', textShadow: `0 10px 0 ${VERDE}, 0 0 40px rgba(0,0,0,.6)`}}>PERNAMBUCO</div>
+      <Etiqueta texto="ILUSTRAÇÃO" />
+    </AbsoluteFill>
+  );
+};
+const Culpa: React.FC = () => <Glitch texto="E A CULPA FOI…" size={140} cor={OURO} />;
+const Portugal: React.FC = () => <Mapa titulo="UM TERREMOTO EM PORTUGAL" />;
+const Gravura: React.FC<{src: string; etq: string; titulo: string; z?: [number, number]; pos?: string; cor?: string}> = ({src, etq, titulo, z = [1.05, 1.15], pos = 'center', cor = '#fff'}) => {
   const f = useCurrentFrame();
   const {durationInFrames: d} = useVideoConfig();
-  const y = interpolate(f, [0, d], [de, ate], {...clamp, easing: Easing.inOut(Easing.quad)});
   return (
-    <AbsoluteFill style={{overflow: 'hidden'}}>
-      <Real src={src} ini={3} />
-      <div style={{position: 'absolute', left: 0, right: 0, top: y, bottom: 0, background: 'linear-gradient(180deg, rgba(40,120,150,.85), rgba(8,40,60,.95))'}} />
-      <svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
-        <path d={`M0 ${y} ${Array.from({length: 28}, (_, k) => `L${k * 40} ${y + Math.sin(k * 0.7 + f * 0.25) * 10}`).join(' ')} L1080 ${y}`} stroke="rgba(220,250,255,.8)" strokeWidth={6} fill="none" />
-      </svg>
+    <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
+      <Img src={staticFile('tsunami/' + src)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: pos, transform: `scale(${interpolate(f, [0, d], z)})`, filter: 'sepia(.35) contrast(1.1)'}} />
       <Sombra />
-      <Etiqueta texto={etiqueta} real />
-      <Titulo texto={titulo} y={330} size={100} cor={CIANO} />
-      {sub && <Texto y={580} size={44} cor="#fff" delay={8}>{sub}</Texto>}
-    </AbsoluteFill>
-  );
-};
-const MarSobe: React.FC = () => <Sobe src="tsunami/r24216.mp4" de={1500} ate={1050} etiqueta="IMAGEM REAL · ÁGUA SUBINDO: ANIMAÇÃO" titulo="O MAR COMEÇA A SUBIR" />;
-const SemVento: React.FC = () => {
-  const f = useCurrentFrame();
-  return (
-    <AbsoluteFill style={{background: 'linear-gradient(180deg, #5ab0e8, #bfe4f8)'}}>
-      <div style={{position: 'absolute', left: 390, top: 640, width: 300, height: 300, borderRadius: 150, background: '#ffd23f', boxShadow: `0 0 ${80 + 20 * Math.sin(f * 0.2)}px #ffd23f`}} />
-      <div style={{position: 'absolute', top: 1080, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: 90, color: '#0b2a44', lineHeight: 1.15}}>
-        <div><s style={{textDecorationColor: VERMELHO, textDecorationThickness: 12}}>TEMPESTADE</s></div>
-        <div style={{opacity: f > 20 ? 1 : 0}}><s style={{textDecorationColor: VERMELHO, textDecorationThickness: 12}}>VENTO</s></div>
-      </div>
-      <Titulo texto="SEM" y={360} size={150} cor="#0b2a44" />
+      <Etiqueta texto={etq} real />
+      <Titulo texto={titulo} y={330} size={96} cor={cor} />
     </AbsoluteFill>
   );
 };
@@ -127,25 +132,9 @@ const Mapa: React.FC<{onda?: boolean; pinos?: boolean; falhas?: boolean; titulo?
     </AbsoluteFill>
   );
 };
-const MesmoDia: React.FC = () => <Mapa titulo="DO OUTRO LADO DO OCEANO" />;
-const Lisboa: React.FC = () => {
-  const f = useCurrentFrame();
-  const p = interpolate(f, [4, 30], [0, 1], clamp);
-  return (
-    <AbsoluteFill style={{background: 'linear-gradient(180deg, #3a2a20, #120c08)', transform: shake(f, 12 * (1 - p * 0.5), 'l')}}>
-      <svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
-        {Array.from({length: 9}, (_, i) => {
-          const h = 300 + random('h' + i) * 300, x = 30 + i * 115;
-          const cai = p * random('c' + i) * 0.7;
-          return <rect key={i} x={x} y={1500 - h * (1 - cai)} width={100} height={h * (1 - cai)} fill="#6a5a4a" stroke="#2a2018" strokeWidth={4} transform={`rotate(${cai * 20 * (random('r' + i) - 0.5)} ${x + 50} 1500)`} />;
-        })}
-        <rect x={0} y={1500} width={1080} height={420} fill="#1a120c" />
-      </svg>
-      <Etiqueta texto="ILUSTRAÇÃO" />
-      <Titulo texto="TERREMOTO DESTRÓI LISBOA" y={300} size={92} cor={OURO} />
-    </AbsoluteFill>
-  );
-};
+const Ano: React.FC = () => <Gravura src="lisboa_1755.jpg" etq="GRAVURA DA ÉPOCA · LISBOA EM 1755 · RIJKSMUSEUM" titulo="LISBOA" z={[1.1, 1.2]} pos="70% 50%" cor={OURO} />;
+const Lisboa: React.FC = () => <Gravura src="ruinas_1755.jpg" etq="GRAVURA DE 1757 · RUÍNAS DA CATEDRAL DE LISBOA · RIJKSMUSEUM" titulo="TERREMOTO DESTRÓI LISBOA" z={[1.15, 1.3]} pos="45% 50%" cor={OURO} />;
+const Empurrou: React.FC = () => <Gravura src="lisboa_1755.jpg" etq="GRAVURA DA ÉPOCA · LISBOA EM 1755 · RIJKSMUSEUM" titulo="E EMPURROU UMA ONDA" z={[1.3, 1.5]} pos="30% 60%" cor={CIANO} />;
 const Travessia: React.FC = () => <Mapa onda titulo="ATRAVESSOU O ATLÂNTICO" />;
 const Chegou: React.FC = () => <Glitch texto="CHEGOU MESMO AQUI?" size={140} cor={CIANO} />;
 const Areia: React.FC = () => {
@@ -268,13 +257,22 @@ const Gigantes: React.FC = () => <Onda titulo="OS TSUNAMIS GIGANTES" />;
 const Filmes: React.FC = () => <Onda cruza titulo="NÃO É O MEGA-TSUNAMI DOS FILMES" />;
 const Lotada: React.FC = () => (
   <AbsoluteFill>
-    <Real src="tsunami/r332784.mp4" ini={7} zoom={[1.2, 1.35]} />
-    <Sombra />
-    <Etiqueta texto="IMAGEM REAL · PRAIA ILUSTRATIVA" real />
-    <Titulo texto="NUMA PRAIA LOTADA" y={330} size={104} />
+    <PraiaMG agua={0.05} pessoas />
+    <Titulo texto="NUMA PRAIA LOTADA" y={300} size={104} cor="#0b2a44" />
+    <Etiqueta texto="ILUSTRAÇÃO" />
   </AbsoluteFill>
 );
-const Entrando: React.FC = () => <Sobe src="tsunami/r998.mp4" de={1700} ate={1150} etiqueta="IMAGEM REAL · ÁGUA SUBINDO: ANIMAÇÃO" titulo="O MAR ENTRANDO" sub="SEM AVISO" />;
+const Entrando: React.FC = () => {
+  const f = useCurrentFrame();
+  const {durationInFrames: d} = useVideoConfig();
+  return (
+    <AbsoluteFill style={{transform: shake(f, 5, 'e')}}>
+      <PraiaMG agua={interpolate(f, [0, d], [0.05, 0.6], {...clamp, easing: Easing.in(Easing.quad)})} pessoas />
+      <Titulo texto="O MAR ENTRANDO SEM AVISO" y={300} size={96} cor="#0b2a44" />
+      <Etiqueta texto="ILUSTRAÇÃO" />
+    </AbsoluteFill>
+  );
+};
 const Bastante: React.FC = () => (
   <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 50%, #0a1626, #000 70%)', justifyContent: 'center', alignItems: 'center'}}>
     <Titulo texto="JÁ É O BASTANTE." y={820} size={120} cor={OURO} />
@@ -287,7 +285,7 @@ const Selo: React.FC = () => (
     fontFamily: FONTE, fontSize: 30, color: OURO, letterSpacing: 3}}>HIPÓTESE</div>
 );
 
-const CENAS = [Praia, NoBrasil, MarSobe, SemVento, Data, MesmoDia, Lisboa, Travessia, Chegou, Cartas, Pinos, Legua, Km, Pontinhas, Areia, Prova, Possivel, Pista,
+const CENAS = [Gancho, Pernambuco, Culpa, Portugal, Data, Ano, Lisboa, Empurrou, Travessia, Chegou, Cartas, Pinos, Legua, Km, Pontinhas, Areia, Prova, Possivel, Pista,
   DeNovo, Manda, Longe, Gigantes, Filmes, Lotada, Entrando, Bastante];
 if (CENAS.length !== FRASES.length) throw new Error('cenas ≠ frases');
 const T = TEMPO.T;
@@ -295,7 +293,7 @@ const SELO_INI = T[FRASES.indexOf('ela chegou mesmo aqui')], SELO_FIM = T[FRASES
 
 export const Video: React.FC = () => (
   <AbsoluteFill>
-    <Short W={W} tempo={TEMPO} cenas={CENAS} calma={CALMA} />
+    <Short W={W} tempo={TEMPO} cenas={CENAS} calma={CALMA} audio="tsunami/narracao.mp3" />
     <Sequence from={SELO_INI} durationInFrames={SELO_FIM - SELO_INI}><Selo /></Sequence>
   </AbsoluteFill>
 );
