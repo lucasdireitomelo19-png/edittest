@@ -101,7 +101,7 @@ Escolhido: o **2**, que coloca a rotina primeiro e quebra na segunda frase. O "j
 ---
 
 ## 3 · Já teve TSUNAMI no Brasil?
-**Formato:** Short (~56 s, ~154 palavras)   **Status:** APROVADO pelo dono (28/10, v4 sem POV)
+**Formato:** Short (~50 s, ~137 palavras)   **Status:** APROVADO pelo dono (28/10, v4 sem POV)
 **v3 → v4 (dono, 28/10):** sai o POV, que a Estratégia de conteúdo proíbe em Short. Novo gancho: "Em 1755, o mar invadiu Pernambuco. E a culpa foi de um terremoto em Portugal." O resto continua igual.
 **v2 → v3 (checagem da Pesquisas, 24/10):** as alturas de ~1,7–1,9 m não estão no artigo (só na imprensa) e saíram. Entram as cartas de 1756 ("o mar entrou uma légua terra adentro" em Lucena e Tamandaré), que são evidência histórica e deixam o meio mais forte. O final perdeu os "dois metros".
 **v1 → v2 (dono, 24/10):** gancho mais apelativo, que anuncia primeiro o que vai acontecer com você ("um meteoro vai explodir em cima da sua cidade") e só depois mostra a cena e o fato real. A virada honesta do fim continua.
