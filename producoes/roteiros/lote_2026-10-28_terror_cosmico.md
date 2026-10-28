@@ -79,7 +79,7 @@ Escolhido: o **2**, com o número do 1 logo em seguida. "Altura da Estação Esp
 > Foi a segunda passagem mais próxima já registrada.
 > E a primeira vez que um telescópio viu essa pedra foi poucas horas depois que ela já tinha passado.
 > Calma: ela tinha de um a três metros. Se tivesse entrado na atmosfera, ia se desfazer lá em cima. Sem perigo.
-> Mas pensa no que isso quer dizer. Uma pedra cruzou a altura dos astronautas, e nenhum telescópio do planeta viu antes.
+> Uma pedra cruzou a altura dos astronautas, e nenhum telescópio do planeta viu antes.
 > Em 2013, outra pedra chegou sem aviso. Vinha da direção do Sol, e ninguém viu. Essa tinha uns vinte metros. Explodiu sobre Chelyabinsk, na Rússia. Mais de sete mil prédios danificados. Mil e quinhentos feridos.
 > As pequenas a gente ainda perde. É por isso que novos telescópios estão sendo construídos pra caçar justamente essas.
 
