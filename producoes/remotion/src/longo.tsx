@@ -159,7 +159,7 @@ export type ConfigLongo = {
   audio: string; musica: string;
   volta: number;                    // capítulo do "Mas espera…": canto verde e trilha mais alta
   gap?: number;                     // silêncio (s) antes de cada capítulo, onde entra o cartão
-  selos?: {texto: string; de: string; ate: string; linha?: number}[];
+  selos?: {texto: string; de: string; ate: string; linha?: number; cor?: string}[];
   cantos?: {frase: string; texto: string}[];   // troca do canto no meio de um capítulo
   hits?: {frase: string; off?: number; vol?: number}[];
   fim: React.FC;
@@ -177,7 +177,7 @@ export const criarLongo = (c: ConfigLongo) => {
   const GAP = fr(c.gap ?? 2.2);
   const INICIO_CAP = plano.map((_, k) => T[CAP_DA_CENA.indexOf(k)]);
   const em = (frase: string) => { const i = FRASES.indexOf(frase); if (i < 0) throw new Error('frase fora do plano: ' + frase); return T[i]; };
-  const SELOS = (c.selos ?? []).map((s) => ({texto: s.texto, linha: s.linha ?? 0, ini: em(s.de), fim: em(s.ate) - (CAP_DA_CENA[FRASES.indexOf(s.ate)] !== CAP_DA_CENA[FRASES.indexOf(s.de)] ? GAP : 0)}));
+  const SELOS = (c.selos ?? []).map((s) => ({texto: s.texto, cor: s.cor ?? OURO, linha: s.linha ?? 0, ini: em(s.de), fim: em(s.ate) - (CAP_DA_CENA[FRASES.indexOf(s.ate)] !== CAP_DA_CENA[FRASES.indexOf(s.de)] ? GAP : 0)}));
   const CANTOS = (c.cantos ?? []).map((x) => ({t: em(x.frase), texto: x.texto}));
 
   const CartaoCap: React.FC<{k: number}> = ({k}) => {
@@ -230,8 +230,8 @@ export const criarLongo = (c: ConfigLongo) => {
         fontFamily: FONTE, fontSize: 28, color: volta ? VERDE : OURO, letterSpacing: 3}}>{volta ? '● ' : ''}{extra ? extra.texto : caps[k].canto}</div>
     );
   };
-  const Selo: React.FC<{t: string; l: number}> = ({t, l}) => (
-    <div style={{position: 'absolute', bottom: 150 + l * 56, right: 50, padding: '6px 16px', borderRadius: 10, border: `3px solid ${OURO}`, background: 'rgba(0,0,0,.6)', fontFamily: FONTE, fontSize: 26, color: OURO, letterSpacing: 3}}>{t}</div>
+  const Selo: React.FC<{t: string; l: number; cor: string}> = ({t, l, cor}) => (
+    <div style={{position: 'absolute', bottom: 150 + l * 56, right: 50, padding: '6px 16px', borderRadius: 10, border: `3px solid ${cor}`, background: 'rgba(0,0,0,.6)', fontFamily: FONTE, fontSize: 26, color: cor, letterSpacing: 3}}>{t}</div>
   );
   const Entrada: React.FC<{children: React.ReactNode}> = ({children}) => {
     const f = useCurrentFrame();
@@ -256,7 +256,7 @@ export const criarLongo = (c: ConfigLongo) => {
       <Sequence from={FALA} durationInFrames={FIM - FALA}><Fim /></Sequence>
       {INICIO_CAP.slice(1).map((t, k) => <Sequence key={'c' + k} from={t - GAP - 3} durationInFrames={GAP + 22}><CartaoCap k={k + 1} /></Sequence>)}
       <Sequence durationInFrames={FALA}><Canto /></Sequence>
-      {SELOS.map((s, i) => <Sequence key={'s' + i} from={s.ini} durationInFrames={s.fim - s.ini}><Selo t={s.texto} l={s.linha} /></Sequence>)}
+      {SELOS.map((s, i) => <Sequence key={'s' + i} from={s.ini} durationInFrames={s.fim - s.ini}><Selo t={s.texto} l={s.linha} cor={s.cor} /></Sequence>)}
       <Legenda />
       <Audio src={staticFile(c.audio)} />
       <Audio src={staticFile(c.musica)} volume={(f) => interpolate(f, [0, 30, V - GAP, V, FIM - 60, FIM], [0, 0.16, 0.16, 0.24, 0.24, 0], clamp)} />
