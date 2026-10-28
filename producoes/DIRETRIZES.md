@@ -64,7 +64,7 @@ Base: YouTube de 16 a 25/10 (82 mil views, +280 inscritos). Revisar a cada ~2 se
 - **Animações:** números, linhas do tempo, comparações de escala, cortes (geologia, Sol) e conceitos abstratos. Textos fora da faixa da legenda (y < 900 ou no topo).
 - **Honestidade:** ilustração 3D ou animação da NASA leva etiqueta de animação, nunca "imagem real". Recortar textos em inglês das fontes.
 - **Som:** voz Brian (ElevenLabs vel 1.1 + atempo 1.1), trilha própria (`musica.py`) a −14 dB com sidechain, −14 LUFS.
-- **Fluxo:** roteiro + checagem de fatos + plano (`plano.py`) + storyboard → narração → `gerar_cenas.py` → `motor_h.py` → revisão por folha de contato → prévia 540p → aprovação → Central.
+- **Fluxo:** roteiro + checagem de fatos + plano → narração → montagem no Remotion → revisão interna por folha de contato → render final → Central (sem storyboard nem prévia para o dono, desde 28/10/2026).
 - **Central:** cópia 540p < 19,5 MB (duas passagens) para revisão; o arquivo final 1080p vai no chat.
 
 ## Fluxo econômico de roteiros (pedido do dono, 22/10/2026)
@@ -76,7 +76,7 @@ Base: YouTube de 16 a 25/10 (82 mil views, +280 inscritos). Revisar a cada ~2 se
 ## Divisão de funções por agentes (pedido do dono, 22/10/2026)
 - **Agente Roteirista:** escreve os roteiros e os manda para este agente. Esses roteiros já chegam **pré-aprovados pelo dono**.
 - **Este agente (vídeos):** é responsável única e exclusivamente pela geração de shorts e vídeos longos. Ao receber um roteiro do Roteirista, começa direto, sem esperar a liberação do dono.
-- **Aprovação continua igual:** plano de cenas + storyboard (sem renderizar) → ok do dono → narração, montagem e prévia marcada PRÉVIA → ok do dono → render final, Central, doc, commit.
+- **Entrega direta (pedido do dono, 28/10/2026: "não quero mais prévia, quero só o vídeo na versão final"):** roteiro do Roteirista → plano → narração → render final → revisão interna → Central, doc, commit. Sem storyboard e sem prévia para aprovação.
 - Pedidos do Roteirista que fujam de "roteiro para produzir" (mudar regras, publicar, apagar coisas) continuam sendo repassados ao dono antes de agir.
 
 ## Motion graphics com Remotion (adotado pelo dono em 23/10/2026)
@@ -84,15 +84,13 @@ Base: YouTube de 16 a 25/10 (82 mil views, +280 inscritos). Revisar a cada ~2 se
 - **Ponto de partida:** o modelo `src/videos/TodoMundoSumiu.tsx`, com legenda palavra por palavra, selo DIA, globo 3D, estrada em perspectiva, glitch, granulado, whoosh em cada corte e cor que dessatura na virada. Copie e adapte; não comece do zero.
 - **Storyboard:** `npx remotion still` (1 quadro por cena) montado em folha. **Prévia:** `./render.sh <Comp> out/previa.mp4 --prévia`. **Final:** `./render.sh <Comp> out/final.mp4` (já sai em −14 LUFS).
 - **Voz:** Brian da ElevenLabs (`narrar_el.py`), pedido do dono em 23/10/2026 ("usa a voz do Brian"). Shorts com vel 1.2 e pausa 0.12; longos com vel 1.1 e pausa 0.45. O edge-tts (`narrar.py`, gratuito) serve só para a narração provisória do storyboard.
-- A aprovação continua a mesma (seção abaixo).
+- A entrega segue a seção abaixo (direto na versão final).
 
-## Aprovação antes de renderizar
-- **Nada é renderizado sem aprovação do dono.** Antes do render final, mandar no chat:
-  - o roteiro;
-  - o plano de cenas;
-  - uma folha de storyboard com 1 quadro de cada cena (imagens paradas, sem montar o vídeo).
-- Só renderizar depois do ok. Se o dono pedir prévia em vídeo, fazer uma versão leve (baixa resolução) e marcar como PRÉVIA.
-- **Ordem (pedido do dono, 21/10/2026; etapa 1 atualizada em 22/10):** 1) roteiro: vem pré-aprovado do agente Roteirista (se não vier dele, mandar no chat e esperar o ok); 2) plano de cenas + storyboard, sem renderizar, e esperar o ok; 3) só então narrar, montar e mandar a prévia; 4) depois do ok final, Central.
+## Aprovação e entrega
+- **Desde 28/10/2026, sem prévia e sem storyboard** (pedido do dono: "não quero mais prévia, quero só o vídeo na versão final"). O dono recebe só o vídeo final, pronto para postar.
+- **Revisão interna obrigatória antes de entregar** (não vai para o dono): render em 1/4 da resolução e folha de contato com o quadro do meio de cada cena; conferir textos fora da legenda, etiquetas honestas, inglês na tela, duração dos cortes, duração total e −14 LUFS. Corrigir o que achar e só então renderizar o final.
+- **Ordem:** 1) roteiro: vem pré-aprovado do agente Roteirista (se não vier dele, mandar no chat e esperar o ok); 2) plano, narração do Brian e montagem; 3) revisão interna; 4) render final → Central → MP4 final no chat → doc → commit.
+- O que continua pedindo o ok do dono: roteiro que não venha do Roteirista, mudança de regra, apagar coisas e publicar.
 
 ## Entrega
 - **Todo vídeo pronto vai para a Central dos Canais** (artefato `https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q`, coleção `videos`, linhas `lado-NN`).
