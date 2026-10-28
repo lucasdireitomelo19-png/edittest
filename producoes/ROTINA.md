@@ -8,7 +8,7 @@ Este é o manual que a tarefa agendada de domingo segue. Ele também serve para 
   - Por semana: **9 derivados** (3 por vídeo longo, como `s5`–`s7`) e **12 avulsos** tirados de `temas.md`.
 
 ## Passo a passo (toda execução)
-1. **Temas:** pegue os 3 primeiros vídeos longos e os 12 primeiros Shorts avulsos sem `[x]` em `temas.md`.
+1. **Temas:** antes de tudo, siga a seção "Estratégia de conteúdo" das `DIRETRIZES.md` (ela tem prioridade sobre o ritmo acima). Pegue os 3 primeiros vídeos longos e os 12 primeiros Shorts avulsos sem `[x]` em `temas.md`.
 2. **Roteiro:** se o tema da fila apontar para um roteiro pronto em `roteiros/` (ex.: `lote_virais_01 #6`), use esse texto e as cenas sugeridas, conferindo os fatos de novo. Caso contrário, siga o padrão do canal (README.md e os documentos 01–04):
    - Gancho forte em 0–3 s, frases curtas, perguntas abertas e um final memorável.
    - **Nunca invente fatos.** Confira cada número em fonte primária (NASA, ESA, ESO ou artigo científico) e registre a checagem no documento do vídeo.

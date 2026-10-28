@@ -2,6 +2,19 @@
 
 Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o texto completo foi passado pelo dono do canal no chat.
 
+## Estratégia de conteúdo (análise de métricas do dono, 28/10/2026)
+Base: YouTube de 16 a 25/10 (82 mil views, +280 inscritos). Revisar a cada ~2 semanas com novos números.
+- **Longo em POV é o carro-chefe.** "Você é a ÚLTIMA pessoa da Terra!" (7:04) é o vídeo mais visto do canal: 15,6 mil views e 55 inscritos, quase tudo vindo da página inicial e das recomendações. Os longos "sobre um assunto" ficaram em 76–243 views. Todo longo novo segue este formato:
+  - **Título curto em 2ª pessoa, terminando em "!"**: "Você caiu num BURACO NEGRO!", "Você é o ÚLTIMO astronauta vivo!". Até ~7 palavras, uma palavra em CAIXA ALTA, sem cauda explicativa ("hora por hora…" vai para a thumb ou a descrição).
+  - **Arco:** no começo parece bom ou curioso → "mas aí…" → os problemas se acumulam em ordem de tempo (horas, dias, anos) → virada final no espaço.
+  - **Duração:** ~7 min (6:30–8:00), com capítulos pelos marcos de tempo.
+- **Shorts: fim do mundo cósmico + algo concreto.** Os campeões (mais de 80% assistido) juntam escala cósmica com uma data, um objeto real ou um número: "Como vai ser o FIM do Sistema Solar" (8,2 mil), "Numa SEXTA-FEIRA 13, um asteroide…" (6,7 mil), "Esse asteroide já tem DATA" (4,2 mil), "E se a Lua chegasse PERTO da Terra?" (4,3 mil).
+  - **Não fazer mais Shorts em POV** ("o que aconteceria com VOCÊ…"). Ficaram em 1,1–1,6 mil views: POV funciona no longo, não no Short.
+  - Datas só se estiverem confirmadas em `fatos.md` ou em fonte primária.
+- **Cortes do longo campeão:** 2–3 Shorts tirados de cada longo em POV que passar de 5 mil views, com o gancho "a versão completa está no canal".
+- **Meta de retenção dos Shorts:** pelo menos 80% assistido. Os primeiros feitos no Remotion (supervulcão do Japão e meteoro) ficaram em 64–66%. Nos próximos, o gancho precisa estar na imagem já no 1º segundo, cortes de até 2 s nos primeiros 10 s e nada de cena de "respiro" antes da escalada.
+- **Ritmo:** por semana, 1 longo em POV + 5–6 Shorts avulsos + os cortes do longo. A fila priorizada fica no topo de `temas.md`.
+
 ## Roteiro (Shorts)
 - **Até 61 s, nunca mais.** Alvo de 130–145 palavras; se a história render melhor em 45–55 s, fica curta.
 - **Estrutura:** hook (0–3 s), contexto (3–10 s), desenvolvimento (10–25 s), escalada (25–42 s), revelação (42–53 s) e payoff (53–61 s).
@@ -41,7 +54,7 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Texto na tela** só para datas, nomes, locais e números. Não repetir a narração.
 
 ## Título e thumbnail
-- **Título:** curiosidade sem mentira.
+- **Título:** curiosidade sem mentira. Longo: curto, em 2ª pessoa e com "!" (ver "Estratégia de conteúdo"). Short: escala cósmica + algo concreto (data, objeto real, número).
 - **Thumbnail:** 1 elemento principal, alto contraste e 2–5 palavras que complementem o título.
 
 ## Padrão de vídeo longo (aprovado pelo dono em 21/10/2026, "5 maneiras de o mundo acabar")

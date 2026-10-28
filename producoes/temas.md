@@ -4,6 +4,12 @@ A automação semanal pega **os 3 primeiros vídeos longos** e **os 12 primeiros
 Edite à vontade: reordene, apague ou acrescente temas. ⚠️ indica fato que precisa de checagem extra.
 
 ## Vídeos longos (10 min)
+<!-- PRIORIDADE (análise de métricas, 28/10/2026): longos em POV de ~7 min, título curto em 2ª pessoa. Ver DIRETRIZES, "Estratégia de conteúdo". Fazer estes antes de qualquer outro longo. -->
+- [ ] Você caiu num BURACO NEGRO! (versão longa do Short campeão de retenção, 87%)
+- [ ] Você é o ÚLTIMO astronauta vivo! (lá em cima, a Terra para de responder)
+- [ ] Você sobreviveu ao ASTEROIDE! (dia por dia depois do impacto)
+- [ ] Você acordou SOZINHO em Marte!
+<!-- Fila antiga (formato "sobre um assunto", rendeu menos): só depois da prioridade, e convertendo para POV quando der. -->
 - [x] A teoria da Floresta Negra
 - [x] O que existe dentro de um buraco negro?
 - [ ] O fim do universo: as 3 formas como tudo pode acabar (Big Freeze, Big Rip, Big Crunch)
@@ -19,6 +25,12 @@ Edite à vontade: reordene, apague ou acrescente temas. ⚠️ indica fato que p
 - [ ] Viagem até a borda do universo observável
 
 ## Shorts avulsos (61 s)
+<!-- PRIORIDADE (análise de métricas, 28/10/2026): fim do mundo cósmico + algo concreto; nada de POV em Short. -->
+- [ ] Como vai ser o FIM da Via Láctea (sequência do campeão "FIM do Sistema Solar")
+- [ ] Como vai ser o FIM do Universo
+- [ ] E se Júpiter chegasse PERTO da Terra?
+- [ ] Um asteroide passa raspando em [data] ⚠️ (só com data confirmada em fatos.md ou fonte primária)
+- [ ] Cortes de "Você é a ÚLTIMA pessoa da Terra!" (2–3 Shorts com o gancho "a versão completa está no canal")
 <!-- Lote viral 02: temas dos Shorts mais vistos do nicho, roteiros prontos em roteiros/lote_virais_02.md -->
 - [ ] E se o Sol apagasse agora? (lote_virais_02 #1)
 - [ ] Numa sexta-feira 13, o Apophis vai passar raspando (lote_virais_02 #6)
