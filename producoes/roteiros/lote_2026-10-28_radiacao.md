@@ -14,7 +14,7 @@
 ---
 
 ## 1 · Astronautas veem LUZES de olhos fechados (HOJE)
-**Formato:** Short (~54 s, ~149 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~54 s, ~149 palavras)   **Status:** aguardando aprovação (v2, ganchos mais fortes a pedido do dono, 28/10)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: um fato estranho, real e verificável (Apollo 11, 15, 16 e 17), com um gancho sensorial que dá para mostrar no 1º segundo (tela preta com clarões). Ponto mais fraco: a causa exata não está resolvida, então o final se apoia na ideia de que "a radiação te atravessa", e não numa revelação fechada.
 **Ângulo:** mistério real em escalada (relato → teste → detector → ainda hoje), com uma virada que traz para o corpo do espectador sem POV.
 **Tom de voz:** misterioso, sombrio, preciso.
@@ -27,12 +27,12 @@ Escolhido: o **2**, a versão do 1 sem POV. Tela preta com flashes no 1º segund
 
 **Título:** `Astronautas veem LUZES de olhos fechados 👁️✨` (alternativo: `Os olhos dos astronautas veem RAIOS CÓSMICOS`)
 
-> Astronautas fecham os olhos no espaço e veem clarões de luz. São partículas de estrelas que explodiram atravessando a cabeça deles.
+> A radiação do espaço atravessa os olhos dos astronautas. E eles conseguem ver isso acontecendo.
+> Eles fecham os olhos e aparecem clarões de luz. Partículas de estrelas que explodiram, passando por dentro da cabeça deles.
 > Apollo 11, 1969. Armstrong e Aldrin contaram que, no escuro, de olhos fechados, viam flashes que ninguém sabia explicar.
 > Na Apollo 15, a NASA fez um teste. A tripulação ficou uma hora vendada, avisando em voz alta a cada clarão.
 > Nas Apollo 16 e 17, colocaram um detector no capacete. E algumas partículas registradas bateram com os flashes que o astronauta viu.
 > A explicação mais aceita: raios cósmicos pesados atravessam a nave, atravessam o olho, e alguma coisa lá dentro acende. Mas até hoje ninguém provou exatamente como.
-> E continua acontecendo. Astronautas na Estação Espacial ainda relatam os clarões.
 > Aqui na Terra, ninguém vê isso. O campo magnético e o ar seguram essas partículas.
 > Lá fora, a prova de que a radiação te atravessa aparece dentro dos olhos.
 
@@ -56,7 +56,7 @@ Escolhido: o **2**, a versão do 1 sem POV. Tela preta com flashes no 1º segund
 ---
 
 ## 2 · O SOL explodiu minas no Vietnã em 1972 (29/10)
-**Formato:** Short (~57 s, ~159 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~57 s, ~159 palavras)   **Status:** aguardando aprovação (v2, ganchos mais fortes a pedido do dono, 28/10)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: um caso real e quase desconhecido, com imagem forte (minas explodindo sozinhas) e uma reviravolta histórica (a Lua estava vazia por pura sorte). Ponto mais fraco: o espectador precisa entender o que é uma tempestade solar em 1 frase.
 **Ângulo:** mistério militar → culpado no espaço → "quase pegou astronautas", com uma virada para Marte.
 **Tom de voz:** tenso, cinematográfico, histórico.
@@ -69,11 +69,11 @@ Escolhido: o **2**, que é o mais visual (explosões no mar no 1º segundo) e gu
 
 **Título:** `O SOL explodiu minas no Vietnã em 1972 ☀️💥`
 
-> Dezenas de minas explodiram sozinhas no mar do Vietnã. Ninguém tocou nelas. Para a Marinha americana, o culpado estava a cento e cinquenta milhões de quilômetros.
-> Era o Sol.
-> Agosto de 1972. Uma região gigante de manchas apareceu nele e, por uns dez dias, explodiu de novo e de novo.
+> O Sol já fez minas de guerra explodirem aqui na Terra. E quase pegou astronautas na Lua.
+> Agosto de 1972. Dezenas de minas no mar do Vietnã explodiram sozinhas. Para a Marinha americana, o culpado era o Sol.
+> Uma região gigante de manchas tinha aparecido nele e, por uns dez dias, explodiu de novo e de novo.
 > Uma dessas erupções chegou à Terra em cerca de quinze horas, uma das mais rápidas já vistas. A perturbação magnética foi tão forte que acionou as minas.
-> E aí vem o detalhe que dá frio na espinha. A Apollo 16 tinha voltado da Lua em abril. A Apollo 17 só foi em dezembro. Em agosto, não tinha ninguém lá.
+> A Apollo 16 tinha voltado da Lua em abril. A Apollo 17 só foi em dezembro. Em agosto, não tinha ninguém lá.
 > Um cientista da NASA calculou depois: um astronauta caminhando na Lua naquela tempestade podia ter recebido umas dezesseis vezes o limite que a NASA aceita hoje pra uma tempestade solar.
 > Ninguém se feriu em 1972. A pergunta é o que acontece quando tiver gente indo pra Marte numa tempestade assim.
 
@@ -95,7 +95,7 @@ Escolhido: o **2**, que é o mais visual (explosões no mar no 1º segundo) e gu
 ---
 
 ## 3 · Uma partícula de ORIGEM desconhecida atingiu a Terra (29/10)
-**Formato:** Short (~57 s, ~159 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~57 s, ~159 palavras)   **Status:** aguardando aprovação (v2, ganchos mais fortes a pedido do dono, 28/10)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: um mistério real e recente (publicado na *Science*), com número absurdo e uma citação de cientista ("não existe nada lá"). Ponto mais fraco: conceito abstrato e sem perigo, e o visual depende de animação (chuva de partículas, mapa do céu).
 **Ângulo:** um objeto real com energia absurda, uma direção impossível e um mistério sem resposta.
 **Tom de voz:** misterioso, crescente, com assombro.
@@ -108,11 +108,11 @@ Escolhido: o **2**, mais curto e com a mesma promessa do 1. A chuva de partícul
 
 **Título:** `Uma partícula de ORIGEM desconhecida atingiu a Terra ⚡`
 
-> Uma única partícula caiu do céu com mais energia que qualquer máquina já construída. E ninguém sabe de onde ela veio.
+> Uma partícula acertou a Terra vinda da direção do nada. E os cientistas não conseguem explicar.
 > Maio de 2021. Utah, nos Estados Unidos. Ela bateu na atmosfera com uma energia dezenas de milhões de vezes maior que a de qualquer acelerador de partículas.
 > A chuva que ela provocou acionou vinte e três detectores, espalhados por quase cinquenta quilômetros quadrados de deserto.
 > Os cientistas deram a ela o nome de Amaterasu, a deusa do Sol no Japão. É a segunda partícula mais energética já registrada.
-> Mas o assustador não é a energia. É a direção.
+> Mas o assustador não é a energia. É de onde ela veio.
 > O caminho dela aponta pra uma região quase vazia do espaço. Um dos cientistas disse: lá não existe nada com energia suficiente pra ter produzido isso.
 > Talvez campos magnéticos tenham desviado a rota. Talvez seja física que a gente ainda não conhece.
 > Ela não é ameaça: a atmosfera absorve tudo. O que assusta é não saber de onde ela veio.
@@ -135,7 +135,7 @@ Escolhido: o **2**, mais curto e com a mesma promessa do 1. A chuva de partícul
 ---
 
 ## 4 · Ir a MARTE já estoura o limite de radiação da NASA (29/10)
-**Formato:** Short (~53 s, ~145 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~53 s, ~145 palavras)   **Status:** aguardando aprovação (v2, ganchos mais fortes a pedido do dono, 28/10)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: liga um sonho popular (ir a Marte) a um número concreto que derruba o sonho (passa do limite antes de pousar). Ponto mais fraco: muitos números (mSv, dias), então a tela precisa simplificar com uma barra enchendo.
 **Ângulo:** um "problema que ninguém conta" com um número que vai enchendo e uma virada de engenharia.
 **Tom de voz:** sério, direto, um pouco sombrio.
@@ -148,11 +148,12 @@ Escolhido: o **2**, a versão do 1 sem POV. A barra de radiação estourando apa
 
 **Título:** `Ir a MARTE já estoura o limite de radiação da NASA 🔴☢️`
 
-> Uma viagem a Marte já nasce acima do limite de radiação da NASA. E isso antes de alguém pisar lá.
+> Quem for a Marte hoje vai tomar quase o dobro da radiação que a NASA permite. Na carreira inteira.
+> E só a viagem já estoura o limite, antes de alguém pisar lá.
 > No caminho até Marte, o robô Curiosity mediu a radiação dentro da nave. Quase dois milisieverts por dia.
 > Parece pouco. Mas a viagem leva uns seis meses pra ir e outros seis pra voltar.
 > Só a ida e a volta já passam do limite que a NASA aceita pra carreira inteira de um astronauta: seiscentos milisieverts.
-> Somando a estadia na superfície, a missão chega perto de mil. Quase o dobro do limite.
+> Somando a estadia na superfície, a missão chega perto de mil.
 > O risco não é cair morto. É câncer, anos depois. O limite existe pra manter esse risco baixo.
 > E esses números são de uma medição só, num momento do ciclo do Sol. Pode ser mais, ou menos.
 > Dá pra resolver? Dá. Blindagem melhor, viagens mais curtas. Mas essa solução ainda não está pronta.
