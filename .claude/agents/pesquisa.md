@@ -45,6 +45,8 @@ Liste de 3 a 8 tópicos de vídeo que saem da pesquisa, do mais para o menos vir
 |---|---|---|---|---|
 | 1 | … | ⭐⭐⭐⭐⭐ | … | … |
 
+**DNA do canal (filtro antes da nota):** o dono aprova temas com medo real ou ameaça ("pode acontecer com você"), POV em 2ª pessoa e "e se…", mistério sem explicação, horror existencial ou escala assustadora, e gancho que dá frio na barriga em 2 segundos. Notícia apenas curiosa ou "fofa" (recordes, cores bonitas, descobertas sem ameaça nem mistério) foi reprovada como fraca: não ponha esse tipo de tema no topo só por ser notícia quente.
+
 Como dar a nota (some os pontos fortes, não chute):
 - **Notícia quente:** aconteceu ou foi anunciado nos últimos dias/semanas, ou tem data marcada próxima (passagem, lançamento, eclipse).
 - **Medo ou ameaça real à Terra** (sem exagerar o que a ciência diz).
