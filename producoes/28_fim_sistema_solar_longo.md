@@ -1,4 +1,6 @@
-# 28 · A Terra vai morrer DUAS vezes, e o final é diferente do que te contaram (lado-59, longo)
+# 28 · Você vê a Terra morrer DUAS vezes! (lado-59, longo)
+
+- Título trocado em 28/10 a pedido do dono ("deve ser curto e impactante gerando curiosidade"); o original era "A Terra vai morrer DUAS vezes, e o final é diferente do que te contaram".
 
 - Vídeo longo 1920x1080, ~7:07 · Remotion (`remotion/src/videos/FimSolar.tsx`, composição `FimSolar`), usando o motor comum `remotion/src/longo.tsx` (tirado do longo da Lua, que segue idêntico) · voz Brian (ElevenLabs vel 1.1, pausa 0.45) · 103 cenas + cartão final · −14 LUFS.
 - Roteiro: `roteiros/longo_fim_sistema_solar.md` (agente Roteirista, aprovado pelo dono em 27/10, v1). Storyboard aprovado pelo dono; ele dispensou a prévia ("me manda já a versão final").
