@@ -67,7 +67,7 @@ Os agentes aparecem no **Prédio dos Agentes** (`https://claude.ai/artifact/MYN7
 |---|---|---|
 | Pesquisas | subagente `pesquisa` | `.claude/agents/pesquisa.md` |
 | Roteirista | subagente `roteirista` | `.claude/agents/roteirista.md` |
-| Gerador de Vídeos (Shorts e longos) | sessão do Claude | `session_014uAw8CBbLDWXsKRFv4J98p` (desde 28/10; antes `session_01RMuyuTR7uKM4etrPUUhNcQ`) |
+| Gerador de Vídeos (Shorts e longos) | sessão do Claude | `session_014uAw8AewL5m4SRkPVMbrbr` (desde 29/10; antes `session_014uAw8CBbLDWXsKRFv4J98p` e `session_01RMuyuTR7uKM4etrPUUhNcQ`) |
 | Gerador de Carrosséis (Instagram) | sessão do Claude | `session_019KYTeVZcURhxGac3ijKjZn` |
 | Legendas (textos de postagem) | subagente `legendas` | `.claude/agents/legendas.md` |
 
