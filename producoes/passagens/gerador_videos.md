@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-66.
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-67.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Painel:** https://claude.ai/artifact/MYN7cXDqxFUwnWPJCYtSWM (avisos: ver `CLAUDE.md`).
 - **Agentes:**
@@ -58,23 +58,8 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 ## Estado atual e pendências (em ordem)
 0. **Entregues em 28/10** (Central como Pronto, MP4 no chat, docs 32–35, LadoSombrio avisado):
    - lado-63 Minas no Vietnã, lado-64 Amaterasu e lado-65 Marte (lote radiação #2–#4, para 29/10);
-   - lado-66 Tsunami 1755 v4 sem POV.
-1. **Longo da Área 51, publicação na sexta 30/10.**
-   - Roteiro em `producoes/roteiros/longo_area51.md` (branch practical-cannon), ~7 min, 8 capítulos "verdade × mito".
-   - Selos por capítulo:
-     - 1, 4, 5 e 6: DOCUMENTADO;
-     - 2: LENDA;
-     - 3: NÃO PROVADO;
-     - 7: DOCUMENTADO + ALEGAÇÃO;
-     - "Mas espera…": DOCUMENTADO + NÃO PROVADO.
-   - A cor cai ao longo do vídeo e volta no "Mas espera…".
-   - Título: "Você chegou na cerca da ÁREA 51!".
-   - Thumb: cerca e placa à noite com farol, texto "O SEGREDO REAL" e selo "DOCUMENTOS DA CIA".
-   - Imagens:
-     - pode: CIA, USAF, NNSS/DOE, Landsat/Sentinel e Natural Earth;
-     - não pode: Google Earth, Maxar, AP/Getty, Lazar/KLAS ou filmes.
-   - Nunca afirmar alienígenas.
-   - **Bloqueio:** a cota do ElevenLabs não basta. É preciso perguntar ao dono (nova cota/chave ou edge-tts provisório).
-2. **Escolhas do dono em aberto:**
+   - lado-66 Tsunami 1755 v4 sem POV;
+   - lado-67 longo da Área 51 (para 30/10), com voz edge-tts Antonio por decisão do dono ("narra com o edge, paciência"). Cópia de 540p na Central; o 1080p foi enviado no chat. Doc 36.
+1. **Escolhas do dono em aberto:**
    - thumb do lado-58 (A ou B, stills ThumbA e ThumbB em `SemLua`);
    - troca do título do lado-58 (sugestão: "Você acorda e a Lua SUMIU!").
