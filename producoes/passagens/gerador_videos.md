@@ -1,6 +1,6 @@
 # Passagem · Gerador de Vídeos (Produção de Vídeo)
 
-Atualizado em 28/10/2026 pela conversa `session_014uAw8CBbLDWXsKRFv4J98p`, que substituiu a `session_01RMuyuTR7uKM4etrPUUhNcQ`.
+Atualizado em 29/10/2026 pela conversa `session_014uAw8CBbLDWXsKRFv4J98p`, na troca por uma nova.
 Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que o pedido envolver.
 
 ## Papel
@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-67.
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-71. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Painel:** https://claude.ai/artifact/MYN7cXDqxFUwnWPJCYtSWM (avisos: ver `CLAUDE.md`).
 - **Agentes:**
@@ -18,7 +18,8 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Chaves (nunca imprima o valor; cole direto no comando)
 - **ElevenLabs** (voz Brian): a chave não fica no repositório. O dono passou uma nova em 28/10 (começa com `sk_`; o código hex que não começa com `sk_` é só o ID da chave e não funciona). Se a conversa for nova, peça de novo.
-  - Plano starter, 30.102 caracteres por ciclo. Restam ~3,9 mil depois do tsunami v4; a cota renova em 18/11/2026.
+  - Plano starter, 30.102 caracteres por ciclo. Restam **~1,4 mil** (29/10, depois dos Reels de Marte e Vênus); a cota renova em 18/11/2026. Confira com `GET /v1/user/subscription` antes de narrar.
+  - A chave fica só na sessão (scratchpad). Numa conversa nova, peça ao dono de novo.
   - **Não dá para o longo da Área 51** (~6 mil caracteres). Avise o dono antes de narrar.
 - **Pixabay:** dá erro de chave (o proxy não injeta). A biblioteca `pipeline/src/*.mp4` **não vem** num container novo (é ignorada pelo git), nem os mp4 de `remotion/public/*`.
 - **Imagens que funcionam:** NASA Images (`images-api.nasa.gov`, `asset/<id>`), SVS (`pipeline/svs.py`) e gravuras históricas do Rijksmuseum (`data.rijksmuseum.nl/search/collection?imageAvailable=true&title=...`, Linked Art → `iiif.micr.io/<id>/full/1600,/0/default.jpg`, domínio público). O Wikimedia Commons deu 429 a sessão inteira.
@@ -56,10 +57,20 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
   - nada de cena de respiro antes da escalada.
 
 ## Estado atual e pendências (em ordem)
-0. **Entregues em 28/10** (Central como Pronto, MP4 no chat, docs 32–35, LadoSombrio avisado):
-   - lado-63 Minas no Vietnã, lado-64 Amaterasu e lado-65 Marte (lote radiação #2–#4, para 29/10);
-   - lado-66 Tsunami 1755 v4 sem POV;
-   - lado-67 longo da Área 51 (para 30/10), com voz edge-tts Antonio por decisão do dono ("narra com o edge, paciência"). Cópia de 540p na Central; o 1080p foi enviado no chat. Doc 36.
-1. **Escolhas do dono em aberto:**
-   - thumb do lado-58 (A ou B, stills ThumbA e ThumbB em `SemLua`);
-   - troca do título do lado-58 (sugestão: "Você acorda e a Lua SUMIU!").
+0. **Entregues** (Central como Pronto, MP4 no chat, docs, LadoSombrio avisado):
+   - 28/10: lado-63 a 65 (lote radiação #2–#4), lado-66 (tsunami v4), lado-67 (longo Área 51, voz edge-tts; thumb nova "A VERDADE SOBRE A ÁREA 51" com ET e TOP SECRET, pedido do dono em 29/10).
+   - 29/10: Reels lado-68 Shoemaker (02/11), lado-69 Boltzmann (03/11), lado-70 Nave a caminho de Marte (30/10) e lado-71 Vênus (30/10). Docs 37–40.
+1. **Reels POV #3 a #6** (`producoes/roteiros/reels_pov_2026-10-30_11-03.md`, branch practical-cannon; cuidados de tela no próprio arquivo e na mensagem do Roteirista):
+   - #3 sinal de outra estrela (sáb 31/10): "IMAGINE" no canto e "NENHUM SINAL CONFIRMADO" no fim; sem BLC1. 1.188 caracteres.
+   - #4 planeta sem sol (sáb 31/10): "ESTIMATIVA" nos números; "SIMULAÇÕES" no dado da Terra; sem vida nem oceano. 1.058 caracteres.
+   - #5 céu vazio em 100 bilhões de anos (dom 01/11): "MODELO ATUAL", "~100 BILHÕES"; "VIA LÁCTEA + ANDRÔMEDA". 988 caracteres.
+   - #6 nasceu em Marte (ter 03/11): "LIMITE DA NASA (ADULTOS)"; 234 mSv/ano é conta nossa; sem SpaceX/Musk. 1.076 caracteres.
+   - **Bloqueio:** juntos pedem ~4,3 mil caracteres e restam ~1,4 mil (dá só o #5). Perguntei ao dono em 29/10: mais cota do ElevenLabs, edge-tts nos outros, ou só o #5 com o Brian. Esperar a resposta.
+2. **Escolhas do dono em aberto:** thumb do lado-58 (A ou B, stills ThumbA e ThumbB em `SemLua`) e troca do título (sugestão: "Você acorda e a Lua SUMIU!").
+
+## Lições da conversa de 28–29/10
+- Num container novo, `pipeline/src` (biblioteca de clipes) e os mp4 de `remotion/public` **não vêm**. Use NASA Images, SVS, Rijksmuseum (gravuras) e ilustração própria. Wikimedia deu 429; sites militares, CIA e Smithsonian deram 403.
+- `npm ci` em `producoes/remotion` e `pip install edge-tts` no começo da sessão.
+- Render travado (CPU parada): mate `remotion render` e `chrome-headless-shell` e renderize de novo. Efeitos pesados (centenas de círculos SVG com drop-shadow) deixam o render lento.
+- Longo maior que 19 MiB: cópia 540p (`-vf scale=960:540 -b:v 250k -maxrate 300k -bufsize 600k -b:a 64k`).
+- O `longo.tsx` aceita `cor` nos selos.
