@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-71. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-75. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Painel:** https://claude.ai/artifact/MYN7cXDqxFUwnWPJCYtSWM (avisos: ver `CLAUDE.md`).
 - **Observatório Lado Sombrio:** https://claude.ai/artifact/G6YahQcE96GqFd1VcSmFDH (painel novo do dono, fixado). **Toda entrega vai também para lá** (o dono cobrou em 29/10):
@@ -65,13 +65,8 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 0. **Entregues** (Central como Pronto, MP4 no chat, docs, LadoSombrio avisado):
    - 28/10: lado-63 a 65 (lote radiação #2–#4), lado-66 (tsunami v4), lado-67 (longo Área 51, voz edge-tts; thumb nova "A VERDADE SOBRE A ÁREA 51" com ET e TOP SECRET, pedido do dono em 29/10).
    - 29/10: Reels lado-68 Shoemaker (02/11), lado-69 Boltzmann (03/11), lado-70 Nave a caminho de Marte (30/10) e lado-71 Vênus (30/10). Docs 37–40.
-1. **Reels POV #3 a #6** (`producoes/roteiros/reels_pov_2026-10-30_11-03.md`, branch practical-cannon; cuidados de tela no próprio arquivo e na mensagem do Roteirista):
-   - #3 sinal de outra estrela (sáb 31/10): "IMAGINE" no canto e "NENHUM SINAL CONFIRMADO" no fim; sem BLC1. 1.188 caracteres.
-   - #4 planeta sem sol (sáb 31/10): "ESTIMATIVA" nos números; "SIMULAÇÕES" no dado da Terra; sem vida nem oceano. 1.058 caracteres.
-   - #5 céu vazio em 100 bilhões de anos (dom 01/11): "MODELO ATUAL", "~100 BILHÕES"; "VIA LÁCTEA + ANDRÔMEDA". 988 caracteres.
-   - #6 nasceu em Marte (ter 03/11): "LIMITE DA NASA (ADULTOS)"; 234 mSv/ano é conta nossa; sem SpaceX/Musk. 1.076 caracteres.
-   - **Bloqueio:** juntos pedem ~4,3 mil caracteres e restam ~1,4 mil (dá só o #5). Perguntei ao dono em 29/10: mais cota do ElevenLabs, edge-tts nos outros, ou só o #5 com o Brian. Esperar a resposta.
-2. **Escolhas do dono em aberto:** thumb do lado-58 (A ou B, stills ThumbA e ThumbB em `SemLua`) e troca do título (sugestão: "Você acorda e a Lua SUMIU!").
+   - 29/10 (tarde): Reels POV lado-72 Sinal de outra estrela (31/10), lado-73 Planeta sem sol (31/10), lado-74 Céu vazio (01/11) e lado-75 Nasceu em Marte (03/11), com voz edge-tts Antonio ("Vai de edge", dono em 29/10). Central + Observatório. Docs 41–44. Composições `Sinal`, `SemSol`, `CeuVazio`, `NasceuMarte`.
+1. **Escolhas do dono em aberto:** thumb do lado-58 (A ou B, stills ThumbA e ThumbB em `SemLua`) e troca do título (sugestão: "Você acorda e a Lua SUMIU!").
 
 ## Lições da conversa de 28–29/10
 - Num container novo, `pipeline/src` (biblioteca de clipes) e os mp4 de `remotion/public` **não vêm**. Use NASA Images, SVS, Rijksmuseum (gravuras) e ilustração própria. Wikimedia deu 429; sites militares, CIA e Smithsonian deram 403.
