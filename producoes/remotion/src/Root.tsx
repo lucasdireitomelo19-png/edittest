@@ -12,6 +12,8 @@ import {Video as Amaterasu, DURACAO as DUR_AMATERASU} from './videos/Amaterasu';
 import {Video as MarteRadiacao, DURACAO as DUR_MARTE} from './videos/MarteRadiacao';
 import {Video as Shoemaker, DURACAO as DUR_SHOEMAKER} from './videos/Shoemaker';
 import {Video as Boltzmann, DURACAO as DUR_BOLTZMANN} from './videos/Boltzmann';
+import {Video as NaveMarte, DURACAO as DUR_NAVEMARTE} from './videos/NaveMarte';
+import {Video as Venus, DURACAO as DUR_VENUS} from './videos/Venus';
 import {Video as Area51, Thumb as ThumbArea51, ThumbVerdade as ThumbArea51Verdade, DURACAO as DUR_AREA51} from './videos/Area51';
 import {Video as FimSolar, Thumb as ThumbFimSolar, ThumbA as ThumbFimSolarA, ThumbB as ThumbFimSolarB, DURACAO as DUR_FIMSOLAR} from './videos/FimSolar';
 import {Video as SemLua, Thumb as ThumbSemLua, ThumbA as ThumbSemLuaA, ThumbB as ThumbSemLuaB, DURACAO as DUR_SEMLUA} from './videos/SemLua';
@@ -40,6 +42,8 @@ export const Root = () => (
     <Still id="ThumbArea51Verdade" component={ThumbArea51Verdade} width={1920} height={1080} />
     <Composition id="Shoemaker" component={Shoemaker} durationInFrames={DUR_SHOEMAKER} fps={30} width={1080} height={1920} />
     <Composition id="Boltzmann" component={Boltzmann} durationInFrames={DUR_BOLTZMANN} fps={30} width={1080} height={1920} />
+    <Composition id="NaveMarte" component={NaveMarte} durationInFrames={DUR_NAVEMARTE} fps={30} width={1080} height={1920} />
+    <Composition id="Venus" component={Venus} durationInFrames={DUR_VENUS} fps={30} width={1080} height={1920} />
     <Composition id="MarteRadiacao" component={MarteRadiacao} durationInFrames={DUR_MARTE} fps={30} width={1080} height={1920} />
     <Composition id="SolAviao" component={SolAviao} durationInFrames={DUR_SOLAVIAO} fps={30} width={1080} height={1920} />
     <Composition id="Tsunami" component={Tsunami} durationInFrames={DUR_TSUNAMI} fps={30} width={1080} height={1920} />
