@@ -10,7 +10,7 @@ import {Video as LuzesOlhos, DURACAO as DUR_LUZES} from './videos/LuzesOlhos';
 import {Video as MinasVietna, DURACAO as DUR_MINAS} from './videos/MinasVietna';
 import {Video as Amaterasu, DURACAO as DUR_AMATERASU} from './videos/Amaterasu';
 import {Video as MarteRadiacao, DURACAO as DUR_MARTE} from './videos/MarteRadiacao';
-import {Video as Area51, Thumb as ThumbArea51, DURACAO as DUR_AREA51} from './videos/Area51';
+import {Video as Area51, Thumb as ThumbArea51, ThumbVerdade as ThumbArea51Verdade, DURACAO as DUR_AREA51} from './videos/Area51';
 import {Video as FimSolar, Thumb as ThumbFimSolar, ThumbA as ThumbFimSolarA, ThumbB as ThumbFimSolarB, DURACAO as DUR_FIMSOLAR} from './videos/FimSolar';
 import {Video as SemLua, Thumb as ThumbSemLua, ThumbA as ThumbSemLuaA, ThumbB as ThumbSemLuaB, DURACAO as DUR_SEMLUA} from './videos/SemLua';
 
@@ -35,6 +35,7 @@ export const Root = () => (
     <Composition id="Amaterasu" component={Amaterasu} durationInFrames={DUR_AMATERASU} fps={30} width={1080} height={1920} />
     <Composition id="Area51" component={Area51} durationInFrames={DUR_AREA51} fps={30} width={1920} height={1080} />
     <Still id="ThumbArea51" component={ThumbArea51} width={1920} height={1080} />
+    <Still id="ThumbArea51Verdade" component={ThumbArea51Verdade} width={1920} height={1080} />
     <Composition id="MarteRadiacao" component={MarteRadiacao} durationInFrames={DUR_MARTE} fps={30} width={1080} height={1920} />
     <Composition id="SolAviao" component={SolAviao} durationInFrames={DUR_SOLAVIAO} fps={30} width={1080} height={1920} />
     <Composition id="Tsunami" component={Tsunami} durationInFrames={DUR_TSUNAMI} fps={30} width={1080} height={1920} />

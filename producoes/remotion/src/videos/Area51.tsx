@@ -627,3 +627,55 @@ export const Thumb: React.FC = () => (
     <div style={{position: 'absolute', left: 92, top: 130, padding: '12px 30px', borderRadius: 16, background: VERMELHO, fontFamily: FONTE, fontSize: 54, color: '#fff', letterSpacing: 3, transform: 'rotate(-3deg)', boxShadow: '0 10px 30px rgba(0,0,0,.6)'}}>DOCUMENTOS DA CIA</div>
   </AbsoluteFill>
 );
+
+// ---------- thumbnail pedida pelo dono em 29/10: "A VERDADE SOBRE A ÁREA 51", ET e TOP SECRET ----------
+// O ET é ilustração (não existe foto real de ET); o vídeo não afirma alienígenas.
+const ET: React.FC<{x: number; y: number; s: number}> = ({x, y, s}) => (
+  <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
+    <defs>
+      <radialGradient id="pele" cx="42%" cy="35%" r="70%"><stop offset="0" stopColor="#c9d6c4" /><stop offset="0.45" stopColor="#8a9a86" /><stop offset="0.8" stopColor="#4a5648" /><stop offset="1" stopColor="#1e241d" /></radialGradient>
+      <radialGradient id="olho" cx="35%" cy="30%" r="80%"><stop offset="0" stopColor="#3a4a52" /><stop offset="0.35" stopColor="#0a0e12" /><stop offset="1" stopColor="#000" /></radialGradient>
+      <linearGradient id="borda" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stopColor="#7dff9a" stopOpacity={0.9} /><stop offset="0.25" stopColor="#7dff9a" stopOpacity={0} /></linearGradient>
+      <linearGradient id="sombra" x1="0" y1="0" x2="0" y2="1"><stop offset="0.45" stopColor="#000" stopOpacity={0} /><stop offset="1" stopColor="#000" stopOpacity={0.75} /></linearGradient>
+      <filter id="suave"><feGaussianBlur stdDeviation="1.2" /></filter>
+      <filter id="halo"><feGaussianBlur stdDeviation="30" /></filter>
+    </defs>
+    <g transform={`translate(${x} ${y}) scale(${s})`}>
+      <ellipse cx={0} cy={60} rx={300} ry={360} fill="#2aff6a" opacity={0.18} filter="url(#halo)" />
+      <path d="M-70 300 Q-60 420 -170 520 L170 520 Q60 420 70 300 Z" fill="#3a4638" />
+      <path d="M0 -330 C190 -330 280 -170 270 -40 C260 90 160 230 60 320 C30 345 -30 345 -60 320 C-160 230 -260 90 -270 -40 C-280 -170 -190 -330 0 -330 Z" fill="url(#pele)" filter="url(#suave)" />
+      <path d="M0 -330 C190 -330 280 -170 270 -40 C260 90 160 230 60 320 C30 345 -30 345 -60 320 C-160 230 -260 90 -270 -40 C-280 -170 -190 -330 0 -330 Z" fill="url(#borda)" />
+      <path d="M-30 -300 Q-10 -200 -20 -120" stroke="#5a6656" strokeWidth={4} fill="none" opacity={0.5} />
+      <path d="M-30 40 C-70 -60 -190 -130 -262 -110 C-275 -20 -170 80 -30 40 Z" fill="url(#olho)" />
+      <path d="M30 40 C70 -60 190 -130 262 -110 C275 -20 170 80 30 40 Z" fill="url(#olho)" />
+      <ellipse cx={-185} cy={-70} rx={30} ry={9} fill="#cfefff" opacity={0.6} transform="rotate(-25 -185 -70)" />
+      <ellipse cx={175} cy={-75} rx={24} ry={7} fill="#cfefff" opacity={0.45} transform="rotate(25 175 -75)" />
+      <path d="M0 -330 C190 -330 280 -170 270 -40 C260 90 160 230 60 320 C30 345 -30 345 -60 320 C-160 230 -260 90 -270 -40 C-280 -170 -190 -330 0 -330 Z" fill="url(#sombra)" />
+      <circle cx={-12} cy={150} r={5} fill="#2a3228" /><circle cx={12} cy={150} r={5} fill="#2a3228" />
+      <path d="M-40 228 L40 228" stroke="#1a2018" strokeWidth={5} strokeLinecap="round" />
+    </g>
+  </svg>
+);
+export const ThumbVerdade: React.FC = () => (
+  <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
+    <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
+    <AbsoluteFill style={{background: 'radial-gradient(circle at 72% 50%, #0f3a1c 0%, #04140a 40%, #000 75%)'}} />
+    <div style={{position: 'absolute', left: 1020, top: 120, width: 820, height: 900, background: '#c9a96a', borderRadius: 18, transform: 'rotate(6deg)', boxShadow: '0 30px 80px rgba(0,0,0,.8)', opacity: 0.9}}>
+      <div style={{position: 'absolute', left: 0, top: -50, width: 300, height: 70, background: '#c9a96a', borderRadius: '18px 18px 0 0'}} />
+      {Array.from({length: 9}, (_, i) => <div key={i} style={{position: 'absolute', left: 60, top: 520 + i * 40, height: 12, width: 520 + (i % 3) * 60, background: 'rgba(60,40,20,.35)'}} />)}
+    </div>
+    <ET x={1430} y={470} s={1.15} />
+    <svg width={1920} height={1080} style={{position: 'absolute', inset: 0, opacity: 0.12, mixBlendMode: 'overlay'}}>
+      <filter id="grao"><feTurbulence type="fractalNoise" baseFrequency={0.9} numOctaves={2} seed={4} /></filter>
+      <rect width="100%" height="100%" filter="url(#grao)" />
+    </svg>
+    <div style={{position: 'absolute', left: 1000, top: 800, padding: '10px 36px', border: '11px solid #e01818', borderRadius: 14, fontFamily: FONTE, fontSize: 104, color: '#e01818', whiteSpace: 'nowrap',
+      letterSpacing: 8, transform: 'rotate(-10deg)', background: 'rgba(0,0,0,.25)', textShadow: '0 0 20px rgba(0,0,0,.6)'}}>TOP SECRET</div>
+    <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.6) 40%, transparent 58%)'}} />
+    <div style={{position: 'absolute', left: 70, top: 150, fontFamily: FONTE, lineHeight: 0.95, letterSpacing: -5, WebkitTextStroke: '10px #000', paintOrder: 'stroke fill', textShadow: '0 14px 40px rgba(0,0,0,.9)'}}>
+      <div style={{fontSize: 190, color: '#fff'}}>A VERDADE</div>
+      <div style={{fontSize: 130, color: '#fff'}}>SOBRE A</div>
+      <div style={{fontSize: 230, color: OURO}}>ÁREA 51</div>
+    </div>
+  </AbsoluteFill>
+);
