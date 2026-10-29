@@ -1,5 +1,5 @@
 // Reel POV "Você é o primeiro humano a ouvir um sinal de OUTRA ESTRELA". Roteiro do Roteirista (reels_pov_2026-10-30_11-03.md #3, v1), aprovado pelo dono em 29/10. Post: sábado 31/10 (Halloween).
-// Voz edge-tts (Antonio), decisão do dono em 29/10 ("Vai de edge"). "IMAGINE" no canto nas cenas hipotéticas, "NENHUM SINAL CONFIRMADO" no fim; sem BLC1.
+// Voz edge-tts Remy Multilingual, escolhida pelo dono em 29/10 no lugar da Antonio. "IMAGINE" no canto nas cenas hipotéticas, "NENHUM SINAL CONFIRMADO" no fim; sem BLC1.
 // Reais: antenas de Goldstone (NASA/JPL) e centro da Via Láctea (Spitzer, NASA). Sala, tela, papel do Wow! e esquemas: ilustração própria.
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig, random, Easing} from 'remotion';

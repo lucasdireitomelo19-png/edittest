@@ -1,2 +1,2 @@
-voz=pt-BR-AntonioNeural
+voz=fr-FR-RemyMultilingualNeural
 pausa=0.12

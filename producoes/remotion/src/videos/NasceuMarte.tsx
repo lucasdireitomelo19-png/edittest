@@ -1,5 +1,5 @@
 // Reel POV "Você nasceu em MARTE". Roteiro do Roteirista (reels_pov_2026-10-30_11-03.md #6, v1), aprovado pelo dono em 29/10. Post: terça 03/11.
-// Voz edge-tts (Antonio), decisão do dono em 29/10. "LIMITE DA NASA (ADULTOS)"; 234 mSv/ano marcado como CONTA; hipóteses com "TALVEZ"; sem SpaceX/Musk.
+// Voz edge-tts Remy Multilingual, escolhida pelo dono em 29/10 no lugar da Antonio. "LIMITE DA NASA (ADULTOS)"; 234 mSv/ano marcado como CONTA; hipóteses com "TALVEZ"; sem SpaceX/Musk.
 // Reais: a Terra vista de Marte (Curiosity), Marte (Viking), cratera Gale (Curiosity) e pôr do sol em Gale (Curiosity), todas NASA/JPL. Esquemas: ilustração própria.
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig, random, Easing} from 'remotion';

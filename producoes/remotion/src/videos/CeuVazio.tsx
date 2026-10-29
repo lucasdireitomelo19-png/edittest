@@ -1,5 +1,5 @@
 // Reel POV "Você olha o céu daqui a 100 BILHÕES de anos, e ele está vazio". Roteiro do Roteirista (reels_pov_2026-10-30_11-03.md #5, v1), aprovado pelo dono em 29/10. Post: domingo 01/11.
-// Voz edge-tts (Antonio), decisão do dono em 29/10. "MODELO ATUAL" e "~100 BILHÕES" na tela; "VIA LÁCTEA + ANDRÔMEDA" no lugar de "Milkomeda" (opção do Roteirista).
+// Voz edge-tts Remy Multilingual, escolhida pelo dono em 29/10 no lugar da Antonio. "MODELO ATUAL" e "~100 BILHÕES" na tela; "VIA LÁCTEA + ANDRÔMEDA" no lugar de "Milkomeda" (opção do Roteirista).
 // Reais: campo ultraprofundo do Hubble (NASA), Andrômeda (GALEX, NASA) e radiação cósmica de fundo (Planck, ESA/NASA). Céu do futuro e esquemas: ilustração própria.
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig, random, Easing} from 'remotion';

@@ -1,5 +1,5 @@
 // Reel POV "Você está num planeta SEM SOL, e ele não é raro". Roteiro do Roteirista (reels_pov_2026-10-30_11-03.md #4, v1), aprovado pelo dono em 29/10. Post: sábado 31/10 (Halloween).
-// Voz edge-tts (Antonio), decisão do dono em 29/10. "ESTIMATIVA" nos números, "SIMULAÇÕES" no dado da Terra; a tela não mostra oceano nem vida.
+// Voz edge-tts Remy Multilingual, escolhida pelo dono em 29/10 no lugar da Antonio. "ESTIMATIVA" nos números, "SIMULAÇÕES" no dado da Terra; a tela não mostra oceano nem vida.
 // Reais: centro da Via Láctea (Spitzer, NASA), campo profundo do Hubble (NASA) e lançamento do Roman (NASA, 30/08/2026). Planeta errante e esquemas: ilustração própria.
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig, random, Easing} from 'remotion';
