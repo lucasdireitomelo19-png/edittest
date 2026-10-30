@@ -69,7 +69,17 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
    - 29/10: Reels lado-68 Shoemaker (02/11), lado-69 Boltzmann (03/11), lado-70 Nave a caminho de Marte (30/10) e lado-71 Vênus (30/10). Docs 37–40.
    - 29/10 (tarde): Reels POV lado-72 Sinal de outra estrela (31/10), lado-73 Planeta sem sol (31/10), lado-74 Céu vazio (01/11) e lado-75 Nasceu em Marte (03/11), com voz edge-tts **Remy** (`fr-FR-RemyMultilingualNeural`). O dono pediu edge ("Vai de edge") e depois trocou a Antonio pela Remy por erro de pronúncia (vídeo comparando 6 vozes, 29/10). **Quando não houver ElevenLabs, use a Remy:** `narrar.py <dir> <alvo> 8 --voz fr-FR-RemyMultilingualNeural --pausa 0.12`. Central + Observatório. Docs 41–44. Composições `Sinal`, `SemSol`, `CeuVazio`, `NasceuMarte`.
    - 30/10: longo POV lado-76 "Você viu o universo se RASGAR!" (Big Rip), voz Remy, 6:17, composição `BigRip` + `ThumbBigRip`, doc 45. Central/Observatório com cópia 540p (o 1080p tem 56 MB). `criarLongo` ganhou a opção `mudo` (trilha zerada num trecho). Data de publicação ainda não definida.
-1. **Escolhas do dono em aberto:** thumb do lado-58 (A ou B, stills ThumbA e ThumbB em `SemLua`) e troca do título (sugestão: "Você acorda e a Lua SUMIU!").
+   - 30/10 (noite): **Big Rip v2** (lado-76, versão 2 na Central e no Observatório): narração 100% em português e 96 cenas sem nenhuma repetida. MP4 1080p no chat. Doc 45 atualizado.
+1. **URGENTE: refazer os Reels POV lado-72 a 75 sem cenas repetidas** (o dono proibiu repetir cena em qualquer vídeo, 30/10; o #3 e o #4 saem no sábado 31/10, o #5 no domingo 01/11 e o #6 na terça 03/11).
+   - **Narração já refeita** com `texto_pt` (anos por extenso, "Wow" → "Uau"), conferida no Whisper. `narracao.mp3` em `public/<sinal|semsol|ceuvazio|nascimarte>/` e `src/videos/<...>.palavras.json` já estão atualizados; as âncoras não mudaram.
+   - **O que repete hoje** (`checar_repeticao.py` + folha de contato):
+     - `Sinal.tsx`: antena.jpg 2× (Captou, NenhumConfirmado), antena_via.jpg 2× (JaAconteceu, Manual), 4 Glitch (NaoConte, Imagina, Gritar, Responder), 3 telas de monitor (NaTela, NaoDevia, NuncaMais), Selo em céu 2× (Regra, OnuUai).
+     - `SemSol.tsx`: céu+chão 5× (OlhaPraCima, NuncaExistiu, SemDia, SemNoite, SoEscuro), Glitch 4× (NaoExisteSol, Ficcao, Vida, NinguemSabe), planeta errante 2×, Sistema 2× (NasceuEstrela, Arremessada), disco de gás 3× (Crescendo, Cha, Engolindo).
+     - `CeuVazio.tsx`: xdf 4×, cmb 2×, andromeda 2×, Galaxias 5×, CeuFuturo 5×, Glitch 3×.
+     - `NasceuMarte.tsx`: gale.jpg 3× (ArLaFora, SemTraje, Radiacao), boneco Pessoa em 4 cenas.
+   - **Como fiz no Big Rip:** uma foto real diferente por cena (NASA Images tem muita: Hubble, Webb, ISS, Curiosity/Perseverance para Marte, Goldstone PIA26717/PIA26719/PIA17792/PIA10953 para antenas), e cada tipo de ilustração uma vez só (troque o 2º glitch por foto com título, o 2º gráfico por outro tipo de esquema etc.). Cenas que são o mesmo momento podem virar uma só (no Big Rip "aos seus átomos" + "eles se desfazem" viraram uma cena, com a troca no meio pelo tempo da palavra).
+   - **Entrega:** render final, trocar `video_asset`/`video_url` nas linhas `videos/lado-72..75` da Central e do Observatório (as linhas estão na versão 2; use `if_version`), mandar os MP4 ao dono e avisar o LadoSombrio.
+2. **Escolhas do dono em aberto:** thumb do lado-58 (A ou B, stills ThumbA e ThumbB em `SemLua`) e troca do título (sugestão: "Você acorda e a Lua SUMIU!").
 
 ## Lições da conversa de 28–29/10
 - Num container novo, `pipeline/src` (biblioteca de clipes) e os mp4 de `remotion/public` **não vêm**. Use NASA Images, SVS, Rijksmuseum (gravuras) e ilustração própria. Wikimedia deu 429; sites militares, CIA e Smithsonian deram 403.
