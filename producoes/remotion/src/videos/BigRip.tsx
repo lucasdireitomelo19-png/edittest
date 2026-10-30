@@ -441,7 +441,18 @@ const Encolhendo: React.FC = () => {
 const Familias: React.FC = () => <F src="webb_aglomerado.jpg" etq="IMAGEM REAL · AGLOMERADO SMACS 0723 · WEBB · NASA/ESA/CSA" t="AS FAMÍLIAS DE GALÁXIAS" z={[1.0, 1.2]} />;
 const Coma: React.FC = () => {
   const f = useCurrentFrame();
-  return <AbsoluteFill><Estilhaco src="coma.jpg" p={interpolate(f, [10, 110], [0, 0.6], clamp)} cols={10} rows={6} /><Tit t="OS AGLOMERADOS SE DESFAZEM" /><Etq t="IMAGEM REAL (AGLOMERADO DE COMA · NASA) + EFEITO" /></AbsoluteFill>;
+  const p = prog(f, 10, 110);
+  return (
+    <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
+      {Array.from({length: 8}, (_, i) => (
+        <div key={i} style={{position: 'absolute', top: 0, height: 1080, left: i * 240, width: 241, overflow: 'hidden', transform: `translate(${(i - 3.5) * 60 * p}px, ${(i % 2 ? -1 : 1) * 140 * p}px)`, opacity: 1 - 0.5 * p}}>
+          <Img src={img('coma.jpg')} style={{position: 'absolute', top: 0, left: -i * 240, width: 1920, height: 1080, objectFit: 'cover'}} />
+        </div>
+      ))}
+      <Tit t="OS AGLOMERADOS SE DESFAZEM" />
+      <Etq t="IMAGEM REAL (AGLOMERADO DE COMA · NASA) + EFEITO" />
+    </AbsoluteFill>
+  );
 };
 const Afastam: React.FC = () => {
   const f = useCurrentFrame();
@@ -633,7 +644,14 @@ const Estacoes: React.FC = () => {
 const SolMenor: React.FC = () => {
   const f = useCurrentFrame();
   const r = interpolate(f, [0, 150], [260, 40], {...clamp, easing: Easing.inOut(Easing.cubic)});
-  return <Ceu n={120}><Bola x={960} y={580} r={r} bg={SOL} brilho="rgba(255,200,80,.7)" /><Tit t="O SOL FICA MENOR NO CÉU" /><Etq t="ANIMAÇÃO · HIPÓTESE" /></Ceu>;
+  return (
+    <AbsoluteFill style={{background: 'linear-gradient(180deg, #0c1838 0%, #3a3a6a 55%, #c07040 80%)'}}>
+      <Bola x={960} y={560} r={r * 0.6} bg={SOL} brilho="rgba(255,200,80,.7)" />
+      <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}><path d="M0 860 L260 820 L520 850 L800 800 L1100 845 L1400 810 L1700 850 L1920 825 V1080 H0 Z" fill="#0a0806" /></svg>
+      <Tit t="O SOL FICA MENOR NO CÉU" />
+      <Etq t="ILUSTRAÇÃO · HIPÓTESE" />
+    </AbsoluteFill>
+  );
 };
 const Frio: React.FC = () => <F src="gelo.jpg" etq="IMAGEM REAL · GELO NA GROENLÂNDIA · NASA" t="E O FRIO CHEGA" z={[1.0, 1.15]} filtro="saturate(.6) brightness(.9)" />;
 const NenhumVivo: React.FC = () => <F src="aurora.jpg" etq="IMAGEM REAL · AURORA VISTA DA ESTAÇÃO ESPACIAL · NASA" t="NENHUM SER VIVO AGUENTARIA" z={[1.0, 1.1]} />;
@@ -714,7 +732,18 @@ const Estatica: React.FC = () => {
     </AbsoluteFill>
   );
 };
-const Calculos: React.FC = () => <Card topo="OS CÁLCULOS SÓ DIZEM" meio="NESSE CENÁRIO, ACONTECE" cor={ROXO} />;
+const Calculos: React.FC = () => {
+  const f = useCurrentFrame();
+  const contas = ['w = −1,5', 'ρ ∝ a³ᐟ²', 'a(t) → ∞', 't → t₀'];
+  return (
+    <AbsoluteFill style={{background: '#16261c'}}>
+      {contas.map((c, i) => <div key={c} style={{position: 'absolute', left: 260 + (i % 2) * 760, top: 300 + Math.floor(i / 2) * 200, fontFamily: 'cursive', fontSize: 90, color: '#e8f0e8', opacity: prog(f, i * 6, i * 6 + 12)}}>{c}</div>)}
+      <Sub y={760} s={56} cor={OURO} d={20}>NESSE CENÁRIO, ACONTECE</Sub>
+      <Tit t="OS CÁLCULOS SÓ DIZEM" />
+      <Etq t="ILUSTRAÇÃO" />
+    </AbsoluteFill>
+  );
+};
 const Filme: React.FC = () => {
   const s = useSpring(14);
   return (
@@ -749,7 +778,17 @@ const Instante: React.FC = () => {
     </AbsoluteFill>
   );
 };
-const DezMenos19: React.FC = () => <Grande t="10⁻¹⁹ S" s={240} cor={OURO} sub="UM DÉCIMO DE BILIONÉSIMO DE BILIONÉSIMO DE SEGUNDO" />;
+const DezMenos19: React.FC = () => {
+  const f = useCurrentFrame();
+  const n = Math.min(18, Math.floor(f / 2));
+  return (
+    <AbsoluteFill style={{background: '#000'}}>
+      <div style={{position: 'absolute', top: 380, width: '100%', textAlign: 'center', fontFamily: 'monospace', fontSize: 92, color: OURO, letterSpacing: 2}}>0,{'0'.repeat(n)}{n >= 18 ? '1' : ''} S</div>
+      <Sub y={560} s={42} cor="#fff">UM DÉCIMO DE BILIONÉSIMO DE BILIONÉSIMO DE SEGUNDO</Sub>
+      <Tit t="10⁻¹⁹ SEGUNDO" />
+    </AbsoluteFill>
+  );
+};
 // o átomo inteiro; quando a fala chega em "eles se desfazem", ele se rasga (uma cena só)
 const [I_ATOMOS, I_DESFAZEM] = ancoras(W, ['aos seus atomos', 'eles se desfazem']);
 const RASGA_EM = fr(W[I_DESFAZEM].t - W[I_ATOMOS].t);
@@ -925,7 +964,15 @@ const NaoConfirmado: React.FC = () => {
 const FimFrio: React.FC = () => <F src="eliptica.jpg" etq="IMAGEM REAL · GALÁXIA ELÍPTICA · HUBBLE · NASA" t="UM FIM FRIO E LENTO" z={[1.0, 1.1]} filtro="brightness(.8)"><Sub y={250} s={42} cor={OURO}>ESTRELAS APAGANDO POR TRILHÕES DE ANOS</Sub></F>;
 const Encolher: React.FC = () => {
   const f = useCurrentFrame();
-  return <Ceu n={60}><Galaxias sem="crunch" k={interpolate(f, [0, 90], [1.6, 0.4], {...clamp, easing: Easing.in(Easing.quad)})} /><Tit t="OU VOLTAR A ENCOLHER" /><Etq t="ANIMAÇÃO · HIPÓTESE" /></Ceu>;
+  const k = interpolate(f, [0, 90], [1.6, 0.25], {...clamp, easing: Easing.in(Easing.quad)});
+  return (
+    <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 50%, #3a0c0c, #0a0202 70%)'}}>
+      <Galaxias sem="crunch" k={k} n={50} />
+      <Bola x={960} y={540} r={40 + (1.6 - k) * 90} bg="radial-gradient(circle, #fff6e0, rgba(255,140,60,.6) 40%, rgba(255,80,30,0) 70%)" />
+      <Tit t="OU VOLTAR A ENCOLHER" />
+      <Etq t="ANIMAÇÃO · HIPÓTESE" />
+    </AbsoluteFill>
+  );
 };
 const NaoRasgo: React.FC = () => (
   <F src="de_lado.jpg" etq="IMAGEM REAL · GALÁXIA DE LADO · HUBBLE · NASA" z={[1.0, 1.12]}>
@@ -934,26 +981,37 @@ const NaoRasgo: React.FC = () => (
 );
 const NaoDescarta: React.FC = () => <F src="espiral2.jpg" etq="IMAGEM REAL · GALÁXIA ESPIRAL · HUBBLE · NASA" t="NINGUÉM CONSEGUE DESCARTAR DE VEZ" z={[1.1, 1.0]} s={70} />;
 // escudo em volta das órbitas: o mínimo que o Sistema Solar garante
+// selo de "garantia mínima" (ilustração)
 const Garantia: React.FC = () => {
   const f = useCurrentFrame();
-  const s = useSpring(10);
-  const rs = [110, 170, 240];
+  const s2 = useSpring(6, {damping: 9, mass: 0.6});
   return (
-    <AbsoluteFill style={{background: NOITE}}>
-      <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
-        {rs.map((r, i) => <ellipse key={i} cx={960} cy={600} rx={r} ry={r * 0.4} fill="none" stroke="rgba(255,255,255,.25)" strokeWidth={2} />)}
-        {rs.map((r, i) => { const a = (f * 0.04) / (i + 1) + i * 2; return <circle key={'p' + i} cx={960 + Math.cos(a) * r} cy={600 + Math.sin(a) * r * 0.4} r={9} fill={['#e8c080', '#4a9ae8', '#d06040'][i]} />; })}
-        <ellipse cx={960} cy={600} rx={340 * s} ry={170 * s} fill="rgba(61,220,132,.08)" stroke={VERDE} strokeWidth={6} />
-      </svg>
-      <Bola x={960} y={600} r={40} bg={SOL} brilho="rgba(255,200,80,.6)" />
+    <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 50%, #0a2418, #020806 70%)'}}>
+      <div style={{position: 'absolute', left: 960 - 220, top: 280, width: 440, height: 440, borderRadius: '50%', border: `14px dashed ${VERDE}`, transform: `rotate(${f * 0.6}deg) scale(${s2})`}} />
+      <div style={{position: 'absolute', left: 960 - 170, top: 330, width: 340, height: 340, borderRadius: '50%', background: 'rgba(61,220,132,.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center',
+        fontFamily: FONTE, fontSize: 44, color: VERDE, lineHeight: 1.1, transform: `scale(${s2})`}}>GARANTIA<br />MÍNIMA</div>
       <Tit t="O MÍNIMO QUE O SISTEMA SOLAR GARANTE" s={70} />
-      <Sub y={830} s={36} cor={ROXO}>MAIO DE 2026 · SCHERRER E TRIVEDI</Sub>
-      <Etq t="ESQUEMA · PRÉ-PUBLICAÇÃO" />
+      <Sub y={800} s={36} cor={ROXO}>MAIO DE 2026 · SCHERRER E TRIVEDI</Sub>
+      <Etq t="ILUSTRAÇÃO · PRÉ-PUBLICAÇÃO" />
     </AbsoluteFill>
   );
 };
 const Estranha: React.FC = () => <F src="espiral.jpg" etq="IMAGEM REAL · GALÁXIA ESPIRAL · HUBBLE · NASA" t="EXIGIRIA UMA FÍSICA MUITO ESTRANHA" z={[1.0, 1.2]} filtro="hue-rotate(250deg) saturate(1.3)" s={72} />;
-const NaoRevisado: React.FC = () => <Pagina topo="ARXIV · MAIO DE 2026 · PRÉ-PUBLICAÇÃO" titulo="O que o Sistema Solar garante sobre o Big Rip" carimbo="AINDA NÃO REVISADO" cor={OURO} />;
+const NaoRevisado: React.FC = () => {
+  const f = useCurrentFrame();
+  const itens: [string, boolean][] = [['ESCRITO', true], ['PUBLICADO COMO PRÉ-PUBLICAÇÃO', true], ['REVISADO POR OUTROS CIENTISTAS', false]];
+  return (
+    <AbsoluteFill style={{background: 'linear-gradient(135deg, #10202a, #05080c)'}}>
+      {itens.map(([t, ok], i) => {
+        const s = spring({frame: f - 4 - i * 10, fps: FPS, config: {damping: 12}});
+        return <div key={t} style={{position: 'absolute', left: 420, top: 360 + i * 140, display: 'flex', alignItems: 'center', gap: 40, opacity: s, fontFamily: FONTE, fontSize: 52, color: ok ? '#fff' : OURO}}>
+          <div style={{width: 80, height: 80, borderRadius: 14, border: `6px solid ${ok ? VERDE : OURO}`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: VERDE, fontSize: 60}}>{ok ? '✓' : ''}</div>{t}</div>;
+      })}
+      <Tit t="AINDA NÃO REVISADO" cor={OURO} />
+      <Etq t="ESQUEMA" />
+    </AbsoluteFill>
+  );
+};
 const TresMeses: React.FC = () => <F src="orion.jpg" etq="IMAGEM REAL · TERRA E LUA VISTAS DA ORION · NASA" t="NINGUÉM SOBREVIVERIA NEM 3 MESES" z={[1.0, 1.1]} s={72} />;
 const Medindo: React.FC = () => {
   const f = useCurrentFrame();
