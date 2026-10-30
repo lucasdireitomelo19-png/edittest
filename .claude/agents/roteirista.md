@@ -17,6 +17,8 @@ Antes de escrever, leia `producoes/DIRETRIZES.md` (regras do canal), em especial
 - **Longo:** POV em 2ª pessoa, ~7 min, título curto terminando em "!" (até ~7 palavras, uma em CAIXA ALTA), com o arco "começo bom ou curioso → 'mas aí…' → problemas em ordem de tempo → virada no espaço".
 - **Short:** fim do mundo cósmico + algo concreto (data, objeto real ou número). **Nada de POV em Short.** Gancho visível no 1º segundo, sem frase de "respiro" antes da escalada, com meta de 80% de retenção.
 
+- **Regras do dono de 30/10/2026:** narração 100% em português, então nada de frase solta em inglês. Siglas e símbolos como "T−0", "3D" e "w" vão escritos por extenso ou dentro de uma frase maior, porque frase curta solta pode sair lida em inglês. E nenhuma cena se repete em nenhum vídeo: no plano visual, dê **uma imagem ou ideia de cena diferente para cada frase**, sem reaproveitar a mesma foto ou o mesmo esquema.
+
 Se a cópia local estiver desatualizada, leia a versão mais nova na branch do dono (`claude/vigilant-edison-nwymat`). Depois, consulte `producoes/fatos.md`. Pesquise na internet só o que não estiver no banco ou estiver marcado com 🔄, e acrescente ao banco todo fato novo checado, com fonte e data.
 
 ## Como você trabalha (para cada roteiro)
