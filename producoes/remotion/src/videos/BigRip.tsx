@@ -415,14 +415,8 @@ const SemAno: React.FC = () => <Grande t="SEM ANO" s={220} />;
 const SemEstacao: React.FC = () => <Grande t="SEM VERÃO · SEM INVERNO" s={130} cor={CIANO} />;
 const SolMenor: React.FC = () => {
   const f = useCurrentFrame();
-  const s = interpolate(f, [0, 150], [0.9, 0.2], {...clamp, easing: Easing.inOut(Easing.cubic)});
-  return (
-    <AbsoluteFill style={{background: '#000', justifyContent: 'center', alignItems: 'center'}}>
-      <Img src={staticFile('bigrip/sol.jpg')} style={{width: 1000 * s, height: 1000 * s, borderRadius: '50%', filter: 'hue-rotate(190deg) saturate(1.6) brightness(1.9)', boxShadow: '0 0 120px rgba(255,190,90,.5)'}} />
-      <Tit t="O SOL FICA MENOR NO CÉU" />
-      <Etq t="IMAGEM REAL (SDO · NASA) + EFEITO" />
-    </AbsoluteFill>
-  );
+  const r = interpolate(f, [0, 150], [260, 40], {...clamp, easing: Easing.inOut(Easing.cubic)});
+  return <Ceu n={120}><Bola x={960} y={580} r={r} bg={SOL} brilho="rgba(255,200,80,.7)" /><Tit t="O SOL FICA MENOR NO CÉU" /><Etq t="ANIMAÇÃO · HIPÓTESE" /></Ceu>;
 };
 const Frio: React.FC = () => {
   const f = useCurrentFrame();
