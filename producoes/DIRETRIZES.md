@@ -39,7 +39,7 @@ Base: YouTube de 16 a 25/10 (82 mil views, +280 inscritos). Revisar a cada ~2 se
 - **Visual Plan:** tabela com #, tempo, narração, ideia, visual desejado, buscas Pixabay (várias variações), footage escolhido (id), relevância 0–10, duração, movimento e função narrativa. Relevância mínima 8/10.
 - **Teste de cada cena:** "Se o espectador ouvir só esta frase, esta imagem faz sentido?" Se não fizer, a cena não entra. Nada de footage aleatório para encher.
 - **Ritmo:** 2–4 s por cena normal e 3–6 s em informação importante. Alguma mudança a cada 5–10 s, sem virar regra mecânica.
-- **Repetição:** evitar repetir clipe. Se repetir, usar outro trecho, crop ou enquadramento.
+- **Nenhuma cena se repete (regra do dono, 30/10/2026: "Nenhum vídeo é pra repetir cena. Nenhum.").** Em cada vídeo, cada foto ou clipe real aparece em uma cena só, e cada tipo de esquema ou ilustração também. Sem reaproveitar a mesma imagem com outro crop, zoom ou filtro. Antes de renderizar: `python3 remotion/checar_repeticao.py src/videos/<Video>.tsx` tem que dar "nada repetido".
 - **Continuidade:** manter a direção do movimento, a luz e a época entre cenas.
 - **Fatos reais:** footage genérico nunca é apresentado como registro real do caso.
 - **Animação** só para o que é abstrato, impossível de filmar, rotas, linhas do tempo ou estatísticas.
@@ -84,6 +84,7 @@ Base: YouTube de 16 a 25/10 (82 mil views, +280 inscritos). Revisar a cada ~2 se
 - **Ponto de partida:** o modelo `src/videos/TodoMundoSumiu.tsx`, com legenda palavra por palavra, selo DIA, globo 3D, estrada em perspectiva, glitch, granulado, whoosh em cada corte e cor que dessatura na virada. Copie e adapte; não comece do zero.
 - **Storyboard:** `npx remotion still` (1 quadro por cena) montado em folha. **Prévia:** `./render.sh <Comp> out/previa.mp4 --prévia`. **Final:** `./render.sh <Comp> out/final.mp4` (já sai em −14 LUFS).
 - **Voz:** Brian da ElevenLabs (`narrar_el.py`), pedido do dono em 23/10/2026 ("usa a voz do Brian"). Shorts com vel 1.2 e pausa 0.12; longos com vel 1.1 e pausa 0.45. O edge-tts (`narrar.py`, gratuito) serve só para a narração provisória do storyboard.
+- **Narração 100% em português (regra do dono, 30/10/2026: "Tem que ser tudo em português").** Sem ElevenLabs, a voz é a Remy Multilingual (`narrar.py --voz fr-FR-RemyMultilingualNeural`, escolha do dono em 29/10). O `narrar.py` passa o texto por `pipeline/texto_pt.py` (números por extenso, "T menos" → "Tê menos", "3D" → "três dê"; a legenda continua mostrando o original). Frase curta solta pode sair em inglês: "T menos zero." sozinho saiu "Team Enos Zero", e junto da frase seguinte ("T menos zero: o próprio espaço…") saiu certo. Depois de narrar, conferir as palavras arriscadas transcrevendo o trecho com Whisper.
 - A entrega segue a seção abaixo (direto na versão final).
 
 ## Aprovação e entrega

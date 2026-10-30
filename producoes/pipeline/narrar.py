@@ -6,6 +6,7 @@ Uso: python3 narrar.py <pasta> [alvo_s] [rate_inicial] [--voz NOME] [--pausa S]
 A voz e a pausa usadas ficam gravadas em voz.txt na pasta, e são reaproveitadas na próxima execução.
 """
 import asyncio, json, os, sys, subprocess, edge_tts
+import texto_pt   # números, letras e siglas em português (pedido do dono, 30/10)
 
 args = sys.argv[1:]
 def opcao(nome):
@@ -16,7 +17,7 @@ cfg = dict(l.split("=", 1) for l in open(f"{d}/voz.txt").read().split()) if os.p
 VOZ = opcao("--voz") or cfg.get("voz", "pt-BR-AntonioNeural")
 PAUSA = float(opcao("--pausa") or cfg.get("pausa", 0)) or None
 alvo = float(args[1]) if len(args) > 1 else 60.2
-TEXT = open(f"{d}/roteiro.txt", encoding="utf-8").read().strip()
+TEXT, TROCAS = texto_pt.preparar(open(f"{d}/roteiro.txt", encoding="utf-8").read().strip())
 
 def duracao(arq):
     return float(subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration","-of","csv=p=0",arq]))
@@ -63,6 +64,7 @@ async def gerar(rate):
         return await gerar(rate)
     if PAUSA:
         words = encurtar_pausas(words)
+    words = texto_pt.restaurar(words, TROCAS)
     json.dump(words, open(f"{d}/palavras.json", "w"), ensure_ascii=False)
     return duracao(f"{d}/narracao.mp3")
 
