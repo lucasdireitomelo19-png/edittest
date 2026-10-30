@@ -10,7 +10,7 @@
 ---
 
 ## 1 · Você viu o universo se RASGAR!
-**Formato:** Longo POV, 1920x1080, ~6,5 min (~990 palavras), gancho + 8 capítulos + "Mas espera…"   **Status:** aguardando aprovação (v1)
+**Formato:** Longo POV, 1920x1080, ~6,5 min (~990 palavras), gancho + 8 capítulos + "Mas espera…"   **Status:** APROVADO pelo dono (30/10, v1). Título A por padrão (o dono não escolheu; segue a Estratégia de conteúdo).
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: é o molde vencedor com a contagem regressiva mais extrema possível (bilhões de anos → meses → minutos → 10⁻¹⁹ s), e cada capítulo fica mais curto e mais pessoal (galáxias → Via Láctea → Terra → os seus átomos). Ponto mais fraco: é hipótese do começo ao fim, e o espectador precisa entender cedo que é um cenário, senão a virada parece trapaça.
 **Ângulo:** POV numa contagem regressiva que acelera, seguindo o arco da Estratégia (curioso → "e se…" → perdas em ordem de tempo → virada), com a virada "o fim depende de um número que ainda estamos medindo".
 **Tom de voz:** épico, sombrio, crescente, com assombro.
