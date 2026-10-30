@@ -162,6 +162,7 @@ export type ConfigLongo = {
   selos?: {texto: string; de: string; ate: string; linha?: number; cor?: string}[];
   cantos?: {frase: string; texto: string}[];   // troca do canto no meio de um capítulo
   hits?: {frase: string; off?: number; vol?: number}[];
+  mudo?: {de: string; ate: string};   // trilha zerada nesse trecho (silêncio total)
   fim: React.FC;
 };
 export const criarLongo = (c: ConfigLongo) => {
@@ -240,6 +241,8 @@ export const criarLongo = (c: ConfigLongo) => {
   };
   const Fim = c.fim;
   const V = INICIO_CAP[c.volta];
+  const M = c.mudo ? [em(c.mudo.de), em(c.mudo.ate)] : null;
+  const somMudo = (f: number) => (M ? interpolate(f, [M[0] - 15, M[0], M[1] - 10, M[1] + 20], [1, 0, 0, 1], clamp) : 1);
   const Video: React.FC = () => (
     <AbsoluteFill style={{background: '#000'}}>
       <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
@@ -259,7 +262,7 @@ export const criarLongo = (c: ConfigLongo) => {
       {SELOS.map((s, i) => <Sequence key={'s' + i} from={s.ini} durationInFrames={s.fim - s.ini}><Selo t={s.texto} l={s.linha} cor={s.cor} /></Sequence>)}
       <Legenda />
       <Audio src={staticFile(c.audio)} />
-      <Audio src={staticFile(c.musica)} volume={(f) => interpolate(f, [0, 30, V - GAP, V, FIM - 60, FIM], [0, 0.16, 0.16, 0.24, 0.24, 0], clamp)} />
+      <Audio src={staticFile(c.musica)} volume={(f) => interpolate(f, [0, 30, V - GAP, V, FIM - 60, FIM], [0, 0.16, 0.16, 0.24, 0.24, 0], clamp) * somMudo(f)} />
       {INICIO_CAP.slice(1).map((t, k) => <Sequence key={'w' + k} from={t - GAP - 8} durationInFrames={30}><Audio src={staticFile('sfx/whoosh.wav')} volume={0.25} /></Sequence>)}
       {(c.hits ?? []).map((h, i) => <Sequence key={'h' + i} from={em(h.frase) + (h.off ?? 0)}><Audio src={staticFile('sfx/hit.wav')} volume={h.vol ?? 0.4} /></Sequence>)}
       <Sequence from={V}><Audio src={staticFile('sfx/hit.wav')} volume={0.4} /></Sequence>

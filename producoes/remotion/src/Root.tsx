@@ -18,6 +18,7 @@ import {Video as Sinal, DURACAO as DUR_SINAL} from './videos/Sinal';
 import {Video as SemSol, DURACAO as DUR_SEMSOL} from './videos/SemSol';
 import {Video as CeuVazio, DURACAO as DUR_CEUVAZIO} from './videos/CeuVazio';
 import {Video as NasceuMarte, DURACAO as DUR_NASCEUMARTE} from './videos/NasceuMarte';
+import {Video as BigRip, Thumb as ThumbBigRip, DURACAO as DUR_BIGRIP} from './videos/BigRip';
 import {Video as Area51, Thumb as ThumbArea51, ThumbVerdade as ThumbArea51Verdade, DURACAO as DUR_AREA51} from './videos/Area51';
 import {Video as FimSolar, Thumb as ThumbFimSolar, ThumbA as ThumbFimSolarA, ThumbB as ThumbFimSolarB, DURACAO as DUR_FIMSOLAR} from './videos/FimSolar';
 import {Video as SemLua, Thumb as ThumbSemLua, ThumbA as ThumbSemLuaA, ThumbB as ThumbSemLuaB, DURACAO as DUR_SEMLUA} from './videos/SemLua';
@@ -52,6 +53,8 @@ export const Root = () => (
     <Composition id="SemSol" component={SemSol} durationInFrames={DUR_SEMSOL} fps={30} width={1080} height={1920} />
     <Composition id="CeuVazio" component={CeuVazio} durationInFrames={DUR_CEUVAZIO} fps={30} width={1080} height={1920} />
     <Composition id="NasceuMarte" component={NasceuMarte} durationInFrames={DUR_NASCEUMARTE} fps={30} width={1080} height={1920} />
+    <Composition id="BigRip" component={BigRip} durationInFrames={DUR_BIGRIP} fps={30} width={1920} height={1080} />
+    <Still id="ThumbBigRip" component={ThumbBigRip} width={1920} height={1080} />
     <Composition id="MarteRadiacao" component={MarteRadiacao} durationInFrames={DUR_MARTE} fps={30} width={1080} height={1920} />
     <Composition id="SolAviao" component={SolAviao} durationInFrames={DUR_SOLAVIAO} fps={30} width={1080} height={1920} />
     <Composition id="Tsunami" component={Tsunami} durationInFrames={DUR_TSUNAMI} fps={30} width={1080} height={1920} />
