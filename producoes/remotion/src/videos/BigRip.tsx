@@ -418,7 +418,7 @@ const SolMenor: React.FC = () => {
   const s = interpolate(f, [0, 150], [0.9, 0.2], {...clamp, easing: Easing.inOut(Easing.cubic)});
   return (
     <AbsoluteFill style={{background: '#000', justifyContent: 'center', alignItems: 'center'}}>
-      <Img src={staticFile('bigrip/sol.jpg')} style={{width: 1000 * s, height: 1000 * s, borderRadius: '50%', filter: 'hue-rotate(190deg) saturate(1.4)'}} />
+      <Img src={staticFile('bigrip/sol.jpg')} style={{width: 1000 * s, height: 1000 * s, borderRadius: '50%', filter: 'hue-rotate(190deg) saturate(1.6) brightness(1.9)', boxShadow: '0 0 120px rgba(255,190,90,.5)'}} />
       <Tit t="O SOL FICA MENOR NO CÉU" />
       <Etq t="IMAGEM REAL (SDO · NASA) + EFEITO" />
     </AbsoluteFill>

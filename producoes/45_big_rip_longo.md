@@ -1,0 +1,9 @@
+# 45 · Você viu o universo se RASGAR! (longo POV, lado-76)
+
+- Longo 1920x1080, ~6:17 · Remotion (`remotion/src/videos/BigRip.tsx`, composição `BigRip`, thumb `ThumbBigRip`) · molde dos longos POV (`longo.tsx`) · gancho + 8 capítulos + "Mas espera…", 87 cenas.
+- Voz: edge-tts **Remy Multilingual** (`fr-FR-RemyMultilingualNeural`, +3%, pausa 0.45), a voz que o dono escolheu em 29/10 para quando não há ElevenLabs (restam ~1,4 mil caracteres; o longo pede ~5,5 mil). Cartões de capítulo com 2,2 s (`capitulos.py`). Trilha própria (`musica.py`, semente 68), que some no T−0 (silêncio total, opção nova `mudo` no `criarLongo`) e volta no "Mas espera…".
+- Roteiro: Roteirista, `longo_big_rip.md` (v1), aprovado pelo dono em 30/10. Título A: "Você viu o universo se RASGAR!" (B: "O fim do universo em que a Terra explode 30 minutos antes de tudo"). Entregue direto na versão final.
+- Canto fixo: "CENÁRIO w = −1,5 · T−20 BI → T−1 BI → T−60 MI → T−3 MESES → T−30 MIN → T−10⁻¹⁹ S → T−0" e "● HOJE · MEDINDO w" no "Mas espera…". Saturação 1 → 0,85 → … → 0,15 e volta a 1.
+- Honestidade: "HIPÓTESE" do gancho até o T−0; "FONTES DIVERGEM" e cartão "2003: T−60 MI × 2004: T−180 MI"; "IMAGINAÇÃO · SEM ESTUDO" no chão e no ar; DESI "NÃO CONFIRMADO"; Scherrer e Trivedi "PRÉ-PUBLICAÇÃO" e "AINDA NÃO REVISADO". A tela nunca mostra "30 anos".
+- Reais (NASA, domínio público): supernova (Spitzer, PIA24575), aglomerado SMACS 0723 (Webb), aglomerado de Coma (PIA04210), centro da Via Láctea (PIA12348), Sol (SDO), Terra (Apollo 17), campo ultraprofundo (Hubble), radiação de fundo (Planck, ESA/NASA). Efeitos sobre fotos levam "IMAGEM REAL + EFEITO". O mapa do DESI é ilustração própria (licença do Berkeley Lab não confirmada).
+- Thumb: Terra (Apollo 17) rachando com luz branca, galáxias esticadas ao fundo, "T−30 MIN" e selo "CENÁRIO".
