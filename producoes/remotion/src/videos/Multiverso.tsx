@@ -1566,24 +1566,43 @@ const L = criarLongo({
 export const Video = L.Video;
 export const DURACAO = L.DURACAO;
 
-// ---------- thumbnail: porta aberta, a mesma pessoa dos dois lados, bolhas de universos lá dentro ----------
-export const Thumb: React.FC = () => (
-  <AbsoluteFill style={{background: 'radial-gradient(circle at 62% 50%, #2a1050, #05020c 70%)', overflow: 'hidden'}}>
-    <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
-    <div style={{position: 'absolute', left: 980, top: 90, width: 470, height: 900, background: 'radial-gradient(circle at 50% 40%, #6a2aff, #1a0640 70%)', overflow: 'hidden', boxShadow: '0 0 160px #8a4aff'}}>
-      {[[120, 160, 90, CIANO], [330, 260, 70, ROSA], [200, 420, 110, VERDE], [380, 560, 60, OURO], [110, 640, 80, '#ff9f43'], [300, 760, 90, CIANO]].map(([x, y, r, c], i) => (
-        <div key={i} style={{position: 'absolute', left: (x as number) - (r as number), top: (y as number) - (r as number), width: 2 * (r as number), height: 2 * (r as number), borderRadius: '50%',
-          background: `radial-gradient(circle at 35% 30%, rgba(255,255,255,.7), ${c}88 40%, ${c}33 70%, ${c} 100%)`, border: `3px solid ${c}`}} />
-      ))}
-      <svg width={470} height={900} style={{position: 'absolute', inset: 0, filter: 'drop-shadow(0 0 30px #c8a0ff)'}}><Pessoa x={235} y={940} h={760} cor="#e8d2c0" flip /></svg>
-    </div>
-    <div style={{position: 'absolute', left: 860, top: 40, width: 120, height: 1000, background: 'linear-gradient(90deg,#2a180c,#5a3a20)', clipPath: 'polygon(0 0, 100% 5%, 100% 95%, 0 100%)'}} />
-    <div style={{position: 'absolute', left: 950, top: 60, width: 530, height: 960, border: '30px solid #1a1008', borderBottom: 'none'}} />
-    <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}><Pessoa x={1720} y={1120} h={900} cor="#e8d2c0" flip /></svg>
-    <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(0,0,0,.8), rgba(0,0,0,.4) 40%, rgba(0,0,0,0) 55%)'}} />
-    <div style={{position: 'absolute', left: 70, top: 300, fontFamily: FONTE, fontSize: 330, lineHeight: 0.85, letterSpacing: -6, color: '#fff', WebkitTextStroke: '10px #000', paintOrder: 'stroke fill', textShadow: '0 14px 40px rgba(0,0,0,.9)'}}>
-      <span style={{color: OURO}}>4</span><br /><span style={{fontSize: 150}}>MULTIVERSOS</span>
-    </div>
-    <div style={{position: 'absolute', left: 80, top: 190, padding: '10px 26px', borderRadius: 14, border: `4px solid ${ROSA}`, background: 'rgba(0,0,0,.6)', fontFamily: FONTE, fontSize: 48, color: ROSA, letterSpacing: 4}}>HIPÓTESE</div>
-  </AbsoluteFill>
-);
+// ---------- thumbnail (v3, 31/10: o dono achou a v1 fraca): selfie real de capacete numa caminhada espacial (NASA, ISS, 2014). O visor racha ao meio:
+// metade reflete a estação, a outra metade é outro universo (Nebulosa da Bolha, Hubble) com um olho brilhando lá dentro. Texto gigante, seta e círculo.
+export const Thumb: React.FC = () => {
+  const K = 0.85, VX = 1380, VY = 560, RX = 567, RY = 545;   // centro e raios do visor na tela
+  const LX = VX + 173 * K, LY = VY - 306 * K;   // lente da câmera refletida, espelhada
+  const fenda = 'M1385 0 L1372 120 L1398 230 L1366 360 L1400 480 L1370 600 L1402 720 L1368 850 L1396 960 L1380 1080';
+  return (
+    <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
+      <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
+      <Img src={img('thumb_capacete.jpg')} style={{position: 'absolute', left: VX - 1133 * K, top: VY - 663 * K, width: 1920 * K, height: 1275 * K, filter: 'contrast(1.15) saturate(1.2)'}} />
+      <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
+        <defs>
+          <clipPath id="metade"><rect x={VX} y={0} width={1920 - VX} height={1080} /></clipPath>
+          <clipPath id="visor"><ellipse cx={VX} cy={VY} rx={RX} ry={RY} /></clipPath>
+          <radialGradient id="olho"><stop offset="0" stopColor="#fff" /><stop offset=".2" stopColor="#ff4a4a" /><stop offset="1" stopColor="rgba(255,0,0,0)" /></radialGradient>
+        </defs>
+        <g clipPath="url(#metade)"><g clipPath="url(#visor)">
+          <image href={img('bolha_nebulosa.jpg')} x={VX - 200} y={VY - RY} width={RX + 400} height={2 * RY} preserveAspectRatio="xMidYMid slice" />
+          <g transform={`translate(${2 * VX} 0) scale(-1 1)`} style={{mixBlendMode: 'screen'}} opacity={0.85}>
+            <image href={img('thumb_capacete.jpg')} x={VX - 1133 * K} y={VY - 663 * K} width={1920 * K} height={1275 * K} style={{filter: 'grayscale(1) sepia(1) hue-rotate(200deg) saturate(3) brightness(.9)'}} />
+          </g>
+          <circle cx={LX} cy={LY} r={110} fill="url(#olho)" />
+          <circle cx={LX} cy={LY} r={18} fill="#fff" />
+        </g></g>
+        <path d={fenda} fill="none" stroke="#fff" strokeWidth={10} style={{filter: 'drop-shadow(0 0 16px #c8b0ff) drop-shadow(0 0 40px #8a4aff)'}} />
+        <circle cx={LX} cy={LY} r={170} fill="none" stroke="#ff2a2a" strokeWidth={14} style={{filter: 'drop-shadow(0 0 10px #000)'}} />
+        <path d="M900 980 Q1300 1010 1560 780" fill="none" stroke="#ff2a2a" strokeWidth={26} strokeLinecap="round" style={{filter: 'drop-shadow(0 6px 8px #000)'}} />
+        <path d="M1600 720 L1500 750 L1570 840 Z" fill="#ff2a2a" />
+      </svg>
+      <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(0,0,0,.95), rgba(0,0,0,.7) 30%, rgba(0,0,0,0) 46%)'}} />
+      <div style={{position: 'absolute', left: 60, top: 110, fontFamily: FONTE, lineHeight: 0.9, letterSpacing: -6, WebkitTextStroke: '12px #000', paintOrder: 'stroke fill', textShadow: '0 16px 40px rgba(0,0,0,.95)'}}>
+        <div style={{fontSize: 180, color: '#fff'}}>TEM</div>
+        <div style={{fontSize: 180, color: '#fff'}}>OUTRO</div>
+        <div style={{fontSize: 250, color: OURO}}>VOCÊ</div>
+      </div>
+      <div style={{position: 'absolute', left: 70, top: 790, padding: '12px 30px', borderRadius: 16, background: '#ff2a2a', fontFamily: FONTE, fontSize: 62, color: '#fff', letterSpacing: 2, transform: 'rotate(-3deg)', boxShadow: '0 10px 30px rgba(0,0,0,.7)'}}>EM 4 UNIVERSOS?!</div>
+      <div style={{position: 'absolute', right: 40, top: 36, padding: '6px 18px', borderRadius: 10, border: `3px solid ${ROSA}`, background: 'rgba(0,0,0,.65)', fontFamily: FONTE, fontSize: 30, color: ROSA, letterSpacing: 3}}>HIPÓTESE</div>
+    </AbsoluteFill>
+  );
+};
