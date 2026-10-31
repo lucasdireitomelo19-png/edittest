@@ -14,7 +14,7 @@
 ---
 
 ## 1 · Você viajou 1 ano. A Terra envelheceu 70.
-**Formato:** Short POV (~52 s, ~143 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short POV (~52 s, ~143 palavras)   **Status:** APROVADO pelo dono (31/10, v1, POV confirmado)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: um gancho emocional brutal ("todo mundo que você amava já morreu"), com números exatos (1 × 70) e uma prova real (relógios em aviões, 1971). Ponto mais fraco: a premissa da velocidade instantânea precisa aparecer, senão a conta fica enganosa.
 **Ganchos considerados:** 1) "Você volta de uma viagem de 1 ano… e todo mundo que você amava já morreu." (Pesquisas) 2) "Um ano pra você. Setenta pra todo mundo." 3) "Você voltou pra casa. Ela não existe mais." **Escolhido: o 1.**
 **Título:** `Você viajou 1 ano. A Terra envelheceu 70. ⏳🚀`
@@ -55,7 +55,7 @@
 ---
 
 ## 2 · Você impediu o próprio nascimento. Quem voltou no tempo?
-**Formato:** Short POV (~57 s, ~161 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short POV (~57 s, ~161 palavras)   **Status:** APROVADO pelo dono (31/10, v1, POV confirmado)
 **Potencial viral:** 🔥🔥 8/10 · Ponto mais forte: um paradoxo que dá nó na cabeça, com três respostas reais da física (Gödel, Hawking, Novikov) e um final arrepiante. Ponto mais fraco: é abstrato, não tem número nem imagem real forte, e a resposta honesta é "ninguém sabe".
 **Ganchos considerados:** 1) "Você volta ao passado e impede o seu próprio nascimento. Então, quem voltou?" (Pesquisas) 2) "Você matou o próprio avô. E continua aqui." 3) "Existe uma viagem no tempo que a física proíbe. Ou será que não?" **Escolhido: o 1.** O 2 é violento sem necessidade.
 **Título:** `Você impediu o próprio nascimento. Quem voltou no tempo? 🕰️` (o título da Pesquisas, `Você volta no tempo e impede o seu próprio nascimento. Quem foi lá?`, ficou mais curto)
