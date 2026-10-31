@@ -1,7 +1,7 @@
 # Lote 31/10/2026 · Shorts do tema "paradoxo dos gêmeos" (3 Shorts)
 
 **Origem:** pedido do dono (31/10/2026): "queria Shorts desse tema também", junto com a aprovação do longo "Você voltou 70 anos DEPOIS!". São cortes do longo (`longo_gemeos.md`), cada um com um ângulo próprio e **diferente** do Short já aprovado "Você viajou 1 ano. A Terra envelheceu 70." (lote_2026-10-31_paradoxos #1).
-**Fatos:** os mesmos do pacote "Paradoxos: gêmeos e avô" da Pesquisas (`fatos.md`, branch `claude/happy-volta-d7td40`). Uma afirmação extra, a velocidade da ISS, está marcada abaixo.
+**Fatos:** os mesmos do pacote "Paradoxos: gêmeos e avô" da Pesquisas (`fatos.md`, branch `claude/happy-volta-d7td40`), mais a checagem de 31/10 (velocidade da ISS, os 340 dias de Kelly e o local de Rossi e Hall), toda confirmada.
 **Estilo:** POV e tom sombrio no ramo dos paradoxos, como o dono pediu em 31/10. Narração 100% em português, com números por extenso, e uma imagem por frase.
 **Não repetir:** Krikalev, GPS e o mesmo gancho dos outros dois vídeos.
 
@@ -71,7 +71,8 @@
 - Scott Kelly passou 340 dias na ISS. Alguns ms "mais novo" é **ESTIMATIVA** por cálculo (~5–13 ms conforme a fonte; conta nossa ~8 ms) (Pesquisas).
 - O estudo dos Gêmeos da NASA (*Science* 2019) é biológico e **não** é citado.
 - Hafele–Keating (1971) é a confirmação com relógios.
-- ⚠️ **"Quase vinte e oito mil km/h":** a velocidade orbital da ISS (~27.600 km/h) é divulgada pela NASA, mas está fora do pacote. Peço confirmação à Pesquisas antes de narrar.
+- **Velocidade da ISS:** "quase vinte e oito mil km/h" **confirmado** pela Pesquisas (31/10). A NASA dá 17.500 mph ≈ 28.000 km/h, e a conta orbital dá ~27.600.
+- **Scott Kelly:** 340 dias seguidos, de 27/03/2015 a 01/03/2016, **confirmado**.
 - ⚠️ A gravidade mais fraca em órbita faz o relógio da ISS andar um pouco mais rápido, mas o efeito da velocidade ganha, e o resultado líquido é "mais novo". A fala não entra nesse detalhe.
 
 ---
@@ -86,7 +87,7 @@
 > Elas se chamam múons. Nascem lá no alto da atmosfera, quando raios cósmicos batem no ar.
 > O problema: um múon vive tão pouco que, pelas contas normais, quase nenhum conseguiria descer até o chão. Eles desapareceriam no caminho.
 > Mas eles chegam. Muitos.
-> Em 1941, cientistas contaram os múons no alto de uma montanha e lá embaixo. Em 1963, outra equipe repetiu, com mais precisão. E o resultado foi sempre o mesmo: chegam muito mais do que deveriam.
+> Em 1941, cientistas contaram os múons no alto das montanhas do Colorado e lá embaixo, em Denver. Em 1963, outra equipe repetiu, com mais precisão. E o resultado foi sempre o mesmo: chegam muito mais do que deveriam.
 > A explicação é a relatividade. Os múons viajam tão perto da velocidade da luz que, pra eles, o tempo passa mais devagar. Eles envelhecem menos no caminho.
 > Todo dia, o céu prova que o tempo não passa igual pra todo mundo.
 > E a prova está caindo em cima de você.
@@ -97,11 +98,15 @@
 2. Raio cósmico batendo na atmosfera (ANIMAÇÃO).
 3. Múon se apagando no meio do caminho, no cenário "sem relatividade" (ANIMAÇÃO).
 4. Chuva de múons chegando ao chão (ANIMAÇÃO, outro ângulo).
-5. Montanha real (Pixabay) com contador no topo e na base.
+5. Montanhas do Colorado (Pixabay) com contador no alto e outro em Denver.
 6. Relógio do múon andando devagar (ANIMAÇÃO).
 7. Céu azul de dia (footage real).
 8. Mão aberta, com riscos atravessando (efeito).
 
 **Fatos usados:**
-- Múons de raios cósmicos chegam ao chão por causa da dilatação do tempo. Rossi e Hall (1941) e Frisch e Smith (1963) mostraram muito mais múons ao nível do chão do que sem dilatação (APS, pacote). **FATO.** A fala não cita números.
+- Múons de raios cósmicos chegam ao chão por causa da dilatação do tempo. **FATO.**
+  - Rossi e Hall (*Phys. Rev.* 59, 1941): Echo Lake (~3.240 m, na estrada do Mount Evans) × Denver (~1.616 m) (APS).
+  - Frisch e Smith (1963): Mount Washington × Cambridge, com fator de dilatação ≈ 10.
+  - A fala não cita números.
+  - ⚠️ Correção da Pesquisas: o "1,4 contra 22" não é de Rossi e Hall e não é usado.
 - ⚠️ "Chegando até o chão onde você está" e "caindo em cima de você" são consequência direta (múons chegam ao nível do solo), sem número de fluxo.
