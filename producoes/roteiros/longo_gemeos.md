@@ -11,7 +11,7 @@
 ---
 
 ## 1 · Você voltou 70 anos DEPOIS!
-**Formato:** Longo POV, 1920x1080, ~6,3 min (~920 palavras), gancho + 7 capítulos + "Mas espera…"   **Status:** aguardando aprovação (v1)
+**Formato:** Longo POV, 1920x1080, ~6,3 min (~920 palavras), gancho + 7 capítulos + "Mas espera…"   **Status:** APROVADO pelo dono (31/10, v1). Título A por padrão. **Enviado ao Gerador para ficar na fila, mas sem produzir até o dono liberar.**
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: o molde vencedor com o drama mais humano possível (perder todo mundo em "um ano"), números que crescem a cada capítulo (7 → 22 → 70 → 707), provas reais (relógios em aviões, múons, Scott Kelly) e uma virada honesta (na prática, só viagens longas funcionam). Ponto mais fraco: não tem notícia quente e o Short do mesmo tema sai antes.
 **Ângulo:** POV de despedida e retorno, com o contador VOCÊ × TERRA. Escalada emocional (quem você perdeu), prova, a realidade e "Mas espera…".
 **Tom de voz:** melancólico, sombrio, íntimo, com assombro.
