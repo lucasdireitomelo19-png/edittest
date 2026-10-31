@@ -1,6 +1,6 @@
 // Short "2027 vai ser assim… 👀": um evento do céu por vez, corte seco, sem narração e sem música
 // (o dono põe um som em alta no app). O último evento emenda no primeiro para o vídeo dar loop.
-// PROVISÓRIO: as datas abaixo são de molde e só saem depois da lista checada da Pesquisas.
+// Datas checadas pela Pesquisas em 31/10/2026 (fatos.md, "Céu de 2027"). Ordem cronológica.
 import React from 'react';
 import {AbsoluteFill, Img, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {FONTE, OURO, fr} from '../comum';
@@ -8,22 +8,42 @@ import {FONTE, OURO, fr} from '../comum';
 type Evento = {
   data: string;          // "6 DE FEVEREIRO"
   nome: string;          // nome do evento (amarelo)
-  img: string;           // arquivo em public/ (uma imagem diferente por evento)
-  tipo: 'IMAGEM REAL' | 'ILUSTRAÇÃO' | 'SIMULAÇÃO';
-  aviso?: string;        // rótulo de honestidade, ex.: "PARCIAL NO BRASIL"
+  img?: string;          // arquivo em public/ (uma imagem diferente por evento)
+  ilus?: React.FC;       // ou uma ilustração própria
+  tipo: string;          // etiqueta honesta da imagem
+  aviso?: string;        // rótulo de honestidade, ex.: "PARCIAL NO RESTO DO BRASIL"
+  alerta?: string;       // aviso de segurança pequeno
+};
+
+// anel de fogo desenhado (não há foto de domínio público boa do anel)
+const Anel: React.FC = () => {
+  const f = useCurrentFrame();
+  const g = 1 + 0.04 * Math.sin(f / 6);
+  return (
+    <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 50%, #3a1404, #0a0302 60%)', justifyContent: 'center', alignItems: 'center'}}>
+      <div style={{position: 'absolute', width: 640, height: 640, borderRadius: '50%', transform: `scale(${g})`,
+        background: 'radial-gradient(circle, rgba(255,150,40,.55) 40%, rgba(255,90,20,.15) 60%, transparent 70%)'}} />
+      <div style={{position: 'absolute', width: 420, height: 420, borderRadius: '50%', background: '#ffd27a',
+        boxShadow: '0 0 60px 20px #ff8a1e, 0 0 160px 60px rgba(255,90,20,.6)'}} />
+      <div style={{position: 'absolute', width: 384, height: 384, borderRadius: '50%', background: '#050302'}} />
+    </AbsoluteFill>
+  );
 };
 
 // Cada imagem e cada evento aparecem uma vez só (regra do dono, 30/10).
 const EVENTOS: Evento[] = [
-  {data: 'DATA A CHECAR', nome: 'EVENTO 1 (PROVISÓRIO)', img: 'bigrip/nascer_sol_iss.jpg', tipo: 'IMAGEM REAL'},
-  {data: 'DATA A CHECAR', nome: 'EVENTO 2 (PROVISÓRIO)', img: 'bigrip/orion.jpg', tipo: 'IMAGEM REAL', aviso: 'PARCIAL NO BRASIL'},
-  {data: 'DATA A CHECAR', nome: 'EVENTO 3 (PROVISÓRIO)', img: 'bigrip/via_lactea2.jpg', tipo: 'IMAGEM REAL'},
-  {data: 'DATA A CHECAR', nome: 'EVENTO 4 (PROVISÓRIO)', img: 'bigrip/terra.jpg', tipo: 'IMAGEM REAL'},
-  {data: 'DATA A CHECAR', nome: 'EVENTO 5 (PROVISÓRIO)', img: 'bigrip/carina.jpg', tipo: 'IMAGEM REAL'},
-  {data: 'DATA A CHECAR', nome: 'EVENTO 6 (PROVISÓRIO)', img: 'bigrip/andromeda.jpg', tipo: 'IMAGEM REAL'},
-  {data: 'DATA A CHECAR', nome: 'EVENTO 7 (PROVISÓRIO)', img: 'bigrip/blue_marble.jpg', tipo: 'IMAGEM REAL'},
+  {data: '6 DE FEVEREIRO', nome: 'Anel de fogo no extremo sul', ilus: Anel, tipo: 'ILUSTRAÇÃO',
+    aviso: 'PARCIAL NO RESTO DO BRASIL', alerta: 'Nunca olhe o Sol sem filtro ISO 12312-2'},
+  {data: '10 DE FEVEREIRO', nome: 'Júpiter no auge do ano', img: 'agenda2027/jupiter.jpg', tipo: 'IMAGEM REAL · HUBBLE',
+    aviso: 'VISÍVEL DE TODO O BRASIL'},
+  {data: '19 DE FEVEREIRO', nome: 'Marte volta, mas longe', img: 'agenda2027/marte.jpg', tipo: 'IMAGEM REAL · HUBBLE',
+    aviso: 'VISÍVEL DE TODO O BRASIL'},
+  {data: '5 E 6 DE MAIO', nome: 'Estrelas cadentes sob Lua nova', img: 'agenda2027/meteoros.jpg', tipo: 'IMAGEM REAL · METEOROS DE 2021',
+    aviso: 'DE MADRUGADA · MELHOR NO HEMISFÉRIO SUL'},
+  {data: '2 DE AGOSTO', nome: 'Escuridão de 6 minutos no Egito', img: 'agenda2027/total.jpg', tipo: 'IMAGEM REAL · ECLIPSE DE 2017',
+    aviso: 'NÃO VISÍVEL DO BRASIL'},
 ];
-const POR_EVENTO = fr(3.5);
+const POR_EVENTO = fr(4);
 export const DURACAO = EVENTOS.length * POR_EVENTO;
 const FAIXA = ['2027 vai ser assim… 👀', 'Marque na agenda ☠️'];
 const EMOJI = 'Noto Color Emoji';
@@ -45,19 +65,21 @@ const Cartao: React.FC<{e: Evento}> = ({e}) => {
     <AbsoluteFill style={{background: '#000'}}>
       {/* imagem no centro, entre a faixa e os textos */}
       <div style={{position: 'absolute', top: 400, left: 0, right: 0, height: 760, overflow: 'hidden'}}>
-        <Img src={staticFile(e.img)} style={{width: '100%', height: '100%', objectFit: 'cover',
-          transform: `scale(${interpolate(f, [0, d], [1.12, 1.02])})`}} />
+        <div style={{position: 'absolute', inset: 0, transform: `scale(${interpolate(f, [0, d], [1.12, 1.02])})`}}>
+          {e.img ? <Img src={staticFile(e.img)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /> : e.ilus && <e.ilus />}
+        </div>
         <div style={{position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 70%, #000)'}} />
         <div style={{position: 'absolute', top: 22, left: 26, padding: '6px 16px', borderRadius: 20, background: 'rgba(0,0,0,.6)',
           color: '#cfd8e8', fontFamily: FONTE, fontSize: 24, letterSpacing: 3}}>{e.tipo}</div>
       </div>
       <div style={{position: 'absolute', top: 1190, width: '100%', textAlign: 'center', fontFamily: FONTE, padding: '0 50px', boxSizing: 'border-box'}}>
-        <div style={{fontSize: 118, color: '#fff', fontStyle: 'italic', letterSpacing: -3, lineHeight: 1,
+        <div style={{fontSize: 100, color: '#fff', fontStyle: 'italic', letterSpacing: -3, lineHeight: 1, whiteSpace: 'nowrap',
           transform: `scale(${1.25 - 0.25 * s})`, textShadow: '0 8px 40px rgba(0,0,0,.8)'}}>{e.data}</div>
-        <div style={{marginTop: 34, fontSize: 64, color: OURO, lineHeight: 1.1, opacity: s}}>{e.nome}</div>
+        <div style={{marginTop: 34, fontSize: 64, color: OURO, lineHeight: 1.1, opacity: s, textWrap: 'balance'} as React.CSSProperties}>{e.nome}</div>
         <div style={{marginTop: 20, fontSize: 84, fontFamily: EMOJI}}>☠️</div>
         {e.aviso && <div style={{marginTop: 12, display: 'inline-block', padding: '6px 18px', borderRadius: 20, background: 'rgba(255,255,255,.12)',
           color: '#cfd8e8', fontSize: 28, letterSpacing: 3}}>{e.aviso}</div>}
+        {e.alerta && <div style={{marginTop: 14, color: '#8a93a6', fontSize: 24, letterSpacing: 1}}>{e.alerta}</div>}
       </div>
     </AbsoluteFill>
   );

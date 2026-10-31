@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-76. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-77. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Painel:** https://claude.ai/artifact/MYN7cXDqxFUwnWPJCYtSWM (avisos: ver `CLAUDE.md`).
 - **Observatório Lado Sombrio:** https://claude.ai/artifact/G6YahQcE96GqFd1VcSmFDH (painel novo do dono, fixado). **Toda entrega vai também para lá** (o dono cobrou em 29/10):
@@ -70,6 +70,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
    - 29/10 (tarde): Reels POV lado-72 Sinal de outra estrela (31/10), lado-73 Planeta sem sol (31/10), lado-74 Céu vazio (01/11) e lado-75 Nasceu em Marte (03/11), com voz edge-tts **Remy** (`fr-FR-RemyMultilingualNeural`). O dono pediu edge ("Vai de edge") e depois trocou a Antonio pela Remy por erro de pronúncia (vídeo comparando 6 vozes, 29/10). **Quando não houver ElevenLabs, use a Remy:** `narrar.py <dir> <alvo> 8 --voz fr-FR-RemyMultilingualNeural --pausa 0.12`. Central + Observatório. Docs 41–44. Composições `Sinal`, `SemSol`, `CeuVazio`, `NasceuMarte`.
    - 30/10: longo POV lado-76 "Você viu o universo se RASGAR!" (Big Rip), voz Remy, 6:17, composição `BigRip` + `ThumbBigRip`, doc 45. Central/Observatório com cópia 540p (o 1080p tem 56 MB). `criarLongo` ganhou a opção `mudo` (trilha zerada num trecho). Data de publicação ainda não definida.
    - 30/10 (noite): **Big Rip v2** (lado-76, versão 2 na Central e no Observatório): narração 100% em português e 96 cenas sem nenhuma repetida. MP4 1080p no chat. Doc 45 atualizado.
+   - 31/10: **Short "2027 vai ser assim"** (lado-77, formato novo sem narração nem música, 20 s em loop), composição `Agenda2027`, doc 46. Central + Observatório. Data de publicação a definir.
 1. **URGENTE: refazer os Reels POV lado-72 a 75 sem cenas repetidas** (o dono proibiu repetir cena em qualquer vídeo, 30/10; o #3 e o #4 saem no sábado 31/10, o #5 no domingo 01/11 e o #6 na terça 03/11).
    - **Narração já refeita** com `texto_pt` (anos por extenso, "Wow" → "Uau"), conferida no Whisper. `narracao.mp3` em `public/<sinal|semsol|ceuvazio|nascimarte>/` e `src/videos/<...>.palavras.json` já estão atualizados; as âncoras não mudaram.
    - **O que repete hoje** (`checar_repeticao.py` + folha de contato):
