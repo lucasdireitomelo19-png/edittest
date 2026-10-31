@@ -61,7 +61,7 @@ Valem para todo roteiro e todo vídeo daqui em diante. Resumo operacional; o tex
 - **Modelo mais barato para textos mecânicos.** Legendas, título, descrição, tags e comentário são feitos pelo subagente `legendas` (`.claude/agents/legendas.md`, modelo menor), a partir do roteiro aprovado. O modelo principal fica com pesquisa, roteiro e revisão.
 
 ## Fluxo de agentes: Pesquisas → Roteirista → geradores (pedido do dono, 22/10/2026)
-Os agentes aparecem no **Prédio dos Agentes** (`https://claude.ai/artifact/MYN7cXDqxFUwnWPJCYtSWM`).
+Os agentes aparecem no **Observatório Lado Sombrio** (`https://claude.ai/artifact/G6YahQcE96GqFd1VcSmFDH`), desde 31/10/2026. Os avisos de status vão para a coleção `eventos` dele, com `andar` = "Direção & Roteiros" para o Roteirista. O antigo Prédio/Painel dos Agentes (`MYN7cXDqxFUwnWPJCYtSWM`) não recebe mais avisos.
 
 | Agente | O que é | Onde |
 |---|---|---|
