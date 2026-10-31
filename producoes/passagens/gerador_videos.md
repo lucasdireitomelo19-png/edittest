@@ -1,6 +1,6 @@
 # Passagem · Gerador de Vídeos (Produção de Vídeo)
 
-Atualizado em 31/10/2026 pela conversa `session_014uAw8DrmJxSY5aKHa69atp`.
+Atualizado em 31/10/2026 pela conversa `session_014uAw8CKDU21uq9jVARfcGA`.
 Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que o pedido envolver.
 
 ## Papel
@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-79.
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-81.
   - **Armazenamento CHEIO (1 GB) desde 31/10.** O lado-79 ficou sem vídeo na Central. Liberar espaço só com OK do dono. Por enquanto, suba o vídeo direto no Observatório. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Avisos de status:** desde 31/10 vão para o Observatório (coleção `eventos`), não mais para o Painel (ver `CLAUDE.md`).
@@ -79,13 +79,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
    - 31/10: **multiverso entregue**: lado-78 Short "Cópia exata" (v3 com voz Antonio, 55 s, publicar a partir de 05–06/11; composição `CopiaExata`, doc 47) e lado-79 longo "Você encontrou outra VERSÃO de você!" (7:00, 96 cenas, composição `Multiverso` + `ThumbMultiverso`, doc 48). Os dois estão no Observatório; na Central, o 79 ficou sem vídeo. LadoSombrio e Roteirista avisados.
    - 31/10 (noite): v3 do multiverso com voz Antonio e thumb nova do longo (capacete real da NASA). O dono marcou o lado-79 como **Postado** às 19:32 com a v2 (Remy, thumb antiga). A v3 ficou no Observatório em `v3_video_url`/`v3_thumb_url`. Na Central, o 79 ficou sem vídeo (cheia).
 0b. **EM ESPERA (não produzir até o dono liberar):** longo POV "Você voltou 70 anos DEPOIS!" (gêmeos), `roteiros/longo_gemeos.md` na branch do Roteirista.
-1. **PRÓXIMO, LIBERADO PELO DONO (31/10, noite: "faz o paradoxo do avô e o você viajou um ano"): 2 Shorts POV de PARADOXO** (Roteirista, aprovados em 31/10). Os 2 vão direto para a versão final, com a voz Antonio. Sigam o fluxo completo de entrega: Observatório como Pronto, legendas pelo subagente `legendas`, docs 49 e 50, aviso ao LadoSombrio e ao Roteirista. Use lado-80 e lado-81: `producoes/roteiros/lote_2026-10-31_paradoxos.md` na branch `claude/practical-cannon-ly7fw1`. #1 "Você viajou 1 ano. A Terra envelheceu 70. ⏳🚀" e #2 "Você impediu o próprio nascimento. Quem voltou no tempo? 🕰️". As telas obrigatórias estão no roteiro. Sem Krikalev, GPS ou Scott Kelly; nunca "resolvido". Os nomes Hafele–Keating, Gödel, Hawking, Novikov e Tobar entram no texto_pt antes de narrar.
-1b. (feito) roteiros de MULTIVERSO (Roteirista, aprovados pelo dono em 31/10; o dono já aprovou a ordem: primeiro o Short, depois o longo). Texto completo, plano visual frase a frase, fatos e rótulos em `producoes/roteiros/multiverso.md` da branch `claude/practical-cannon-ly7fw1`. Use o texto narrado **sem mudar nada**. Direto para a versão final, com revisão interna.
-   - **#1 Short "Em algum lugar existe uma CÓPIA EXATA de você 🪞🌌"**: ~52 s, vertical, **não é POV**. Selo fixo "MODELO". Na tela: "SE O ESPAÇO FOR INFINITO", "~10^(10^29) M (ESTIMATIVA)", "UNIVERSO VISÍVEL: < 10^27 M" (na narração, por extenso). Publicar **a partir de 05–06/11** (o Reel do Boltzmann de 03/11 também fala de "cópias de você"). Legenda do post: "Alguém igual a você a 10^(10^29) metros? A conta é de Tegmark (MIT, 2003) e só vale se o espaço for infinito."
-   - **#2 Longo "Você encontrou outra VERSÃO de você!"** (B: "E se o multiverso for real? Do outro lado do universo, ele está esperando"): ~6,5 min, 1920x1080, POV como espinha + os 4 níveis de Tegmark como capítulos. Selo no canto "NÍVEL I…IV" + rótulo do capítulo (MODELO / FATO / INTERPRETAÇÃO / HIPÓTESE CONTESTADA / HIPÓTESE). Contador "DISTÂNCIA DA SUA CÓPIA": "10^(10^29) M" → "OUTRA BOLHA" → "AQUI, EM OUTRO RAMO" → "NEM EXISTE ESPAÇO". A cor some a cada nível e volta em "Mas espera…". Thumb: porta aberta com a mesma pessoa dos dois lados e bolhas de universos lá dentro, texto "4 MULTIVERSOS", selo "HIPÓTESE".
-   - **Regra de ouro:** nenhum outro universo foi observado; nunca mostrar "provado".
-   - **Imagens reais** (confirme a licença): WMAP (NASA) e Planck (ESA) com a Mancha Fria (diferentes, não repetir); Hubble Ultra Deep Field (`public/bigrip/udf.jpg` já existe, mas é outro vídeo, pode usar); chip Willow (Google, atribuir); retratos de Everett e Tegmark só com licença, senão só o nome. Bolhas e ramificações = ANIMAÇÃO.
-   - Voz: Remy (edge-tts), a menos que o dono mande chave nova da ElevenLabs (confira a cota; o longo não cabe nos ~1,4 mil restantes). Legendas pelo subagente `legendas`. Avise o Roteirista (`session_01SHrzyZioTiFba7qKi3g3kj`) e o LadoSombrio na entrega.
+1. **Entregues em 31/10 (noite):** os 2 Shorts POV de paradoxo, com a voz Antonio. São o lado-80 "Você viajou 1 ano. A Terra envelheceu 70." (composição `Gemeos`, doc 49) e o lado-81 "Você impediu o próprio nascimento" (composição `Avo`, doc 50). Estão só no Observatório, porque a Central está cheia. Datas de publicação a definir. O longo dos gêmeos continua **EM ESPERA**.
 2. Versão antiga (20 s) do Short 2027 continua como asset na Central e no Observatório; apagar só com OK do dono (já perguntado em 31/10, sem resposta).
 
 ## Lições da conversa de 31/10
