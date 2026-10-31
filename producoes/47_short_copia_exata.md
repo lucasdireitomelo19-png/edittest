@@ -8,6 +8,7 @@
 - Reais (NASA): luzes da América do Sul (Suomi NPP), Hubble eXtreme Deep Field (NASA/ESA), céu noturno no Kennedy, Via Láctea vista da ISS. O resto é ilustração/animação própria. Sem retrato do Tegmark (só o nome).
 - Pixabay continua sem chave (sem footage real de pessoas): pessoas viraram silhuetas ilustradas.
 - Central e Observatório: `lado-78`, status Pronto. Data de publicação a definir (a partir de 05–06/11).
+- **v2 (31/10, pedido do dono: "tem um erro na pronúncia, como se fosse um estadunidense falando português")**: nomes e siglas em inglês ganharam grafia fonética só na fala (`pipeline/texto_pt.py`: Máx Tégmark, eme í tê). A legenda mostra a grafia original.
 
 ## Textos de postagem
 

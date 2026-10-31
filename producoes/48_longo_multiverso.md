@@ -10,6 +10,7 @@
 - Sem retratos (Tegmark, Everett, Carroll, Guth, Ellis e Steinhardt só pelo nome). Chip Willow: ilustração própria, rotulada "NÃO É FOTO DO CHIP".
 - Thumb: porta aberta, a mesma pessoa dos dois lados, bolhas de universos lá dentro, "4 MULTIVERSOS", selo "HIPÓTESE".
 - Central e Observatório: `lado-79`, status Pronto. Data de publicação a definir.
+- **v2 (31/10, pedido do dono: pronúncia "de estadunidense")**: grafia fonética só na fala para Tegmark, MIT (eme í tê), WMAP (dáblio map), Google (Gúgou), Willow (Uílou), chip (xip), internet (internét), Everett, Carroll, Ellis, Steinhardt, Guth, Vilenkin, Linde e "explodiu" (expludiu). Fica em `pipeline/texto_pt.py` e vale para os próximos vídeos. A legenda mostra a grafia original.
 
 ## Textos de postagem
 

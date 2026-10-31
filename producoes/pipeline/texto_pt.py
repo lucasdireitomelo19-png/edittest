@@ -34,6 +34,25 @@ FIXAS = [
     (r'\bT(?= menos\b)', 'Tê'),
     (r'\b3D\b', 'três dê'),
     (r'\bWow\b', 'Uau'),
+    # nomes e siglas em inglês: grafia fonética em português, senão a voz multilíngue fala com sotaque americano (dono, 31/10)
+    (r'\bMax Tegmark\b', 'Máx Tégmark'),
+    (r'\bTegmark\b', 'Tégmark'),
+    (r'\bMIT\b', 'eme í tê'),
+    (r'\bWMAP\b', 'dáblio map'),
+    (r'\bGoogle\b', 'Gúgou'),
+    (r'\bWillow\b', 'Uílou'),
+    (r'\bchip\b', 'xip'),
+    (r'\binternet\b', 'internét'),
+    (r'\bexplodiu\b', 'expludiu'),
+    (r'\bHugh Everett\b', 'Hiu Éveret'),
+    (r'\bEverett\b', 'Éveret'),
+    (r'\bSean Carroll\b', 'Xón Kérol'),
+    (r'\bGeorge Ellis\b', 'Djórdj Élis'),
+    (r'\bPaul Steinhardt\b', 'Pól Stáinhart'),
+    (r'\bSteinhardt\b', 'Stáinhart'),
+    (r'\bAlan Guth\b', 'Álan Gút'),
+    (r'\bAlexander Vilenkin\b', 'Alexânder Vilênkin'),
+    (r'\bAndrei Linde\b', 'Andrêi Línde'),
 ]
 
 def preparar(texto):
@@ -42,7 +61,8 @@ def preparar(texto):
         trocas.append((m.group(0), falado)); return falado
     itens = []
     for rx, fal in FIXAS:
-        for m in re.finditer(rx, texto): itens.append((m.start(), m.end(), fal))
+        for m in re.finditer(rx, texto):
+            if not any(a < m.end() and m.start() < b for a, b, _ in itens): itens.append((m.start(), m.end(), fal))
     for m in re.finditer(r'\d{1,3}(?:\.\d{3})+|\d+', texto):
         if any(a <= m.start() < b for a, b, _ in itens): continue
         itens.append((m.start(), m.end(), extenso(int(m.group(0).replace('.', '')))))
