@@ -12,7 +12,7 @@
 ---
 
 ## 1 · Em algum lugar existe uma CÓPIA EXATA de você (Short)
-**Formato:** Short (~52 s, ~150 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~52 s, ~150 palavras)   **Status:** APROVADO pelo dono (31/10, v1). Publicar a partir de 05–06/11 (depois do Reel do Boltzmann).
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: um gancho pessoal e perturbador com um número absurdo e concreto (10^(10^29) m) de um cientista com nome (Tegmark, MIT), o que encaixa na regra "cósmico + concreto" da Estratégia. Ponto mais fraco: fala com "você", mas **não é POV** (não narra uma cena vivida por você), então está dentro da regra dos Shorts. Fica a observação para o dono.
 **Ângulo:** número real e absurdo, mostrado pela escala, com a virada "tudo depende de uma suposição".
 **Tom de voz:** inquietante, íntimo, preciso.
@@ -50,7 +50,7 @@
 ---
 
 ## 2 · Você encontrou outra VERSÃO de você! (longo)
-**Formato:** Longo híbrido, 1920x1080, ~6,5 min (~980 palavras), POV de espinha + 4 níveis de Tegmark como capítulos   **Status:** aguardando aprovação (v1)
+**Formato:** Longo híbrido, 1920x1080, ~6,5 min (~980 palavras), POV de espinha + 4 níveis de Tegmark como capítulos   **Status:** APROVADO pelo dono (31/10, v1). Título A por padrão (o dono não escolheu).
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: o molde vencedor do canal (POV, escalada e "Mas espera…") num tema de busca enorme (multiverso, Marvel), com uma escada clara (a cópia fica mais estranha a cada nível) e uma polêmica real e recente (o chip do Google). Ponto mais fraco: é muito abstrato, então o POV precisa voltar a cada nível para segurar quem está vendo.
 **Ângulo:** você caça a sua cópia por quatro níveis. Do outro lado do universo, numa bolha, num ramo quântico e numa matemática. A virada honesta é "ninguém viu, ninguém descartou".
 **Tom de voz:** curioso, sombrio, crescente, com humor seco no fim.
