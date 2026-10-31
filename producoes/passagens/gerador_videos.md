@@ -1,6 +1,6 @@
 # Passagem · Gerador de Vídeos (Produção de Vídeo)
 
-Atualizado em 31/10/2026 pela conversa `session_014uAw8ECXTG9UxiW9JLs54A`, na troca por uma nova.
+Atualizado em 31/10/2026 pela conversa `session_014uAw8DrmJxSY5aKHa69atp`.
 Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que o pedido envolver.
 
 ## Papel
@@ -8,7 +8,8 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-77. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-79.
+  - **Armazenamento CHEIO (1 GB) desde 31/10.** O lado-79 ficou sem vídeo na Central. Liberar espaço só com OK do dono. Por enquanto, suba o vídeo direto no Observatório. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Avisos de status:** desde 31/10 vão para o Observatório (coleção `eventos`), não mais para o Painel (ver `CLAUDE.md`).
 - **Observatório Lado Sombrio:** https://claude.ai/artifact/G6YahQcE96GqFd1VcSmFDH (painel novo do dono, fixado). **Toda entrega vai também para lá** (o dono cobrou em 29/10):
@@ -31,6 +32,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Regras do dono que valem
 - **NENHUMA cena se repete em nenhum vídeo** (30/10, bronca no Big Rip): cada foto/clipe real numa cena só, e cada tipo de esquema/ilustração (cartão, gráfico, glitch, página, efeito de estilhaço, céu estrelado com galáxias…) também uma vez só por vídeo. Rode `python3 remotion/checar_repeticao.py src/videos/X.tsx` antes de renderizar (pega mídia e cena repetida; template repetido você confere na folha de contato).
+- **Pronúncia (31/10, "como se fosse um estadunidense")**: nomes e siglas em inglês vão em grafia fonética só na fala, em `pipeline/texto_pt.py` (FIXAS), e a legenda mantém a grafia original. Antes de narrar, acrescente lá os nomes novos do roteiro. O mesmo vale para palavras que a Remy erra ("explodiu" → "expludiu").
 - **Narração 100% em português** (30/10, o "T−0" saiu em inglês): voz Remy (`fr-FR-RemyMultilingualNeural`) quando não há ElevenLabs. `narrar.py` já usa `pipeline/texto_pt.py` (números por extenso etc.). Frase curta solta pode sair em inglês: junte com a seguinte. Confira com `pipeline/ouvir.py` (Whisper; `pip install faster-whisper`).
 - **Short em lista sem narração (formato "2027 vai ser assim")** (31/10): rápido (~2,5 s por item) e com transições explosivas no estilo de edit (zoom de impacto, chicote, glitch RGB, giro, tremida, flash), sem respiro. Molde: `Agenda2027.tsx`.
 - Entrega direta na versão final, sem storyboard nem prévia ("Não quero mais prévia, quero só o vídeo na versão final", 28/10).
@@ -73,7 +75,9 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
    - 30/10 (noite): **Big Rip v2** (lado-76, versão 2 na Central e no Observatório): narração 100% em português e 96 cenas sem nenhuma repetida. MP4 1080p no chat. Doc 45 atualizado.
    - 31/10: **Short "2027 vai ser assim"** (lado-77, formato novo sem narração nem música; v2 com 13 s em loop e transições de edit), composição `Agenda2027`, doc 46. Central + Observatório. Data de publicação a definir.
    - 31/10: o dono **cancelou a refação dos Reels POV lado-72 a 75** ("Esquece o lado 72-75"). Não mexer neles.
-1. **PRÓXIMO: roteiros de MULTIVERSO** (Roteirista, aprovados pelo dono em 31/10; o dono já aprovou a ordem: primeiro o Short, depois o longo). Texto completo, plano visual frase a frase, fatos e rótulos em `producoes/roteiros/multiverso.md` da branch `claude/practical-cannon-ly7fw1`. Use o texto narrado **sem mudar nada**. Direto para a versão final, com revisão interna.
+   - 31/10: **multiverso entregue**: lado-78 Short "Cópia exata" (v2, pronúncia corrigida, 55 s, publicar a partir de 05–06/11; composição `CopiaExata`, doc 47) e lado-79 longo "Você encontrou outra VERSÃO de você!" (7:00, 96 cenas, composição `Multiverso` + `ThumbMultiverso`, doc 48). Os dois estão no Observatório; na Central, o 79 ficou sem vídeo. LadoSombrio e Roteirista avisados.
+1. **PRÓXIMO: 2 Shorts POV de PARADOXO** (Roteirista, aprovados em 31/10): `producoes/roteiros/lote_2026-10-31_paradoxos.md` na branch `claude/practical-cannon-ly7fw1`. #1 "Você viajou 1 ano. A Terra envelheceu 70. ⏳🚀" e #2 "Você impediu o próprio nascimento. Quem voltou no tempo? 🕰️". As telas obrigatórias estão no roteiro. Sem Krikalev, GPS ou Scott Kelly; nunca "resolvido". Os nomes Hafele–Keating, Gödel, Hawking, Novikov e Tobar entram no texto_pt antes de narrar.
+1b. (feito) roteiros de MULTIVERSO (Roteirista, aprovados pelo dono em 31/10; o dono já aprovou a ordem: primeiro o Short, depois o longo). Texto completo, plano visual frase a frase, fatos e rótulos em `producoes/roteiros/multiverso.md` da branch `claude/practical-cannon-ly7fw1`. Use o texto narrado **sem mudar nada**. Direto para a versão final, com revisão interna.
    - **#1 Short "Em algum lugar existe uma CÓPIA EXATA de você 🪞🌌"**: ~52 s, vertical, **não é POV**. Selo fixo "MODELO". Na tela: "SE O ESPAÇO FOR INFINITO", "~10^(10^29) M (ESTIMATIVA)", "UNIVERSO VISÍVEL: < 10^27 M" (na narração, por extenso). Publicar **a partir de 05–06/11** (o Reel do Boltzmann de 03/11 também fala de "cópias de você"). Legenda do post: "Alguém igual a você a 10^(10^29) metros? A conta é de Tegmark (MIT, 2003) e só vale se o espaço for infinito."
    - **#2 Longo "Você encontrou outra VERSÃO de você!"** (B: "E se o multiverso for real? Do outro lado do universo, ele está esperando"): ~6,5 min, 1920x1080, POV como espinha + os 4 níveis de Tegmark como capítulos. Selo no canto "NÍVEL I…IV" + rótulo do capítulo (MODELO / FATO / INTERPRETAÇÃO / HIPÓTESE CONTESTADA / HIPÓTESE). Contador "DISTÂNCIA DA SUA CÓPIA": "10^(10^29) M" → "OUTRA BOLHA" → "AQUI, EM OUTRO RAMO" → "NEM EXISTE ESPAÇO". A cor some a cada nível e volta em "Mas espera…". Thumb: porta aberta com a mesma pessoa dos dois lados e bolhas de universos lá dentro, texto "4 MULTIVERSOS", selo "HIPÓTESE".
    - **Regra de ouro:** nenhum outro universo foi observado; nunca mostrar "provado".
