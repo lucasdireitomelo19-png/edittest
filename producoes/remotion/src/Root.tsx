@@ -20,6 +20,8 @@ import {Video as CeuVazio, DURACAO as DUR_CEUVAZIO} from './videos/CeuVazio';
 import {Video as NasceuMarte, DURACAO as DUR_NASCEUMARTE} from './videos/NasceuMarte';
 import {Video as Agenda2027, DURACAO as DUR_AGENDA2027} from './videos/Agenda2027';
 import {Video as CopiaExata, DURACAO as DUR_COPIA} from './videos/CopiaExata';
+import {Video as Gemeos, DURACAO as DUR_GEMEOS} from './videos/Gemeos';
+import {Video as Avo, DURACAO as DUR_AVO} from './videos/Avo';
 import {Video as Multiverso, Thumb as ThumbMultiverso, DURACAO as DUR_MULTIVERSO} from './videos/Multiverso';
 import {Video as BigRip, Thumb as ThumbBigRip, DURACAO as DUR_BIGRIP} from './videos/BigRip';
 import {Video as Area51, Thumb as ThumbArea51, ThumbVerdade as ThumbArea51Verdade, DURACAO as DUR_AREA51} from './videos/Area51';
@@ -58,6 +60,8 @@ export const Root = () => (
     <Composition id="CeuVazio" component={CeuVazio} durationInFrames={DUR_CEUVAZIO} fps={30} width={1080} height={1920} />
     <Composition id="NasceuMarte" component={NasceuMarte} durationInFrames={DUR_NASCEUMARTE} fps={30} width={1080} height={1920} />
     <Composition id="CopiaExata" component={CopiaExata} durationInFrames={DUR_COPIA} fps={30} width={1080} height={1920} />
+    <Composition id="Gemeos" component={Gemeos} durationInFrames={DUR_GEMEOS} fps={30} width={1080} height={1920} />
+    <Composition id="Avo" component={Avo} durationInFrames={DUR_AVO} fps={30} width={1080} height={1920} />
     <Composition id="Multiverso" component={Multiverso} durationInFrames={DUR_MULTIVERSO} fps={30} width={1920} height={1080} />
     <Still id="ThumbMultiverso" component={ThumbMultiverso} width={1920} height={1080} />
     <Composition id="BigRip" component={BigRip} durationInFrames={DUR_BIGRIP} fps={30} width={1920} height={1080} />

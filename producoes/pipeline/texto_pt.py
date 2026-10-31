@@ -53,6 +53,16 @@ FIXAS = [
     (r'\bAlan Guth\b', 'Álan Gút'),
     (r'\bAlexander Vilenkin\b', 'Alexânder Vilênkin'),
     (r'\bAndrei Linde\b', 'Andrêi Línde'),
+    # lote de paradoxos (31/10)
+    (r'\bHafele\b', 'Háfele'),
+    (r'\bKeating\b', 'Kíting'),
+    (r'\bKurt Gödel\b', 'Kúrt Guêdel'),
+    (r'\bGödel\b', 'Guêdel'),
+    (r'\bStephen Hawking\b', 'Stíven Róquin'),
+    (r'\bHawking\b', 'Róquin'),
+    (r'\bNovikov\b', 'Nóvikof'),
+    (r'\bTobar\b', 'Tobár'),
+    (r'\bEinstein\b', 'Áinstain'),
 ]
 
 def preparar(texto):
