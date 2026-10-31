@@ -1,6 +1,6 @@
 # Passagem · Gerador de Vídeos (Produção de Vídeo)
 
-Atualizado em 29/10/2026 pela conversa `session_014uAw8CBbLDWXsKRFv4J98p`, na troca por uma nova.
+Atualizado em 31/10/2026 pela conversa `session_014uAw8ECXTG9UxiW9JLs54A`, na troca por uma nova.
 Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que o pedido envolver.
 
 ## Papel
@@ -72,17 +72,14 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
    - 30/10: longo POV lado-76 "Você viu o universo se RASGAR!" (Big Rip), voz Remy, 6:17, composição `BigRip` + `ThumbBigRip`, doc 45. Central/Observatório com cópia 540p (o 1080p tem 56 MB). `criarLongo` ganhou a opção `mudo` (trilha zerada num trecho). Data de publicação ainda não definida.
    - 30/10 (noite): **Big Rip v2** (lado-76, versão 2 na Central e no Observatório): narração 100% em português e 96 cenas sem nenhuma repetida. MP4 1080p no chat. Doc 45 atualizado.
    - 31/10: **Short "2027 vai ser assim"** (lado-77, formato novo sem narração nem música; v2 com 13 s em loop e transições de edit), composição `Agenda2027`, doc 46. Central + Observatório. Data de publicação a definir.
-   - **Na fila depois dos Reels:** 2 roteiros de MULTIVERSO aprovados em 31/10 (Short "CÓPIA EXATA de você", publicar a partir de 05–06/11; longo "Você encontrou outra VERSÃO de você!"). Arquivo: `producoes/roteiros/multiverso.md` na branch `claude/practical-cannon-ly7fw1`.
-1. **URGENTE: refazer os Reels POV lado-72 a 75 sem cenas repetidas** (o dono proibiu repetir cena em qualquer vídeo, 30/10; o #3 e o #4 saem no sábado 31/10, o #5 no domingo 01/11 e o #6 na terça 03/11).
-   - **Narração já refeita** com `texto_pt` (anos por extenso, "Wow" → "Uau"), conferida no Whisper. `narracao.mp3` em `public/<sinal|semsol|ceuvazio|nascimarte>/` e `src/videos/<...>.palavras.json` já estão atualizados; as âncoras não mudaram.
-   - **O que repete hoje** (`checar_repeticao.py` + folha de contato):
-     - `Sinal.tsx`: antena.jpg 2× (Captou, NenhumConfirmado), antena_via.jpg 2× (JaAconteceu, Manual), 4 Glitch (NaoConte, Imagina, Gritar, Responder), 3 telas de monitor (NaTela, NaoDevia, NuncaMais), Selo em céu 2× (Regra, OnuUai).
-     - `SemSol.tsx`: céu+chão 5× (OlhaPraCima, NuncaExistiu, SemDia, SemNoite, SoEscuro), Glitch 4× (NaoExisteSol, Ficcao, Vida, NinguemSabe), planeta errante 2×, Sistema 2× (NasceuEstrela, Arremessada), disco de gás 3× (Crescendo, Cha, Engolindo).
-     - `CeuVazio.tsx`: xdf 4×, cmb 2×, andromeda 2×, Galaxias 5×, CeuFuturo 5×, Glitch 3×.
-     - `NasceuMarte.tsx`: gale.jpg 3× (ArLaFora, SemTraje, Radiacao), boneco Pessoa em 4 cenas.
-   - **Como fiz no Big Rip:** uma foto real diferente por cena (NASA Images tem muita: Hubble, Webb, ISS, Curiosity/Perseverance para Marte, Goldstone PIA26717/PIA26719/PIA17792/PIA10953 para antenas), e cada tipo de ilustração uma vez só (troque o 2º glitch por foto com título, o 2º gráfico por outro tipo de esquema etc.). Cenas que são o mesmo momento podem virar uma só (no Big Rip "aos seus átomos" + "eles se desfazem" viraram uma cena, com a troca no meio pelo tempo da palavra).
-   - **Entrega:** render final, trocar `video_asset`/`video_url` nas linhas `videos/lado-72..75` da Central e do Observatório (as linhas estão na versão 2; use `if_version`), mandar os MP4 ao dono e avisar o LadoSombrio.
-2. **Escolhas do dono em aberto:** thumb do lado-58 (A ou B, stills ThumbA e ThumbB em `SemLua`) e troca do título (sugestão: "Você acorda e a Lua SUMIU!").
+   - 31/10: o dono **cancelou a refação dos Reels POV lado-72 a 75** ("Esquece o lado 72-75"). Não mexer neles.
+1. **PRÓXIMO: roteiros de MULTIVERSO** (Roteirista, aprovados pelo dono em 31/10; o dono já aprovou a ordem: primeiro o Short, depois o longo). Texto completo, plano visual frase a frase, fatos e rótulos em `producoes/roteiros/multiverso.md` da branch `claude/practical-cannon-ly7fw1`. Use o texto narrado **sem mudar nada**. Direto para a versão final, com revisão interna.
+   - **#1 Short "Em algum lugar existe uma CÓPIA EXATA de você 🪞🌌"**: ~52 s, vertical, **não é POV**. Selo fixo "MODELO". Na tela: "SE O ESPAÇO FOR INFINITO", "~10^(10^29) M (ESTIMATIVA)", "UNIVERSO VISÍVEL: < 10^27 M" (na narração, por extenso). Publicar **a partir de 05–06/11** (o Reel do Boltzmann de 03/11 também fala de "cópias de você"). Legenda do post: "Alguém igual a você a 10^(10^29) metros? A conta é de Tegmark (MIT, 2003) e só vale se o espaço for infinito."
+   - **#2 Longo "Você encontrou outra VERSÃO de você!"** (B: "E se o multiverso for real? Do outro lado do universo, ele está esperando"): ~6,5 min, 1920x1080, POV como espinha + os 4 níveis de Tegmark como capítulos. Selo no canto "NÍVEL I…IV" + rótulo do capítulo (MODELO / FATO / INTERPRETAÇÃO / HIPÓTESE CONTESTADA / HIPÓTESE). Contador "DISTÂNCIA DA SUA CÓPIA": "10^(10^29) M" → "OUTRA BOLHA" → "AQUI, EM OUTRO RAMO" → "NEM EXISTE ESPAÇO". A cor some a cada nível e volta em "Mas espera…". Thumb: porta aberta com a mesma pessoa dos dois lados e bolhas de universos lá dentro, texto "4 MULTIVERSOS", selo "HIPÓTESE".
+   - **Regra de ouro:** nenhum outro universo foi observado; nunca mostrar "provado".
+   - **Imagens reais** (confirme a licença): WMAP (NASA) e Planck (ESA) com a Mancha Fria (diferentes, não repetir); Hubble Ultra Deep Field (`public/bigrip/udf.jpg` já existe, mas é outro vídeo, pode usar); chip Willow (Google, atribuir); retratos de Everett e Tegmark só com licença, senão só o nome. Bolhas e ramificações = ANIMAÇÃO.
+   - Voz: Remy (edge-tts), a menos que o dono mande chave nova da ElevenLabs (confira a cota; o longo não cabe nos ~1,4 mil restantes). Legendas pelo subagente `legendas`. Avise o Roteirista (`session_01SHrzyZioTiFba7qKi3g3kj`) e o LadoSombrio na entrega.
+2. Versão antiga (20 s) do Short 2027 continua como asset na Central e no Observatório; apagar só com OK do dono (já perguntado em 31/10, sem resposta).
 
 ## Lições da conversa de 28–29/10
 - Num container novo, `pipeline/src` (biblioteca de clipes) e os mp4 de `remotion/public` **não vêm**. Use NASA Images, SVS, Rijksmuseum (gravuras) e ilustração própria. Wikimedia deu 429; sites militares, CIA e Smithsonian deram 403.
