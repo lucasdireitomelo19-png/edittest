@@ -67,7 +67,7 @@ Os agentes aparecem no **Observatório Lado Sombrio** (`https://claude.ai/artifa
 |---|---|---|
 | Pesquisas | subagente `pesquisa` | `.claude/agents/pesquisa.md` |
 | Roteirista | subagente `roteirista` | `.claude/agents/roteirista.md` |
-| Gerador de Vídeos (Shorts e longos) | sessão do Claude | `session_014uAw8ECXTG9UxiW9JLs54A` (desde 30/10; antes `session_014uAw8AewL5m4SRkPVMbrbr`, `session_014uAw8CBbLDWXsKRFv4J98p` e `session_01RMuyuTR7uKM4etrPUUhNcQ`) |
+| Gerador de Vídeos (Shorts e longos) | sessão do Claude | `session_014uAw8DrmJxSY5aKHa69atp` (desde 31/10; antes `session_014uAw8ECXTG9UxiW9JLs54A`, `session_014uAw8AewL5m4SRkPVMbrbr`, `session_014uAw8CBbLDWXsKRFv4J98p` e `session_01RMuyuTR7uKM4etrPUUhNcQ`) |
 | Gerador de Carrosséis (Instagram) | sessão do Claude | `session_019KYTeVZcURhxGac3ijKjZn` |
 | Legendas (textos de postagem) | subagente `legendas` | `.claude/agents/legendas.md` |
 
