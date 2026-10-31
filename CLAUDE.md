@@ -35,6 +35,7 @@ Para trocar:
    - `source_url` = este repositório;
    - `source_revision` e `outcome_branch` = `claude/vigilant-edison-nwymat`;
    - mesmo título;
-   - `prompt`: "Você continua o trabalho do agente <nome> do Canal 1. Leia o CLAUDE.md e producoes/passagens/<agente>.md, grave o aviso inicial no Observatório (estado idle, faz = 'Assumiu no lugar da conversa anterior', com o andar certo) e espere o dono."
+   - `prompt`: "Você continua o trabalho do agente <nome> do Canal 1, no lugar da conversa <id antigo>. Leia o CLAUDE.md e producoes/passagens/<agente>.md, grave o aviso inicial no Observatório (estado idle, faz = 'Assumiu no lugar da conversa anterior', com o andar certo), arquive a conversa anterior com `archive_session` (<id antigo>) e espere o dono."
 4. Grave o último aviso desta conversa no Observatório com `estado: "arq"` (ela sai do painel) e mande ao dono o link da conversa nova.
 5. Avise a troca por `send_message` aos agentes que mandam mensagens para esta conversa, informando o id novo.
+6. **Só ficam abertas as conversas em funcionamento** (pedido do dono em 31/10/2026): a sucessora arquiva a anterior assim que assume, como diz o prompt acima, e a direção (LadoSombrio) atualiza o `sessao` do agente na coleção `agentes` do Observatório.
