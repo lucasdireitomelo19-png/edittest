@@ -3,7 +3,7 @@
 - Longo 1920x1080, ~6:55. Roteiro aprovado pelo dono (31/10, v1), em `roteiros/multiverso.md` #2 (branch `claude/practical-cannon-ly7fw1`).
 - Título A por padrão (o roteiro manda A quando o dono não escolhe): "Você encontrou outra VERSÃO de você!". B para o teste A/B: "E se o multiverso for real? Do outro lado do universo, ele está esperando".
 - Capítulos com cartões: 0:00 Gancho, 0:30 Nível I, 1:25 Longe demais, 1:55 Nível II, 3:04 Alguém já viu uma bolha?, 3:40 Nível III, 4:54 O chip do Google, 5:28 Nível IV, 6:00 Mas espera…
-- Remotion (`remotion/src/videos/Multiverso.tsx`, composição `Multiverso` + thumb `ThumbMultiverso`), motor `criarLongo`. Voz edge-tts **Remy** (pausa 0.45, rate −6%), cartões de capítulo de 2,2 s (`capitulos.py`), trilha própria (`musica.py`, semente 70). Narração conferida no Whisper: 100% em português (nomes próprios com sotaque; "WMAP" sai como "Vap").
+- Remotion (`remotion/src/videos/Multiverso.tsx`, composição `Multiverso` + thumb `ThumbMultiverso`), motor `criarLongo`. Voz edge-tts **Antonio** na v3 (pausa 0.45, rate −5%; Remy na v1 e na v2), cartões de capítulo de 2,2 s (`capitulos.py`), trilha própria (`musica.py`, semente 70). Narração conferida no Whisper: 100% em português (nomes próprios com sotaque; "WMAP" sai como "Vap").
 - Texto narrado sem nenhuma mudança (`videos/v70_longo_multiverso/roteiro.txt`). **96 cenas, nenhuma repetida** (cada foto e cada tipo de esquema uma vez só; `checar_repeticao.py` ok; folha de contato conferida).
 - Molde: canto "NÍVEL I…IV · MODELO / FATO / INTERPRETAÇÃO / HIPÓTESE CONTESTADA / HIPÓTESE"; selos de rótulo no canto de baixo; contador "DISTÂNCIA DA SUA CÓPIA": 10^(10^29) M → OUTRA BOLHA → AQUI, EM OUTRO RAMO → NEM EXISTE ESPAÇO. A cor some a cada nível (saturação 0,85 → 0,65 → 0,45 → 0,22) e volta no "Mas espera…".
 - Reais: Via Láctea vista da ISS, Hubble XDF, Hubble Deep Field, galáxias distantes e Nebulosa da Bolha (Hubble), Abell 2744, Penhascos Cósmicos (Webb, cores alteradas e avisado), a Terra vista da Orion, a Terra no horizonte da Lua (LRO), astronauta na Cupola e horizonte visto da ISS, mapa do **WMAP** (NASA, corte do quadrado COBE/WMAP/Planck) e mapa do **Planck** (ESA/NASA) em duas versões diferentes (céu inteiro e escalas grandes com a Mancha Fria marcada). Ilustrações da NASA (rotuladas): satélite WMAP e linha do tempo do universo.
@@ -11,6 +11,7 @@
 - Thumb: porta aberta, a mesma pessoa dos dois lados, bolhas de universos lá dentro, "4 MULTIVERSOS", selo "HIPÓTESE".
 - Central e Observatório: `lado-79`, status Pronto. Data de publicação a definir.
 - **v2 (31/10, pedido do dono: pronúncia "de estadunidense")**: grafia fonética só na fala para Tegmark, MIT (eme í tê), WMAP (dáblio map), Google (Gúgou), Willow (Uílou), chip (xip), internet (internét), Everett, Carroll, Ellis, Steinhardt, Guth, Vilenkin, Linde e "explodiu" (expludiu). Fica em `pipeline/texto_pt.py` e vale para os próximos vídeos. A legenda mostra a grafia original.
+- **v3 (31/10)**: o dono ainda ouvia sotaque na Remy e, depois de comparar 3 vozes, escolheu a **Antonio** (`pt-BR-AntonioNeural`, brasileira nativa) para o Short e o longo. A grafia fonética dos nomes continua no `texto_pt.py`.
 
 ## Textos de postagem
 
