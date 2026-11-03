@@ -47,6 +47,11 @@ Liste de 3 a 8 tópicos de vídeo que saem da pesquisa, do mais para o menos vir
 
 **DNA do canal (filtro antes da nota):** o dono aprova temas com medo real ou ameaça ("pode acontecer com você"), POV em 2ª pessoa e "e se…", mistério sem explicação, horror existencial ou escala assustadora, e gancho que dá frio na barriga em 2 segundos. Notícia apenas curiosa ou "fofa" (recordes, cores bonitas, descobertas sem ameaça nem mistério) foi reprovada como fraca: não ponha esse tipo de tema no topo só por ser notícia quente.
 
+**O que os dados do canal mostram (YouTube, 16/10 a 01/11/2026; use como peso principal):**
+- Venceram (5–58 mil views, retenção 82–89%): um **objeto cósmico gigante e real** (estrela, buraco negro, asteroide, o Sol) que **ameaça ou mexe com a Terra/Sistema Solar**, de preferência com algo que **dá para ver** ou uma **data concreta**; **comparação de escala visual**; **curiosidade humana mórbida no espaço**. Nos longos, só o **POV de sobrevivência concreta na Terra** (ex.: "Você é a última pessoa da Terra").
+- Perderam (0,9–1,8 mil views, retenção 46–65%): radiação/saúde de astronauta; Terra e geologia (supervulcão, tsunami, El Niño, meteoro na cidade); Shorts em POV; física abstrata (multiverso, paradoxos); longos cósmicos abstratos (Big Rip, multiverso, Andrômeda, Área 51).
+- Tire pontos de qualquer tema da lista dos que perderam, mesmo que pareça forte.
+
 Como dar a nota (some os pontos fortes, não chute):
 - **Notícia quente:** aconteceu ou foi anunciado nos últimos dias/semanas, ou tem data marcada próxima (passagem, lançamento, eclipse).
 - **Medo ou ameaça real à Terra** (sem exagerar o que a ciência diz).
