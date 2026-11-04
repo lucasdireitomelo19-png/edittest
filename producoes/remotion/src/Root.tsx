@@ -32,10 +32,25 @@ import {Video as Jupiter, Thumb as ThumbJupiter, DURACAO as DUR_JUPITER} from '.
 import {Video as MaiorEstrela, Thumb as ThumbMaiorEstrela, DURACAO as DUR_MAIORESTRELA} from './videos/MaiorEstrela';
 import {Video as Tesla, Thumb as ThumbTesla, DURACAO as DUR_TESLA} from './videos/Tesla';
 import {Video as Memorial, Thumb as ThumbMemorial, DURACAO as DUR_MEMORIAL} from './videos/Memorial';
+import {Video as Betelgeuse, Thumb as ThumbBetelgeuse, DURACAO as DUR_BETELGEUSE} from './videos/Betelgeuse';
+import {Video as Yr4, Thumb as ThumbYr4, DURACAO as DUR_YR4} from './videos/Yr4';
+import {Video as Magnetar, Thumb as ThumbMagnetar, DURACAO as DUR_MAGNETAR} from './videos/Magnetar';
+import {Video as Errante, Thumb as ThumbErrante, DURACAO as DUR_ERRANTE} from './videos/Errante';
+import {Video as SolTerra, Thumb as ThumbSolTerra, DURACAO as DUR_SOLTERRA} from './videos/SolTerra';
 import {Video as BnPerto, Thumb as ThumbBnPerto, DURACAO as DUR_BNPERTO} from './videos/BnPerto';
 // Cada vídeo novo vira um arquivo em src/videos/ e uma <Composition> aqui.
 export const Root = () => (
   <>
+    <Composition id="Betelgeuse" component={Betelgeuse} durationInFrames={DUR_BETELGEUSE} fps={30} width={1080} height={1920} />
+    <Still id="ThumbBetelgeuse" component={ThumbBetelgeuse} width={1080} height={1920} />
+    <Composition id="Yr4" component={Yr4} durationInFrames={DUR_YR4} fps={30} width={1080} height={1920} />
+    <Still id="ThumbYr4" component={ThumbYr4} width={1080} height={1920} />
+    <Composition id="Magnetar" component={Magnetar} durationInFrames={DUR_MAGNETAR} fps={30} width={1080} height={1920} />
+    <Still id="ThumbMagnetar" component={ThumbMagnetar} width={1080} height={1920} />
+    <Composition id="Errante" component={Errante} durationInFrames={DUR_ERRANTE} fps={30} width={1080} height={1920} />
+    <Still id="ThumbErrante" component={ThumbErrante} width={1080} height={1920} />
+    <Composition id="SolTerra" component={SolTerra} durationInFrames={DUR_SOLTERRA} fps={30} width={1080} height={1920} />
+    <Still id="ThumbSolTerra" component={ThumbSolTerra} width={1080} height={1920} />
     <Composition id="BnPerto" component={BnPerto} durationInFrames={DUR_BNPERTO} fps={30} width={1080} height={1920} />
     <Still id="ThumbBnPerto" component={ThumbBnPerto} width={1080} height={1920} />
     <Composition id="Memorial" component={Memorial} durationInFrames={DUR_MEMORIAL} fps={30} width={1080} height={1920} />
