@@ -103,6 +103,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 2. Versão antiga (20 s) do Short 2027 continua como asset na Central e no Observatório; apagar só com OK do dono (já perguntado em 31/10, sem resposta).
 
 ## Lições da conversa de 04/11 (tarde)
+- **A troca de conversa automática parou de funcionar (04/11):** `create_session` recusou, porque a cadeia chegou ao limite de 8 conversas encadeadas, e nenhuma configuração muda isso. Antes disso, o classificador também tinha barrado a chave do ElevenLabs no `prompt` do `create_session` (vazamento de credencial). Daqui em diante, **o dono abre a conversa nova** e cola a chave lá.
 - Fotos novas que funcionaram: ESO `potw1513a` (Órion sobre o ALMA), `potw2009a` (Órion sobre o Paranal), `eso0927c` (Órion com Betelgeuse, crédito "ESO, P. Kervella, Digitized Sky Survey 2 and A. Fujii"), `eso2003a` (Betelgeuse pelo SPHERE) e `eso1121b` (mapa). NASA: `KSC-20170809-PH_KLS02_0009` (Lua), `PIA25790` (Webb, ilustração), `PIA26274` (magnetar) e `PIA21085` (pulsar).
 - A foto `sts054-97-018` (Órion do ônibus espacial) não presta: é escura, e clarear deixa ela granulada e vermelha.
 - Imagens grandes (> 2.400 px): reduza com PIL antes do render.
