@@ -11,7 +11,7 @@
 ---
 
 ## Um BURACO NEGRO está vindo e você tem 1 ANO!
-**Formato:** Longo POV de sobrevivência na Terra (molde do vídeo 20), 1920x1080   **Status:** aguardando aprovação (v1)
+**Formato:** Longo POV de sobrevivência na Terra (molde do vídeo 20), 1920x1080   **Status:** APROVADO pelo dono (04/11, v1)
 **Potencial viral:** 🔥🔥🔥 10/10 · Ponto mais forte: é exatamente a combinação vencedora dos dados (objeto cósmico gigante e real que ameaça a Terra + POV de sobrevivência + contagem regressiva), com uma virada surpreendente e verdadeira: "na sua rua, nada acontece". Ponto mais fraco: o "1 ano" é um recurso de roteiro, porque na vida real o aviso viria décadas antes, e isso tem de ser dito cedo.
 **Ângulo:** contagem regressiva FALTAM 365 → DIA 0 → DEPOIS, com os três cenários reais de Pavlík e Shore. O perigo cresce para os planetas de fora e, na Terra, quase nada muda.
 **Tom de voz:** tenso, sombrio, crescente, com alívio irônico no fim.

@@ -10,7 +10,7 @@
 ---
 
 ## Uma ESTRELA EXPLODIU do lado da Terra!
-**Formato:** Longo POV, 1920x1080, molde do vídeo 20 (marcador HORA / DIA / ANO e cor sumindo)   **Status:** aguardando aprovação (v1)
+**Formato:** Longo POV, 1920x1080, molde do vídeo 20 (marcador HORA / DIA / ANO e cor sumindo)   **Status:** APROVADO pelo dono (04/11, v1)
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: uma ameaça cósmica real e visível ("uma nova estrela acende no céu"), uma escalada contraintuitiva (a luz não machuca, o perigo chega depois, em ondas) e uma prova real no fim (ferro-60 no fundo do mar). Ponto mais fraco: os efeitos são lentos e os cientistas divergem, então a tensão tem de vir do "invisível que chega depois".
 **Ângulo:** POV hora a hora → séculos, com três ondas de perigo (luz, radiação e raios cósmicos) e a virada "não existe candidata perto".
 **Tom de voz:** sombrio, tenso, crescente, depois aliviado.

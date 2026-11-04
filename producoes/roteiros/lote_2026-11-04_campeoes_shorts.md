@@ -21,7 +21,7 @@
 ---
 
 ## S7 · E se JÚPITER estivesse no lugar da Lua? O céu ficaria ASSIM
-**Status:** aguardando aprovação (v1) · ~140 palavras · **Thumb:** "40× MAIOR" (Júpiter gigante no céu sobre uma cidade, com a Lua pequenininha no canto)
+**Status:** APROVADO pelo dono (04/11, v1) · ~140 palavras · **Thumb:** "40× MAIOR" (Júpiter gigante no céu sobre uma cidade, com a Lua pequenininha no canto)
 > A Lua ocupa só meio grau no céu. Se Júpiter estivesse no lugar dela, ocuparia vinte e um graus.
 > Seriam quarenta Luas lado a lado. Um planeta listrado tomando um pedaço enorme do céu.
 > Mas tem um detalhe. Júpiter é muito mais pesado que a Terra. Então não seria ele girando em volta da gente. Seria a Terra girando em volta de Júpiter. Uma volta a cada trinta e sete horas, mais ou menos.
@@ -37,7 +37,7 @@
 ---
 
 ## S6 · A MAIOR estrela já vista ENGOLIRIA o Sistema Solar até Saturno
-**Status:** aguardando aprovação (v1) · ~150 palavras · **Thumb:** "ENGOLE ATÉ SATURNO" (estrela vermelha gigante com os planetas desenhados dentro e Saturno na borda)
+**Status:** APROVADO pelo dono (04/11, v1) · ~150 palavras · **Thumb:** "ENGOLE ATÉ SATURNO" (estrela vermelha gigante com os planetas desenhados dentro e Saturno na borda)
 > Se você colocasse a maior estrela já vista no lugar do Sol, a superfície dela passaria de Mercúrio, de Vênus, da Terra, de Marte, de Júpiter. E chegaria quase em Saturno.
 > Ela se chama WOH G64. Fica numa galáxia vizinha, a Grande Nuvem de Magalhães, a cento e sessenta mil anos-luz.
 > Segundo o Observatório Europeu do Sul, ela tem cerca de duas mil vezes o tamanho do Sol.
@@ -53,7 +53,7 @@
 ---
 
 ## S9 · O CARRO do Elon Musk está no espaço há 8 anos. Olha onde ele está AGORA
-**Status:** aguardando aprovação (v1) · ~145 palavras · **Thumb:** "ONDE ELE ESTÁ?" (carro vermelho no escuro com uma seta para um ponto no Sistema Solar)
+**Status:** APROVADO pelo dono (04/11, v1) · ~145 palavras · **Thumb:** "ONDE ELE ESTÁ?" (carro vermelho no escuro com uma seta para um ponto no Sistema Solar)
 > Tem um carro de verdade dando voltas no Sol agora. E ele está a uns cento e doze milhões de quilômetros de você.
 > É o Tesla Roadster do Elon Musk. Em fevereiro de 2018, ele foi lançado no primeiro voo do foguete Falcon Heavy.
 > Musk disse que o carro iria até o cinturão de asteroides. Não foi. Ele vai, no máximo, até perto da órbita de Marte.
@@ -70,7 +70,7 @@
 ---
 
 ## S10 · Deixaram uma ESTÁTUA e 14 NOMES na Lua. Quase ninguém sabe por quê
-**Status:** aguardando aprovação (v1) · ~140 palavras · **Thumb:** "14 NOMES NA LUA" (foto real da estatueta e da placa no solo lunar)
+**Status:** APROVADO pelo dono (04/11, v1) · ~140 palavras · **Thumb:** "14 NOMES NA LUA" (foto real da estatueta e da placa no solo lunar)
 > Na Lua tem uma estatueta de alumínio. E do lado dela, uma placa com catorze nomes.
 > Foi deixada em 1971, na missão Apollo 15, pelo astronauta David Scott.
 > Os nomes são de astronautas e cosmonautas que morreram. Oito americanos. Seis soviéticos. Em plena Guerra Fria, os rivais lado a lado.
@@ -87,7 +87,7 @@
 ---
 
 ## S2 · Pode existir um BURACO NEGRO bem mais perto do que a gente conhece
-**Status:** aguardando aprovação (v1) · ~150 palavras · **Thumb:** "ESTÁ MAIS PERTO?" (céu estrelado com um círculo preto vazio e uma interrogação)
+**Status:** APROVADO pelo dono (04/11, v1) · ~150 palavras · **Thumb:** "ESTÁ MAIS PERTO?" (céu estrelado com um círculo preto vazio e uma interrogação)
 > O buraco negro mais perto que a gente conhece está a mil quinhentos e sessenta anos-luz. Mas as contas dizem que pode ter algum bem mais perto.
 > O conhecido se chama Gaia BH1. Tem quase dez vezes a massa do Sol. E foi achado de um jeito curioso: uma estrela girando em volta de nada.
 > Só que a nossa galáxia deve ter uns cem milhões de buracos negros. E quase todos são invisíveis. Sem uma estrela por perto, não tem como ver.
@@ -108,7 +108,7 @@
 ---
 
 ## S1 · Essa estrela vai EXPLODIR… e tem um mês em que o Brasil INTEIRO não vai ver
-**Status:** aguardando aprovação (v1) · ~155 palavras · **Thumb:** "EXPLODIU. E SUMIU?" (Órion com Betelgeuse brilhando e o Sol encobrindo metade da imagem)
+**Status:** APROVADO pelo dono (04/11, v1) · ~155 palavras · **Thumb:** "EXPLODIU. E SUMIU?" (Órion com Betelgeuse brilhando e o Sol encobrindo metade da imagem)
 > Quando Betelgeuse explodir, existe uma época do ano em que ninguém no Brasil vai conseguir ver.
 > Betelgeuse é aquela estrela avermelhada no ombro de Órion. Um dia ela vai virar supernova. Pode ser amanhã. Ou daqui a cem mil anos.
 > Quando acontecer, ela vai ficar brilhante o bastante pra aparecer até de dia. Mas tem um problema.
@@ -131,7 +131,7 @@
 ---
 
 ## S5 · Esse asteroide tinha chance de ATINGIR A LUA. A NASA recalculou
-**Status:** aguardando aprovação (v1) · ~150 palavras · **Thumb:** "IA BATER NA LUA" (asteroide vindo em direção à Lua, com o número "4,3%" riscado)
+**Status:** APROVADO pelo dono (04/11, v1) · ~150 palavras · **Thumb:** "IA BATER NA LUA" (asteroide vindo em direção à Lua, com o número "4,3%" riscado)
 > Esse asteroide tinha mais de quatro por cento de chance de bater na Lua. Até o telescópio Webb olhar pra ele.
 > O nome dele é 2024 YR4. Uns sessenta metros.
 > Primeiro, o susto foi com a Terra. Em fevereiro de 2025, a chance de ele atingir o nosso planeta chegou a três vírgula um por cento. Um recorde pro tamanho dele. Poucos dias depois, foi descartada.
@@ -147,7 +147,7 @@
 ---
 
 ## S4 · Se ESSA estrela chegasse perto, seu cartão de crédito seria APAGADO
-**Status:** aguardando aprovação (v1) · ~140 palavras · **Thumb:** "CARTÃO APAGADO" (cartão de crédito com a tarja magnética derretendo sob uma estrela azul)
+**Status:** APROVADO pelo dono (04/11, v1) · ~140 palavras · **Thumb:** "CARTÃO APAGADO" (cartão de crédito com a tarja magnética derretendo sob uma estrela azul)
 > A NASA diz que, se um magnetar chegasse a meia distância da Lua, os seus cartões de crédito seriam apagados.
 > Magnetar é o que sobra de uma estrela gigante que explodiu. Uma bola do tamanho de uma cidade, com o campo magnético mais forte que a gente conhece.
 > Até mil vezes mais forte que o de uma estrela de nêutrons comum.
@@ -166,7 +166,7 @@
 ---
 
 ## S3 · Existem TRILHÕES de planetas vagando no escuro. E se um entrasse aqui?
-**Status:** aguardando aprovação (v1) · ~155 palavras · **Thumb:** "VINDO NO ESCURO" (planeta negro com borda iluminada em direção ao Sistema Solar)
+**Status:** APROVADO pelo dono (04/11, v1) · ~155 palavras · **Thumb:** "VINDO NO ESCURO" (planeta negro com borda iluminada em direção ao Sistema Solar)
 > Existem planetas sem estrela, sem luz, vagando no escuro. E pode ter trilhões deles só na nossa galáxia.
 > Uma pesquisa de nove anos estimou cerca de vinte e um planetas assim pra cada estrela da Via Láctea. Com uns cem bilhões de estrelas, a conta dá trilhões.
 > O único jeito de achar um é quando ele passa na frente de uma estrela distante e a luz dela dá uma piscada. Um desses candidatos apareceu por só quarenta e um minutos.
@@ -187,7 +187,7 @@
 ---
 
 ## S8 · O SOL vai ENGOLIR a Terra? Um estudo novo diz que TALVEZ NÃO
-**Status:** aguardando aprovação (v1) · ~150 palavras · **Thumb:** "A TERRA ESCAPA?" (Sol vermelho gigante com a Terra na borda e uma seta para fora)
+**Status:** APROVADO pelo dono (04/11, v1) · ~150 palavras · **Thumb:** "A TERRA ESCAPA?" (Sol vermelho gigante com a Terra na borda e uma seta para fora)
 > Durante anos, a previsão foi clara: o Sol vai inchar e engolir a Terra. Em junho de 2026, um estudo novo disse que talvez não.
 > Daqui a uns cinco bilhões de anos, o Sol começa a virar uma gigante vermelha. Ele cresce tanto que engole Mercúrio e Vênus.
 > Em 2008, um estudo calculou que a Terra também seria puxada pra dentro. Fim.
