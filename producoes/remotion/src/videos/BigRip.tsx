@@ -1099,3 +1099,52 @@ const TerraFoto: React.FC<{x: number; y: number; R: number; filtro?: string}> = 
   const E = (2 * R) / 0.666;   // o disco ocupa 66,6% da foto da Apollo 17
   return <Img src={img('terra.jpg')} style={{position: 'absolute', left: x - E * 0.501, top: y - E * 0.508, width: E, height: E, clipPath: `circle(${R}px at ${E * 0.501}px ${E * 0.508}px)`, filter: filtro}} />;
 };
+
+// ---------- thumbnail v2 (04/11, dono: "zero clickbait e chamativa, melhore"): a imagem inteira rasgada ao meio,
+// a Terra partida nas duas metades, luz branca e vermelha saindo da fenda, texto gigante "O UNIVERSO VAI RASGAR" ----------
+const RASGO: [number, number][] = [[1330, -20], [1300, 90], [1352, 170], [1290, 270], [1340, 360], [1268, 450], [1320, 540], [1250, 630], [1296, 720], [1222, 820], [1268, 900], [1196, 1000], [1230, 1100]];
+export const ThumbRasgo: React.FC = () => {
+  const lado = (dx: number, esq: boolean) => {
+    const pts = RASGO.map(([x, y]) => `${x + (esq ? -1 : 1) * 4}px ${y}px`);
+    return `polygon(${esq ? `-100px -100px, ${pts.join(', ')}, -100px 1200px` : `2100px -100px, ${pts.join(', ')}, 2100px 1200px`})`;
+  };
+  const Cena: React.FC = () => (
+    <AbsoluteFill>
+      <Img src={img('carina.jpg')} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(1.4) contrast(1.15) brightness(.75)'}} />
+      <TerraFoto x={1270} y={560} R={330} filtro="contrast(1.25) saturate(1.2)" />
+    </AbsoluteFill>
+  );
+  const borda = RASGO.map(([x, y]) => `${x},${y}`).join(' ');
+  return (
+    <AbsoluteFill style={{background: '#fff', overflow: 'hidden'}}>
+      <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
+      {/* o que aparece pela fenda: luz branca com borda vermelha */}
+      <AbsoluteFill style={{background: 'radial-gradient(ellipse 260px 700px at 1265px 540px, #fff 30%, #ffe0d0 50%, #ff3b3b 75%, #300 100%)'}} />
+      {/* metade esquerda, puxada pra esquerda e girando um pouco */}
+      <AbsoluteFill style={{clipPath: lado(0, true), transform: 'translate(-70px, 14px) rotate(-1.5deg)', transformOrigin: '0 50%'}}><Cena /></AbsoluteFill>
+      {/* metade direita */}
+      <AbsoluteFill style={{clipPath: lado(0, false), transform: 'translate(70px, -14px) rotate(1.5deg)', transformOrigin: '100% 50%'}}><Cena /></AbsoluteFill>
+      {/* brilho e estilhaços na fenda */}
+      <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
+        <defs><filter id="rg"><feGaussianBlur stdDeviation="14" /></filter></defs>
+        <polyline points={borda} fill="none" stroke="#fff" strokeWidth={70} filter="url(#rg)" opacity={0.9} />
+        {Array.from({length: 46}, (_, i) => {
+          const [x, y] = RASGO[1 + Math.floor(random('fx' + i) * 11)];
+          const d = (random('fd' + i) - 0.5) * 520, s = 6 + random('fs' + i) * 22;
+          return <rect key={i} x={x + d} y={y + (random('fy' + i) - 0.5) * 120} width={s} height={s * (0.5 + random('fh' + i))} fill={i % 3 ? '#d8e4ff' : '#ff6b4a'} opacity={0.9}
+            transform={`rotate(${random('fr' + i) * 90} ${x + d} ${y})`} />;
+        })}
+      </svg>
+      <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(0,0,0,.88), rgba(0,0,0,.55) 38%, rgba(0,0,0,0) 58%)'}} />
+      <div style={{position: 'absolute', left: 60, top: 150, fontFamily: FONTE, lineHeight: 0.9, letterSpacing: -6, WebkitTextStroke: '12px #000', paintOrder: 'stroke fill', textShadow: '0 14px 40px rgba(0,0,0,.95)'}}>
+        <div style={{fontSize: 150, color: '#fff'}}>O UNIVERSO</div>
+        <div style={{fontSize: 150, color: '#fff'}}>VAI</div>
+        <div style={{fontSize: 260, color: VERMELHO, transform: 'rotate(-4deg) translateX(-6px)', transformOrigin: '0 50%'}}>RASGAR</div>
+      </div>
+      <div style={{position: 'absolute', left: 70, top: 900, padding: '12px 30px', borderRadius: 16, background: OURO, fontFamily: FONTE, fontSize: 58, color: '#111', transform: 'rotate(-2deg)', boxShadow: '0 10px 30px rgba(0,0,0,.7)'}}>
+        ATÉ OS SEUS ÁTOMOS
+      </div>
+      <div style={{position: 'absolute', right: 40, top: 36, padding: '8px 22px', borderRadius: 12, border: `4px solid ${ROXO}`, background: 'rgba(0,0,0,.7)', fontFamily: FONTE, fontSize: 38, color: ROXO, letterSpacing: 4}}>HIPÓTESE</div>
+    </AbsoluteFill>
+  );
+};

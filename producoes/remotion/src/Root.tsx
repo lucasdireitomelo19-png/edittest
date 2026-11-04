@@ -23,7 +23,7 @@ import {Video as CopiaExata, DURACAO as DUR_COPIA} from './videos/CopiaExata';
 import {Video as Gemeos, DURACAO as DUR_GEMEOS} from './videos/Gemeos';
 import {Video as Avo, DURACAO as DUR_AVO} from './videos/Avo';
 import {Video as Multiverso, Thumb as ThumbMultiverso, DURACAO as DUR_MULTIVERSO} from './videos/Multiverso';
-import {Video as BigRip, Thumb as ThumbBigRip, DURACAO as DUR_BIGRIP} from './videos/BigRip';
+import {Video as BigRip, Thumb as ThumbBigRip, ThumbRasgo as ThumbBigRipRasgo, DURACAO as DUR_BIGRIP} from './videos/BigRip';
 import {Video as Area51, Thumb as ThumbArea51, ThumbVerdade as ThumbArea51Verdade, DURACAO as DUR_AREA51} from './videos/Area51';
 import {Video as FimSolar, Thumb as ThumbFimSolar, ThumbA as ThumbFimSolarA, ThumbB as ThumbFimSolarB, DURACAO as DUR_FIMSOLAR} from './videos/FimSolar';
 import {Video as SemLua, Thumb as ThumbSemLua, ThumbA as ThumbSemLuaA, ThumbB as ThumbSemLuaB, DURACAO as DUR_SEMLUA} from './videos/SemLua';
@@ -66,6 +66,7 @@ export const Root = () => (
     <Still id="ThumbMultiverso" component={ThumbMultiverso} width={1920} height={1080} />
     <Composition id="BigRip" component={BigRip} durationInFrames={DUR_BIGRIP} fps={30} width={1920} height={1080} />
     <Still id="ThumbBigRip" component={ThumbBigRip} width={1920} height={1080} />
+    <Still id="ThumbBigRipRasgo" component={ThumbBigRipRasgo} width={1920} height={1080} />
     <Composition id="MarteRadiacao" component={MarteRadiacao} durationInFrames={DUR_MARTE} fps={30} width={1080} height={1920} />
     <Composition id="SolAviao" component={SolAviao} durationInFrames={DUR_SOLAVIAO} fps={30} width={1080} height={1920} />
     <Composition id="Tsunami" component={Tsunami} durationInFrames={DUR_TSUNAMI} fps={30} width={1080} height={1920} />
