@@ -1,6 +1,6 @@
 # Passagem · Gerador de Vídeos (Produção de Vídeo)
 
-Atualizado em 31/10/2026 pela conversa `session_014uAw8CKDU21uq9jVARfcGA`.
+Atualizado em 04/11/2026 pela conversa `session_014uAw8CKDU21uq9jVARfcGA`, na troca por uma nova.
 Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que o pedido envolver.
 
 ## Papel
@@ -23,10 +23,10 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 - **Roteiros novos** ficam na branch `claude/practical-cannon-ly7fw1`, em `producoes/roteiros/`. Use `git fetch origin claude/practical-cannon-ly7fw1` e depois `git show origin/claude/practical-cannon-ly7fw1:<arquivo>`.
 
 ## Chaves (nunca imprima o valor; cole direto no comando)
-- **ElevenLabs** (voz Brian): a chave não fica no repositório. O dono passou uma nova em 28/10 (começa com `sk_`; o código hex que não começa com `sk_` é só o ID da chave e não funciona). Se a conversa for nova, peça de novo.
-  - Plano starter, 30.102 caracteres por ciclo. Restam **~1,4 mil** (29/10, depois dos Reels de Marte e Vênus); a cota renova em 18/11/2026. Confira com `GET /v1/user/subscription` antes de narrar.
-  - A chave fica só na sessão (scratchpad). Numa conversa nova, peça ao dono de novo.
-  - **Não dá para o longo da Área 51** (~6 mil caracteres). Avise o dono antes de narrar.
+- **ElevenLabs** (voz Brian): a chave **não fica no repositório**. O dono mandou uma nova em 04/11, no chat. Começa com `sk_`; o código hex sem `sk_` é só o ID da chave e não funciona.
+  - **Regra do dono (04/11): "sempre transfira a chave para as novas conversas".** Na troca de conversa, a chave vai no `prompt` do `create_session`, nunca num arquivo do repositório. Na sessão, guarde-a só no scratchpad.
+  - Plano **Creator**: 123.692 caracteres livres em 04/11 (0 usados), com renovação em 04/12/2026. Confira com `GET /v1/user/subscription` antes de narrar.
+  - Com ElevenLabs, a voz é a Brian (`narrar_el.py`). Sem ElevenLabs, use a Antonio.
 - **Pixabay:** dá erro de chave (o proxy não injeta). A biblioteca `pipeline/src/*.mp4` **não vem** num container novo (é ignorada pelo git), nem os mp4 de `remotion/public/*`.
 - **Imagens que funcionam:** NASA Images (`images-api.nasa.gov`, `asset/<id>`), SVS (`pipeline/svs.py`) e gravuras históricas do Rijksmuseum (`data.rijksmuseum.nl/search/collection?imageAvailable=true&title=...`, Linked Art → `iiif.micr.io/<id>/full/1600,/0/default.jpg`, domínio público). O Wikimedia Commons deu 429 a sessão inteira.
 
@@ -78,8 +78,21 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
    - 31/10: o dono **cancelou a refação dos Reels POV lado-72 a 75** ("Esquece o lado 72-75"). Não mexer neles.
    - 31/10: **multiverso entregue**: lado-78 Short "Cópia exata" (v3 com voz Antonio, 55 s, publicar a partir de 05–06/11; composição `CopiaExata`, doc 47) e lado-79 longo "Você encontrou outra VERSÃO de você!" (7:00, 96 cenas, composição `Multiverso` + `ThumbMultiverso`, doc 48). Os dois estão no Observatório; na Central, o 79 ficou sem vídeo. LadoSombrio e Roteirista avisados.
    - 31/10 (noite): v3 do multiverso com voz Antonio e thumb nova do longo (capacete real da NASA). O dono marcou o lado-79 como **Postado** às 19:32 com a v2 (Remy, thumb antiga). A v3 ficou no Observatório em `v3_video_url`/`v3_thumb_url`. Na Central, o 79 ficou sem vídeo (cheia).
+0a. **PRÓXIMO: lote "LINHA DOS CAMPEÕES"** (12 roteiros aprovados pelo dono em 04/11, v1: 10 Shorts e 2 longos). Vai direto para o vídeo final, com revisão interna e voz **Brian** (ElevenLabs; o lote soma ~17,8 mil caracteres e cabe no saldo). Os arquivos estão na branch `claude/practical-cannon-ly7fw1`: `producoes/roteiros/lote_2026-11-04_campeoes_shorts.md`, `longo_buraco_negro_1ano.md` e `longo_supernova_perto.md`. Use o texto narrado sem mudar nada. Lado-82 em diante.
+   - **Ordens do dono nesta aprovação:** "Não quero cenas repetidas": cada foto, clipe, esquema ou ilustração entra numa cena só, sem outro crop, zoom ou filtro da mesma imagem. Rode `checar_repeticao.py` antes de cada render. O saldo do ElevenLabs já foi conferido e passado ao Roteirista em 04/11.
+   - Ordem de publicação dos Shorts: S7 Júpiter → S6 maior estrela → S9 Tesla → S10 memorial na Lua → S2 buraco negro escondido (publicar perto de 02/12, Gaia DR4) → S1 Betelgeuse → S5 YR4 → S4 magnetar → S3 planeta errante → S8 Sol × Terra.
+   - Cuidados:
+     - S9: recalcule a distância do Tesla no JPL Horizons (alvo −143205) no dia de publicar.
+     - S6: "MAIOR estrela JÁ VISTA", nunca "do universo".
+     - S8: "TALVEZ NÃO".
+     - S5: "A NASA recalculou".
+   - Os Shorts **não são POV**. Os 2 longos **são POV**, com o marcador e a cor caindo até "Mas espera…" e o selo "E SE":
+     - Longo A: "FALTAM 365 → DIA 0 → DEPOIS".
+     - Longo B: "HORA −3 → ~900 ANOS", com tela dividida "FONTES DIVERGEM" no capítulo do ozônio e o Devoniano como "HIPÓTESE".
+   - Legendas pelo subagente `legendas`. Entrega no Observatório (a Central está cheia). Avise o Roteirista e o LadoSombrio.
 0b. **EM ESPERA (não produzir até o dono liberar):** longo POV "Você voltou 70 anos DEPOIS!" (gêmeos), `roteiros/longo_gemeos.md` na branch do Roteirista.
 1. **Entregues em 31/10 (noite):** os 2 Shorts POV de paradoxo, com a voz Antonio. São o lado-80 "Você viajou 1 ano. A Terra envelheceu 70." (composição `Gemeos`, doc 49) e o lado-81 "Você impediu o próprio nascimento" (composição `Avo`, doc 50). Estão só no Observatório, porque a Central está cheia. Datas de publicação a definir. O longo dos gêmeos continua **EM ESPERA**.
+1b. 04/11: **thumb v3 do Big Rip** (lado-76, pedido do dono): universo rasgado e Terra partida, composição `ThumbBigRipRasgo`. Está no Observatório (`thumb_url`; a antiga ficou em `thumb_antiga_url`). Como o vídeo já está postado, a capa precisa ser trocada no YouTube.
 2. Versão antiga (20 s) do Short 2027 continua como asset na Central e no Observatório; apagar só com OK do dono (já perguntado em 31/10, sem resposta).
 
 ## Lições da conversa de 31/10
