@@ -1,6 +1,6 @@
 # Passagem · Gerador de Vídeos (Produção de Vídeo)
 
-Atualizado em 04/11/2026 pela conversa `session_014uAw8CKDU21uq9jVARfcGA`, na troca por uma nova.
+Atualizado em 04/11/2026 (madrugada) pela conversa `session_014uAw8CUzLyCxGS1n1K8S7o`, na troca por uma nova, no meio do lote Linha dos campeões.
 Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que o pedido envolver.
 
 ## Papel
@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-81.
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-86 (só no Observatório).
   - **Armazenamento CHEIO (1 GB) desde 31/10.** O lado-79 ficou sem vídeo na Central. Liberar espaço só com OK do dono. Por enquanto, suba o vídeo direto no Observatório. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Avisos de status:** desde 31/10 vão para o Observatório (coleção `eventos`), não mais para o Painel (ver `CLAUDE.md`).
@@ -78,22 +78,30 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
    - 31/10: o dono **cancelou a refação dos Reels POV lado-72 a 75** ("Esquece o lado 72-75"). Não mexer neles.
    - 31/10: **multiverso entregue**: lado-78 Short "Cópia exata" (v3 com voz Antonio, 55 s, publicar a partir de 05–06/11; composição `CopiaExata`, doc 47) e lado-79 longo "Você encontrou outra VERSÃO de você!" (7:00, 96 cenas, composição `Multiverso` + `ThumbMultiverso`, doc 48). Os dois estão no Observatório; na Central, o 79 ficou sem vídeo. LadoSombrio e Roteirista avisados.
    - 31/10 (noite): v3 do multiverso com voz Antonio e thumb nova do longo (capacete real da NASA). O dono marcou o lado-79 como **Postado** às 19:32 com a v2 (Remy, thumb antiga). A v3 ficou no Observatório em `v3_video_url`/`v3_thumb_url`. Na Central, o 79 ficou sem vídeo (cheia).
-0a. **PRÓXIMO: lote "LINHA DOS CAMPEÕES"** (12 roteiros aprovados pelo dono em 04/11, v1: 10 Shorts e 2 longos). Vai direto para o vídeo final, com revisão interna e voz **Brian** (ElevenLabs; o lote soma ~17,8 mil caracteres e cabe no saldo). Os arquivos estão na branch `claude/practical-cannon-ly7fw1`: `producoes/roteiros/lote_2026-11-04_campeoes_shorts.md`, `longo_buraco_negro_1ano.md` e `longo_supernova_perto.md`. Use o texto narrado sem mudar nada. Lado-82 em diante.
-   - **Ordens do dono nesta aprovação:** "Não quero cenas repetidas": cada foto, clipe, esquema ou ilustração entra numa cena só, sem outro crop, zoom ou filtro da mesma imagem. Rode `checar_repeticao.py` antes de cada render. O saldo do ElevenLabs já foi conferido e passado ao Roteirista em 04/11.
-   - Ordem de publicação dos Shorts: S7 Júpiter → S6 maior estrela → S9 Tesla → S10 memorial na Lua → S2 buraco negro escondido (publicar perto de 02/12, Gaia DR4) → S1 Betelgeuse → S5 YR4 → S4 magnetar → S3 planeta errante → S8 Sol × Terra.
+0a. **EM ANDAMENTO: lote "LINHA DOS CAMPEÕES"** (12 roteiros aprovados pelo dono em 04/11, v1: 10 Shorts e 2 longos). Vai direto para o vídeo final, com revisão interna e voz **Brian**. Roteiros na branch `claude/practical-cannon-ly7fw1`: `producoes/roteiros/lote_2026-11-04_campeoes_shorts.md`, `longo_buraco_negro_1ano.md` e `longo_supernova_perto.md`. Use o texto narrado sem mudar nada.
+   - **Entregues em 04/11 (Observatório como Pronto, com 6 legendas, thumb e MP4 no chat; doc 51; commit 6c2fed4):** lado-82 S7 Júpiter (`Jupiter`), lado-83 S6 maior estrela (`MaiorEstrela`), lado-84 S9 Tesla (`Tesla`, distância recalculada em 04/11 = 113 milhões de km), lado-85 S10 memorial (`Memorial`) e lado-86 S2 buraco negro perto (`BnPerto`, publicar perto de 02/12). **Falta:** avisar o LadoSombrio e o Roteirista dessas 5 entregas, junto com as próximas.
+   - **Narrações Brian JÁ FEITAS para os 10 Shorts** (não gaste créditos de novo): `remotion/public/<slug>/narracao.mp3` + `palavras.json`, copiadas também para `src/videos/<slug>.palavras.json`. Os slugs que faltam montar são S1 `betelgeuse`, S5 `yr4`, S4 `magnetar`, S3 `errante` e S8 `solterra`. Saldo ElevenLabs depois disso: ~115 mil caracteres. Os longos ainda não foram narrados (`--vel 1.1 --pausa 0.45`; rode um de cada vez, porque em paralelo dá 429).
+   - **Kit novo:** `remotion/src/lote/kit.tsx`. Cada vídeo é um `PLANO: K.Plano = [['frase-âncora', K.Tipo, {props}], ...]` mais `K.criarShort(W, PLANO, '<slug>/narracao.mp3', '<frase do flash>')` e `export const Thumb` (com `K.Capa`). Modelo mais completo: `src/videos/BnPerto.tsx` e `Memorial.tsx` (cenas próprias no arquivo quando o kit não tem). Para registrar no Root, use o padrão `{Video as X, Thumb as ThumbX, DURACAO as DUR_X}`. O `checar_repeticao.py` barra tipo repetido (Foto/Clipe contam pelo arquivo). Para a revisão, use um render 1/4 mudo + folha `fps=1/1.6,scale=180:-1,tile=10x3`. Pegou texto estourando, cena curta demais (âncora colada na seguinte) e rótulo cortado.
+   - Para os longos, o kit é vertical (1080x1920). Use `criarLongo` (`src/longo.tsx`) como nos longos anteriores.
+   - **Imagens que funcionaram nesta conversa:** NASA Images (`pipeline/baixar_img.py <id> <saída>`), ESO (`cdn.eso.org/images/large/<id>.jpg`, CC BY 4.0, crédito obrigatório; vídeos com `pipeline/eso.py`), NOIRLab (`noirlab.edu/public/media/archives/images/large/<id>.jpg`) e fotos Apollo em baixa no LPI (`lpi.usra.edu/resources/apollo/images/browse/AS16/117/18841.jpg`). Já baixadas para S1 (sem uso ainda): PIA16680 (Betelgeuse, Herschel), sts054-97-018 (Órion, escura), stsci-h-p1708c-m-2000x2000 (SN 1987A). Para S5: GSFC_20171208_Archive_e000355 (espelhos do Webb). Para S3: PIA03239 (Via Láctea, Spitzer). Para S8: PIA26681 (Sol SDO, já usado no S6, então em outro vídeo pode) e Blue Marble.
+   - **Ordens do dono nesta aprovação:** "Não quero cenas repetidas": cada foto, clipe, esquema ou ilustração entra numa cena só, sem outro crop, zoom ou filtro da mesma imagem.
+   - Ordem de publicação dos Shorts: S7 → S6 → S9 → S10 → S2 (já entregues) → **S1 Betelgeuse → S5 YR4 → S4 magnetar → S3 planeta errante → S8 Sol × Terra** (próximos, lado-87 a 91) → longos A (buraco negro, 1 ano) e B (supernova perto), lado-92 e 93.
    - Cuidados:
-     - S9: recalcule a distância do Tesla no JPL Horizons (alvo −143205) no dia de publicar.
      - S6: "MAIOR estrela JÁ VISTA", nunca "do universo".
      - S8: "TALVEZ NÃO".
      - S5: "A NASA recalculou".
    - Os Shorts **não são POV**. Os 2 longos **são POV**, com o marcador e a cor caindo até "Mas espera…" e o selo "E SE":
      - Longo A: "FALTAM 365 → DIA 0 → DEPOIS".
      - Longo B: "HORA −3 → ~900 ANOS", com tela dividida "FONTES DIVERGEM" no capítulo do ozônio e o Devoniano como "HIPÓTESE".
-   - Legendas pelo subagente `legendas`. Entrega no Observatório (a Central está cheia). Avise o Roteirista e o LadoSombrio.
+   - Legendas pelo subagente `legendas` (ele grava JSON no scratchpad; as linhas no Observatório seguem o formato de lado-82). Entrega no Observatório (a Central está cheia). Avise o Roteirista e o LadoSombrio.
 0b. **EM ESPERA (não produzir até o dono liberar):** longo POV "Você voltou 70 anos DEPOIS!" (gêmeos), `roteiros/longo_gemeos.md` na branch do Roteirista.
 1. **Entregues em 31/10 (noite):** os 2 Shorts POV de paradoxo, com a voz Antonio. São o lado-80 "Você viajou 1 ano. A Terra envelheceu 70." (composição `Gemeos`, doc 49) e o lado-81 "Você impediu o próprio nascimento" (composição `Avo`, doc 50). Estão só no Observatório, porque a Central está cheia. Datas de publicação a definir. O longo dos gêmeos continua **EM ESPERA**.
 1b. 04/11: **thumb v3 do Big Rip** (lado-76, pedido do dono): universo rasgado e Terra partida, composição `ThumbBigRipRasgo`. Está no Observatório (`thumb_url`; a antiga ficou em `thumb_antiga_url`). Como o vídeo já está postado, a capa precisa ser trocada no YouTube.
 2. Versão antiga (20 s) do Short 2027 continua como asset na Central e no Observatório; apagar só com OK do dono (já perguntado em 31/10, sem resposta).
+
+## Lições da conversa de 04/11 (madrugada)
+- `archive_session` da conversa anterior foi **negado** pelo classificador do ambiente. Peça ao dono para arquivar, ou para liberar a permissão.
+- ElevenLabs em paralelo dá 429: narre um de cada vez.
 
 ## Lições da conversa de 31/10
 - `pkill -f <padrão>` mata o próprio shell quando o padrão aparece no comando. Mate pelo PID.
