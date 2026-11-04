@@ -8,6 +8,8 @@ Uso: ELEVENLABS_API_KEY=... python3 narrar_el.py <pasta> [alvo_s] [--voz ID] [--
 A chave fica só na variável de ambiente; nunca é gravada em arquivo. Cada execução gasta créditos.
 """
 import base64, json, os, subprocess, sys, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import texto_pt
 
 args = sys.argv[1:]
 def opcao(nome, padrao=None):
@@ -22,7 +24,8 @@ alvo = float(args[1]) if len(args) > 1 else None
 CHAVE = os.environ.get("ELEVENLABS_API_KEY")
 if not CHAVE:
     raise SystemExit("ELEVENLABS_API_KEY não definida")
-TEXT = open(f"{d}/roteiro.txt", encoding="utf-8").read().strip()
+# números por extenso e siglas em pronúncia portuguesa (narração 100% em português, regra do dono de 30/10)
+TEXT, TROCAS = texto_pt.preparar(open(f"{d}/roteiro.txt", encoding="utf-8").read().strip())
 
 def duracao(arq):
     return float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", arq]))
@@ -69,6 +72,7 @@ subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-filter_complex", f
 os.remove(bruto)
 for w in words:
     w["t"] = round(w["t"] / fator, 3); w["d"] = round(w["d"] / fator, 3)
+words = texto_pt.restaurar(words, TROCAS)
 json.dump(words, open(f"{d}/palavras.json", "w"), ensure_ascii=False)
 open(f"{d}/voz.txt", "w").write(f"elevenlabs={VOZ}\nvel={VEL}\npausa={PAUSA}\natempo={fator:.3f}\n")
 open(f"{d}/rate.txt", "w").write(f"elevenlabs vel {VEL} atempo {fator:.3f}")

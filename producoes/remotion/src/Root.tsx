@@ -28,9 +28,24 @@ import {Video as Area51, Thumb as ThumbArea51, ThumbVerdade as ThumbArea51Verdad
 import {Video as FimSolar, Thumb as ThumbFimSolar, ThumbA as ThumbFimSolarA, ThumbB as ThumbFimSolarB, DURACAO as DUR_FIMSOLAR} from './videos/FimSolar';
 import {Video as SemLua, Thumb as ThumbSemLua, ThumbA as ThumbSemLuaA, ThumbB as ThumbSemLuaB, DURACAO as DUR_SEMLUA} from './videos/SemLua';
 
+import {Video as Jupiter, Thumb as ThumbJupiter, DURACAO as DUR_JUPITER} from './videos/Jupiter';
+import {Video as MaiorEstrela, Thumb as ThumbMaiorEstrela, DURACAO as DUR_MAIORESTRELA} from './videos/MaiorEstrela';
+import {Video as Tesla, Thumb as ThumbTesla, DURACAO as DUR_TESLA} from './videos/Tesla';
+import {Video as Memorial, Thumb as ThumbMemorial, DURACAO as DUR_MEMORIAL} from './videos/Memorial';
+import {Video as BnPerto, Thumb as ThumbBnPerto, DURACAO as DUR_BNPERTO} from './videos/BnPerto';
 // Cada vídeo novo vira um arquivo em src/videos/ e uma <Composition> aqui.
 export const Root = () => (
   <>
+    <Composition id="BnPerto" component={BnPerto} durationInFrames={DUR_BNPERTO} fps={30} width={1080} height={1920} />
+    <Still id="ThumbBnPerto" component={ThumbBnPerto} width={1080} height={1920} />
+    <Composition id="Memorial" component={Memorial} durationInFrames={DUR_MEMORIAL} fps={30} width={1080} height={1920} />
+    <Still id="ThumbMemorial" component={ThumbMemorial} width={1080} height={1920} />
+    <Composition id="Tesla" component={Tesla} durationInFrames={DUR_TESLA} fps={30} width={1080} height={1920} />
+    <Still id="ThumbTesla" component={ThumbTesla} width={1080} height={1920} />
+    <Composition id="MaiorEstrela" component={MaiorEstrela} durationInFrames={DUR_MAIORESTRELA} fps={30} width={1080} height={1920} />
+    <Still id="ThumbMaiorEstrela" component={ThumbMaiorEstrela} width={1080} height={1920} />
+    <Composition id="Jupiter" component={Jupiter} durationInFrames={DUR_JUPITER} fps={30} width={1080} height={1920} />
+    <Still id="ThumbJupiter" component={ThumbJupiter} width={1080} height={1920} />
     <Composition id="TodoMundoSumiu" component={TodoMundoSumiu} durationInFrames={DUR_SUMIU} fps={30} width={1080} height={1920} />
     <Composition id="Kikai" component={Kikai} durationInFrames={DUR_KIKAI} fps={30} width={1080} height={1920} />
     <Composition id="Meteoro" component={Meteoro} durationInFrames={DUR_METEORO} fps={30} width={1080} height={1920} />

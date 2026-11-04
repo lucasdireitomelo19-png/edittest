@@ -63,6 +63,11 @@ FIXAS = [
     (r'\bNovikov\b', 'Nóvikof'),
     (r'\bTobar\b', 'Tobár'),
     (r'\bEinstein\b', 'Áinstain'),
+    # lote Linha dos campeões (04/11, voz Brian)
+    (r'\bWOH G64\b', 'dáblio ó agá gê sessenta e quatro'),
+    (r'\bStephenson 2-18\b', 'Stívenson dois dezoito'),
+    (r'\bGaia BH1\b', 'Gaia bê agá um'),
+    (r'\b2024 YR4\b', 'dois mil e vinte e quatro ípsilon érre quatro'),
 ]
 
 def preparar(texto):

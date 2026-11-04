@@ -5,7 +5,10 @@ s = open(sys.argv[1], encoding='utf-8').read()
 corpo = s.split('export const Thumb')[0]   # a thumbnail não entra no vídeo
 arqs = re.findall(r"""['"]([\w./-]+\.(?:jpg|jpeg|png|mp4|webm))['"]""", corpo)
 plano = re.search(r'const PLANO[^=]*=([\s\S]*?)\n\];', corpo)
-if plano: cenas = re.findall(r"\[\s*'[^']+',\s*(\w+)\]", plano.group(1))
+if plano:
+    cenas = re.findall(r"\[\s*'[^']+',\s*(\w+)\]", plano.group(1))
+    # PLANO do kit do lote (04/11): ['frase', Tipo, {props}]. Cada tipo uma vez só; fotos contam pelo arquivo.
+    cenas += [c for c in re.findall(r"\[\s*'[^']+',\s*(?:K\.)?(\w+),", plano.group(1)) if c not in ('Foto', 'Clipe')]
 else:
     m = re.search(r'const CENAS = \[([\s\S]*?)\];', corpo)
     cenas = re.findall(r'\b([A-Z]\w+)\b', m.group(1)) if m else []
