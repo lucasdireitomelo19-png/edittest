@@ -53,6 +53,12 @@ FIXAS = [
     (r'\bAlan Guth\b', 'Álan Gút'),
     (r'\bAlexander Vilenkin\b', 'Alexânder Vilênkin'),
     (r'\bAndrei Linde\b', 'Andrêi Línde'),
+    # longo A do lote Linha dos campeões (04/11)
+    (r'\bPavlík\b', 'Pávlik'),
+    (r'\bShore\b', 'Xór'),
+    # longo B do lote Linha dos campeões (04/11)
+    (r'\bSuper-Kamiokande\b', 'Súper Kamiokânde'),
+    (r'\bIK Pegasi\b', 'Í Cá Pégasi'),
     # lote de paradoxos (31/10)
     (r'\bHafele\b', 'Háfele'),
     (r'\bKeating\b', 'Kíting'),

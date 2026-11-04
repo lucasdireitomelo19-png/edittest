@@ -37,6 +37,8 @@ import {Video as Yr4, Thumb as ThumbYr4, DURACAO as DUR_YR4} from './videos/Yr4'
 import {Video as Magnetar, Thumb as ThumbMagnetar, DURACAO as DUR_MAGNETAR} from './videos/Magnetar';
 import {Video as Errante, Thumb as ThumbErrante, DURACAO as DUR_ERRANTE} from './videos/Errante';
 import {Video as SolTerra, Thumb as ThumbSolTerra, DURACAO as DUR_SOLTERRA} from './videos/SolTerra';
+import {Video as BnAno, Thumb as ThumbBnAno, DURACAO as DUR_BNANO} from './videos/BnAno';
+import {Video as SnPerto, Thumb as ThumbSnPerto, DURACAO as DUR_SNPERTO} from './videos/SnPerto';
 import {Video as BnPerto, Thumb as ThumbBnPerto, DURACAO as DUR_BNPERTO} from './videos/BnPerto';
 // Cada vídeo novo vira um arquivo em src/videos/ e uma <Composition> aqui.
 export const Root = () => (
@@ -51,6 +53,10 @@ export const Root = () => (
     <Still id="ThumbErrante" component={ThumbErrante} width={1080} height={1920} />
     <Composition id="SolTerra" component={SolTerra} durationInFrames={DUR_SOLTERRA} fps={30} width={1080} height={1920} />
     <Still id="ThumbSolTerra" component={ThumbSolTerra} width={1080} height={1920} />
+    <Composition id="BnAno" component={BnAno} durationInFrames={DUR_BNANO} fps={30} width={1920} height={1080} />
+    <Still id="ThumbBnAno" component={ThumbBnAno} width={1920} height={1080} />
+    <Composition id="SnPerto" component={SnPerto} durationInFrames={DUR_SNPERTO} fps={30} width={1920} height={1080} />
+    <Still id="ThumbSnPerto" component={ThumbSnPerto} width={1920} height={1080} />
     <Composition id="BnPerto" component={BnPerto} durationInFrames={DUR_BNPERTO} fps={30} width={1080} height={1920} />
     <Still id="ThumbBnPerto" component={ThumbBnPerto} width={1080} height={1920} />
     <Composition id="Memorial" component={Memorial} durationInFrames={DUR_MEMORIAL} fps={30} width={1080} height={1920} />
