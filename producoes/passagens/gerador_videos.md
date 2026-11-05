@@ -109,6 +109,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 - **Renderize com `--gl=swangle`.** `angle` dá "Error creating WebGL context" neste container. Os 8 s levam ~4 min com `--concurrency=4`. O `render.sh` não passa `--gl`: rode `npx remotion render` direto e normalize o áudio à parte.
 - Carregue as texturas FORA do `ThreeCanvas` (com `delayRender`) e só monte o canvas quando estiverem prontas, senão o quadro sai preto.
 - Texturas da Terra em `public/teste3d/` (mapas Blue Marble dos exemplos do Three.js, via jsDelivr). O `eoimages.gsfc.nasa.gov` cai no proxy.
+- **Versão Blender (lado-95, "Teste"):** `producoes/blender/terra_impacto.py`, Blender 4.2.3 LTS baixado em `/opt/blender` (não vem no container: `curl -L https://download.blender.org/release/Blender4.2/blender-4.2.3-linux-x64.tar.xz`). Uso: `blender -b -P terra_impacto.py -- <texturas> <saída> <pct> <amostras> <ini> <fim>`. Em 50% e 16 amostras, ~16 s por quadro (~1 h para os 240). Monte com ffmpeg (lanczos para 1080x1920 + sfx). Fratura própria: cortes de Voronoi com bisect radial na casca, sem addon. Numa GPU seriam minutos.
 - DepthOfField do postprocessing borrou a Terra inteira, então ficou de fora. Bloom e Vignette funcionam.
 
 ## Lições da conversa de 04/11 (tarde e fim da tarde)
