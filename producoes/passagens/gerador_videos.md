@@ -103,6 +103,14 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 1b. 04/11: **thumb v3 do Big Rip** (lado-76, pedido do dono): universo rasgado e Terra partida, composição `ThumbBigRipRasgo`. Está no Observatório (`thumb_url`; a antiga ficou em `thumb_antiga_url`). Como o vídeo já está postado, a capa precisa ser trocada no YouTube.
 2. Versão antiga (20 s) do Short 2027 continua como asset na Central e no Observatório; apagar só com OK do dono (já perguntado em 31/10, sem resposta).
 
+## 3D no Remotion (teste de 05/11)
+- Pedido do dono via LadoSombrio: Terra atingida e rachando, no estilo de anúncio de jogo de destruir planetas. Entregue como **lado-94, status "Teste"** (composição `Teste3D`, `src/videos/Teste3D.tsx`).
+- Pacotes: `@remotion/three@4.0.538`, `three@0.178.0`, `@react-three/fiber@9.1.2`, `@react-three/postprocessing@3.0.4`, `postprocessing@6.37.6` (já no package.json).
+- **Renderize com `--gl=swangle`.** `angle` dá "Error creating WebGL context" neste container. Os 8 s levam ~4 min com `--concurrency=4`. O `render.sh` não passa `--gl`: rode `npx remotion render` direto e normalize o áudio à parte.
+- Carregue as texturas FORA do `ThreeCanvas` (com `delayRender`) e só monte o canvas quando estiverem prontas, senão o quadro sai preto.
+- Texturas da Terra em `public/teste3d/` (mapas Blue Marble dos exemplos do Three.js, via jsDelivr). O `eoimages.gsfc.nasa.gov` cai no proxy.
+- DepthOfField do postprocessing borrou a Terra inteira, então ficou de fora. Bloom e Vignette funcionam.
+
 ## Lições da conversa de 04/11 (tarde e fim da tarde)
 - **Render final: nunca apague o mp4 de saída antes de o `render.sh` terminar.** Ele renderiza num temporário e só no fim normaliza o áudio para a saída; apagar a saída no meio perde o trabalho todo (perdi um render inteiro do longo A assim). Confira com `ffprobe` antes de dar o arquivo por pronto.
 - Longo com ~70 cenas em 1920x1080 leva uns 25 min de render final neste container. Renderize em segundo plano e vá fazendo outra coisa.
