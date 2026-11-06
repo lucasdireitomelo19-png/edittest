@@ -280,11 +280,12 @@ const S12: React.FC = () => <C3 t="ISSO JÁ ACONTECEU" etq="ANIMAÇÃO 3D">{(f, 
   <Pos /></>}</C3>;
 // 13 · a Terra primitiva, quente
 const quente = capaMat('lava');
+const atmQuente = atmMat('1.0,0.45,0.15', 1.3);
 const S13: React.FC = () => <C3 t="A TERRA PRIMITIVA" sub="HIPÓTESE MAIS ACEITA" etq="ANIMAÇÃO 3D · HIPÓTESE">{(f, tex) => {
   quente.uniforms.uC.value = new THREE.Vector3(0, 0, 1); quente.uniforms.uR.value = 4.0; quente.uniforms.uT.value = f * 0.5; quente.uniforms.uK.value = 1;
   return <><Cam pos={[0, 0, 3.2]} /><Luzes sol={[-2, 1, 3]} i={1.5} /><Estrelas sem="s13" />
     <group rotation={[0.2, f * 0.006, 0]}><mesh><sphereGeometry args={[1, 96, 96]} /><meshStandardMaterial color="#2a1a14" roughness={1} /></mesh><mesh material={quente} scale={1.003}><sphereGeometry args={[1, 160, 160]} /></mesh></group>
-    <mesh material={useMemo(() => atmMat('1.0,0.45,0.15', 1.3), [])} scale={1.1}><sphereGeometry args={[1, 64, 64]} /></mesh>
+    <mesh material={atmQuente} scale={1.1}><sphereGeometry args={[1, 64, 64]} /></mesh>
     <Pos bloom={1.2} /></>;
 }}</C3>;
 // 14 · ~4,5 bilhões de anos: um túnel de estrelas voltando no tempo
