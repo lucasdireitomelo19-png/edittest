@@ -56,12 +56,12 @@ const relevo = (() => { const g = new THREE.PlaneGeometry(10, 10, 100, 100); con
   for (let i = 0; i < p.count; i++) { const x = p.getX(i), y = p.getY(i); const arco = Math.exp(-((Math.hypot(x + 3, y - 3) - 5) ** 2) * 1.5); p.setZ(i, arco * 0.6 + 0.08 * Math.sin(x * 2.3) * Math.cos(y * 1.7)); }
   g.computeVertexNormals(); return g; })();
 const S4: React.FC = () => <AbsoluteFill><C3 t="~1.350 VULCÕES" sub="POTENCIALMENTE ATIVOS (USGS)" etq="ANIMAÇÃO 3D · MAPA ILUSTRATIVO">{(f) => <>
-  <Cam pos={[interpolate(f, [0, 120], [2.5, -1]), 1.0, 3.2]} alvo={[0, 0, -0.5]} /><Luzes sol={[2, 4, 1]} amb={0.25} />
+  <Cam pos={[interpolate(f, [0, 120], [1.2, -1.2]), 1.4, 2.6]} alvo={[0, -0.2, -1.2]} /><Luzes sol={[2, 4, 1]} amb={0.25} />
   <mesh geometry={relevo} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.6, 0]}><meshStandardMaterial color="#4a5a3a" roughness={1} flatShading /></mesh>
   <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.45, 0]}><planeGeometry args={[10, 10]} /><meshStandardMaterial color="#1a3a6a" transparent opacity={0.7} /></mesh>
-  {Array.from({length: 220}, (_, i) => { const a = random('pa' + i) * Math.PI * 0.9 + Math.PI * 1.1; const R = 5 + (random('pr' + i) - 0.5) * 0.7; const x = -3 + Math.cos(a) * R, z = -(3 + Math.sin(a) * R);
-    const s = pr(f, i * 0.4, i * 0.4 + 8); if (Math.abs(x) > 5 || Math.abs(z) > 5) return null;
-    return <mesh key={i} position={[x, -0.3 + 0.12 * s, z]} scale={s}><coneGeometry args={[0.05, 0.22, 8]} /><meshStandardMaterial color={VERMELHO} emissive={LAVA} emissiveIntensity={0.8} /></mesh>; })}
+  {Array.from({length: 160}, (_, i) => { const t = i / 159; const x = -1.6 + 3.2 * t + (random('px' + i) - 0.5) * 0.3, z = -2.6 + 2.2 * Math.sin(t * Math.PI) * 0.9 + (random('pz' + i) - 0.5) * 0.4;
+    const s = pr(f, i * 0.5, i * 0.5 + 8);
+    return <mesh key={i} position={[x, -0.25 + 0.18 * s, z]} scale={s}><coneGeometry args={[0.07, 0.36, 8]} /><meshStandardMaterial color={VERMELHO} emissive={LAVA} emissiveIntensity={1} /></mesh>; })}
   <Pos bloom={0.9} /></>}</C3></AbsoluteFill>;
 // 5 · sem contar os do fundo do mar: fendas brilhando sob a água
 const S5: React.FC = () => <AbsoluteFill><C3 t="SEM CONTAR OS DO FUNDO DO MAR" etq="ANIMAÇÃO 3D">{(f) => <>
@@ -72,15 +72,15 @@ const S5: React.FC = () => <AbsoluteFill><C3 t="SEM CONTAR OS DO FUNDO DO MAR" e
   <Pos bloom={1.2} /></>}</C3></AbsoluteFill>;
 // 6 · basta olhar pra um só: a câmera chega num único vulcão
 const S6: React.FC = () => <AbsoluteFill><C3 t="BASTA OLHAR PRA UM SÓ" etq="ANIMAÇÃO 3D">{(f) => <>
-  <Cam pos={[0, interpolate(f, [0, 75], [1.6, 0.9]), interpolate(f, [0, 75], [6, 3.4])]} alvo={[0, 0.5, 0]} /><Luzes sol={[-3, 4, 2]} amb={0.2} /><Estrelas sem="v6" />
+  <Cam pos={[0, interpolate(f, [0, 75], [1.6, 1.1]), interpolate(f, [0, 75], [9, 6])]} alvo={[0, 0.7, 0]} /><Luzes sol={[-3, 4, 2]} amb={0.3} /><color attach="background" args={['#2a3448']} />
   <Chao cor="#3a3a30" /><Cone s={1.2} />
   <Jato f={f} sem="j6" base={new THREE.Vector3(0, 1.2, 0)} n={50} altura={0.6} cor="#9a9088" tam={0.15} />
   <Pos bloom={0.8} /></>}</C3></AbsoluteFill>;
 // 7 · Pinatubo 1991: coluna de cinza subindo até a estratosfera
 const S7: React.FC = () => <AbsoluteFill><C3 t="PINATUBO · 1991" sub="FILIPINAS" etq="ANIMAÇÃO 3D">{(f) => <>
-  <Cam pos={[0, interpolate(f, [0, 100], [0.8, 3.0]), 5.5]} alvo={[0, interpolate(f, [0, 100], [0.8, 3.2]), 0]} /><Luzes sol={[-3, 4, 2]} amb={0.3} /><color attach="background" args={['#5a7aa0']} />
+  <Cam pos={[0, 2.2, 9.5]} alvo={[0, 2.4, 0]} /><Luzes sol={[-3, 4, 2]} amb={0.3} /><color attach="background" args={['#5a7aa0']} />
   <Chao cor="#3a4a30" /><Cone s={1.1} cor="#4a4238" />
-  {Array.from({length: 140}, (_, i) => { const t = Math.min(1, (f * 0.012 + random('c7' + i) * 0.6)); const h = 1.1 + t * 4.2; const r = 0.15 + t * (0.6 + (h > 4 ? (h - 4) * 1.6 : 0)) * random('cr' + i);
+  {Array.from({length: 140}, (_, i) => { const t = random('c7' + i) * Math.min(1, 0.25 + f * 0.01); const h = 1.1 + t * 4.2; const r = 0.15 + t * (0.6 + (h > 4 ? (h - 4) * 1.6 : 0)) * random('cr' + i);
     const a = random('ca' + i) * Math.PI * 2;
     return <mesh key={i} position={[Math.cos(a) * r, h, Math.sin(a) * r]} scale={0.25 + t * 0.5}><sphereGeometry args={[1, 10, 10]} /><meshStandardMaterial color="#8a8078" roughness={1} transparent opacity={0.85} /></mesh>; })}
   <Pos bloom={0.4} /></>}</C3></AbsoluteFill>;
@@ -125,15 +125,15 @@ const S11: React.FC = () => {
         <mesh position={[0, 0.45, 0]} rotation={[0, Math.PI / 4, 0]}><coneGeometry args={[0.34, 0.25, 4]} /><meshStandardMaterial color={apaga ? '#4a3a30' : '#a0402a'} /></mesh></group>; })}
     <Pos bloom={0.4} /></>}</C3><Grande t={n.toLocaleString('pt-BR')} y={1130} s={150} cor={OURO} /><Grande t="HABITANTES" y={1300} s={56} /></AbsoluteFill>;
 };
-// 12 · Sibéria, 252 milhões de anos: planícies com rios de lava
-const lavaPl = capaMat('lava');
-const S12: React.FC = () => <AbsoluteFill><C3 t="SIBÉRIA · 252 MI DE ANOS" sub="ERUPÇÕES QUE DURARAM MILÊNIOS" etq="ANIMAÇÃO 3D">{(f) => {
-  lavaPl.uniforms.uC.value = new THREE.Vector3(0, 1, 0); lavaPl.uniforms.uR.value = 4; lavaPl.uniforms.uT.value = f; lavaPl.uniforms.uK.value = 1;
-  return <><Cam pos={[0, interpolate(f, [0, 130], [3.5, 2.2]), 4]} alvo={[0, 0, -1]} /><Luzes sol={[-2, 3, 2]} i={0.5} amb={0.1} /><color attach="background" args={['#1a0c08']} />
-    <mesh rotation={[-Math.PI / 2, 0, 0]} scale={6}><sphereGeometry args={[1, 128, 64, 0, Math.PI * 2, 0, 0.5]} /><meshStandardMaterial color="#1a1210" /></mesh>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} scale={6.02} material={lavaPl}><sphereGeometry args={[1, 160, 80, 0, Math.PI * 2, 0, 0.5]} /></mesh>
-    <Pos bloom={1.3} /></>;
-}}</C3></AbsoluteFill>;
+// 12 · Sibéria, 252 milhões de anos: planície escura cortada por rios de lava
+const RIOS = Array.from({length: 9}, (_, r) => Array.from({length: 30}, (_, i) => new THREE.Vector3(-4 + i * 0.28, 0.01, -1 - r * 0.8 + Math.sin(i * 0.4 + r) * 0.35)));
+const S12: React.FC = () => <AbsoluteFill><C3 t="SIBÉRIA · 252 MI DE ANOS" sub="ERUPÇÕES QUE DURARAM MILÊNIOS" etq="ANIMAÇÃO 3D">{(f) => <>
+  <Cam pos={[interpolate(f, [0, 130], [-1, 1]), 2.2, 3.2]} alvo={[0, 0, -2.5]} /><Luzes sol={[-2, 3, 2]} i={0.4} amb={0.12} /><color attach="background" args={['#2a120a']} /><fog attach="fog" args={['#2a120a', 4, 12]} />
+  <Chao cor="#1e1612" />
+  {RIOS.map((rio, r) => rio.slice(0, 29).map((p, i) => { const q = rio[i + 1]; const d = q.clone().sub(p); const fl = 0.7 + 0.3 * Math.sin(f / 5 + i + r);
+    return <mesh key={r + '_' + i} position={p.clone().add(q).multiplyScalar(0.5)} rotation={[-Math.PI / 2, 0, -Math.atan2(d.z, d.x)]}><planeGeometry args={[d.length() + 0.02, 0.09 + 0.05 * Math.sin(i + r)]} /><meshStandardMaterial color={LAVA} emissive={LAVA} emissiveIntensity={2.4 * fl} /></mesh>; }))}
+  {Array.from({length: 6}, (_, i) => <mesh key={'m' + i} position={[-3 + i * 1.2, 0.3, -5 - (i % 2)]}><coneGeometry args={[0.8, 0.6, 6]} /><meshStandardMaterial color="#2a1e18" flatShading /></mesh>)}
+  <Pos bloom={1.3} /></>}</C3></AbsoluteFill>;
 // 13 · ~90% da vida no mar: corais 3D se apagando
 const S13: React.FC = () => <AbsoluteFill><C3 t="~90% DA VIDA NO MAR" etq="ANIMAÇÃO 3D">{(f) => {
   const k = pr(f, 10, 70);
@@ -163,10 +163,10 @@ const S15: React.FC = () => <AbsoluteFill><C3 t="SENTIRIA O FRIO" sub="E A SAFRA
 }}</C3></AbsoluteFill>;
 // 16 · cada vulcão tem a sua câmara de magma: corte de dois vulcões lado a lado
 const S16: React.FC = () => <AbsoluteFill><C3 t="TODOS AO MESMO TEMPO? IMPOSSÍVEL" etq="ANIMAÇÃO 3D · CORTE">{(f) => <>
-  <Cam pos={[0, 0.2, 4.6]} alvo={[0, -0.4, 0]} /><Luzes sol={[2, 3, 4]} amb={0.4} />
-  <mesh position={[0, -1.5, -0.3]}><boxGeometry args={[6, 2.6, 0.4]} /><meshStandardMaterial color="#5a4a3a" roughness={1} /></mesh>
-  {[-1.2, 1.2].map((x, i) => <group key={i}>
-    <mesh position={[x, 0.3, 0]}><coneGeometry args={[0.9, 0.9, 4]} /><meshStandardMaterial color="#4a3a30" flatShading /></mesh>
+  <Cam pos={[0, -0.3, 6.2]} alvo={[0, -0.6, 0]} /><Luzes sol={[2, 3, 4]} i={2.4} amb={0.6} /><color attach="background" args={['#4a6a90']} />
+  <mesh position={[0, -1.5, -0.3]}><boxGeometry args={[3.6, 2.6, 0.4]} /><meshStandardMaterial color="#7a6048" roughness={1} /></mesh>
+  {[-0.9, 0.9].map((x, i) => <group key={i}>
+    <mesh position={[x, 0.3, 0]}><coneGeometry args={[0.75, 0.9, 4]} /><meshStandardMaterial color="#5a4636" flatShading /></mesh>
     <mesh position={[x, -1.6, 0]} scale={[0.55, 0.32, 0.3]}><sphereGeometry args={[1, 32, 32]} /><meshStandardMaterial color={LAVA} emissive={LAVA} emissiveIntensity={1.2 + 0.3 * Math.sin(f / 5 + i)} /></mesh>
     <mesh position={[x, -0.6, 0]}><cylinderGeometry args={[0.05, 0.08, 1.6, 12]} /><meshStandardMaterial color={LAVA} emissive={LAVA} emissiveIntensity={1} /></mesh>
   </group>)}
