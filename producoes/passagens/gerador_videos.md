@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-96 (só no Observatório; lado-94 e 95 são os testes 3D).
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-99 (só no Observatório; lado-94 e 95 são os testes 3D).
   - **Armazenamento CHEIO (1 GB) desde 31/10.** O lado-79 ficou sem vídeo na Central. Liberar espaço só com OK do dono. Por enquanto, suba o vídeo direto no Observatório. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Avisos de status:** desde 31/10 vão para o Observatório (coleção `eventos`), não mais para o Painel (ver `CLAUDE.md`).
@@ -103,6 +103,11 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 1. **Entregues em 31/10 (noite):** os 2 Shorts POV de paradoxo, com a voz Antonio. São o lado-80 "Você viajou 1 ano. A Terra envelheceu 70." (composição `Gemeos`, doc 49) e o lado-81 "Você impediu o próprio nascimento" (composição `Avo`, doc 50). Estão só no Observatório, porque a Central está cheia. Datas de publicação a definir. O longo dos gêmeos continua **EM ESPERA**.
 1b. 04/11: **thumb v3 do Big Rip** (lado-76, pedido do dono): universo rasgado e Terra partida, composição `ThumbBigRipRasgo`. Está no Observatório (`thumb_url`; a antiga ficou em `thumb_antiga_url`). Como o vídeo já está postado, a capa precisa ser trocada no YouTube.
 2. Versão antiga (20 s) do Short 2027 continua como asset na Central e no Observatório; apagar só com OK do dono (já perguntado em 31/10, sem resposta).
+
+## Entregues em 06/11 (noite)
+- lado-97 PI = 3 (`PiTres`), lado-98 TODOS OS VULCÕES (`Vulcoes`) e lado-99 ATAQUE ALIENÍGENA (`Alien`), todos em Remotion 3D com o kit `src/lote/kit3d.tsx`. Doc 55. Roteirista e LadoSombrio avisados. Datas de publicação a definir.
+- **Thumbs de vídeo 3D:** renderize um quadro do vídeo (`npx remotion still <Comp> --frame=N --gl=swangle`) e escreva o texto com PIL (Montserrat ExtraBold, degradê escuro embaixo para cobrir a legenda). O `Freeze` não funciona dentro do `ThreeCanvas`.
+- O longo dos gêmeos continua parado até o dono liberar.
 
 ## Decisões do dono em 06/11
 - "Esquece" para três perguntas: escolher entre os testes 3D lado-94 (Remotion) e 95 (Blender), refazer as thumbs de 82 a 86 e ajustar o Blender para GPU. **Não pergunte de novo.** Os testes ficam no Observatório como "Teste".
