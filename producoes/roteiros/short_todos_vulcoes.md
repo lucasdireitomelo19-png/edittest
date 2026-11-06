@@ -13,7 +13,7 @@
 ---
 
 ## O DIA em que TODOS os VULCÕES do mundo ACORDAM (e o Brasil?)
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (06/11/2026), enviado ao Gerador de Vídeos
 **Potencial viral:** 🔥🔥 7/10 · Ponto mais forte: um "e se" fácil de entender, com número grande (1.350), uma régua real (um só vulcão já esfriou o planeta) e duas viradas (é impossível, mas o risco de 1 em 6 é real, e nós soltamos mais CO₂ que todos os vulcões juntos). Ponto mais fraco: geologia perdeu no canal, e a Pesquisas deu ⭐⭐ ao Short.
 **Ângulo:** escala → régua real (Pinatubo, Laki, Sibéria) → Brasil → virada honesta.
 **Tom de voz:** urgente, sombrio, sóbrio no trecho do Laki.

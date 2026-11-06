@@ -13,7 +13,7 @@
 ---
 
 ## ATAQUE ALIENÍGENA: a Terra teria só 55 SEGUNDOS
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (06/11/2026), enviado ao Gerador de Vídeos
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: começa com um fato brasileiro, recente e viral (o alerta falso de "ataque alienígena" no celular de milhões de pessoas), segue com uma conta assustadora e real (1 tonelada = 66 Tsar Bombas; 55 segundos de aviso) e fecha com uma virada honesta. Ponto mais fraco: o "e se" pode parecer sensacionalista, então o "nada prova que existam" precisa aparecer com clareza no fim.
 **Ângulo:** um caso real → "e se fosse verdade" → a arma mais simples, que é a física → o tempo de aviso → a virada (a ameaça real são as rochas, e a gente já sabe se defender).
 **Tom de voz:** urgente, seco, depois aliviado.

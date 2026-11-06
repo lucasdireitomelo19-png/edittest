@@ -11,7 +11,7 @@
 ---
 
 ## PI = 3 e o GPS ERRA QUILÔMETROS
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (06/11/2026), enviado ao Gerador de Vídeos
 **Potencial viral:** 🔥🔥 7/10 · Ponto mais forte: uma imagem impossível logo de cara (o círculo virando hexágono) e uma virada surpreendente e verdadeira (na superfície da Terra, um círculo gigante tem "pi = 3"). Ponto mais fraco: o tema é matemático, que o canal mostrou que perde. Por isso o vídeo é curto, visual e sem aula. A Pesquisas deu ⭐⭐ a ⭐⭐½.
 **Ângulo:** ameaça visual → o que quebraria → humanos que já erraram pi → virada da esfera.
 **Tom de voz:** rápido, intrigado, com humor seco.
