@@ -176,13 +176,13 @@ const blocos = (W: Palavra[], cortes: number[], fala: number) => {
   out.forEach((b, k) => { b.ini = fr(W[b.ws[0]].t); b.fim = k < out.length - 1 ? fr(W[out[k + 1].ws[0]].t) : fala; });
   return out;
 };
-const Legenda: React.FC<{W: Palavra[]; B: ReturnType<typeof blocos>}> = ({W, B}) => {
+const Legenda: React.FC<{W: Palavra[]; B: ReturnType<typeof blocos>; tam?: number}> = ({W, B, tam = 76}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
   const b = B.find((x) => f >= x.ini && f < x.fim);
   if (!b) return null;
   return (
-    <div style={{position: 'absolute', top: 1540, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: 76, lineHeight: 1.1,
+    <div style={{position: 'absolute', top: 1540, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: tam, lineHeight: 1.1,
       textTransform: 'uppercase', padding: '0 60px', boxSizing: 'border-box'}}>
       {b.ws.map((i) => {
         const ini = fr(W[i].t);
@@ -231,8 +231,8 @@ export const montar = (W: Palavra[], frases: string[]) => {
 // Short completo: cenas + legenda + grão + sons de corte. `sons` são extras {em (frame), src, volume}.
 export const Short: React.FC<{
   W: Palavra[]; tempo: ReturnType<typeof montar>; cenas: React.FC[]; audio?: string; calma: number;
-  sons?: {em: number; src: string; volume: number}[]; fundoFinal?: string;
-}> = ({W, tempo, cenas, audio, calma, sons = [], fundoFinal}) => {
+  sons?: {em: number; src: string; volume: number}[]; fundoFinal?: string; legenda?: number;
+}> = ({W, tempo, cenas, audio, calma, sons = [], fundoFinal, legenda}) => {
   const {T, FALA, FIM, cortes} = tempo;
   const B = React.useMemo(() => blocos(W, cortes, FALA), [W, cortes, FALA]);
   return (
@@ -246,7 +246,7 @@ export const Short: React.FC<{
       <Sequence from={FALA} durationInFrames={FIM - FALA}><Entrada><Final fundo={fundoFinal} /></Entrada></Sequence>
       <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 50%, transparent 55%, rgba(0,0,0,.6))', pointerEvents: 'none'}} />
       <Grao />
-      <Legenda W={W} B={B} />
+      <Legenda W={W} B={B} tam={legenda} />
       <Flash em={T[calma]} />
       {audio && <Audio src={staticFile(audio)} />}
       {T.slice(1).map((t, i) => (i + 1 === calma ? null : (

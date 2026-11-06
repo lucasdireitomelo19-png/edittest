@@ -82,7 +82,8 @@ export const Luzes: React.FC<{sol?: [number, number, number]; i?: number; amb?: 
 );
 
 // cena 3D genérica: carrega as texturas, monta o canvas e põe o texto por cima
-export const C3: React.FC<{children: (f: number, tex: Tex) => React.ReactNode; t?: string; sub?: string; etq: string; fov?: number; ty?: number; cor?: string}> = ({children, t, sub, etq, fov = 40, ty, cor}) => {
+// Regra do dono (07/11): sem títulos nem textos soltos na tela; o visual conta a história. Deixe t, sub e etq vazios nos vídeos novos.
+export const C3: React.FC<{children: (f: number, tex: Tex) => React.ReactNode; t?: string; sub?: string; etq?: string; fov?: number; ty?: number; cor?: string}> = ({children, t, sub, etq, fov = 40, ty, cor}) => {
   const tex = useTex();
   const f = useCurrentFrame();
   const {width, height} = useVideoConfig();
@@ -93,7 +94,7 @@ export const C3: React.FC<{children: (f: number, tex: Tex) => React.ReactNode; t
         {children(f, tex)}
       </ThreeCanvas>}
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,.45), transparent 22%, transparent 70%, rgba(0,0,0,.55))'}} />
-      <Etiqueta texto={etq} />
+      {etq && <Etiqueta texto={etq} />}
       {t && <Titulo texto={t} y={ty ?? 290} size={104} cor={cor} />}
       {sub && <Texto y={(ty ?? 290) + 240} size={52} cor={OURO} delay={6}>{sub}</Texto>}
     </AbsoluteFill>

@@ -722,14 +722,15 @@ export const Mar: React.FC<{t?: string; etq?: string; forte?: number}> = ({t, et
 };
 
 // ---------- montagem do vídeo a partir do PLANO ----------
-export const criarShort = (W: Palavra[], plano: Plano, audio: string, calmaFrase: string, extra?: React.FC) => {
+// opts.legenda: tamanho da legenda (padrão 76; a partir de 07/11 o dono pediu legenda menor, use 56)
+export const criarShort = (W: Palavra[], plano: Plano, audio: string, calmaFrase: string, extra?: React.FC, opts: {legenda?: number} = {}) => {
   const tempo = montar(W, plano.map((p) => p[0]));
   const cenas = plano.map(([, C, props]) => { const X: React.FC = () => <C {...(props ?? {})} />; return X; });
   const calma = plano.findIndex((p) => p[0] === calmaFrase);
   if (calma < 0) throw new Error('frase calma não está no plano');
   const Video: React.FC = () => (
     <AbsoluteFill>
-      <Short W={W} tempo={tempo} cenas={cenas} audio={audio} calma={calma} sons={[{em: 0, src: 'sfx/boom.wav', volume: 0.3}]} />
+      <Short W={W} tempo={tempo} cenas={cenas} audio={audio} calma={calma} sons={[{em: 0, src: 'sfx/boom.wav', volume: 0.3}]} legenda={opts.legenda} />
       {extra && React.createElement(extra)}
     </AbsoluteFill>
   );
