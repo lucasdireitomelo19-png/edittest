@@ -56,6 +56,8 @@ FIXAS = [
     # longo A do lote Linha dos campeões (04/11)
     (r'\bPavlík\b', 'Pávlik'),
     (r'\bShore\b', 'Xór'),
+    # Short da Lua batendo na Terra (06/11)
+    (r'\bTheia\b', 'Téia'),
     # longo B do lote Linha dos campeões (04/11)
     (r'\bSuper-Kamiokande\b', 'Súper Kamiokânde'),
     (r'\bIK Pegasi\b', 'Í Cá Pégasi'),
