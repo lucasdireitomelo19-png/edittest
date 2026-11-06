@@ -3,7 +3,7 @@
 // Cuidados: sem anel em volta da Terra (não repetir o v26), nada gráfico, sem altura de ondas; Theia e as massas no manto como HIPÓTESE.
 // Texturas: Terra e Lua dos mapas dos exemplos do Three.js (derivados da NASA Blue Marble e do LRO). Renderizar com --gl=swangle.
 import React, {useEffect, useMemo, useState} from 'react';
-import {AbsoluteFill, interpolate, random, staticFile, useCurrentFrame, useVideoConfig, delayRender, continueRender, Easing} from 'remotion';
+import {AbsoluteFill, Freeze, interpolate, random, staticFile, useCurrentFrame, useVideoConfig, delayRender, continueRender, Easing} from 'remotion';
 import {ThreeCanvas} from '@remotion/three';
 import {useThree} from '@react-three/fiber';
 import {EffectComposer, Bloom, Vignette} from '@react-three/postprocessing';
@@ -386,7 +386,7 @@ export const DURACAO = S.DURACAO;
 // thumb: a Lua gigante descendo sobre a Terra, com o contador vermelho
 export const Thumb: React.FC = () => (
   <AbsoluteFill>
-    <S1 />
+    <Freeze frame={50}><S1 /></Freeze>
     <style>{`@font-face{font-family:'${FONTE}';src:url('${staticFile('fontes/Montserrat-ExtraBold.ttf')}');}`}</style>
     <div style={{position: 'absolute', left: 0, right: 0, top: 1150, display: 'flex', justifyContent: 'center'}}><div style={{padding: '8px 34px', background: VERMELHO, border: '6px solid #000', borderRadius: 16, fontFamily: FONTE, fontSize: 150, color: '#fff', transform: 'rotate(-3deg)'}}>10 MILHÕES</div></div>
     <div style={{position: 'absolute', top: 1390, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: 140, lineHeight: 0.95, color: OURO, WebkitTextStroke: '10px #000', paintOrder: 'stroke fill'}}>DE<br />CHICXULUBS</div>

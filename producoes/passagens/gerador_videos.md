@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-93 (só no Observatório).
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-96 (só no Observatório; lado-94 e 95 são os testes 3D).
   - **Armazenamento CHEIO (1 GB) desde 31/10.** O lado-79 ficou sem vídeo na Central. Liberar espaço só com OK do dono. Por enquanto, suba o vídeo direto no Observatório. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Avisos de status:** desde 31/10 vão para o Observatório (coleção `eventos`), não mais para o Painel (ver `CLAUDE.md`).
@@ -102,6 +102,9 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 1. **Entregues em 31/10 (noite):** os 2 Shorts POV de paradoxo, com a voz Antonio. São o lado-80 "Você viajou 1 ano. A Terra envelheceu 70." (composição `Gemeos`, doc 49) e o lado-81 "Você impediu o próprio nascimento" (composição `Avo`, doc 50). Estão só no Observatório, porque a Central está cheia. Datas de publicação a definir. O longo dos gêmeos continua **EM ESPERA**.
 1b. 04/11: **thumb v3 do Big Rip** (lado-76, pedido do dono): universo rasgado e Terra partida, composição `ThumbBigRipRasgo`. Está no Observatório (`thumb_url`; a antiga ficou em `thumb_antiga_url`). Como o vídeo já está postado, a capa precisa ser trocada no YouTube.
 2. Versão antiga (20 s) do Short 2027 continua como asset na Central e no Observatório; apagar só com OK do dono (já perguntado em 31/10, sem resposta).
+
+## Entregue em 06/11
+- **lado-96 · Short "E se a LUA BATESSE na Terra?"**, todo em Remotion 3D (pedido do dono), composição `LuaBate`, doc 54. Roteirista e LadoSombrio avisados. Molde para próximos vídeos 3D: o componente `C3` de `LuaBate.tsx` (carrega as texturas, monta o canvas e põe o texto por cima) mais as peças `Terra`, `Lua`, `Pedras`, `Nuvem` e `capaMat` (disco, racha e lava). Não use hooks dentro da função de cena do `C3` (React #310).
 
 ## 3D no Remotion (teste de 05/11)
 - Pedido do dono via LadoSombrio: Terra atingida e rachando, no estilo de anúncio de jogo de destruir planetas. Entregue como **lado-94, status "Teste"** (composição `Teste3D`, `src/videos/Teste3D.tsx`).
