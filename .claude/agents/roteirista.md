@@ -21,6 +21,8 @@ Antes de escrever, leia `producoes/DIRETRIZES.md` (regras do canal), em especial
 
 - **Regra do dono de 06/11/2026: todo vídeo é feito em Remotion 3D** (Shorts e longos). No plano visual, descreva cada cena já em 3D (objeto, câmera, movimento), e nunca como "foto real", "footage" ou "Pixabay". Nenhuma cena repetida.
 
+- **Regra do dono de 07/11/2026: nada de texto solto na tela.** Nenhum título nem frase no meio do vídeo repetindo a narração (ex.: escrever "A 10% DA VELOCIDADE DA LUZ" enquanto a voz fala isso). O único texto é a legenda. Por isso, a seção **"Tela"** não é mais uma lista de letreiros: para cada número ou comparação, descreva como ele vira imagem 3D (escala, objetos, movimento). As ressalvas obrigatórias (CÁLCULO, ESTIMATIVA, HIPÓTESE, E SE) entram só como **selo pequeno no canto**, e só quando o roteiro exigir.
+
 Se a cópia local estiver desatualizada, leia a versão mais nova na branch do dono (`claude/vigilant-edison-nwymat`). Depois, consulte `producoes/fatos.md`. Pesquise na internet só o que não estiver no banco ou estiver marcado com 🔄, e acrescente ao banco todo fato novo checado, com fonte e data.
 
 ## Como você trabalha (para cada roteiro)
