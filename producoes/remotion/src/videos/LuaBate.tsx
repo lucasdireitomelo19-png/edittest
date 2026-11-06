@@ -324,14 +324,14 @@ const S17: React.FC = () => <C3 t="E A LUA NASCEU DESSE CHOQUE" etq="ANIMAÇÃO 
     <Pos /></>;
 }}</C3>;
 // 18 · corte da Terra com duas massas no fundo do manto
-const S18: React.FC = () => <C3 t="PEDAÇOS DE THEIA NO FUNDO?" sub="HIPÓTESE" etq="ANIMAÇÃO 3D · BASEADO NO USGS">{(f, tex) => <>
-  <Cam pos={[2.4, 0.9, 2.6]} /><Luzes sol={[3, 2, 3]} i={2.2} amb={0.3} /><Estrelas sem="s18" />
+const S18: React.FC = () => <C3 t="PEDAÇOS DE THEIA?" sub="NO FUNDO DO MANTO · HIPÓTESE" etq="ANIMAÇÃO 3D · BASEADO NO USGS">{(f, tex) => <>
+  <Cam pos={[3.3, 1.2, 3.5]} /><Luzes sol={[3, 2, 3]} i={2.2} amb={0.3} /><Estrelas sem="s18" />
   <group rotation={[0, 3.1 + f * 0.003, 0]}>
     <mesh><sphereGeometry args={[1, 96, 96, 0, Math.PI * 1.5]} /><meshStandardMaterial map={tex.dia} side={THREE.DoubleSide} roughness={0.9} /></mesh>
-    <mesh><sphereGeometry args={[0.9, 64, 64, 0, Math.PI * 1.5]} /><meshStandardMaterial color="#c85a20" side={THREE.DoubleSide} emissive="#802000" emissiveIntensity={0.4} /></mesh>
-    <mesh><sphereGeometry args={[0.55, 64, 64]} /><meshStandardMaterial color="#ffb040" emissive="#ff8a20" emissiveIntensity={0.9} /></mesh>
-    <mesh><sphereGeometry args={[0.2, 32, 32]} /><meshStandardMaterial color="#fff0b0" emissive="#ffe080" emissiveIntensity={1.2} /></mesh>
-    {[[0.45, 0.25, 0.42], [0.3, -0.3, 0.52]].map((p, i) => <mesh key={i} position={p as [number, number, number]} scale={[0.22, 0.12, 0.18]}><sphereGeometry args={[1, 32, 32]} /><meshStandardMaterial color={ROSA} emissive="#a01050" emissiveIntensity={0.8 + 0.3 * Math.sin(f / 6)} /></mesh>)}
+    <mesh><sphereGeometry args={[0.9, 64, 64, 0, Math.PI * 1.5]} /><meshStandardMaterial color="#a84a1c" side={THREE.DoubleSide} emissive="#501400" emissiveIntensity={0.3} /></mesh>
+    <mesh><sphereGeometry args={[0.55, 64, 64]} /><meshStandardMaterial color="#d89030" emissive="#a05010" emissiveIntensity={0.25} /></mesh>
+    <mesh><sphereGeometry args={[0.2, 32, 32]} /><meshStandardMaterial color="#fff0b0" emissive="#ffd060" emissiveIntensity={0.5} /></mesh>
+    {[[-0.46, 0.18, -0.46], [-0.5, -0.22, -0.36]].map((p, i) => <mesh key={i} position={p as [number, number, number]} scale={[0.18, 0.1, 0.16]}><sphereGeometry args={[1, 32, 32]} /><meshStandardMaterial color={ROSA} emissive="#a01050" emissiveIntensity={0.8 + 0.3 * Math.sin(f / 6)} /></mesh>)}
   </group>
   <Pos bloom={0.9} /></>}</C3>;
 // 20 · ela se afasta 3,8 cm por ano: régua vertical entre a Terra e a Lua
