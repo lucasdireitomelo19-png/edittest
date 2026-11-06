@@ -26,13 +26,13 @@ Escolhido: o **1**, com o número no 1º segundo (contador "×10.000.000"). O 2 
 **Thumb:** "10 MILHÕES DE CHICXULUBS" (a Lua gigante descendo sobre a Terra, com o contador vermelho). Alternativa: "A LUA CAI?".
 
 > Se a Lua caísse na Terra, a energia seria dez milhões de vezes a do asteroide que acabou com os dinossauros.
-> A Lua é enorme. Ela caberia dentro do Brasil, de norte a sul, mas por pouco.
+> A Lua caberia dentro do Brasil. Mas por pouco.
 > Ela só não cai porque corre em volta da Terra a mais de um quilômetro por segundo. Pra cair, teria que parar.
 > Se parasse, levaria quase cinco dias pra chegar.
 > E nem chegaria inteira: perto daqui, a gravidade da Terra rasgaria a Lua em pedaços.
 > E o impacto teria energia pra derreter a crosta e ferver os oceanos.
 > Só que isso já aconteceu. Pela hipótese mais aceita, há uns quatro bilhões e meio de anos, um planeta do tamanho de Marte, chamado Theia, bateu na Terra. E a Lua nasceu desse choque.
-> E pedaços de Theia podem estar até hoje lá no fundo da Terra.
+> E pedaços de Theia podem estar até hoje no fundo da Terra.
 > A Lua não vai cair. Ela se afasta três vírgula oito centímetros por ano. E você está em cima do que sobrou daquela batida.
 
 **Tela:**
