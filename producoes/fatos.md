@@ -393,3 +393,16 @@ Regra: nada aqui prova que alienígenas existam. É "e se" ancorado em física e
 ## Notícias checadas na pesquisa do YouTube gringo (06/11/2026) 🔄
 - **2026 ED138, candidato a planeta anão:** achado pelo Observatório Vera C. Rubin; anunciado por astrofísicos de Harvard/Smithsonian (Matthew Holman) em 27–28/10/2026; provavelmente **600 a 1.500 km** de diâmetro (incerto: pode ser pequeno e claro ou grande e escuro); a ~**4,3 bilhões de milhas** (~6,9 bi km) do Sol, além de Plutão, no Cinturão de Kuiper; "ainda é um candidato" (Holman). Fontes: CNN 28/10/2026, WGBH 27/10/2026, Sky at Night. NOVA (PBS) publicou vídeo em 27/10 com 2,8 mi de views em 10 dias.
 - **Sinal NBS 260108 (FAST, China):** sinal de rádio de banda estreita apontado para o sistema **K2-155** (~238 a.l., anã vermelha com 3 planetas maiores que a Terra, um perto da zona habitável); captado em 2021 e reexaminado com aprendizado de máquina; o artigo (*The Astronomical Journal*) o chama de "candidato a tecnoassinatura de baixa prioridade" e diz que origem humana ou instrumental é "mais plausível que extraterrestre". Data exata de publicação não confirmada. Manchetes "aliens enviaram sinal" exageram.
+
+## E se um buraco negro aparecesse na sua sala de aula (pesquisa de 06/11/2026)
+Inspiração: o Short gringo "What would happen if a BLACK HOLE appeared in your classroom" (~349 mi de views, o maior do nicho na pesquisa do YouTube de 06/11/2026). Não copiar: o ângulo é a escada de massas abaixo.
+- **Fórmulas (física padrão; contas nossas em código):** raio do horizonte r = 2GM/c². Tempo de evaporação por radiação Hawking (modelo clássico, só emissão de corpo negro): t = 5120πG²M³/(ħc⁴) ≈ **8,4×10⁻¹⁷ s × (M em kg)³**. Ao evaporar, toda a massa vira energia (E = mc²). Ressalva: contando a produção de outras partículas, a vida real fica **2 a 3 ordens de grandeza menor** (arXiv 2112.02818); tratar os tempos como **estimativa**. A radiação Hawking (Hawking, 1974) **nunca foi observada** diretamente.
+- **Escada de massas (contas nossas):**
+  - Massa de um **lápis (10 g)**: horizonte de ~10⁻²⁹ m; evapora em ~10⁻²² s, soltando ~**0,2 megaton** (~14 bombas de Hiroshima, 15 kt cada).
+  - Massa de uma **pessoa (70 kg)**: evapora em ~3×10⁻¹¹ s, soltando ~**1.500 megatons** (~30 Tsar Bombas). A sala, a escola e a cidade em volta seriam destruídas pela explosão, não pela gravidade.
+  - Massa de um **carro (1 t)**: dura ~10⁻⁷ s; ~21.500 megatons.
+  - Um buraco negro que sobreviveria por toda a idade do universo (13,8 bi anos) precisa de pelo menos ~**1,7×10¹¹ kg** (uma montanha pequena; modelo clássico).
+  - Massa do **Everest (~1,6×10¹⁴ kg, estimativa)**: horizonte de ~2×10⁻¹³ m (menor que um átomo); vida muito maior que a idade do universo. Gravidade a 1 m dele: ~**10.700 m/s²** (~1.100 g); a 10 m, ~11 g. Atravessaria o chão e cairia para dentro da Terra (comportamento a partir daí: hipótese, sem modelo).
+  - Massa da **Lua**: horizonte de ~0,1 mm. Massa da **Terra**: ~1,8 cm (já no banco).
+  - Para o horizonte ter o tamanho de uma **sala (raio de 5 m)**: ~3,4×10²⁷ kg, **~560 Terras** (quase 2 Júpiteres).
+- **Contexto real:** buracos negros "primordiais" desse tamanho pequeno são **hipótese** (nunca detectados). O LHC não cria buracos negros perigosos (relatório de segurança do CERN, 2008; já no banco: LHC).
