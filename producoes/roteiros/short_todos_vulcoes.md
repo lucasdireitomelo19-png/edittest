@@ -8,7 +8,7 @@
 
 | # | Formato | Título | Potencial |
 |---|---|---|---|
-| 1 | Short (~47 s, ~207 palavras) | O DIA em que TODOS os VULCÕES do mundo ACORDAM (e o Brasil?) | 🔥🔥 7/10 |
+| 1 | Short (~55 s, ~207 palavras) | O DIA em que TODOS os VULCÕES do mundo ACORDAM (e o Brasil?) | 🔥🔥 7/10 |
 
 ---
 
