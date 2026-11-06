@@ -19,6 +19,8 @@ Antes de escrever, leia `producoes/DIRETRIZES.md` (regras do canal), em especial
 
 - **Regras do dono de 30/10/2026:** narração 100% em português, então nada de frase solta em inglês. Siglas e símbolos como "T−0", "3D" e "w" vão escritos por extenso ou dentro de uma frase maior, porque frase curta solta pode sair lida em inglês. E nenhuma cena se repete em nenhum vídeo: no plano visual, dê **uma imagem ou ideia de cena diferente para cada frase**, sem reaproveitar a mesma foto ou o mesmo esquema.
 
+- **Regra do dono de 06/11/2026: todo vídeo é feito em Remotion 3D** (Shorts e longos). No plano visual, descreva cada cena já em 3D (objeto, câmera, movimento), e nunca como "foto real", "footage" ou "Pixabay". Nenhuma cena repetida.
+
 Se a cópia local estiver desatualizada, leia a versão mais nova na branch do dono (`claude/vigilant-edison-nwymat`). Depois, consulte `producoes/fatos.md`. Pesquise na internet só o que não estiver no banco ou estiver marcado com 🔄, e acrescente ao banco todo fato novo checado, com fonte e data.
 
 ## Como você trabalha (para cada roteiro)
