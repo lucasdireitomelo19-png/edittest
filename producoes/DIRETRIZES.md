@@ -25,6 +25,7 @@ Base: YouTube de 16 a 25/10 (82 mil views, +280 inscritos). Revisar a cada ~2 se
 - **Factualidade:** pesquisar antes de escrever e nunca inventar data, nome, fala ou evidência. Especulação aparece como hipótese, teoria ou alegação. Conflito entre fontes é sinalizado.
 
 ## Vídeo
+- **TODO VÍDEO É FEITO EM REMOTION 3D (regra do dono, 06/11/2026: "todos os videos devem ser feitos em remotion 3d").** Vale para Shorts e longos. Toda cena é uma cena 3D (Three.js via `@remotion/three`), inclusive as que antes seriam footage real, foto, Pixabay, mapa ou esquema 2D: elas viram cenas 3D equivalentes. Esta regra está acima da ordem "footage real primeiro" logo abaixo, que fica só como referência de conteúdo (o que mostrar, não como). Molde: `src/videos/LuaBate.tsx` (componente `C3`, com as peças `Terra`, `Lua`, `Pedras`, `Nuvem` e `capaMat`). Render com `--gl=swangle`. No plano visual, o Roteirista descreve cada cena já pensando em 3D. A regra de nenhuma cena repetida continua valendo.
 - **Footage real primeiro.** Ordem de preferência:
   1. Real literal
   2. Real contextual
