@@ -405,4 +405,4 @@ Inspiração: o Short gringo "What would happen if a BLACK HOLE appeared in your
   - Massa do **Everest (~1,6×10¹⁴ kg, estimativa)**: horizonte de ~2×10⁻¹³ m (menor que um átomo); vida muito maior que a idade do universo. Gravidade a 1 m dele: ~**10.700 m/s²** (~1.100 g); a 10 m, ~11 g. Atravessaria o chão e cairia para dentro da Terra (comportamento a partir daí: hipótese, sem modelo).
   - Massa da **Lua**: horizonte de ~0,1 mm. Massa da **Terra**: ~1,8 cm (já no banco).
   - Para o horizonte ter o tamanho de uma **sala (raio de 5 m)**: ~3,4×10²⁷ kg, **~560 Terras** (quase 2 Júpiteres).
-- **Contexto real:** buracos negros "primordiais" desse tamanho pequeno são **hipótese** (nunca detectados). O LHC não cria buracos negros perigosos (relatório de segurança do CERN, 2008; já no banco: LHC).
+- **Contexto real:** buracos negros "primordiais" desse tamanho pequeno são **hipótese** (nunca detectados). O LHC não cria buracos negros perigosos (relatório de segurança do LHC, LSAG, 2008; conferir antes de citar).
