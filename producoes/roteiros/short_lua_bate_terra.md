@@ -11,7 +11,7 @@
 ---
 
 ## E se a LUA BATESSE na Terra? Isso JÁ aconteceu (e a Lua nasceu dali)
-**Formato:** Short (~56 s, ~158 palavras)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (~56 s, ~158 palavras)   **Status:** APROVADO pelo dono (06/11, v1). Pedido do dono: **fazer tudo em Remotion 3D**.
 **Potencial viral:** 🔥🔥🔥 9/10 · Ponto mais forte: um "e se" com a Lua (formato campeão do canal), um número absurdo e real (10 milhões de Chicxulubs) e uma virada que surpreende de verdade ("isso já aconteceu"). Ponto mais fraco: o tema da Lua já tem o v26, e por isso o ângulo aqui é outro (impacto e Theia).
 **Ângulo:** número de choque → por que não cai → o que aconteceria → virada histórica → fechamento tranquilizador.
 **Tom de voz:** épico, sombrio, com assombro.
