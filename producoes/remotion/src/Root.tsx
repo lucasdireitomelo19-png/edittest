@@ -44,6 +44,7 @@ import {Video as LuaBate, Thumb as ThumbLuaBate, DURACAO as DUR_LUABATE} from '.
 import {Video as PiTres, Thumb as ThumbPiTres, DURACAO as DUR_PITRES} from './videos/PiTres';
 import {Video as Vulcoes, Thumb as ThumbVulcoes, DURACAO as DUR_VULCOES} from './videos/Vulcoes';
 import {Video as Alien, Thumb as ThumbAlien, DURACAO as DUR_ALIEN} from './videos/Alien';
+import {Video as BnSala, ThumbCena as ThumbBnSala, DURACAO as DUR_BNSALA} from './videos/BnSala';
 import {Teste3D, DURACAO_3D} from './videos/Teste3D';
 import {Video as BnPerto, Thumb as ThumbBnPerto, DURACAO as DUR_BNPERTO} from './videos/BnPerto';
 // Cada vídeo novo vira um arquivo em src/videos/ e uma <Composition> aqui.
@@ -78,6 +79,8 @@ export const Root = () => (
     <Still id="ThumbVulcoes" component={ThumbVulcoes} width={1080} height={1920} />
     <Composition id="Alien" component={Alien} durationInFrames={DUR_ALIEN} fps={30} width={1080} height={1920} />
     <Still id="ThumbAlien" component={ThumbAlien} width={1080} height={1920} />
+    <Still id="ThumbBnSala" component={ThumbBnSala} width={1080} height={1920} />
+    <Composition id="BnSala" component={BnSala} durationInFrames={DUR_BNSALA} fps={30} width={1080} height={1920} />
     <Composition id="Teste3D" component={Teste3D} durationInFrames={DURACAO_3D} fps={30} width={1080} height={1920} />
     <Composition id="BnPerto" component={BnPerto} durationInFrames={DUR_BNPERTO} fps={30} width={1080} height={1920} />
     <Still id="ThumbBnPerto" component={ThumbBnPerto} width={1080} height={1920} />
