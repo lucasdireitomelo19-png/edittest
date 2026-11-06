@@ -7,7 +7,7 @@
 
 | # | Formato | Título | Potencial |
 |---|---|---|---|
-| 1 | Longo POV | A LUA ESTÁ CAINDO: você tem 4 DIAS! | 🔥🔥🔥 9/10 |
+| 1 | Longo POV (~6 min, ~891 palavras) | A LUA ESTÁ CAINDO: você tem 4 DIAS! | 🔥🔥🔥 9/10 |
 
 ---
 
@@ -50,7 +50,7 @@ Escolhido: o **1**, adaptado para o POV de acordar com a notícia. O **2** fica 
 
 ### 1:15 · DIA 1 e 2 · 374.000 → 342.000 KM
 > Dia um. Trezentos e setenta e quatro mil quilômetros. Dia dois. Trezentos e quarenta e dois mil.
-> E nada parece mudar.
+> E nada parece mudar. Você vai trabalhar. O supermercado está cheio. Todo mundo comprando água.
 > À noite, a Lua está quase igual. O seu cérebro diz: é exagero. Os cientistas na TV dizem que não.
 > É que uma queda assim começa devagar. Lá longe, a gravidade da Terra é fraca, e a Lua vai ganhando velocidade aos poucos.
 > E é aí que mora o perigo: quase toda a queda vai acontecer nas últimas horas.
@@ -58,6 +58,7 @@ Escolhido: o **1**, adaptado para o POV de acordar com a notícia. O **2** fica 
 ### 2:00 · DIA 3 · 284.000 KM
 > Dia três. Duzentos e oitenta e quatro mil quilômetros.
 > Agora dá pra notar. A Lua está um pouco maior. Mais brilhante.
+> Na escola, as crianças desenham a Lua maior que de costume. Os adultos não acham graça.
 > E o mar começa a reagir. A força que a Lua faz sobre os oceanos cresce muito mais rápido do que a distância encolhe.
 > Nas praias, as marés começam a subir mais do que o normal.
 
@@ -65,12 +66,14 @@ Escolhido: o **1**, adaptado para o POV de acordar com a notícia. O **2** fica 
 > Dia quatro. Cento e oitenta e cinco mil quilômetros.
 > A Lua tem o dobro do tamanho de hoje. E a força de maré já é umas nove vezes maior.
 > As cidades do litoral começam a ser esvaziadas. Da sua janela, você vê a fila de carros indo pro interior.
+> Os aeroportos lotam. Mas não existe lugar na Terra pra onde fugir de uma coisa que vai bater no planeta inteiro.
 > Ninguém dorme. Todo mundo olha pra cima.
 
 ### 3:10 · FALTAM 7 HORAS · 100.000 KM
 > Faltam sete horas. Cem mil quilômetros.
 > Agora tudo acelera. A Lua cresce a olho nu. Você olha pra ela, desvia o olhar, volta. E ela está maior.
 > Em quatro dias e meio, ela andou quase trezentos mil quilômetros. Nas próximas sete horas, vai andar os últimos cem mil.
+> As pessoas sobem nos prédios pra ver melhor. Ninguém fala alto.
 > O céu que você conhecia acabou.
 
 ### 3:50 · FALTAM 30 MINUTOS · 18.400 KM
@@ -78,6 +81,7 @@ Escolhido: o **1**, adaptado para o POV de acordar com a notícia. O **2** fica 
 > A Lua ocupa um pedaço enorme do céu. E aí acontece uma coisa que ninguém espera.
 > Ela começa a se esticar. A gravidade da Terra puxa o lado mais perto com mais força do que o lado mais longe. Até que a própria gravidade da Lua não consegue mais segurar ela inteira.
 > Os cientistas chamam isso de limite de Roche. Pra um corpo mole, fica por volta de dezoito mil quilômetros. Pra um corpo duro, uns nove mil e quinhentos. A Lua de verdade ficaria em algum lugar no meio.
+> A olho nu, você vê rachaduras se abrindo na superfície dela.
 > Ela racha.
 
 ### 4:45 · FALTAM 12 MINUTOS · 9.500 KM
@@ -105,6 +109,7 @@ Escolhido: o **1**, adaptado para o POV de acordar com a notícia. O **2** fica 
 > Pela hipótese mais aceita, há uns quatro bilhões e meio de anos, um planeta do tamanho de Marte, chamado Theia, bateu na Terra jovem. E dos destroços, nasceu a Lua.
 > Simulações sugerem que ela pode ter se formado em poucas horas. E um estudo de outubro de 2026 propôs uma Theia sólida, que se partiu em duas.
 > E tem mais. Lá no fundo da Terra, perto do núcleo, existem duas massas gigantes de rocha, um pouco mais densas que o resto. Alguns cientistas acham que são pedaços de Theia.
+> Toda vez que você olha pra Lua, está olhando pro que sobrou dessa batida.
 > O impacto que importava já aconteceu. E você está em cima do que sobrou.
 
 ---
