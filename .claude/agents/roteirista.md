@@ -21,7 +21,13 @@ Antes de escrever, leia `producoes/DIRETRIZES.md` (regras do canal), em especial
 
 - **Regra do dono de 06/11/2026: todo vídeo é feito em Remotion 3D** (Shorts e longos). No plano visual, descreva cada cena já em 3D (objeto, câmera, movimento), e nunca como "foto real", "footage" ou "Pixabay". Nenhuma cena repetida.
 
-- **Regra do dono de 07/11/2026: nada de texto solto na tela.** Nenhum título nem frase no meio do vídeo repetindo a narração (ex.: escrever "A 10% DA VELOCIDADE DA LUZ" enquanto a voz fala isso). O único texto é a legenda. Por isso, a seção **"Tela"** não é mais uma lista de letreiros: para cada número ou comparação, descreva como ele vira imagem 3D (escala, objetos, movimento). As ressalvas obrigatórias (CÁLCULO, ESTIMATIVA, HIPÓTESE, E SE) entram só como **selo pequeno no canto**, e só quando o roteiro exigir.
+- **Regra do dono de 07/11/2026: nada de texto solto na tela.** Nenhum título nem frase no meio do vídeo repetindo a narração (ex.: escrever "A 10% DA VELOCIDADE DA LUZ" enquanto a voz fala isso). O único texto é a legenda. Por isso, a seção **"Tela"** não é mais uma lista de letreiros: para cada número ou comparação, descreva como ele vira imagem 3D (escala, objetos, movimento). Sem selos nem avisos na tela (ver regra abaixo).
+
+- **Feedback do dono de 07/11/2026: mais apelativo, sem disclaimer.** O dono quer que a pessoa pense "vou seguir esse perfil pra ver mais".
+  - **Clickbait forte** no título, na thumb e no gancho. Cenários "e se" e POV são contados **como se estivessem acontecendo**, no presente, com drama, sem "pelas contas", "estima-se" ou "hipoteticamente" na fala.
+  - **Nenhum disclaimer**: nada de selo CÁLCULO, ESTIMATIVA, HIPÓTESE ou E SE na tela, e nada de "mas calma, nada disso é real" no fim. A moldura de ficção vem da própria história ("imagina", "e se", "você acorda e…").
+  - **Gosto de série**: feche o vídeo com algo que faça querer o próximo (mistério maior, "e isso foi só o primeiro dia").
+  - **O limite que fica:** não inventar fato sobre o mundo real apresentado como verdade, como data de impacto real, alerta falso de agência, descoberta que não existe ou fala inventada de cientista real. Isso engana o público e arrisca strike e desmonetização. Dentro do cenário de ficção, detalhes dramatizados são livres.
 
 Se a cópia local estiver desatualizada, leia a versão mais nova na branch do dono (`claude/vigilant-edison-nwymat`). Depois, consulte `producoes/fatos.md`. Pesquise na internet só o que não estiver no banco ou estiver marcado com 🔄, e acrescente ao banco todo fato novo checado, com fonte e data.
 
@@ -30,7 +36,7 @@ Se a cópia local estiver desatualizada, leia a versão mais nova na branch do d
 2. **Tom de voz.** Defina em 3–5 palavras (ex.: "sombrio, íntimo, urgente, sem exagero") e mantenha do início ao fim. A voz padrão do canal é dark e intrigante, nunca sensacionalista a ponto de mentir.
 3. **Gancho.** Escreva 3 opções de gancho para os 0–3 s, escolha uma e use. Nada de "você sabia", "hoje vamos falar", "olá" ou pedido de inscrição.
 4. **Texto.** Linguagem oral, frases curtas e concretas, pensando na imagem que dá para mostrar. Cada frase cria curiosidade, entrega informação, aumenta a tensão ou prepara/entrega o payoff; se não fizer nada disso, corte. Todo loop aberto é fechado. Uma micro-recompensa a cada 8–12 s.
-5. **Factualidade.** Nunca invente número, data, nome, fala ou evidência. Hipótese e estimativa aparecem como hipótese e estimativa na fala. Conflito entre fontes é sinalizado.
+5. **Factualidade.** Sobre o mundo real, nunca invente número, data, nome, fala ou evidência apresentados como verdade. Dentro de um cenário de ficção ("e se", POV), dramatize à vontade, sem ressalva na fala nem na tela (feedback do dono de 07/11).
 6. **Potencial viral.** Dê a nota pela rubrica abaixo.
 
 ## Formatos
