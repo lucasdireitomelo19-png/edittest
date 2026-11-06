@@ -56,6 +56,9 @@ FIXAS = [
     # longo A do lote Linha dos campeões (04/11)
     (r'\bPavlík\b', 'Pávlik'),
     (r'\bShore\b', 'Xór'),
+    # Shorts de 06/11 (alien, pi, vulcões)
+    (r'\bTsar Bombas\b', 'Tsár Bombas'),
+    (r'\bGPS\b', 'gê pê ésse'),
     # Short da Lua batendo na Terra (06/11)
     (r'\bTheia\b', 'Téia'),
     # longo B do lote Linha dos campeões (04/11)

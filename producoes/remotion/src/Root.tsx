@@ -41,6 +41,9 @@ import {Video as BnAno, Thumb as ThumbBnAno, DURACAO as DUR_BNANO} from './video
 import {Video as SnPerto, Thumb as ThumbSnPerto, DURACAO as DUR_SNPERTO} from './videos/SnPerto';
 import {ThumbBetelgeuse2, ThumbYr42, ThumbMagnetar2, ThumbErrante2, ThumbSolTerra2, ThumbBnAno2, ThumbSnPerto2} from './lote/thumbs2';
 import {Video as LuaBate, Thumb as ThumbLuaBate, DURACAO as DUR_LUABATE} from './videos/LuaBate';
+import {Video as PiTres, Thumb as ThumbPiTres, DURACAO as DUR_PITRES} from './videos/PiTres';
+import {Video as Vulcoes, Thumb as ThumbVulcoes, DURACAO as DUR_VULCOES} from './videos/Vulcoes';
+import {Video as Alien, Thumb as ThumbAlien, DURACAO as DUR_ALIEN} from './videos/Alien';
 import {Teste3D, DURACAO_3D} from './videos/Teste3D';
 import {Video as BnPerto, Thumb as ThumbBnPerto, DURACAO as DUR_BNPERTO} from './videos/BnPerto';
 // Cada vídeo novo vira um arquivo em src/videos/ e uma <Composition> aqui.
@@ -69,6 +72,12 @@ export const Root = () => (
     <Still id="ThumbSnPerto2" component={ThumbSnPerto2} width={1920} height={1080} />
     <Composition id="LuaBate" component={LuaBate} durationInFrames={DUR_LUABATE} fps={30} width={1080} height={1920} />
     <Still id="ThumbLuaBate" component={ThumbLuaBate} width={1080} height={1920} />
+    <Composition id="PiTres" component={PiTres} durationInFrames={DUR_PITRES} fps={30} width={1080} height={1920} />
+    <Still id="ThumbPiTres" component={ThumbPiTres} width={1080} height={1920} />
+    <Composition id="Vulcoes" component={Vulcoes} durationInFrames={DUR_VULCOES} fps={30} width={1080} height={1920} />
+    <Still id="ThumbVulcoes" component={ThumbVulcoes} width={1080} height={1920} />
+    <Composition id="Alien" component={Alien} durationInFrames={DUR_ALIEN} fps={30} width={1080} height={1920} />
+    <Still id="ThumbAlien" component={ThumbAlien} width={1080} height={1920} />
     <Composition id="Teste3D" component={Teste3D} durationInFrames={DURACAO_3D} fps={30} width={1080} height={1920} />
     <Composition id="BnPerto" component={BnPerto} durationInFrames={DUR_BNPERTO} fps={30} width={1080} height={1920} />
     <Still id="ThumbBnPerto" component={ThumbBnPerto} width={1080} height={1920} />
