@@ -147,9 +147,9 @@ const capaMat = (modo: 'disco' | 'racha' | 'lava') => new THREE.ShaderMaterial({
         float borda = 1.0 - smoothstep(0.0, 0.04, v.y - v.x); float frente = smoothstep(uR, uR - 0.3, ang);
         float l = borda * frente; gl_FragColor = vec4(vec3(1.0,0.45,0.08)*2.6*(0.85+0.15*sin(uT*8.0+vP.x*30.0)), l);` : ''}
       ${modo === 'lava' ? `vec3 q = vP*3.0; vec2 v = voro(q + vec3(uT*0.05)); vec2 w = voro(q*3.0);
-        float b = 1.0 - smoothstep(0.0, 0.06, v.y - v.x); float b2 = 1.0 - smoothstep(0.0, 0.04, w.y - w.x);
+        float b = 1.0 - smoothstep(0.0, 0.035, v.y - v.x); float b2 = 1.0 - smoothstep(0.0, 0.02, w.y - w.x);
         float frente = smoothstep(uR, uR - 0.4, ang); float l = max(b, b2*0.7);
-        vec3 cor = mix(vec3(0.12,0.04,0.02), vec3(1.0,0.5,0.1)*2.4, l); gl_FragColor = vec4(cor, frente * uK);` : ''}
+        vec3 cor = mix(vec3(0.12,0.04,0.02), vec3(1.0,0.45,0.08)*1.5, l*l); gl_FragColor = vec4(cor, frente * uK);` : ''}
     }`,
   transparent: true, depthWrite: false,
 });
@@ -159,7 +159,7 @@ const capaMat = (modo: 'disco' | 'racha' | 'lava') => new THREE.ShaderMaterial({
 const S1: React.FC = () => <C3 t="SE A LUA CAÍSSE…" etq="ANIMAÇÃO 3D">{(f, tex) => <>
   <Cam pos={[0, -0.4, 4.2]} alvo={[0, 0.3, 0]} /><Luzes sol={[2, 3, 4]} /><Estrelas />
   <Terra tex={tex} r={1.6} pos={[0, -2.1, 0]} rot={[0.5, f * 0.002, 0]} />
-  <Lua tex={tex} r={0.9} pos={[0.2, interpolate(f, [0, 50], [2.6, 1.5], cl), -1.5]} rot={[0, f * 0.01, 0]} />
+  <Lua tex={tex} r={0.75} pos={[0.1, interpolate(f, [0, 50], [1.75, 1.15], cl), -1.2]} rot={[0, f * 0.01, 0]} />
   <Pos /></>}</C3>;
 // 2 · ×10 milhões: um enxame de asteroides se multiplicando
 const S2: React.FC = () => {
@@ -179,12 +179,12 @@ const S2b: React.FC = () => {
     <Texto y={960} size={50} cor="#fff">A ENERGIA DO ASTEROIDE DOS DINOSSAUROS</Texto></AbsoluteFill>;
 };
 // 3 · Chicxulub: um asteroide pequeno riscando a borda da Terra
-const S3: React.FC = () => <C3 t="O ASTEROIDE DOS DINOSSAUROS" sub="CHICXULUB" etq="ANIMAÇÃO 3D">{(f, tex) => {
-  const p = new THREE.Vector3(interpolate(f, [0, 60], [-2.2, 0.15]), interpolate(f, [0, 60], [2.6, 0.95]), 0.3);
+const S3: React.FC = () => <C3 t="CHICXULUB" sub="O ASTEROIDE DOS DINOSSAUROS" etq="ANIMAÇÃO 3D">{(f, tex) => {
+  const p = new THREE.Vector3(interpolate(f, [0, 60], [-0.75, 0.1], cl), interpolate(f, [0, 60], [0.75, 0.02], cl), 0.6);
   return <><Cam pos={[0, 0, 3.2]} alvo={[0, -0.5, 0]} /><Luzes sol={[-2, 1, 3]} /><Estrelas sem="s3" />
     <Terra tex={tex} r={1.4} pos={[0, -1.4, 0]} rot={[0.2, 1.2, 0]} />
-    <mesh geometry={geoPedra} position={p} scale={0.04}><meshStandardMaterial color="#6a5a4a" emissive="#ff7a30" emissiveIntensity={1.5} flatShading /></mesh>
-    {Array.from({length: 40}, (_, i) => <Brilho key={i} pos={[p.x - i * 0.02 * 2.4 / 2.4, p.y + i * 0.02 * 1.65 / 2.4, p.z]} s={0.12 * (1 - i / 40)} o={0.8 * (1 - i / 40)} />)}
+    <mesh geometry={geoPedra} position={p} scale={0.035}><meshStandardMaterial color="#6a5a4a" emissive="#ff7a30" emissiveIntensity={1.5} flatShading /></mesh>
+    {Array.from({length: 40}, (_, i) => <Brilho key={i} pos={[p.x - i * 0.014, p.y + i * 0.0125, p.z]} s={0.1 * (1 - i / 40)} o={0.9 * (1 - i / 40)} />)}
     <Pos /></>;
 }}</C3>;
 // 4 · a Lua sobre o Brasil, em escala
@@ -204,7 +204,7 @@ const S5: React.FC = () => <C3 t="ELA CORRE EM VOLTA DA TERRA" sub="~1 KM/S" etq
   const a = f * 0.045; const R = 2.2; const p: [number, number, number] = [Math.cos(a) * R, 0, Math.sin(a) * R];
   return <><Cam pos={[0, 2.6, 4.4]} /><Luzes sol={[4, 2, 2]} /><Estrelas sem="s5" />
     <Terra tex={tex} r={0.7} rot={[0.3, f * 0.01, 0]} />
-    <Lua tex={tex} r={0.19} pos={p} />
+    <Lua tex={tex} r={0.26} pos={p} />
     {Array.from({length: 50}, (_, i) => { const b = a - i * 0.025; return <Brilho key={i} pos={[Math.cos(b) * R, 0, Math.sin(b) * R]} s={0.09 * (1 - i / 50)} cor="#9fd0ff" o={0.7 * (1 - i / 50)} />; })}
     <Pos /></>;
 }}</C3>;
@@ -224,7 +224,7 @@ const S7: React.FC = () => {
   return <AbsoluteFill><C3 t="QUASE 5 DIAS CAINDO" etq="ANIMAÇÃO 3D · CÁLCULO">{(fr, tex) => <>
     <Cam pos={[3.2, 0.5, 3.2]} alvo={[0, 0.8, 0]} /><Luzes sol={[-2, 3, 3]} /><Estrelas sem="s7" />
     <Terra tex={tex} r={0.8} pos={[0, -0.6, 0]} rot={[0.3, fr * 0.004, 0]} />
-    <Lua tex={tex} r={0.22} pos={[0, interpolate(k, [0, 1], [3.2, 0.5]), 0]} />
+    <Lua tex={tex} r={0.3} pos={[0, interpolate(k, [0, 1], [2.1, 0.55]), 0]} />
     <mesh position={[0, 1.4, 0]}><cylinderGeometry args={[0.004, 0.004, 2.6, 6]} /><meshBasicMaterial color="#ffd23f" transparent opacity={0.4} /></mesh>
     <Pos /></>}</C3>
     <div style={{position: 'absolute', top: 1180, width: '100%', textAlign: 'center', fontFamily: 'monospace', fontSize: 90, color: '#fff', textShadow: '0 4px 20px #000'}}>{d} DIAS {String(h % 24).padStart(2, '0')} H</div>
@@ -247,7 +247,7 @@ const S9: React.FC = () => <C3 t="A GRAVIDADE RASGARIA A LUA" etq="ANIMAÇÃO 3D
     return {p: new THREE.Vector3(r.x * (1 + f * 0.004), 0.6 + r.y - estica * 1.6, r.z), s: 0.05 + random('ps' + i) * 0.16, g: random('pg' + i)};
   });
   return <><Cam pos={[0, 0, 4.2]} alvo={[0, 0, 0]} /><Luzes sol={[-2, 2, 3]} /><Estrelas sem="s9" />
-    {pedacos.map((x, i) => <mesh key={i} geometry={geoPedra} position={x.p} scale={x.s} rotation={[f * 0.02 * x.g, f * 0.015, i]}><meshStandardMaterial map={tex.lua} roughness={1} flatShading emissive="#ff5a10" emissiveIntensity={0.4} /></mesh>)}
+    {pedacos.map((x, i) => <mesh key={i} geometry={geoPedra} position={x.p} scale={x.s} rotation={[f * 0.02 * x.g, f * 0.015, i]}><meshStandardMaterial color="#9a9890" roughness={1} flatShading /></mesh>)}
     <Terra tex={tex} r={2.0} pos={[0, -3.4, -1]} rot={[0.5, 0.8, 0]} />
     <Pos /></>;
 }}</C3>;
@@ -278,16 +278,17 @@ const S12: React.FC = () => <C3 t="ISSO JÁ ACONTECEU" etq="ANIMAÇÃO 3D">{(f, 
   <Terra tex={tex} rot={[0.3, -f * 0.25, 0]} />
   {Array.from({length: 30}, (_, i) => { const a = i / 30 * Math.PI * 2 + f * 0.05; return <Brilho key={i} pos={[Math.cos(a) * 1.6, Math.sin(a) * 1.6, -0.5]} s={0.08} cor={CIANO} o={0.6} />; })}
   <Pos /></>}</C3>;
-// 13 · a Terra primitiva, quente
-const quente = capaMat('lava');
+// 13 · a Terra primitiva: rocha escura com pontos incandescentes e brilho vermelho na borda
 const atmQuente = atmMat('1.0,0.45,0.15', 1.3);
-const S13: React.FC = () => <C3 t="A TERRA PRIMITIVA" sub="HIPÓTESE MAIS ACEITA" etq="ANIMAÇÃO 3D · HIPÓTESE">{(f, tex) => {
-  quente.uniforms.uC.value = new THREE.Vector3(0, 0, 1); quente.uniforms.uR.value = 4.0; quente.uniforms.uT.value = f * 0.5; quente.uniforms.uK.value = 1;
-  return <><Cam pos={[0, 0, 3.2]} /><Luzes sol={[-2, 1, 3]} i={1.5} /><Estrelas sem="s13" />
-    <group rotation={[0.2, f * 0.006, 0]}><mesh><sphereGeometry args={[1, 96, 96]} /><meshStandardMaterial color="#2a1a14" roughness={1} /></mesh><mesh material={quente} scale={1.003}><sphereGeometry args={[1, 160, 160]} /></mesh></group>
-    <mesh material={atmQuente} scale={1.1}><sphereGeometry args={[1, 64, 64]} /></mesh>
-    <Pos bloom={1.2} /></>;
-}}</C3>;
+const S13: React.FC = () => <C3 t="A TERRA PRIMITIVA" sub="HIPÓTESE MAIS ACEITA" etq="ANIMAÇÃO 3D · HIPÓTESE">{(f) => <>
+  <Cam pos={[0, 0, 3.4]} /><Luzes sol={[-2, 1, 3]} i={1.4} /><Estrelas sem="s13" />
+  <group rotation={[0.2, f * 0.006, 0]}>
+    <mesh><icosahedronGeometry args={[1, 5]} /><meshStandardMaterial color="#2a1c16" roughness={1} flatShading /></mesh>
+    {Array.from({length: 60}, (_, i) => { const v = new THREE.Vector3(random('q' + i) - 0.5, random('w' + i) - 0.5, random('e' + i) - 0.5).normalize().multiplyScalar(1.01);
+      return <Brilho key={i} pos={[v.x, v.y, v.z]} s={0.06 + random('r' + i) * 0.12} o={0.6 + 0.4 * Math.sin(f / 5 + i)} />; })}
+  </group>
+  <mesh material={atmQuente} scale={1.1}><sphereGeometry args={[1, 64, 64]} /></mesh>
+  <Pos bloom={1.2} /></>}</C3>;
 // 14 · ~4,5 bilhões de anos: um túnel de estrelas voltando no tempo
 const S14: React.FC = () => <C3 t="~4,5 BILHÕES DE ANOS ATRÁS" etq="ANIMAÇÃO 3D">{(f) => <>
   <Cam pos={[0, 0, 5]} /><ambientLight intensity={0.5} />
@@ -297,14 +298,14 @@ const S14: React.FC = () => <C3 t="~4,5 BILHÕES DE ANOS ATRÁS" etq="ANIMAÇÃO
 // 15 · Theia, do tamanho de Marte, chegando
 const S15: React.FC = () => <C3 t="THEIA" sub="UM PLANETA DO TAMANHO DE MARTE" etq="ANIMAÇÃO 3D · HIPÓTESE">{(f) => <>
   <Cam pos={[0, 0, 5]} /><Luzes sol={[2, 2, 4]} /><Estrelas sem="s15" />
-  <mesh position={[-0.9, -0.6, 0]}><sphereGeometry args={[1, 96, 96]} /><meshStandardMaterial color="#3a2a22" roughness={1} emissive="#ff4a10" emissiveIntensity={0.25} /></mesh>
-  <mesh position={[interpolate(f, [0, 70], [2.2, 1.0]), interpolate(f, [0, 70], [1.6, 0.6]), 0]} rotation={[0, f * 0.02, 0]}><sphereGeometry args={[0.53, 96, 96]} /><meshStandardMaterial color="#b0603a" roughness={0.9} /></mesh>
+  <mesh position={[-0.3, -0.8, 0]} scale={0.75}><sphereGeometry args={[1, 96, 96]} /><meshStandardMaterial color="#3a2a22" roughness={1} emissive="#ff4a10" emissiveIntensity={0.2} /></mesh>
+  <mesh position={[interpolate(f, [0, 70], [0.95, 0.55], cl), interpolate(f, [0, 70], [1.3, 0.55], cl), 0]} rotation={[0, f * 0.02, 0]} scale={0.75}><sphereGeometry args={[0.53, 96, 96]} /><meshStandardMaterial color="#b0603a" roughness={0.9} /></mesh>
   <Pos /></>}</C3>;
 // 16 · o choque: os dois se fundem e espirram matéria
 const S16: React.FC = () => <C3 t="BATEU NA TERRA" etq="ANIMAÇÃO 3D · SIMULAÇÃO ILUSTRATIVA">{(f) => {
   const o = new THREE.Vector3(0.55, 0.55, 0.3);
-  return <><Cam pos={[0, 0, 4.6]} tremor={0.1 * Math.exp(-f / 12)} /><Luzes sol={[2, 2, 4]} /><Estrelas sem="s16" />
-    <mesh><sphereGeometry args={[1, 96, 96]} /><meshStandardMaterial color="#3a2a22" roughness={1} emissive="#ff5a10" emissiveIntensity={0.3 + 1.5 * Math.exp(-f / 15)} /></mesh>
+  return <><Cam pos={[0, 0, 7.5]} tremor={0.12 * Math.exp(-f / 12)} /><Luzes sol={[2, 2, 4]} /><Estrelas sem="s16" />
+    <mesh><sphereGeometry args={[1, 96, 96]} /><meshStandardMaterial color="#3a2a22" roughness={1} emissive="#ff5a10" emissiveIntensity={0.2 + 0.6 * Math.exp(-f / 15)} /></mesh>
     <mesh position={[o.x * (1.2 - pr(f, 0, 10) * 0.4), o.y * (1.2 - pr(f, 0, 10) * 0.4), o.z]} scale={1 - pr(f, 0, 14) * 0.7}><sphereGeometry args={[0.53, 64, 64]} /><meshStandardMaterial color="#b0603a" emissive="#ff6a20" emissiveIntensity={1} /></mesh>
     <Brilho pos={[o.x, o.y, o.z + 0.2]} s={1 + 3 * Math.exp(-f / 8)} />
     <Nuvem n={900} sem="s16n" origem={o.clone()} t={f} raio={2.4} cor="#ffb070" tam={0.06} add dir={o.clone().normalize()} />
@@ -325,7 +326,7 @@ const S17: React.FC = () => <C3 t="E A LUA NASCEU DESSE CHOQUE" etq="ANIMAÇÃO 
 // 18 · corte da Terra com duas massas no fundo do manto
 const S18: React.FC = () => <C3 t="PEDAÇOS DE THEIA NO FUNDO?" sub="HIPÓTESE" etq="ANIMAÇÃO 3D · BASEADO NO USGS">{(f, tex) => <>
   <Cam pos={[2.4, 0.9, 2.6]} /><Luzes sol={[3, 2, 3]} i={2.2} amb={0.3} /><Estrelas sem="s18" />
-  <group rotation={[0, -0.6 + f * 0.003, 0]}>
+  <group rotation={[0, 3.1 + f * 0.003, 0]}>
     <mesh><sphereGeometry args={[1, 96, 96, 0, Math.PI * 1.5]} /><meshStandardMaterial map={tex.dia} side={THREE.DoubleSide} roughness={0.9} /></mesh>
     <mesh><sphereGeometry args={[0.9, 64, 64, 0, Math.PI * 1.5]} /><meshStandardMaterial color="#c85a20" side={THREE.DoubleSide} emissive="#802000" emissiveIntensity={0.4} /></mesh>
     <mesh><sphereGeometry args={[0.55, 64, 64]} /><meshStandardMaterial color="#ffb040" emissive="#ff8a20" emissiveIntensity={0.9} /></mesh>
@@ -333,17 +334,17 @@ const S18: React.FC = () => <C3 t="PEDAÇOS DE THEIA NO FUNDO?" sub="HIPÓTESE" 
     {[[0.45, 0.25, 0.42], [0.3, -0.3, 0.52]].map((p, i) => <mesh key={i} position={p as [number, number, number]} scale={[0.22, 0.12, 0.18]}><sphereGeometry args={[1, 32, 32]} /><meshStandardMaterial color={ROSA} emissive="#a01050" emissiveIntensity={0.8 + 0.3 * Math.sin(f / 6)} /></mesh>)}
   </group>
   <Pos bloom={0.9} /></>}</C3>;
-// 20 · ela se afasta 3,8 cm por ano: régua 3D entre a Terra e a Lua
+// 20 · ela se afasta 3,8 cm por ano: régua vertical entre a Terra e a Lua
 const S20: React.FC = () => {
   const f = useCurrentFrame();
   return <AbsoluteFill><C3 t="A LUA NÃO VAI CAIR" etq="ANIMAÇÃO 3D · LASER LUNAR (NASA/JPL)">{(fr, tex) => {
-    const x = interpolate(fr, [0, 80], [1.2, 1.7]);
-    return <><Cam pos={[0, 0.6, 4.2]} alvo={[0.5, 0, 0]} /><Luzes sol={[2, 2, 3]} /><Estrelas sem="s20" />
-      <Terra tex={tex} r={0.55} pos={[-1, 0, 0]} rot={[0.3, fr * 0.005, 0]} />
-      <Lua tex={tex} r={0.16} pos={[x, 0, 0]} />
-      <mesh position={[(x - 1) / 2, -0.4, 0]}><boxGeometry args={[x + 1, 0.02, 0.02]} /><meshBasicMaterial color={OURO} /></mesh>
-      {Array.from({length: 12}, (_, i) => <mesh key={i} position={[-1 + i * (x + 1) / 11, -0.4, 0]}><boxGeometry args={[0.01, 0.08, 0.01]} /><meshBasicMaterial color={OURO} /></mesh>)}
-      <mesh position={[(x + (-1)) / 2 + 0.5, 0.0, 0]}><boxGeometry args={[(x - 1) * 2, 0.006, 0.006]} /><meshBasicMaterial color="#ff3030" transparent opacity={0.7} /></mesh>
+    const y = interpolate(fr, [0, 80], [0.75, 1.15], cl);
+    return <><Cam pos={[0, 0, 4.4]} alvo={[0, 0.1, 0]} /><Luzes sol={[2, 2, 3]} /><Estrelas sem="s20" />
+      <Terra tex={tex} r={0.6} pos={[0, -1.0, 0]} rot={[0.3, fr * 0.005, 0]} />
+      <Lua tex={tex} r={0.17} pos={[0, y, 0]} />
+      <mesh position={[0.45, (y - 0.4) / 2, 0]}><boxGeometry args={[0.02, y + 0.4, 0.02]} /><meshBasicMaterial color={OURO} /></mesh>
+      {Array.from({length: 10}, (_, i) => <mesh key={i} position={[0.45, -0.4 + i * (y + 0.4) / 9, 0]}><boxGeometry args={[0.09, 0.01, 0.01]} /><meshBasicMaterial color={OURO} /></mesh>)}
+      <mesh position={[0, (y - 0.4) / 2, 0]}><boxGeometry args={[0.006, y + 0.4, 0.006]} /><meshBasicMaterial color="#ff3030" transparent opacity={0.7} /></mesh>
       <Pos bloom={1.0} /></>;
   }}</C3>
     <div style={{position: 'absolute', top: 1180, width: '100%', textAlign: 'center', fontFamily: FONTE, fontSize: 130, color: VERDE, WebkitTextStroke: '6px #000', paintOrder: 'stroke fill', opacity: interpolate(f, [6, 14], [0, 1], cl)}}>+3,8 CM/ANO</div>
