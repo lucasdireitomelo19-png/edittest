@@ -17,7 +17,7 @@
 ---
 
 ## Um BURACO NEGRO na sua SALA DE AULA… e o PIOR é o MENOR
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (07/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: um tema comprovado (349 mi de views lá fora), um lugar que todo mundo conhece e uma virada contraintuitiva, porque o menor é o que mata mais. Ponto mais fraco: o canal já fez três vídeos de buraco negro, e o diferencial (o buraco pequeno, dentro de uma sala) precisa aparecer no 1º segundo.
 
