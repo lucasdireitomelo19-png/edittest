@@ -163,3 +163,9 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 - Ainda não foi usado em vídeo do canal: a regra continua Remotion 3D até o dono dizer outra coisa.
 - **Openverse (sons):** `pipeline/openverse_audio.py` (07/11). A busca funciona. Do container, o download falha: o CDN do Freesound responde 403 e o Wikimedia, 429. Baixe no computador do dono ou tente de novo depois. A versão de imagens continua em `pipeline/openverse.py`.
 - **Earshot** (Leon Lin, github.com/Leonxlnx/earshot): instalado e testado em 07/11 com aprovação do dono. Num container novo, rode `uv tool install "earshot[mcp] @ git+https://github.com/Leonxlnx/earshot"` e depois `earshot doctor --fetch` (baixa ~1,1 GB de modelos). Comandos úteis: `earshot sfx list` lista o banco de 252 efeitos (sem crédito); `earshot sfx render <id> -o x.wav` gera um efeito; `earshot timeline <video.mp4>` "ouve" o vídeo e mostra os cortes sem som; `earshot sheet` gera um PNG da trilha. O pacote "earshot" do PyPI é OUTRO (detecção de voz); não use.
+
+## Próximo: "E se a Pangeia voltasse" (07/11, via Pesquisas)
+- Primeiro vem um Short, depois um longo. Espere o roteiro do Short chegar do Roteirista.
+- Fatos estão em `fatos.md`, nas seções "E se a Pangeia voltasse" e "Viver na Pangeia".
+- Guia visual da Pesquisas (`session_01LAsqdhNS2ebk9jvKN6smN2`), no estilo do Short "What If Pangea Came Back?" do Geo All Day: mapa de satélite (Blue Marble), região citada em vermelho sólido, câmera sempre em movimento e emoji grande nas perguntas. Não use nada do vídeo deles.
+- **Conflito com as regras do dono de 07/11:** o guia pede nomes em neon e a etiqueta "simulação", mas o dono proibiu texto solto e selos. Por isso os nomes e a etiqueta ficam fora até o dono decidir. A pergunta foi feita a ele em 07/11.
