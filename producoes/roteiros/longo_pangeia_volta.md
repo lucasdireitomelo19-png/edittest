@@ -18,7 +18,7 @@ O marcador de tempo do canto vira imagem: um **anel 3D de camadas de rocha** que
 ---
 
 ## Você acorda com UM SÓ CONTINENTE!
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (07/11/2026), enviado ao Gerador de Vídeos (produzir depois do Short)
 
 **Potencial viral:** 🔥🔥 8/10. Ponto mais forte: o mesmo tema do Short gringo de 12 mi, um "você" concreto acordando a cada 50 milhões de anos, o Brasil no centro e uma virada real e surpreendente (Aurica). Ponto mais fraco: geologia foi mal no canal, e entre +100 e +200 milhões de anos não há marcos publicados. Esses capítulos se apoiam na encruzilhada dos cenários, não em eventos datados.
 

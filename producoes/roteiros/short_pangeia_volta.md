@@ -17,7 +17,7 @@
 ---
 
 ## E SE a PANGEIA VOLTASSE AGORA? O BRASIL ENCOSTA NA ÁFRICA
-**Status:** aguardando aprovação (v1, estrutura provisória até chegar a análise da referência)
+**Status:** APROVADO pelo dono (07/11/2026), enviado ao Gerador de Vídeos (Short primeiro)
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: tema comprovado (12 mi de views lá fora), o ângulo Brasil (o Nordeste encaixado na África, que é fato geológico) e uma escalada até um número que assusta (só 8 a 16% da terra habitável). Ponto mais fraco: geologia foi mal no canal, então o vídeo precisa do mapa se fechando já no 1º segundo.
 
