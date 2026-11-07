@@ -1,64 +1,58 @@
 # Passagem · LadoSombrio (direção do Canal 1)
 
-Atualizado em 28/10/2026, na troca da conversa `session_015e2JLC4tKSvXxCwAtgDrdG` por uma nova (economia de tokens).
-Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que o pedido envolver. Não releia o resto do repositório sem necessidade.
+Atualizado em 07/11/2026, na troca da conversa `session_014uAw8A8j8RoZaxo26zVPpt` (contexto em ~48%).
+Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que o pedido envolver.
 
-## Papel desta conversa
-Direção do canal "Lado Sombrio do Universo" (@ladosombriodouniverso), em pt-BR: estratégia e métricas, roteiros quando o dono pede direto, ferramentas (Central, Painel, Remotion) e coordenação dos outros agentes. A produção dos vídeos é do Gerador de Vídeos.
+## Papel
+Direção do canal "Lado Sombrio do Universo", em pt-BR: estratégia e métricas, coordenação dos agentes, Observatório e repasse das entregas ao dono. A produção é do Gerador de Vídeos; a pesquisa, da Pesquisas; os roteiros, do Roteirista.
 
 ## Links e ids
-- **Central dos Canais:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN` (a última é lado-61).
-  - Só o Lado Sombrio: o Inquérito Sombrio foi removido em 28/10.
-  - Tem seleção para apagar vários vídeos de uma vez; o arquivo é apagado junto.
-  - O armazenamento está em ~99% de 1 GB.
-  - Não republicar a página sem ler a versão no ar antes.
-- **Painel dos Agentes:** https://claude.ai/artifact/MYN7cXDqxFUwnWPJCYtSWM
-  - Coleções `agentes` e `eventos`; regra de aviso no `CLAUDE.md`.
-  - O Zelador e a tarefa agendada dele foram excluídos em 28/10. O painel se atualiza só pelos avisos.
-- **Agentes:**
-  - Gerador de Vídeos: `session_01RMuyuTR7uKM4etrPUUhNcQ`
-  - Roteirista: `session_01SHrzyZioTiFba7qKi3g3kj`
-  - Pesquisas: `session_01LAsqdhNS2ebk9jvKN6smN2`
-  - Gerador de Carrosséis: `session_019KYTeVZcURhxGac3ijKjZn`
-  - Para falar com eles, use `send_message` do conector claude-code-remote.
-- **YouTube via Supermetrics:**
-  - Fonte `YT2`, conta `UCbCxssrFpoxRyF58RLdt5Ng`.
-  - Relatórios `LatestVideos`, `ChannelTotals` e `TrafficSources`.
-  - Os dados têm ~2 dias de atraso.
-- **Branch:** `claude/vigilant-edison-nwymat`. Sempre `git pull --rebase` antes do push, porque outras conversas também enviam para essa branch. Sem PR.
+- **Observatório** (painel oficial desde 31/10): https://claude.ai/artifact/G6YahQcE96GqFd1VcSmFDH
+  - Coleções `agentes` (doc por agente, campo `sessao` e `anteriores`), `eventos` e `videos`.
+  - Cada vídeo pode ser marcado Pronto / Programado / Postado; tem botão de baixar vídeo e thumb.
+  - Página em `producoes/observatorio.html`; para republicar, leia a versão no ar antes (`Artifact` read).
+- **Central dos Canais** (arquivo antigo): https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q. O armazenamento está cheio (1 GB); os vídeos novos vão só para o Observatório.
+- **Painel dos Agentes** antigo (MYN7cXDqxFUwnWPJCYtSWM): não recebe mais avisos.
+- **Agentes** (fale por `send_message`):
+  - Gerador de Vídeos: `session_014uAw8CcRpbapyaEFWGsSPQ`. Troca de conversa com frequência; a cada troca, atualize `agentes/videos` no Observatório e arquive a conversa antiga.
+  - Roteirista: `session_01SHrzyZioTiFba7qKi3g3kj`, na branch `claude/practical-cannon-ly7fw1`, com ~69% de contexto em 31/10.
+  - Pesquisas: `session_01LAsqdhNS2ebk9jvKN6smN2`.
+    - Grava na branch `claude/happy-volta-d7td40`; a mudança de branch espera autorização do dono.
+    - Copie o `producoes/fatos.md` dela para a nossa branch quando ela entregar algo novo (`git checkout origin/claude/happy-volta-d7td40 -- producoes/fatos.md`, se a nossa não mudou o arquivo).
+    - Ela só manda pacotes ao Roteirista depois que o dono aprova na conversa dela.
+  - Carrosséis: `session_019KYTeVZcURhxGac3ijKjZn`.
+- **YouTube via Supermetrics:** fonte `YT2`, conta `UCbCxssrFpoxRyF58RLdt5Ng`. O teste grátis acabava em 04/11; se não funcionar, peça os números ao dono.
+- **Branch:** `claude/vigilant-edison-nwymat`. Faça `git pull --rebase` antes do push; não abra PR.
 
-## Regras do dono que valem sempre
-- Descrições sem fontes. Nunca inventar fatos (use `producoes/fatos.md`). Nada gráfico ou sensível, só estilizado.
-- Voz padrão: Brian (ElevenLabs). O edge-tts só serve para narração provisória.
-- Motion graphics no Remotion (`producoes/remotion/`).
-- **Desde 28/10 o vídeo vai direto para a versão final, sem storyboard nem prévia** (o Gerador registrou em `3c6b5a5`). Antes era "nada é renderizado sem aprovação". Ainda falta o dono confirmar que pediu isso; perguntei e ele não respondeu.
-- Estratégia de conteúdo (`DIRETRIZES.md`, de 28/10):
-  - longos em POV, com título curto em 2ª pessoa e "!", ~7 min;
-  - Shorts de fim do mundo cósmico + algo concreto;
-  - nada de POV em Short;
-  - meta de 80% de retenção;
-  - a fila priorizada fica no topo de `temas.md`.
-- Nunca pedir chave ou token no chat; chaves ficam nas variáveis de ambiente. Não publicar em redes sociais.
-- Commits terminam com as linhas `Co-Authored-By` e `Claude-Session` da sessão atual.
+## Regras do dono (além das DIRETRIZES)
+- Só ficam abertas as conversas em funcionamento: arquive as antigas ao trocar. As conversas "Gerador De Videos" e "Gerador de Carrosseis" de 17/10 são do Inquérito Sombrio (repositório novodark); não mexer sem pedido.
+- Vídeos 100% Remotion 3D, sem texto solto e sem selos na tela, com legenda menor. A voz é Brian (ElevenLabs, saldo ~123 mil caracteres em 04/11); sem ElevenLabs, Antonio.
+- O ritmo é de 2 Shorts por dia e 2 longos por semana, com temas na "linha dos campeões".
 
-## Números de referência (YouTube, 16–25/10)
-- 82 mil views, +280 inscritos.
-- Campeão: o longo "Você é a ÚLTIMA pessoa da Terra!", com 15,6 mil views e 55 inscritos.
-- Melhores Shorts:
-  - FIM do Sistema Solar (8,2 mil)
-  - Sexta-feira 13 / asteroide (6,7 mil)
-  - Cair num buraco negro (5,9 mil, 87% de retenção)
-- Os Shorts em POV ficaram em 1,1–1,6 mil.
+## Análise (dados até 01/11)
+- 243 mil views e +825 inscritos. Em 30/10 o dono informou 730 inscritos e 201 mil views.
+- Por volta de 1.160 h assistidas em vídeo longo, de 4.000 h exigidas.
+- **Campeões:** "Esta estrela vai explodir" (57,8 mil, 84%, 244 inscritos), "Buraco negro passando pelo Sistema Solar" (30,8 mil, 197 inscritos), o longo "Você é a ÚLTIMA pessoa da Terra!" (44,5 mil), "Planetas entre a Terra e a Lua" (12,2 mil) e "Fim do Sistema Solar" (10,4 mil).
+- **Fracos:** POV em Short, física abstrata (multiverso, paradoxos), Terra e geologia, radiação e longos abstratos.
+- Padrão dos vencedores: objeto cósmico gigante e real ameaçando a Terra, com algo visível ou data concreta.
 - Refazer a análise por volta de 10/11.
 
-## Pendências
-1. O dono confirmar a regra "direto para o final, sem prévia".
-2. 1 arquivo do Inquérito ficou na Central, sem linha apontando para ele: `692ae084a5e10af15e957ad57b6ba16e`, 13 MB. A exclusão foi barrada pelo sistema de permissões; só tentar de novo se o dono pedir.
-3. Economia de tokens, medidas ainda não aplicadas:
-   - o Gerador parar de mandar aviso para esta conversa e só gravar no Painel;
-   - Gerador e Carrosséis no Sonnet.
-4. Open Generative AI: precisa de uma chave da MuAPI. Esperando o dono decidir.
+## Estado atual (07/11)
+- No Observatório, como Pronto e sem data:
+  - lado-76 (Big Rip);
+  - lado-78, 80 e 81;
+  - lado-82 a 91 (Shorts da linha dos campeões; o lado-86 sai perto de 02/12);
+  - lado-92 e 93 (longos buraco negro e estrela que explodiu);
+  - lado-96 (Lua bate na Terra, primeiro 100% 3D);
+  - lado-97 a 99 (π e GPS, vulcões, ataque alienígena);
+  - lado-100 (buraco negro na sala, primeiro sem texto e sem selo).
+- lado-94 e 95 são testes 3D (Remotion e Blender).
+- Calendário sugerido ao dono, sem resposta: 2 Shorts por dia a partir de 05/11, longos às terças e sextas.
+- Fila do Gerador vazia; o longo dos gêmeos está parado.
 
-## Instalado só na sessão antiga (some com ela)
-FreeLLMAPI, Open-Generative-AI e o teste do Remotion no scratchpad. O modelo do Remotion está salvo no repositório.
+## Pendências
+1. O dono definir as datas de publicação (ou autorizar que a direção marque no Observatório).
+2. Pedir à Pesquisas o próximo lote na linha dos campeões (oferecido ao dono, sem resposta).
+3. Roteirista e Pesquisas acima de 50% de contexto: oferecido trocar as duas para a branch principal; o dono não respondeu.
+4. Carrosséis estava esperando o dono confirmar os avisos no Observatório.
+5. Segundo canal: sugeridos Oceano/Terra sombria, Lado Sombrio em inglês ou religioso (arqueologia bíblica). O dono não decidiu.
