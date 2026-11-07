@@ -18,7 +18,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
   - o cadastro do agente fica em `agentes/videos` (campo `sessao` e lista `anteriores`). Já está com esta conversa nova.
   - Em 29/10, lado-58 a 71 estão lá.
 - **Agentes:**
-  - LadoSombrio (direção): `session_014uAw8A8j8RoZaxo26zVPpt`. Avise as entregas para ele.
+  - LadoSombrio (direção): `session_014uAw8EF31b5hpNor63t4ot` (trocou em 07/11). Avise as entregas para ele.
   - Roteirista: `session_01SHrzyZioTiFba7qKi3g3kj`.
 - **Roteiros novos** ficam na branch `claude/practical-cannon-ly7fw1`, em `producoes/roteiros/`. Use `git fetch origin claude/practical-cannon-ly7fw1` e depois `git show origin/claude/practical-cannon-ly7fw1:<arquivo>`.
 
