@@ -168,4 +168,4 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 - Primeiro vem um Short, depois um longo. Espere o roteiro do Short chegar do Roteirista.
 - Fatos estão em `fatos.md`, nas seções "E se a Pangeia voltasse" e "Viver na Pangeia".
 - Guia visual da Pesquisas (`session_01LAsqdhNS2ebk9jvKN6smN2`), no estilo do Short "What If Pangea Came Back?" do Geo All Day: mapa de satélite (Blue Marble), região citada em vermelho sólido, câmera sempre em movimento e emoji grande nas perguntas. Não use nada do vídeo deles.
-- **Conflito com as regras do dono de 07/11:** o guia pede nomes em neon e a etiqueta "simulação", mas o dono proibiu texto solto e selos. Por isso os nomes e a etiqueta ficam fora até o dono decidir. A pergunta foi feita a ele em 07/11.
+- **Decisão do dono (07/11):** nos vídeos da Pangeia, os NOMES dos países e regiões podem aparecer na tela (branco, neon azul-ciano). A etiqueta "simulação"/"modelo" continua proibida (regra de sem selos). Fora os nomes, continua só a legenda.
