@@ -161,3 +161,5 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 - Criar projeto: `npx hyperframes init <nome> --non-interactive --skip-skills --resolution=portrait`.
 - Renderizar: `npx hyperframes render -o x.mp4 --no-browser-gpu`. Funcionou no teste com o Chromium do container.
 - Ainda não foi usado em vídeo do canal: a regra continua Remotion 3D até o dono dizer outra coisa.
+- **Openverse (sons):** `pipeline/openverse_audio.py` (07/11). A busca funciona. Do container, o download falha: o CDN do Freesound responde 403 e o Wikimedia, 429. Baixe no computador do dono ou tente de novo depois. A versão de imagens continua em `pipeline/openverse.py`.
+- **Earshot** (Leon Lin, github.com/Leonxlnx/earshot): ferramenta de áudio para agentes (ouvir, criticar e gerar efeitos), com banco de 252 efeitos. Instala com `uv tool install "earshot[mcp] @ git+https://github.com/Leonxlnx/earshot"`. A instalação foi bloqueada pela permissão automática (código externo) e espera liberação do dono. O pacote "earshot" do PyPI é OUTRO (detecção de voz); não use.
