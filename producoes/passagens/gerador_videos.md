@@ -155,3 +155,9 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 - Render travado (CPU parada): mate `remotion render` e `chrome-headless-shell` e renderize de novo. Efeitos pesados (centenas de círculos SVG com drop-shadow) deixam o render lento.
 - Longo maior que 19 MiB: cópia 540p (`-vf scale=960:540 -b:v 250k -maxrate 300k -bufsize 600k -b:a 64k`).
 - O `longo.tsx` aceita `cor` nos selos.
+
+## HyperFrames (instalado em 07/11 a pedido do dono)
+- HyperFrames 0.9.19 (HeyGen, vídeo em HTML) em `producoes/hyperframes/`. Num container novo, rode `npm i` nessa pasta.
+- Criar projeto: `npx hyperframes init <nome> --non-interactive --skip-skills --resolution=portrait`.
+- Renderizar: `npx hyperframes render -o x.mp4 --no-browser-gpu`. Funcionou no teste com o Chromium do container.
+- Ainda não foi usado em vídeo do canal: a regra continua Remotion 3D até o dono dizer outra coisa.
