@@ -164,6 +164,8 @@ export type ConfigLongo = {
   hits?: {frase: string; off?: number; vol?: number}[];
   mudo?: {de: string; ate: string};   // trilha zerada nesse trecho (silêncio total)
   fim: React.FC;
+  // formato novo do dono (07/11): sem cartão de capítulo, canto ou selos escritos; só a legenda (menor). cartao/canto viram peças visuais.
+  semTexto?: boolean; legenda?: number; cartao?: React.FC<{k: number}>; canto?: React.FC<{k: number}>;
 };
 export const criarLongo = (c: ConfigLongo) => {
   const {W, plano, caps} = c;
@@ -216,7 +218,7 @@ export const criarLongo = (c: ConfigLongo) => {
     if (!b) return null;
     return (
       <div style={{position: 'absolute', bottom: 60, left: 160, right: 160, textAlign: 'center'}}>
-        <span style={{fontFamily: FONTE, fontSize: 50, color: '#fff', padding: '8px 22px', borderRadius: 12, background: 'rgba(0,0,0,.55)', lineHeight: 1.35,
+        <span style={{fontFamily: FONTE, fontSize: c.legenda ?? 50, color: '#fff', padding: '8px 22px', borderRadius: 12, background: 'rgba(0,0,0,.55)', lineHeight: 1.35,
           boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone'}}>{b.txt}</span>
       </div>
     );
@@ -234,6 +236,7 @@ export const criarLongo = (c: ConfigLongo) => {
   const Selo: React.FC<{t: string; l: number; cor: string}> = ({t, l, cor}) => (
     <div style={{position: 'absolute', bottom: 150 + l * 56, right: 50, padding: '6px 16px', borderRadius: 10, border: `3px solid ${cor}`, background: 'rgba(0,0,0,.6)', fontFamily: FONTE, fontSize: 26, color: cor, letterSpacing: 3}}>{t}</div>
   );
+  const CantoK: React.FC<{C: React.FC<{k: number}>}> = ({C}) => { const f = useCurrentFrame(); const k = INICIO_CAP.reduce((acc, t, i) => (f >= t ? i : acc), 0); return <C k={k} />; };
   const Entrada: React.FC<{children: React.ReactNode}> = ({children}) => {
     const f = useCurrentFrame();
     const o = interpolate(f, [0, 6], [0, 1], clamp);
@@ -257,9 +260,10 @@ export const criarLongo = (c: ConfigLongo) => {
         );
       })}
       <Sequence from={FALA} durationInFrames={FIM - FALA}><Fim /></Sequence>
-      {INICIO_CAP.slice(1).map((t, k) => <Sequence key={'c' + k} from={t - GAP - 3} durationInFrames={GAP + 22}><CartaoCap k={k + 1} /></Sequence>)}
-      <Sequence durationInFrames={FALA}><Canto /></Sequence>
-      {SELOS.map((s, i) => <Sequence key={'s' + i} from={s.ini} durationInFrames={s.fim - s.ini}><Selo t={s.texto} l={s.linha} cor={s.cor} /></Sequence>)}
+      {INICIO_CAP.slice(1).map((t, k) => { const X = c.cartao ?? CartaoCap; return (c.semTexto && !c.cartao) ? null : <Sequence key={'c' + k} from={t - GAP - 3} durationInFrames={GAP + 22}><X k={k + 1} /></Sequence>; })}
+      {!c.semTexto && <Sequence durationInFrames={FALA}><Canto /></Sequence>}
+      {c.canto && <Sequence durationInFrames={FALA}><CantoK C={c.canto} /></Sequence>}
+      {!c.semTexto && SELOS.map((s, i) => <Sequence key={'s' + i} from={s.ini} durationInFrames={s.fim - s.ini}><Selo t={s.texto} l={s.linha} cor={s.cor} /></Sequence>)}
       <Legenda />
       <Audio src={staticFile(c.audio)} />
       <Audio src={staticFile(c.musica)} volume={(f) => interpolate(f, [0, 30, V - GAP, V, FIM - 60, FIM], [0, 0.16, 0.16, 0.24, 0.24, 0], clamp) * somMudo(f)} />
@@ -268,5 +272,5 @@ export const criarLongo = (c: ConfigLongo) => {
       <Sequence from={V}><Audio src={staticFile('sfx/hit.wav')} volume={0.4} /></Sequence>
     </AbsoluteFill>
   );
-  return {Video, DURACAO: FIM, T, FRASES};
+  return {Video, DURACAO: FIM, T, FRASES, INICIO_CAP, GAP};
 };
