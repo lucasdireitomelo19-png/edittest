@@ -291,7 +291,7 @@ const S20: React.FC = () => <CP>{(f, _t, pt) => <>
 const QUATRO: [Cfg, number, [number, number, number]][] = [['ultima', -0.5, [-0.62, 0.75, 0]], ['novo', 2.6, [0.62, 0.75, 0]], ['amasia', 0.6, [-0.62, -0.55, 0]], ['aurica', 2.4, [0.62, -0.55, 0]]];
 const S21: React.FC = () => <CP>{(f) => <>
   <Cam pos={[0, 0.1, 6.2 + f * 0.008]} alvo={[0, 0.1, 0]} /><Luzes sol={[2, 2, 4]} i={2.4} amb={0.3} /><Estrelas sem="p21" />
-  {QUATRO.map(([s, g, p], i) => <group key={s} scale={pr(f, i * 6, i * 6 + 14)}><Super s={s} pos={p} esc={0.5} giro={g + f * 0.012} /></group>)}
+  {QUATRO.map(([s, g, p], i) => <group key={s} scale={0.35 + 0.65 * pr(f, i * 6, i * 6 + 14)}><Super s={s} pos={p} esc={0.5} giro={g + f * 0.012} /></group>)}
   <Pos bloom={0.7} /></>}</CP>;
 // 22 · ninguém sabe qual: os quatro globos em volta de um ponto de interrogação de luz (câmera recuando)
 const INTERROG = (() => { const pts: THREE.Vector3[] = []; for (let i = 0; i <= 40; i++) { const a = Math.PI * 1.05 - i / 40 * Math.PI * 1.45; pts.push(new THREE.Vector3(Math.cos(a) * 0.32, 0.45 + Math.sin(a) * 0.32, 0)); }
@@ -331,8 +331,8 @@ const S = K.criarShort(W, PLANO, 'pangeia/narracao.mp3', 'e ninguem sabe', undef
 export const Video = S.Video; export const DURACAO = S.DURACAO;
 // thumb: "BRASIL COLA NA ÁFRICA" — o Nordeste vermelho encaixando no Golfo da Guiné, com a emenda em brasa
 export const ThumbCena: React.FC = () => <CP>{() => <>
-  <Cam pos={camLL(0, -8, 1.75)} /><Luzes sol={[1, 2, 4]} i={2.6} amb={0.3} /><Estrelas sem="pt" />
+  <Cam pos={camLL(-6, -4, 3.0)} alvo={(() => { const p = v(-6, -4, 0.35); return [p.x, p.y + 0.15, p.z] as [number, number, number]; })()} /><Luzes sol={[1, 2, 4]} i={2.8} amb={0.45} /><Estrelas sem="pt" />
   <Globo k={0.97} nordeste={1} guine={1} />
-  {Array.from({length: 14}, (_, i) => { const p = v(-3 + i * 0.8, -6 + i * 0.6, 1.03); return <Brilho key={i} pos={[p.x, p.y, p.z]} s={0.12} cor="#ff7a20" o={0.9} />; })}
+  {Array.from({length: 14}, (_, i) => { const p = v(-1 + i * 0.7, -9 + i * 0.35, 1.02); return <Brilho key={i} pos={[p.x, p.y, p.z]} s={0.07} cor="#ff7a20" o={0.9} />; })}
   <Pos bloom={1.1} /></>}</CP>;
 void AbsoluteFill;
