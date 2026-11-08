@@ -17,6 +17,8 @@ const V = (p: THREE.Vector3): V3 => [p.x, p.y, p.z];
 const ease = Easing.inOut(Easing.cubic);
 const lerp3 = (a: V3, b: V3, t: number): V3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 const useD = () => useVideoConfig().durationInFrames;
+// luz vinda de perto da câmera (um pouco acima e ao lado), para o globo nunca ficar no escuro
+const solDe = (c: V3): V3 => { const p = new THREE.Vector3(...c).normalize(); const lado = new THREE.Vector3(0, 1, 0).cross(p).normalize(); return V(p.multiplyScalar(4).add(lado.multiplyScalar(2.2)).add(new THREE.Vector3(0, 1.6, 0))); };
 const REP: Record<string, THREE.Texture> = {};
 const rep = (t: THREE.Texture, n: number) => { const k = t.uuid + n; if (!REP[k]) { const c = t.clone(); c.wrapS = c.wrapT = THREE.RepeatWrapping; c.repeat.set(n, n); c.needsUpdate = true; REP[k] = c; } return REP[k]; };
 
@@ -31,7 +33,7 @@ const G = (o: GOpt): React.FC => () => {
   return <CP rot={(f) => <>{(o.labs ?? []).map((l, i) => { const p = v(l.la, l.lo, 1.02); if (l.cont) p.applyQuaternion(qCfg(o.cfg ?? 'pangeia', l.cont, kk(f)));
     const g = interpolate(f, [0, d], o.giro ?? [0, 0]); p.applyAxisAngle(new THREE.Vector3(0, 1, 0), g);
     return <R3 key={i} cam={camF(f)} p={p} txt={l.txt} o={pr(f, l.ini ?? 4, (l.ini ?? 4) + 8)} dy={l.dy ?? -70} tam={l.tam ?? 60} />; })}</>}>{(f) => <>
-    <Cam pos={camF(f)} /><Luzes sol={o.sol ?? [2, 2, 4]} i={2.4} amb={o.amb ?? 0.28} /><Estrelas sem={'g' + (o.ca.join('') + (o.k ?? []).join(''))} />
+    <Cam pos={camF(f)} /><Luzes sol={o.sol ?? solDe(camF(f))} i={2.4} amb={o.amb ?? 0.28} /><Estrelas sem={'g' + (o.ca.join('') + (o.k ?? []).join(''))} />
     <Globo cfg={o.cfg ?? 'pangeia'} k={kk(f)} nordeste={o.ne ?? 0} guine={o.gu ?? 0} giro={interpolate(f, [0, d], o.giro ?? [0, 0])} />
     <Pos bloom={0.7} /></>}</CP>;
 };
@@ -42,9 +44,9 @@ const SS = (o: SOpt): React.FC => () => {
   const x = (f: number) => ease(Math.min(1, f / Math.max(1, d - 1)));
   const camF = (f: number) => { const cb = o.cb ?? o.ca; const t = x(f); return camLL(o.ca[0] + (cb[0] - o.ca[0]) * t, o.ca[1] + (cb[1] - o.ca[1]) * t, o.ca[2] + (cb[2] - o.ca[2]) * t); };
   return <CP rot={(f) => <>{(o.labs ?? []).map((l, i) => <R3 key={i} cam={camF(f)} p={v(l.la, l.lo, 1.02)} txt={l.txt} o={pr(f, l.ini ?? 4, (l.ini ?? 4) + 8)} dy={l.dy ?? -70} tam={l.tam ?? 60} />)}</>}>{(f) => <>
-    <Cam pos={camF(f)} /><Luzes sol={[2, 2, 4]} i={2.3} amb={o.amb ?? 0.28} /><Estrelas sem={'s' + o.s + o.ca.join('')} />
+    <Cam pos={camF(f)} /><Luzes sol={solDe(camF(f))} i={2.3} amb={o.amb ?? 0.28} /><Estrelas sem={'s' + o.s + o.ca.join('')} />
     <Super s={o.s} calor={o.calor ? interpolate(x(f), [0, 1], o.calor) : 0} verde={o.verde ? interpolate(x(f), [0, 1], o.verde) : 0} atmCor={o.atm} />
-    {o.gelo && <mesh><sphereGeometry args={[1.012, 96, 48, 0, Math.PI * 2, 0, Math.PI * interpolate(x(f), [0, 1], o.gelo)]} /><meshStandardMaterial color="#eef6ff" roughness={0.6} transparent opacity={0.92} /></mesh>}
+    {o.gelo && <mesh><sphereGeometry args={[1.012, 96, 48, 0, Math.PI * 2, 0, Math.PI * interpolate(x(f), [0, 1], o.gelo)]} /><meshStandardMaterial color="#eef6ff" emissive="#cfe0ff" emissiveIntensity={0.45} roughness={0.6} transparent opacity={0.92} /></mesh>}
     {o.extra && o.extra(f, d)}
     <Pos bloom={0.8} /></>}</CP>;
 };
@@ -135,7 +137,7 @@ const C1d: React.FC = () => <CP>{(f) => { const sl = f * 0.004; return <>
   <Pos bloom={1} /></>; }}</CP>;
 // a dorsal meso-atlântica no fundo do mar, com a fenda acesa
 const C1e: React.FC = () => <CP>{(f) => <>
-  <Cam pos={[1.6, 0.9, 3 - f * 0.01]} alvo={[0, 0.1, -1]} /><Luzes sol={[0, 5, 2]} i={1} amb={0.3} /><color attach="background" args={['#04121e']} /><fog attach="fog" args={['#062236', 1.5, 8]} />
+  <Cam pos={[1.6, 0.9, 3 - f * 0.01]} alvo={[0, 0.1, -1]} /><Luzes sol={[1, 5, 3]} i={1.8} amb={0.7} /><color attach="background" args={['#04121e']} /><fog attach="fog" args={['#062236', 1.5, 8]} />
   <mesh geometry={DORSAL}><meshStandardMaterial color="#3a3a40" roughness={1} flatShading /></mesh>
   <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.2, 0]}><planeGeometry args={[0.07, 8]} /><meshBasicMaterial color="#ff6a20" /></mesh>
   {Array.from({length: 14}, (_, i) => <Brilho key={i} pos={[0, 0.25, -3.5 + i * 0.5]} s={0.4} cor="#ff7a30" o={0.6 + 0.3 * Math.sin(f * 0.2 + i)} />)}
@@ -316,7 +318,7 @@ const C4h = G({cfg: 'ultima', ca: [20, -30, 3.0], cb: [15, -15, 2.7], k: [0.3, 0
 const C4i = G({ca: [36, -6, 2.6], cb: [36, -6, 1.6], labs: [{la: 36, lo: -5.6, txt: 'GIBRALTAR', ini: 20, dy: -60, tam: 56}]});
 const ARCO = relevo(160, (x, z, i) => -0.3 + Math.sin(x * 0.8) * 0.08 + (random('gb' + i) - 0.5) * 0.03 - Math.exp(-((z - 0.4 * x * x + 0.6) ** 2) / 0.02) * 0.35, 8);
 const C4j: React.FC = () => <CP>{(f) => <>
-  <Cam pos={[0, 1.5, 3.2 - f * 0.006]} alvo={[0, -0.4, -0.6]} /><Luzes sol={[0, 4, 2]} i={1} amb={0.3} /><color attach="background" args={['#03101c']} /><fog attach="fog" args={['#052036', 2, 9]} />
+  <Cam pos={[0, 1.5, 3.2 - f * 0.006]} alvo={[0, -0.4, -0.6]} /><Luzes sol={[1, 4, 3]} i={1.6} amb={0.6} /><color attach="background" args={['#03101c']} /><fog attach="fog" args={['#052036', 2, 9]} />
   <mesh geometry={ARCO}><meshStandardMaterial color="#3a3c44" roughness={1} flatShading /></mesh>
   {Array.from({length: 30}, (_, i) => { const x = -2.4 + i * 0.165; return <Brilho key={i} pos={[x, -0.6, 0.4 * x * x - 0.6]} s={0.3} cor="#ff6a20" o={pr(f, i * 3, i * 3 + 10) * (0.7 + 0.3 * Math.sin(f * 0.2 + i))} />; })}
   <Pos bloom={1.3} /></>}</CP>;
@@ -347,10 +349,10 @@ const C5a: React.FC = () => <CP>{(f) => <>
 const C5b = SS({s: 'amasia', ca: [75, -20, 3.4], cb: [70, 30, 3.2], gelo: [0.02, 0.12], labs: [{la: 65, lo: 10, txt: 'AMÁSIA', ini: 6, dy: -40, tam: 64}]});
 // supercomputador: fileiras de servidores e o mundo girando no meio
 const Servidores: React.FC<{f: number; cor: string}> = ({f, cor}) => <>{[-1, 1].map((l) => Array.from({length: 6}, (_, i) => <group key={l + '_' + i} position={[l * 1.5, 0, -i * 0.9]}>
-  <mesh position={[0, 0.6, 0]}><boxGeometry args={[0.6, 1.4, 0.7]} /><meshStandardMaterial color="#1a1e26" metalness={0.5} roughness={0.4} /></mesh>
+  <mesh position={[0, 0.6, 0]}><boxGeometry args={[0.6, 1.4, 0.7]} /><meshStandardMaterial color="#3a4454" metalness={0.4} roughness={0.45} /></mesh>
   {Array.from({length: 10}, (_, k) => <Brilho key={k} pos={[-l * 0.31, 0.05 + k * 0.13, (random('lz' + i + k) - 0.5) * 0.5]} s={0.035} cor={random('lc' + i + k + Math.floor(f / 5)) > 0.4 ? cor : '#2a3040'} o={0.9} />)}</group>))}</>;
 const C5c: React.FC = () => <CP rot={(f) => <Rotulo x={960} y={180} txt="NASA" o={pr(f, 10, 18)} tam={56} />}>{(f) => <>
-  <Cam pos={[0, 1.2, 3.4 - f * 0.008]} alvo={[0, 0.8, -1.5]} /><Luzes sol={[0, 4, 2]} i={0.8} amb={0.25} /><color attach="background" args={['#05070c']} />
+  <Cam pos={[0, 1.2, 3.4 - f * 0.008]} alvo={[0, 0.8, -1.5]} /><Luzes sol={[1, 4, 3]} i={1.8} amb={0.6} /><color attach="background" args={['#05070c']} />
   <mesh rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[10, 12]} /><meshStandardMaterial color="#0e1218" metalness={0.6} roughness={0.3} /></mesh>
   <Servidores f={f} cor="#4fd0ff" />
   <group position={[0, 0.9, -1.8]} scale={0.45}><Super s="amasia" giro={f * 0.02} /></group>
@@ -398,7 +400,7 @@ const C6e = G({cfg: 'ultima', ca: [45, 40, 3.0], cb: [45, 60, 2.8], k: [0.6, 1],
 const ANEL: V3[] = Array.from({length: 40}, (_, i) => { const a = i / 40 * Math.PI * 2; return V(v(15 + Math.sin(a) * 22, -25 + Math.cos(a) * 26, 1.015)); });
 const C6f = SS({s: 'ultima', ca: [15, -25, 2.8], cb: [15, -22, 2.5], extra: (f) => <>{ANEL.map((p, i) => <Brilho key={i} pos={p} s={0.09} cor="#ff6a20" o={pr(f, i * 2, i * 2 + 8)} />)}</>, labs: [{la: 15, lo: -25, txt: 'ANEL DE VULCÕES', ini: 70, dy: 0, tam: 50}]});
 const C6g = SS({s: 'ultima', ca: [5, 0, 4.2], cb: [10, 30, 3.6], labs: [{la: 20, lo: 15, txt: 'PANGEIA ÚLTIMA', ini: 10, dy: -120, tam: 72}]});
-const C6h = SS({s: 'ultima', ca: [80, 20, 3.4], cb: [85, 50, 3.0]});
+const C6h = SS({s: 'ultima', ca: [50, 0, 3.4], cb: [55, 30, 3.0]});
 const C6i: React.FC = () => <CP>{(f) => <>
   <Cam pos={[Math.sin(f * 0.01) * 3, 1.0, Math.cos(f * 0.01) * 3]} alvo={[0, 0.4, 0]} /><Luzes sol={[2, 5, 2]} i={2.4} amb={0.5} /><color attach="background" args={['#e8c48a']} /><fog attach="fog" args={['#e8c48a', 3, 14]} />
   <mesh geometry={DUNAS}><meshStandardMaterial color="#c08a52" roughness={1} /></mesh>
@@ -423,7 +425,7 @@ const C7b: React.FC = () => <CP>{(f) => { const b = pr(f, 0, 240); const pulso =
   <Brilho pos={[0, 0, 0.2]} s={5 + b * 2 + pulso} cor="#ffb040" o={0.75} />
   <Pos bloom={1.5} /></>; }}</CP>;
 const C7c: React.FC = () => <CP>{(f) => { const k = pr(f, 0, 80); return <>
-  <Cam pos={[0, 1.2, 4.4]} alvo={[0, 0.4, 0]} /><Luzes sol={[2, 4, 2]} i={1.6} amb={0.35} /><color attach="background" args={['#3a2a24']} />
+  <Cam pos={[0, 1.2, 4.4]} alvo={[0, 0.4, 0]} /><Luzes sol={[2, 4, 3]} i={2.2} amb={0.6} /><color attach="background" args={['#3a2a24']} />
   <mesh position={[-1.6 - 0.3 + k * 0.3, 0, 0]}><boxGeometry args={[2.4, 0.5, 2]} /><meshStandardMaterial color="#4a3e36" roughness={1} /></mesh>
   <mesh position={[1.6 + 0.3 - k * 0.3, 0, 0]}><boxGeometry args={[2.4, 0.5, 2]} /><meshStandardMaterial color="#42382f" roughness={1} /></mesh>
   {[-0.6, 0, 0.6].map((z, i) => <group key={i} position={[0, 0.25, z]}><mesh position={[0, 0.35 * k, 0]}><coneGeometry args={[0.35, 0.7 * k + 0.01, 16]} /><meshStandardMaterial color="#3a2e28" flatShading /></mesh>
@@ -441,7 +443,7 @@ const C7e: React.FC = () => <CP>{(f) => { const k = pr(f, 0, 80); return <>
   <Brilho pos={[0, 0.25, 0]} s={1.2 * k} cor="#ff6a20" o={0.6 * k} />
   <Pos bloom={1.2} /></>; }}</CP>;
 const C7f: React.FC = () => <CP rot={(f) => <Rotulo x={960} y={180} txt="BRISTOL" o={pr(f, 8, 16)} tam={56} />}>{(f) => <>
-  <Cam pos={[0, 1.1, 3.2 - f * 0.006]} alvo={[0, 0.9, -1.5]} /><Luzes sol={[0, 4, 2]} i={0.8} amb={0.3} /><color attach="background" args={['#0a0605']} />
+  <Cam pos={[0, 1.1, 3.2 - f * 0.006]} alvo={[0, 0.9, -1.5]} /><Luzes sol={[1, 4, 3]} i={1.8} amb={0.6} /><color attach="background" args={['#0a0605']} />
   <mesh rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[10, 12]} /><meshStandardMaterial color="#140c0a" metalness={0.5} roughness={0.4} /></mesh>
   <Servidores f={f} cor="#ff7a3a" />
   <mesh position={[0, 1, -2.4]}><planeGeometry args={[2.2, 1.3]} /><meshBasicMaterial color="#120806" /></mesh>
@@ -517,13 +519,13 @@ const C9b: React.FC = () => <CP>{(f) => <>
 const C9c = SS({s: 'aurica', ca: [0, 100, 3.6], cb: [5, 130, 3.0], labs: [{la: 5, lo: 120, txt: 'AURICA', ini: 4, dy: -120, tam: 76}]});
 const C9d = G({cfg: 'aurica', ca: [0, 150, 3.4], cb: [0, 120, 3.2], k: [0, 1], labs: [{la: 0, lo: 180, txt: 'EQUADOR', ini: 60, dy: 0, tam: 46}]});
 const C9e: React.FC = () => <CP rot={(f) => <Rotulo x={960} y={180} txt="NASA" o={pr(f, 8, 16)} tam={56} />}>{(f) => <>
-  <Cam pos={[0.8, 1.1, 3 - f * 0.006]} alvo={[0, 0.9, -1.5]} /><Luzes sol={[0, 4, 2]} i={0.8} amb={0.3} /><color attach="background" args={['#040a08']} />
+  <Cam pos={[0.8, 1.1, 3 - f * 0.006]} alvo={[0, 0.9, -1.5]} /><Luzes sol={[1, 4, 3]} i={1.8} amb={0.6} /><color attach="background" args={['#040a08']} />
   <mesh rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[10, 12]} /><meshStandardMaterial color="#0a1410" metalness={0.5} roughness={0.4} /></mesh>
   <Servidores f={f} cor="#5fe08a" />
   <group position={[0, 0.95, -1.6]} scale={0.5}><Super s="aurica" giro={f * 0.02} /></group>
   <Pos bloom={1} /></>}</CP>;
 const C9f: React.FC = () => <CP>{(f, tex) => <>
-  <Cam pos={camLL(5, 120 + f * 0.05, 2.8)} /><Luzes sol={[2, 2, 4]} i={2.4} amb={0.3} /><Estrelas sem="c9f" />
+  <Cam pos={camLL(5, 120 + f * 0.05, 2.8)} /><Luzes sol={solDe(camLL(5, 120 + f * 0.05, 2.8))} i={2.4} amb={0.3} /><Estrelas sem="c9f" />
   <Super s="aurica" />
   <mesh rotation={[0, f * 0.002, 0]}><sphereGeometry args={[1.015, 96, 96]} /><meshStandardMaterial color="#ffffff" alphaMap={tex.nuvem} transparent opacity={0.7} depthWrite={false} /></mesh>
   <Pos bloom={0.6} /></>}</CP>;
