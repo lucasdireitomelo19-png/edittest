@@ -239,7 +239,8 @@ export const criarLongo = (c: ConfigLongo) => {
   const CantoK: React.FC<{C: React.FC<{k: number}>}> = ({C}) => { const f = useCurrentFrame(); const k = INICIO_CAP.reduce((acc, t, i) => (f >= t ? i : acc), 0); return <C k={k} />; };
   const Entrada: React.FC<{children: React.ReactNode}> = ({children}) => {
     const f = useCurrentFrame();
-    const o = interpolate(f, [0, 6], [0, 1], clamp);
+    // no modo sem texto (cenas 3D) a entrada pelo preto vira uma piscada escura em cada corte; ali o corte é seco
+    const o = c.semTexto ? 1 : interpolate(f, [0, 6], [0, 1], clamp);
     return <AbsoluteFill style={{opacity: o}}>{children}</AbsoluteFill>;
   };
   const Fim = c.fim;
