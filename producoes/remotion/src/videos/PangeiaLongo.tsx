@@ -613,10 +613,11 @@ export const DURACAO = L.DURACAO;
 
 // thumb: "UM SÓ CONTINENTE" — supercontinente laranja e rachado, uma silhueta minúscula na borda
 export const ThumbCena: React.FC = () => <CP>{() => <>
-  <Cam pos={[-0.95, 0.3, 2.9]} alvo={[-0.6, 0.1, 0]} /><Luzes sol={[1, 2, 4]} i={2.6} amb={0.35} /><Estrelas sem="thl" />
+  <Cam pos={[-0.55, 0.2, 2.35]} alvo={[-0.42, 0.05, 0]} /><Luzes sol={[1, 2, 4]} i={2.8} amb={0.4} /><Estrelas sem="thl" />
   <group rotation={[0, -1.9, 0]}>
-    <Super s="ultima" calor={1} atmCor="1.0,0.45,0.15" />
-    <group position={V(v(12, 62, 1.0))} quaternion={new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), v(12, 62))}><Boneco s={0.13} /></group>
+    <Super s="ultima" calor={1.3} atmCor="1.0,0.4,0.1" />
+    <group position={V(v(14, 52, 1.0))} quaternion={new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), v(14, 52))}><Boneco s={0.2} cor="#000000" /></group>
   </group>
-  <Pos bloom={1.1} /></>}</CP>;
+  <Brilho pos={[0.6, 0.1, -0.5]} s={4.5} cor="#ff4a10" o={0.35} />
+  <Pos bloom={1.3} /></>}</CP>;
 void AbsoluteFill; void lerp3; void Pedras; void Nuvem;
