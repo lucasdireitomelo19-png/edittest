@@ -174,9 +174,21 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 - **Longo da Pangeia entregue (lado-102, 08/11, doc 58).** Longos 3D passam do limite de 2 h de uma tarefa em segundo plano: renderize em 4 partes (`--frames=a-b --muted`), passe `pipeline/tapa_preto.py` em cada uma, junte com concat e misture o áudio com ffmpeg. O config força crf, então o render só de áudio falha. O Observatório recebe cópia em 540p (< 19,5 MB).
 - **Teste de modelo encerrado (11/11):** o lado-103 foi feito no Fable, mas o dono achou que gastou token demais ("foi uma sessão pra um vídeo"). Decisão do dono: produzir no Opus 5.5.
 - **Lote 11/11 (4 Shorts) FECHADO:** lado-103 gelo (`Gelo`), 104 Antártida (`Antartida`), 105 Terra cubo (`Cubo`) e 106 grão de areia (`Grao`). Todos no Observatório como Pronto, com legendas e sem thumb.
-- **PRÓXIMO: longo do Apophis** (aprovado pelo dono em 11/11), `roteiros/longo_apophis.md` na branch `claude/practical-cannon-ly7fw1` (commit a64a6ad). São ~8 min, 1.920x1080, POV no molde do vídeo 20.
-  - **Tela:** contador de tempo no canto (FALTAM 25 ANOS → … → IMPACTO → DIA 1), vermelho na simulação e normal no "Mas espera". Velocímetro de 12,6 km/s. Nomes em neon sobre a faixa de risco de 2005. Nenhum selo.
-  - **Cuidados:** nada gráfico, sem rostos, sem o Brasil vendo o Apophis no céu, sem altura de onda.
-  - **Thumb (é longo):** "13 DE ABRIL DE 2029".
-  - **Como fazer:** use `criarLongo` com `semTexto` e um `canto` próprio (o contador), como em `PangeiaLongo.tsx`. Renderize em 4 partes (`--frames`), por causa do limite de 2 h de uma tarefa. Passe `pipeline/tapa_preto.py` em cada parte e misture o áudio com ffmpeg. Detalhes no doc 58.
+- **Entregues em 11/11 (tarde):**
+  - lado-107, longo do Apophis (`Apophis`, 7:16, doc 60). Thumb "UM ASTEROIDE VAI BATER NA TERRA!", pedida pelo dono.
+  - lado-108, Short do estoque de emergência (`Estoque`, 56 s, doc 61).
+  - Os dois estão no Observatório como Pronto. Roteirista e LadoSombrio avisados.
+- **Skills de motion (direção, 11/11):** `.claude/skills/motion-design` e `biblioteca-de-motion-documental`. As DIRETRIZES ficam acima das skills.
+  - **Usar nos próximos vídeos:**
+    - zoom de impacto na palavra forte;
+    - movimento entrando na palavra, nunca antes;
+    - nada linear em movimento espacial;
+    - overshoot e spring;
+    - pulsar em ponto de perigo;
+    - cascata de 0,06–0,1 s;
+    - traço se desenhando;
+    - drift lento de câmera;
+    - wipe 3D na troca de capítulo.
+  - **Ignorar:** os efeitos de texto e a paleta das skills.
+- **Render destacado:** `setsid nohup script.sh &` escapa do limite de 2 h das tarefas. Um longo de ~13 mil quadros leva ~2h30 em 4 partes.
 - **Economia (dono, 11/11):** o dono reclamou do gasto de tokens. Revise com 1 folha de contato e stills pontuais, sem repetir renders de revisão à toa, e troque de conversa ao fechar cada lote.
