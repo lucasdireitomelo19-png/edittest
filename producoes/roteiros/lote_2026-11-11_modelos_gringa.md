@@ -31,7 +31,7 @@
 ---
 
 ## 1 · E SE TODO o GELO da Terra DERRETESSE? O MAPA que NINGUÉM quer ver
-**Formato:** Short (modelo A, mapa de satélite)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (modelo A, mapa de satélite)   **Status:** APROVADO pelo dono (11/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: um modelo provado (7,1 e 6 mi de views), cidades reais sumindo e o Brasil no mapa. Ponto mais fraco: o tema é conhecido, então o ângulo Brasil (os morros do Rio virando ilhas, a Amazônia virando braço de mar) precisa vir rápido.
 
@@ -100,7 +100,7 @@ Escolhido: **o 3 seguido do 1**. A pergunta abre como título grande, e o "olha 
 ---
 
 ## 2 · O QUE ESCONDEM 4 KM de GELO na ANTÁRTIDA? (florestas, vulcões e LAGOS)
-**Formato:** Short (modelo A, mapa de satélite)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (modelo A, mapa de satélite)   **Status:** APROVADO pelo dono (11/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: o modelo mais forte do lote (29 mi de views), com uma revelação a cada camada de gelo tirada, até o final com floresta. Ponto mais fraco: o título promete "4 km" e a fala precisa entregar esse número logo.
 
@@ -161,7 +161,7 @@ Escolhido: **o 2 seguido de uma versão curta do 1**. A pergunta abre como títu
 ---
 
 ## 3 · E SE a TERRA fosse um CUBO? Você NÃO ia aguentar o CANTO
-**Formato:** Short (modelo B, simulação 3D)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (modelo B, simulação 3D)   **Status:** APROVADO pelo dono (11/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥 8/10. Ponto mais forte: uma imagem impossível e uma física que surpreende (o chão vira ladeira, os oceanos viram seis lagos). Ponto mais fraco: a referência mais famosa é um vídeo do Kurzgesagt, e o nosso precisa de visual e frases próprios.
 
@@ -219,7 +219,7 @@ Escolhido: **o 2**, com a imagem do globo virando cubo no 1º segundo. A ladeira
 ---
 
 ## 4 · E SE um GRÃO de AREIA BATESSE na TERRA a QUASE a VELOCIDADE da LUZ?
-**Formato:** Short (modelo B, simulação 3D)   **Status:** aguardando aprovação (v1)
+**Formato:** Short (modelo B, simulação 3D)   **Status:** APROVADO pelo dono (11/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: uma escada perfeita para contador (99% → 99,99% → …) e um choque de escala (um grão = Hiroshima). A virada é real: uma partícula do espaço já chegou com a energia de uma bola arremessada. Ponto mais fraco: o canal já fez "1 tonelada a 50% da luz" (lado-99), então aqui o diferencial é o objeto minúsculo.
 
