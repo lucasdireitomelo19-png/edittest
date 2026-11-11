@@ -442,7 +442,7 @@ dialog::backdrop { background: rgba(3,4,10,.85); }
   const tick = () => { clock.textContent = "Brasília · " + fmtClock.format(new Date()); }; tick(); setInterval(tick, 30000);
 
   /* =================== ESTADO =================== */
-  const S = { agentes: [], eventos: [], videos: [], pedidos: [], metricas: null, filtro: "todos", st: "comando", ready: false };
+  const S = { agentes: [], eventos: [], videos: [], pedidos: [], metricas: null, filtro: "todos", st: "comando", ready: false, sel: null };
   try { S.filtro = localStorage.getItem("obs-filtro") || "todos"; } catch (e) {}
   let DB = null, MCP = null;
 
@@ -570,11 +570,46 @@ dialog::backdrop { background: rgba(3,4,10,.85); }
       const b = el("button", "btn primary sm", "Enviar pedido"); b.type = "submit"; const m = el("div", "msg");
       row.append(b); f.append(ta, row, m);
       f.addEventListener("submit", async e => { e.preventDefault(); if (await enviarPedido(a, ta.value, m, b)) ta.value = ""; });
+      const ver = el("button", "btn sm", S.sel === a.id ? "Ocultar entregas" : "Ver entregas");
+      ver.addEventListener("click", () => { S.sel = S.sel === a.id ? null : a.id; render(); const d = document.getElementById("entregas"); if (d && S.sel) d.scrollIntoView({ behavior: STILL ? "auto" : "smooth", block: "start" }); });
+      row.append(ver);
+      if (S.sel === a.id) c.style.borderColor = "var(--accent-2)";
       c.append(f); box.append(c);
     });
     s.append(box);
+    const alvo = S.agentes.find(a => a.id === S.sel);
+    if (alvo) s.append(entregasPanel(alvo));
     const g = el("div", "grid2"); g.append(feedPanel(14), pedidosPanel()); s.append(g);
     return s;
+  }
+  function entregasPanel(a) {
+    const p = el("div", "panel glass"); p.id = "entregas";
+    const h = el("h2", "", "Entregas de " + a.nome); h.append(el("small", "", "tudo o que o agente avisou, do mais novo ao mais antigo")); p.append(h);
+    const ids = [a.sessao].concat(a.anteriores || []);
+    const evs = S.eventos.filter(e => ids.includes(e.sessao)).sort((x, y) => (y.ts || "").localeCompare(x.ts || ""));
+    const g = el("div", "grid2");
+    const ul = el("ul", "list feed");
+    if (!evs.length) ul.append(el("li", "empty", "Esse agente ainda não mandou avisos."));
+    evs.slice(0, 40).forEach(e => {
+      const st = e.estado === "arq" ? "none" : e.estado; const li = el("li", "s-" + st); li.append(el("span", "dt"));
+      const c = el("div"); const top = el("div"); top.append(el("span", "who", LABEL[st] || "Troca de conversa"), document.createTextNode(" "), el("span", "ago", ago(e.ts) + (e.ts ? " · " + new Date(e.ts).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "")));
+      c.append(top, el("div", "txt", e.faz || ""));
+      if (e.pedido) { const pd = el("div", "notes", "Pedido: " + e.pedido); c.append(pd); }
+      li.append(c); ul.append(li);
+    });
+    g.append(ul);
+    // vídeos entregues (para o Gerador) ou pedidos feitos a esse agente
+    const lado = el("div"); lado.style.display = "grid"; lado.style.gap = "10px"; lado.style.alignContent = "start";
+    if (/v[ií]deo/i.test(a.nome) || a.id === "videos") {
+      lado.append(el("div", "eyebrow", "Vídeos entregues"));
+      const vs = [...S.videos].sort((x, y) => (y.ordem || 0) - (x.ordem || 0)).slice(0, 16);
+      vs.forEach(v => { const r = el("div", "pcard"); const t = el("div", "t", vTitle(v)); t.tabIndex = 0; t.addEventListener("click", () => openVideo(v)); const m = el("div", "m"); m.append(el("span", "", (v.tipo === "longo" ? "Longo" : "Short") + " · #" + v.ordem), el("span", "st-" + (v.status || "").toLowerCase(), v.status || "")); r.append(t, m); lado.append(r); });
+    }
+    const ps = S.pedidos.filter(x => x.agente_id === a.id || x.agente === a.nome).sort((x, y) => (y.ts || "").localeCompare(x.ts || ""));
+    lado.append(el("div", "eyebrow", "Seus pedidos para " + a.nome));
+    if (!ps.length) lado.append(el("div", "empty", "Nenhum pedido enviado pelo Observatório."));
+    ps.slice(0, 10).forEach(x => { const r = el("div", "pcard"); r.append(el("div", "", x.texto)); const m = el("div", "m"); m.append(el("span", "", ago(x.ts)), el("span", x.status === "pendente" ? "st-programado" : "st-postado", x.status === "pendente" ? "aguardando entrega" : "entregue")); r.append(m); lado.append(r); });
+    g.append(lado); p.append(g); return p;
   }
   function pedidosPanel() {
     const p = el("div", "panel glass"); const h = el("h2", "", "Seus pedidos"); h.append(el("small", "", "enviados por aqui")); p.append(h);
@@ -846,7 +881,8 @@ dialog::backdrop { background: rgba(3,4,10,.85); }
     if (!db) { S.ready = true; main.innerHTML = ""; const s = el("section", "station"); s.append(head("Observatório", "Entre no claude.ai", "Os agentes, os vídeos e os números aparecem quando você abre o Observatório com sua conta.")); main.append(s); return; }
     DB = db;
     let pend = 4; const done = () => { if (--pend <= 0) S.ready = true; };
-    const sub = (name, key) => db.collection(name).onSnapshot(snap => { S[key] = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done(); schedule(); }, () => { done(); schedule(); });
+    const normTs = o => { if (o && o.ts != null && typeof o.ts !== "string") { const d = new Date(typeof o.ts === "number" ? o.ts : (o.ts.seconds ? o.ts.seconds * 1000 : o.ts)); o.ts = isNaN(d) ? "" : d.toISOString(); } return o; };
+    const sub = (name, key) => db.collection(name).onSnapshot(snap => { S[key] = snap.docs.map(d => normTs(Object.assign({ id: d.id }, d.data()))); done(); schedule(); }, () => { done(); schedule(); });
     sub("agentes", "agentes"); sub("eventos", "eventos"); sub("videos", "videos"); sub("pedidos", "pedidos");
     db.doc("metricas/youtube").onSnapshot(snap => { S.metricas = snap.exists ? snap.data() : null; schedule(); }, () => {});
   })();
