@@ -47,6 +47,7 @@ import {Video as Alien, Thumb as ThumbAlien, DURACAO as DUR_ALIEN} from './video
 import {Video as BnSala, ThumbCena as ThumbBnSala, DURACAO as DUR_BNSALA} from './videos/BnSala';
 import {Video as Pangeia, ThumbCena as ThumbPangeia, DURACAO as DUR_PANGEIA} from './videos/Pangeia';
 import {Video as PangeiaLongo, ThumbCena as ThumbPangeiaLongo, DURACAO as DUR_PGL} from './videos/PangeiaLongo';
+import {Video as Gelo, ThumbCena as ThumbGelo, DURACAO as DUR_GELO} from './videos/Gelo';
 import {Teste3D, DURACAO_3D} from './videos/Teste3D';
 import {Video as BnPerto, Thumb as ThumbBnPerto, DURACAO as DUR_BNPERTO} from './videos/BnPerto';
 // Cada vídeo novo vira um arquivo em src/videos/ e uma <Composition> aqui.
@@ -87,6 +88,8 @@ export const Root = () => (
     <Still id="ThumbPangeia" component={ThumbPangeia} width={1080} height={1920} />
     <Composition id="PangeiaLongo" component={PangeiaLongo} durationInFrames={DUR_PGL} fps={30} width={1920} height={1080} />
     <Still id="ThumbPangeiaLongo" component={ThumbPangeiaLongo} width={1920} height={1080} />
+    <Composition id="Gelo" component={Gelo} durationInFrames={DUR_GELO} fps={30} width={1080} height={1920} />
+    <Still id="ThumbGelo" component={ThumbGelo} width={1080} height={1920} />
     <Composition id="Teste3D" component={Teste3D} durationInFrames={DURACAO_3D} fps={30} width={1080} height={1920} />
     <Composition id="BnPerto" component={BnPerto} durationInFrames={DUR_BNPERTO} fps={30} width={1080} height={1920} />
     <Still id="ThumbBnPerto" component={ThumbBnPerto} width={1080} height={1920} />
