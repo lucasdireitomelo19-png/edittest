@@ -469,33 +469,28 @@ dialog::backdrop { background: rgba(3,4,10,.85); }
     try { const r = await mcp.listTools("Claude Code Remote"); const s = (r.servers || [])[0]; return !!(s && (s.tools || []).some(t => t.name === "send_message")); }
     catch (e) { return false; }
   }
-  async function salvarPendente(agente, texto, msg, motivo) {
-    if (!DB) { msg.className = "msg bad"; msg.textContent = "Abra o Observatório no claude.ai, com sua conta, para pedir."; return false; }
-    try {
-      await DB.collection("pedidos").add({ agente: agente.nome, agente_id: agente.id, sessao: agente.sessao, texto, ts: new Date().toISOString(), status: "pendente" });
-      msg.className = "msg ok"; msg.textContent = "Pedido salvo. A direção entrega para " + agente.nome + " na próxima verificação (de hora em hora, das 9h às 23h)." + (motivo ? " " + motivo : "");
-      return true;
-    } catch (e) { msg.className = "msg bad"; msg.textContent = "Não deu para salvar o pedido. Tente de novo."; return false; }
-  }
+  // Todo pedido é salvo primeiro como "pendente"; depois tenta o envio direto.
+  // Se o envio direto não confirmar, a direção entrega na verificação de hora em hora.
   async function enviarPedido(agente, texto, msg, btn) {
     texto = (texto || "").trim();
     if (!texto) { msg.className = "msg warn"; msg.textContent = "Escreva o pedido antes de enviar."; return false; }
     if (!agente) { msg.className = "msg bad"; msg.textContent = "Escolha um agente."; return false; }
-    btn.disabled = true; msg.className = "msg"; msg.textContent = "Enviando…";
+    if (!DB) { msg.className = "msg bad"; msg.textContent = "Abra o Observatório no claude.ai, com sua conta, para pedir."; return false; }
+    btn.disabled = true; msg.className = "msg"; msg.textContent = "Salvando…";
+    let ref;
+    try { ref = await DB.collection("pedidos").add({ agente: agente.nome, agente_id: agente.id, sessao: agente.sessao || "", texto, ts: new Date().toISOString(), status: "pendente" }); }
+    catch (e) { btn.disabled = false; msg.className = "msg bad"; msg.textContent = "Não deu para salvar o pedido. Tente de novo."; return false; }
+    const salvo = "Pedido salvo. A direção entrega para " + agente.nome + " na próxima verificação (de hora em hora, das 9h às 23h).";
+    msg.className = "msg ok"; msg.textContent = salvo + " Tentando entregar agora…";
     try {
       const mcp = await getMcp();
-      if (!mcp || !agente.sessao || !(await podeEnviarDireto(mcp))) return await salvarPendente(agente, texto, msg, "");
-      try {
+      if (mcp && agente.sessao && await podeEnviarDireto(mcp)) {
         await mcp.callTool("Claude Code Remote", "send_message", { session_id: agente.sessao, message: "Pedido do dono (enviado pelo Observatório): " + texto }, { cache: false });
-        msg.className = "msg ok"; msg.textContent = "Enviado direto para " + agente.nome + ".";
-        if (DB) DB.collection("pedidos").add({ agente: agente.nome, agente_id: agente.id, sessao: agente.sessao, texto, ts: new Date().toISOString(), status: "entregue" }).catch(() => {});
-        return true;
-      } catch (e) {
-        const c = e && e.code;
-        if (c === "server_unavailable" || c === "upstream_error" || c === "cancelled") { msg.className = "msg warn"; msg.textContent = "Sem resposta do servidor. O pedido pode ter chegado; confira na conversa antes de reenviar."; return false; }
-        return await salvarPendente(agente, texto, msg, "");
-      }
-    } finally { btn.disabled = false; }
+        await ref.update({ status: "entregue", entregue_em: new Date().toISOString(), via: "direto" }).catch(() => {});
+        msg.textContent = "Entregue agora para " + agente.nome + ".";
+      } else msg.textContent = salvo;
+    } catch (e) { msg.className = "msg ok"; msg.textContent = salvo; }
+    btn.disabled = false; return true;
   }
 
   /* =================== ESTAÇÕES =================== */
