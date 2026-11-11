@@ -3,19 +3,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: fundo de universo em canvas fixo; por cima, painéis de vidro em grade — resumo, agentes, vídeos, atividade. */
+/* Layout: cena 3D fixa (planeta, lua, cinturão, estrelas) atrás; navegação de 5 estações no topo; cada estação move a câmera e mostra seus painéis de vidro. */
 :root {
   color-scheme: dark;
-  --void: #05060d;
-  --ink: #e9ecff;
-  --ink-dim: #a3a9cf;
-  --ink-faint: #6d7399;
-  --glass: rgba(150, 165, 255, 0.07);
-  --glass-hi: rgba(170, 185, 255, 0.13);
+  --void: #04050c;
+  --ink: #eaedff;
+  --ink-dim: #a6acd2;
+  --ink-faint: #6b7199;
+  --glass: rgba(140, 155, 255, 0.07);
+  --glass-hi: rgba(170, 185, 255, 0.14);
+  --glass-solid: rgba(10, 12, 28, 0.72);
   --edge: rgba(190, 200, 255, 0.16);
-  --edge-hi: rgba(210, 220, 255, 0.32);
+  --edge-hi: rgba(210, 220, 255, 0.34);
   --accent: #9d8cff;
   --accent-2: #5fd4ff;
+  --ember: #ff8a4c;
   --ok: #5fe3a1;
   --warn: #ffc65c;
   --bad: #ff6b7d;
@@ -28,395 +30,700 @@
 * { box-sizing: border-box; }
 html, body { background: var(--void); color: var(--ink); }
 body { font-family: var(--f-body); font-size: 15px; line-height: 1.5; min-height: 100vh; }
-#sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
-.wrap {
-  position: relative; z-index: 1; max-width: 1280px; margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 28px 56px;
-  display: grid; gap: 22px;
+#space { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+.shade { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 120%, rgba(4,5,12,0) 30%, rgba(4,5,12,.55) 100%); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: rgba(6, 8, 20, 0.9); }
+
+/* ---------- topo ---------- */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 12px;
+  background: linear-gradient(180deg, rgba(4,5,12,.85), rgba(4,5,12,.35));
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--edge);
 }
+.bar-in { max-width: 1240px; margin: 0 auto; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.logo { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.logo b { font-family: var(--f-display); font-weight: 800; font-size: 18px; letter-spacing: -.01em; white-space: nowrap; }
+.logo b span { background: linear-gradient(90deg, var(--ink), var(--accent) 60%, var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.logo small { font-family: var(--f-mono); font-size: 11px; color: var(--ink-faint); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+nav { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+nav a { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-dim); text-decoration: none; padding: 8px 12px; border-radius: 999px; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 7px; }
+nav a .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .55; }
+nav a[aria-current="page"] { color: var(--ink); border-color: var(--edge-hi); background: var(--glass-hi); }
+nav a[aria-current="page"] .dot { opacity: 1; background: var(--accent-2); box-shadow: 0 0 10px var(--accent-2); }
+nav a:hover { color: var(--ink); }
+nav a .badge { font-size: 10px; background: var(--warn); color: var(--void); border-radius: 999px; padding: 0 6px; font-weight: 700; }
+nav a .badge:empty { display: none; }
+.clock { font-family: var(--f-mono); font-size: 12px; color: var(--ink-faint); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---------- estações ---------- */
+main {
+  position: relative; z-index: 1; max-width: 1240px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 26px 70px;
+}
+.station { display: grid; gap: 20px; animation: rise .55s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+.st-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.st-head h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(26px, 4.2vw, 44px); line-height: 1.05; margin: 0; text-wrap: balance; text-shadow: 0 2px 30px rgba(0,0,0,.6); }
+.st-head p { margin: 6px 0 0; color: var(--ink-dim); max-width: 60ch; }
+.eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-2); }
 .glass {
-  background: linear-gradient(160deg, var(--glass-hi), var(--glass) 55%);
-  border: 1px solid var(--edge);
-  border-radius: var(--r);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: linear-gradient(160deg, var(--glass-hi), var(--glass) 55%), var(--glass-solid);
+  border: 1px solid var(--edge); border-radius: var(--r);
+  backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 0 10px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.07);
 }
-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; }
-.brand h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(26px, 4.4vw, 44px); line-height: 1.05; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
-.brand h1 span { background: linear-gradient(90deg, var(--ink), var(--accent) 60%, var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.brand p { margin: 6px 0 0; color: var(--ink-dim); font-size: 14px; }
-.eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
-.clock { font-family: var(--f-mono); font-size: 13px; color: var(--ink-dim); padding: 8px 14px; border-radius: 999px; font-variant-numeric: tabular-nums; }
-.clock b { color: var(--ink); font-weight: 600; }
+.panel { padding: 18px; min-width: 0; }
+.panel h2 { font-family: var(--f-display); font-weight: 600; font-size: 16px; margin: 0 0 12px; letter-spacing: .01em; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.panel h2 small { font-family: var(--f-mono); font-size: 11px; font-weight: 400; color: var(--ink-faint); letter-spacing: .04em; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.kpi { padding: 16px 18px; display: grid; gap: 2px; min-width: 0; position: relative; overflow: hidden; }
+.kpi .n { font-family: var(--f-display); font-size: 30px; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--ink-dim); font-size: 13px; }
+.kpi .s { color: var(--ink-faint); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kpi svg { position: absolute; right: 0; bottom: 0; width: 55%; height: 46px; opacity: .55; }
+.c-ok { color: var(--ok); } .c-warn { color: var(--warn); } .c-work { color: var(--work); } .c-acc { color: var(--accent); } .c-ember { color: var(--ember); }
 
-.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-.stat { padding: 16px 18px; display: grid; gap: 4px; min-width: 0; }
-.stat .n { font-family: var(--f-display); font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; }
-.stat .l { color: var(--ink-dim); font-size: 13px; }
-.stat .sub { color: var(--ink-faint); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.stat.warn .n { color: var(--warn); }
-.stat.work .n { color: var(--work); }
-.stat.ok .n { color: var(--ok); }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.row .t { font-weight: 600; font-size: 14px; }
+.row .d { color: var(--ink-dim); font-size: 13px; }
+.empty { color: var(--ink-faint); font-size: 13.5px; padding: 14px; text-align: center; }
+.datebox { font-family: var(--f-mono); text-align: center; border: 1px solid var(--edge); border-radius: 10px; padding: 4px 0; width: 54px; line-height: 1.15; }
+.datebox b { display: block; font-family: var(--f-display); font-size: 17px; font-weight: 600; }
+.datebox small { font-size: 10px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .1em; }
 
-section > .head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
-section h2 { font-family: var(--f-display); font-weight: 600; font-size: 19px; margin: 0; letter-spacing: 0.01em; }
-section .head .hint { color: var(--ink-faint); font-size: 13px; }
-
-.agents { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
-.agent { padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; position: relative; overflow: hidden; }
-.agent::before { content: ""; position: absolute; inset: -40% -40% auto auto; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle, var(--halo, transparent), transparent 70%); opacity: 0.55; pointer-events: none; }
-.agent .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.agent .name { font-weight: 700; font-size: 16px; }
-.agent .role { color: var(--ink-faint); font-size: 12.5px; margin-top: -6px; }
-.agent .doing { color: var(--ink-dim); font-size: 13.5px; min-height: 2.9em; }
-.agent .meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--f-mono); font-size: 11px; color: var(--ink-faint); }
-.agent a { color: var(--accent-2); text-decoration: none; }
-.agent a:hover, .agent a:focus-visible { text-decoration: underline; }
-.pill { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
 .pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 .s-work { color: var(--work); } .s-wait { color: var(--warn); } .s-idle { color: var(--ok); } .s-fail { color: var(--bad); } .s-none { color: var(--ink-faint); }
 .s-work.pill::before { animation: pulse 1.6s ease-in-out infinite; }
-@keyframes pulse { 50% { opacity: 0.25; } }
+@keyframes pulse { 50% { opacity: .25; } }
 
-.floor-label { grid-column: 1 / -1; margin-top: 4px; }
+.btn { font: inherit; font-size: 13px; color: var(--ink); background: var(--glass-hi); border: 1px solid var(--edge-hi); border-radius: 10px; padding: 7px 12px; cursor: pointer; }
+.btn:hover { background: rgba(170,185,255,.24); }
+.btn.primary { background: linear-gradient(135deg, rgba(157,140,255,.5), rgba(95,212,255,.38)); border-color: var(--accent); font-weight: 600; }
+.btn.sm { font-size: 12px; padding: 4px 9px; border-radius: 8px; }
+.btn[disabled] { opacity: .55; cursor: progress; }
+.btn:focus-visible, nav a:focus-visible, .vcard:focus-visible, .chip:focus-visible, textarea:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+textarea, input, select { font: inherit; font-size: 14px; color: var(--ink); background: rgba(4,5,12,.55); border: 1px solid var(--edge-hi); border-radius: 10px; padding: 8px 10px; width: 100%; color-scheme: dark; }
+textarea { min-height: 84px; resize: vertical; }
+label.f { display: grid; gap: 5px; font-size: 12.5px; color: var(--ink-dim); }
+.msg { font-size: 12.5px; color: var(--ink-faint); min-height: 1.2em; }
+.msg.ok { color: var(--ok); } .msg.bad { color: var(--bad); } .msg.warn { color: var(--warn); }
 
-.cols { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr); gap: 22px; align-items: start; }
-.filters { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { font: inherit; font-size: 13px; color: var(--ink-dim); background: var(--glass); border: 1px solid var(--edge); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
-.chip[aria-pressed="true"] { color: var(--ink); border-color: var(--accent); background: rgba(157, 140, 255, 0.18); }
-.chip:focus-visible, .vcard:focus-visible, button:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
-
-.videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
-.vcard { all: unset; cursor: pointer; display: grid; grid-template-rows: auto 1fr; overflow: hidden; min-width: 0; }
-.vcard .frame { position: relative; aspect-ratio: 9 / 16; max-width: 100%; background: #0b0d1c; overflow: hidden; border-bottom: 1px solid var(--edge); }
-.vcard.longo { grid-column: span 2; }
-.vcard.longo .frame { aspect-ratio: 16 / 9; }
-.vcard .frame video, .vcard .frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
-.vcard:hover .frame video, .vcard:hover .frame img { transform: scale(1.04); }
-.vcard .badge { position: absolute; top: 8px; left: 8px; }
-.vcard .num { position: absolute; bottom: 8px; right: 8px; font-family: var(--f-mono); font-size: 11px; padding: 3px 7px; border-radius: 6px; background: rgba(5, 6, 13, 0.7); color: var(--ink-dim); }
-.vcard .body { padding: 12px 12px 14px; display: grid; gap: 6px; align-content: start; }
-.vcard .t { font-weight: 600; font-size: 14px; line-height: 1.3; }
-.vcard .d { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-faint); display: flex; justify-content: space-between; gap: 6px; }
-.vcard .d .when { color: var(--accent-2); }
-.tag { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 7px; border-radius: 6px; background: rgba(5, 6, 13, 0.72); border: 1px solid var(--edge); color: var(--ink); }
-
-.side { display: grid; gap: 22px; }
-.panel { padding: 16px 18px; }
-.agenda, .feed { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.agenda li { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 10px; align-items: center; }
-.agenda .date { font-family: var(--f-mono); text-align: center; border: 1px solid var(--edge); border-radius: 10px; padding: 5px 0; line-height: 1.15; }
-.agenda .date b { display: block; font-size: 18px; font-family: var(--f-display); font-weight: 600; }
-.agenda .date small { font-size: 10px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.1em; }
-.agenda .what { font-size: 13.5px; }
-.agenda .what small { display: block; color: var(--ink-faint); font-size: 12px; }
+/* agentes */
+.agents { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.agent { padding: 16px; display: grid; gap: 10px; align-content: start; position: relative; overflow: hidden; min-width: 0; }
+.agent::before { content: ""; position: absolute; inset: -45% -45% auto auto; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, var(--halo, transparent), transparent 70%); opacity: .55; pointer-events: none; }
+.agent .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.agent .name { font-weight: 700; font-size: 16px; }
+.agent .role { color: var(--ink-faint); font-size: 12.5px; margin-top: -6px; }
+.agent .doing { color: var(--ink-dim); font-size: 13.5px; min-height: 2.9em; }
+.agent .meta { display: flex; justify-content: space-between; gap: 8px; font-family: var(--f-mono); font-size: 11px; color: var(--ink-faint); align-items: center; }
+.agent a { color: var(--accent-2); text-decoration: none; }
+.agent form { display: grid; gap: 8px; }
 .feed li { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; font-size: 13px; }
-.feed .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-top: 6px; }
+.feed .dt { width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-top: 6px; }
 .feed .who { font-weight: 600; }
 .feed .ago { font-family: var(--f-mono); font-size: 11px; color: var(--ink-faint); }
 .feed .txt { color: var(--ink-dim); }
-.agenda li.empty, .feed li.empty { display: block; }
-.empty { color: var(--ink-faint); font-size: 13.5px; padding: 18px; text-align: center; }
 
-dialog { padding: 0; border: none; background: transparent; color: var(--ink); max-width: min(980px, calc(100vw - 24px)); width: 100%; max-height: calc(100dvh - 24px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
-dialog::backdrop { background: rgba(3, 4, 10, 0.72); backdrop-filter: blur(6px); }
-.modal { position: relative; display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr); gap: 0; overflow: hidden; align-items: start; }
+/* produção */
+.board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: start; }
+.col { padding: 12px; display: grid; gap: 10px; min-width: 0; }
+.col h3 { margin: 0; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; display: flex; justify-content: space-between; color: var(--ink-dim); }
+.col h3 b { color: var(--ink); }
+.pcard { background: rgba(4,5,12,.55); border: 1px solid var(--edge); border-radius: 12px; padding: 10px; display: grid; gap: 8px; min-width: 0; }
+.pcard .t { font-size: 13.5px; font-weight: 600; line-height: 1.3; cursor: pointer; }
+.pcard .t:hover { color: var(--accent-2); }
+.pcard .m { font-family: var(--f-mono); font-size: 11px; color: var(--ink-faint); display: flex; justify-content: space-between; gap: 6px; }
+.pcard .acts { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pcard input[type=date] { width: auto; padding: 3px 6px; font-size: 12px; border-radius: 8px; }
+.newform { display: grid; grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)); gap: 12px; }
+.newform .full { grid-column: 1 / -1; }
+
+/* vídeos */
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: 13px; color: var(--ink-dim); background: var(--glass); border: 1px solid var(--edge); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--ink); border-color: var(--accent); background: rgba(157,140,255,.2); }
+.videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.vcard { all: unset; cursor: pointer; display: grid; grid-template-rows: auto 1fr; overflow: hidden; min-width: 0; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+.vcard:hover { transform: translateY(-4px); }
+.vcard .frame { position: relative; aspect-ratio: 9/16; max-width: 100%; background: #0b0d1c; overflow: hidden; border-bottom: 1px solid var(--edge); }
+.vcard.longo { grid-column: span 2; } .vcard.longo .frame { aspect-ratio: 16/9; }
+.vcard .frame video, .vcard .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vcard .badge { position: absolute; top: 8px; left: 8px; }
+.vcard .num { position: absolute; bottom: 8px; right: 8px; font-family: var(--f-mono); font-size: 11px; padding: 3px 7px; border-radius: 6px; background: rgba(5,6,13,.7); color: var(--ink-dim); }
+.vcard .body { padding: 12px; display: grid; gap: 6px; align-content: start; }
+.vcard .t { font-weight: 600; font-size: 14px; line-height: 1.3; }
+.vcard .d { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-faint); display: flex; justify-content: space-between; gap: 6px; }
+.vcard .d .when { color: var(--accent-2); }
+.vcard.is-postado .frame { opacity: .55; }
+.tag { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 7px; border-radius: 6px; background: rgba(5,6,13,.72); border: 1px solid var(--edge); color: var(--ink); }
+.st-programado { color: var(--warn); } .st-postado { color: var(--ok); } .st-teste { color: var(--accent); }
+.ph { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 10px; padding: 12px; text-align: center; background: radial-gradient(circle at 30% 20%, rgba(157,140,255,.35), transparent 60%), radial-gradient(circle at 80% 90%, rgba(95,212,255,.25), transparent 55%), #0b0d1c; }
+.ph-play { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--edge-hi); background: rgba(255,255,255,.08); font-size: 16px; padding-left: 3px; }
+.ph-t { font-family: var(--f-display); font-size: 13px; line-height: 1.25; text-wrap: balance; }
+
+/* insights */
+.chart-wrap { overflow-x: auto; }
+.chart { width: 100%; min-width: 640px; height: 220px; display: block; }
+.chart text { fill: var(--ink-faint); font-family: var(--f-mono); font-size: 10px; }
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); font-weight: 400; padding: 6px 8px; border-bottom: 1px solid var(--edge); white-space: nowrap; }
+td { padding: 8px; border-bottom: 1px solid rgba(190,200,255,.07); vertical-align: middle; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--f-mono); white-space: nowrap; }
+.retbar { display: flex; align-items: center; gap: 8px; min-width: 110px; }
+.retbar i { display: block; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+.retbar.low i { background: linear-gradient(90deg, #7a4a5a, var(--bad)); }
+.ins { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ins li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; font-size: 14px; color: var(--ink-dim); }
+.ins li::before { content: "✦"; color: var(--accent-2); }
+.split { display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 8px 0 6px; }
+.split i { display: block; height: 100%; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--ink-dim); }
+.legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; background: var(--c); vertical-align: -1px; }
+.fresh { font-family: var(--f-mono); font-size: 11px; color: var(--ink-faint); }
+
+/* modal */
+dialog { padding: 0; border: none; background: transparent; color: var(--ink); max-width: min(980px, calc(100vw - 24px)); width: 100%; max-height: calc(100dvh - 24px); overflow-y: auto; overscroll-behavior: contain; }
+dialog::backdrop { background: rgba(3,4,10,.75); backdrop-filter: blur(6px); }
+.modal { position: relative; display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr); overflow: hidden; align-items: start; }
 .modal .player { background: #000; display: flex; align-items: center; justify-content: center; position: relative; min-height: 200px; }
-.vload { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--f-mono); font-size: 12px; color: var(--ink); background: rgba(5, 6, 13, 0.75); border: 1px solid var(--edge); border-radius: 8px; padding: 6px 10px; pointer-events: none; white-space: nowrap; }
-.ph { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 10px; padding: 12px; text-align: center; background: radial-gradient(circle at 30% 20%, rgba(157, 140, 255, 0.35), transparent 60%), radial-gradient(circle at 80% 90%, rgba(95, 212, 255, 0.25), transparent 55%), #0b0d1c; }
-.ph-play { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--edge-hi); background: rgba(255, 255, 255, 0.08); font-size: 16px; padding-left: 3px; }
-.ph-t { font-family: var(--f-display); font-size: 13px; line-height: 1.25; color: var(--ink); text-wrap: balance; }
 .modal video { display: block; max-height: 80vh; max-width: 100%; }
 .modal.short .player video { width: min(360px, 42vw); }
-.modal.longo { grid-template-columns: 1fr; }
-.modal.longo video { width: 100%; max-height: 56vh; }
+.modal.longo { grid-template-columns: 1fr; } .modal.longo video { width: 100%; max-height: 56vh; }
 .modal .info { padding: 18px 20px 24px; display: grid; gap: 12px; align-content: start; min-width: 0; }
-.dl-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(5, 6, 13, 0.5); border: 1px solid var(--edge); }
+.modal h3 { font-family: var(--f-display); font-weight: 600; font-size: 18px; margin: 0; text-wrap: balance; }
+.vload { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--f-mono); font-size: 12px; background: rgba(5,6,13,.75); border: 1px solid var(--edge); border-radius: 8px; padding: 6px 10px; pointer-events: none; white-space: nowrap; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(5,6,13,.5); border: 1px solid var(--edge); }
 .seg button { font: inherit; font-size: 13px; font-weight: 600; color: var(--ink-dim); background: transparent; border: 1px solid transparent; border-radius: 9px; padding: 7px 14px; cursor: pointer; }
 .seg button[aria-pressed="true"].v-pronto { color: var(--void); background: var(--ink-dim); }
 .seg button[aria-pressed="true"].v-programado { color: var(--void); background: var(--warn); }
 .seg button[aria-pressed="true"].v-postado { color: var(--void); background: var(--ok); }
-.seg button[disabled] { cursor: progress; opacity: 0.6; }
-.pub { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; color: var(--ink-dim); }
-.pub input { font: inherit; font-size: 13px; color: var(--ink); background: rgba(5, 6, 13, 0.5); border: 1px solid var(--edge-hi); border-radius: 8px; padding: 5px 8px; color-scheme: dark; }
-.st-programado { color: var(--warn); } .st-postado { color: var(--ok); }
-.vcard.is-postado .frame { opacity: 0.55; }
-.btn.primary { background: linear-gradient(135deg, rgba(157, 140, 255, 0.45), rgba(95, 212, 255, 0.35)); border-color: var(--accent); font-size: 13px; padding: 7px 14px; font-weight: 600; }
-.btn[disabled] { opacity: 0.6; cursor: progress; }
-.dl-msg { font-size: 12.5px; color: var(--ink-faint); }
-.modal h3 { font-family: var(--f-display); font-weight: 600; font-size: 18px; margin: 0; text-wrap: balance; }
-.modal .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .copy { display: grid; gap: 4px; }
 .copy .lbl { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.copy pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: var(--f-body); font-size: 13px; color: var(--ink-dim); background: rgba(5, 6, 13, 0.5); border: 1px solid var(--edge); border-radius: 10px; padding: 10px 12px; max-height: 160px; overflow-y: auto; }
-.btn { font: inherit; font-size: 12px; color: var(--ink); background: var(--glass-hi); border: 1px solid var(--edge-hi); border-radius: 8px; padding: 4px 10px; cursor: pointer; }
-.btn:hover { background: rgba(170, 185, 255, 0.22); }
+.copy pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: var(--f-body); font-size: 13px; color: var(--ink-dim); background: rgba(5,6,13,.5); border: 1px solid var(--edge); border-radius: 10px; padding: 10px 12px; max-height: 160px; overflow-y: auto; }
 .close { position: absolute; top: 10px; right: 10px; z-index: 2; }
 .notes { font-size: 12.5px; color: var(--ink-faint); }
+.dl-row { display: flex; flex-wrap: wrap; gap: 8px; }
 
-@media (max-width: 900px) {
-  .cols { grid-template-columns: minmax(0, 1fr); }
-  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 980px) {
+  .grid2 { grid-template-columns: minmax(0, 1fr); }
+  .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .modal { grid-template-columns: 1fr; }
   .modal.short .player video { width: auto; max-height: 58vh; }
   .modal.longo video { max-height: none; }
 }
-@media (max-width: 420px) {
-  .vcard.longo { grid-column: span 1; }
+@media (max-width: 560px) {
+  .board { grid-template-columns: minmax(0, 1fr); }
+  .newform { grid-template-columns: minmax(0, 1fr); }
+  nav { margin-left: 0; width: 100%; overflow-x: auto; flex-wrap: nowrap; }
+  .clock { display: none; }
+  .logo small { display: none; }
+  .logo { min-width: 0; }
+  .logo b { white-space: normal; }
   .videos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .vcard.longo { grid-column: 1 / -1; }
+  .kpi .n { font-size: 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before { animation: none !important; transition: none !important; }
 }
 </style>
 
-<canvas id="sky" aria-hidden="true"></canvas>
-<div class="wrap">
-  <header>
-    <div class="brand">
-      <div class="eyebrow">Canal 1 · @ladosombriodouniverso</div>
-      <h1><span>Observatório</span> Lado Sombrio</h1>
-      <p>Os agentes do canal e os vídeos mais recentes, num lugar só.</p>
-    </div>
-    <div class="clock glass" id="clock">Brasília <b>--:--</b></div>
-  </header>
+<canvas id="space" aria-hidden="true"></canvas>
+<div class="shade"></div>
 
-  <div class="stats" id="stats">
-    <div class="stat glass work"><div class="n" id="st-work">–</div><div class="l">Trabalhando agora</div><div class="sub" id="st-work-sub">&nbsp;</div></div>
-    <div class="stat glass warn"><div class="n" id="st-wait">–</div><div class="l">Esperando você</div><div class="sub" id="st-wait-sub">&nbsp;</div></div>
-    <div class="stat glass ok"><div class="n" id="st-ready">–</div><div class="l">Vídeos prontos</div><div class="sub" id="st-ready-sub">&nbsp;</div></div>
-    <div class="stat glass"><div class="n" id="st-next">–</div><div class="l">Próxima publicação</div><div class="sub" id="st-next-sub">&nbsp;</div></div>
-  </div>
-
-  <section>
-    <div class="head"><h2>Agentes</h2><span class="hint">Status pelo último aviso de cada conversa</span></div>
-    <div class="agents" id="agents"><div class="empty glass">Carregando os agentes…</div></div>
-  </section>
-
-  <div class="cols">
-    <section>
-      <div class="head">
-        <h2>Vídeos recentes</h2>
-        <div class="filters" role="group" aria-label="Filtrar vídeos">
-          <button class="chip" id="f-todos" data-f="todos" aria-pressed="true">Todos</button>
-          <button class="chip" id="f-short" data-f="short" aria-pressed="false">Shorts</button>
-          <button class="chip" id="f-longo" data-f="longo" aria-pressed="false">Longos</button>
-          <button class="chip" id="f-agenda" data-f="agenda" aria-pressed="false">Agendados</button>
-          <button class="chip" id="f-postado" data-f="postado" aria-pressed="false">Postados</button>
-        </div>
-      </div>
-      <div class="videos" id="videos"><div class="empty glass">Carregando os vídeos…</div></div>
-    </section>
-
-    <aside class="side">
-      <section class="panel glass">
-        <div class="head"><h2>Agenda</h2></div>
-        <ul class="agenda" id="agenda"><li class="empty">Nenhuma publicação marcada.</li></ul>
-      </section>
-      <section class="panel glass">
-        <div class="head"><h2>Atividade</h2></div>
-        <ul class="feed" id="feed"><li class="empty">Sem avisos ainda.</li></ul>
-      </section>
-    </aside>
+<div class="bar">
+  <div class="bar-in">
+    <div class="logo"><b><span>Observatório</span> Lado Sombrio</b><small>Canal 1</small></div>
+    <nav aria-label="Estações">
+      <a href="#comando" data-st="comando"><span class="dot"></span>Comando <span class="badge" id="b-wait"></span></a>
+      <a href="#agentes" data-st="agentes"><span class="dot"></span>Agentes</a>
+      <a href="#producao" data-st="producao"><span class="dot"></span>Produção <span class="badge" id="b-sem"></span></a>
+      <a href="#videos" data-st="videos"><span class="dot"></span>Vídeos</a>
+      <a href="#insights" data-st="insights"><span class="dot"></span>Insights</a>
+    </nav>
+    <div class="clock" id="clock"></div>
   </div>
 </div>
 
-<dialog id="dlg" aria-label="Detalhes do vídeo">
-  <div class="modal glass" id="modal"></div>
-</dialog>
+<main id="main"></main>
 
+<dialog id="dlg" aria-label="Detalhes do vídeo"><div class="modal glass" id="modal"></div></dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (() => {
-  /* ---------- fundo de universo ---------- */
-  const cv = document.getElementById("sky"), cx = cv.getContext("2d");
-  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let W, H, stars = [], neb = null, t0 = performance.now();
-  function seed() {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    W = cv.width = innerWidth * dpr; H = cv.height = innerHeight * dpr;
-    const n = Math.round((innerWidth * innerHeight) / 2600);
-    stars = Array.from({ length: n }, () => ({
-      x: Math.random() * W, y: Math.random() * H,
-      r: (Math.random() ** 3 * 1.6 + 0.3) * dpr,
-      a: Math.random() * 0.7 + 0.3, tw: Math.random() * 2 + 0.6, ph: Math.random() * 6.28,
-      hue: Math.random() < 0.15 ? 210 : Math.random() < 0.1 ? 30 : 240
-    }));
-    neb = document.createElement("canvas"); neb.width = W; neb.height = H;
-    const g = neb.getContext("2d");
-    g.fillStyle = "#05060d"; g.fillRect(0, 0, W, H);
-    const blobs = [
-      [0.18, 0.22, 0.55, "rgba(110, 70, 220, 0.30)"],
-      [0.82, 0.18, 0.45, "rgba(40, 140, 220, 0.20)"],
-      [0.70, 0.78, 0.60, "rgba(170, 60, 160, 0.18)"],
-      [0.30, 0.85, 0.40, "rgba(40, 90, 200, 0.16)"]
-    ];
-    for (const [bx, by, br, c] of blobs) {
-      const R = br * Math.max(W, H), gr = g.createRadialGradient(bx * W, by * H, 0, bx * W, by * H, R);
-      gr.addColorStop(0, c); gr.addColorStop(1, "rgba(0,0,0,0)");
-      g.fillStyle = gr; g.fillRect(0, 0, W, H);
-    }
-    // faixa da Via Láctea
-    g.save(); g.translate(W / 2, H / 2); g.rotate(-0.42);
-    const band = g.createLinearGradient(0, -H * 0.18, 0, H * 0.18);
-    band.addColorStop(0, "rgba(0,0,0,0)"); band.addColorStop(0.5, "rgba(190,180,255,0.07)"); band.addColorStop(1, "rgba(0,0,0,0)");
-    g.fillStyle = band; g.fillRect(-W, -H * 0.18, W * 2, H * 0.36);
-    for (let i = 0; i < 900; i++) {
-      g.fillStyle = `rgba(220,215,255,${Math.random() * 0.35})`;
-      g.fillRect((Math.random() - 0.5) * W * 1.6, (Math.random() - 0.5) * H * 0.3 * Math.random(), 1, 1);
-    }
-    g.restore();
-  }
-  function draw(now) {
-    const t = (now - t0) / 1000;
-    cx.drawImage(neb, 0, 0);
-    for (const s of stars) {
-      const a = still ? s.a : s.a * (0.65 + 0.35 * Math.sin(t * s.tw + s.ph));
-      cx.fillStyle = `hsla(${s.hue}, 80%, 92%, ${a})`;
-      cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, 6.283); cx.fill();
-    }
-    if (!still) requestAnimationFrame(draw);
-  }
-  seed(); requestAnimationFrame(draw);
-  addEventListener("resize", () => { seed(); if (still) draw(performance.now()); });
+  /* =================== CENA 3D =================== */
+  const STILL = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const CAM = {
+    comando:  { p: [0, 3, 34],    t: [0, 0, 0] },
+    agentes:  { p: [-30, 8, 18],  t: [6, 0, 0] },
+    producao: { p: [14, -6, 20],  t: [-4, 0, 0] },
+    videos:   { p: [26, 16, 30],  t: [0, 2, -6] },
+    insights: { p: [0, 34, 46],   t: [0, -4, 0] }
+  };
+  let three = null;
+  function initSpace() {
+    if (!window.THREE) return null;
+    const cv = document.getElementById("space");
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true }); } catch (e) { return null; }
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
+    renderer.setClearColor(0x04050c, 1);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 3000);
+    camera.position.set(0, 3, 34);
+    const look = new THREE.Vector3();
 
-  /* ---------- relógio ---------- */
+    // estrelas
+    const N = 5000, pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) {
+      const r = 350 + Math.random() * 650, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+      pos[i*3] = r * Math.sin(ph) * Math.cos(th); pos[i*3+1] = r * Math.cos(ph) * 0.7; pos[i*3+2] = r * Math.sin(ph) * Math.sin(th);
+      const c = 0.6 + Math.random() * 0.4, tint = Math.random();
+      col[i*3] = c * (tint < .15 ? 1 : .85); col[i*3+1] = c * .9; col[i*3+2] = c * (tint > .8 ? 1 : .95);
+    }
+    const sg = new THREE.BufferGeometry();
+    sg.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    sg.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    const stars = new THREE.Points(sg, new THREE.PointsMaterial({ size: 1.6, sizeAttenuation: true, vertexColors: true, transparent: true, opacity: .9 }));
+    scene.add(stars);
+
+    // nebulosas (sprites gerados aqui)
+    function blob(c1) {
+      const k = document.createElement("canvas"); k.width = k.height = 256;
+      const g = k.getContext("2d"), gr = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+      gr.addColorStop(0, c1); gr.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
+      return new THREE.CanvasTexture(k);
+    }
+    [["rgba(120,80,230,.55)", [-260, 90, -420], 520], ["rgba(40,150,230,.4)", [300, -60, -380], 460], ["rgba(200,70,150,.35)", [60, 220, -520], 600]].forEach(([c, p, s]) => {
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: blob(c), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+      sp.position.set(...p); sp.scale.set(s, s, 1); scene.add(sp);
+    });
+
+    // planeta (shader procedural)
+    const noise = `
+      vec3 hash3(vec3 p){ p=vec3(dot(p,vec3(127.1,311.7,74.7)),dot(p,vec3(269.5,183.3,246.1)),dot(p,vec3(113.5,271.9,124.6))); return -1.0+2.0*fract(sin(p)*43758.5453123); }
+      float n3(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); vec3 u=f*f*(3.0-2.0*f);
+        return mix(mix(mix(dot(hash3(i),f),dot(hash3(i+vec3(1,0,0)),f-vec3(1,0,0)),u.x),mix(dot(hash3(i+vec3(0,1,0)),f-vec3(0,1,0)),dot(hash3(i+vec3(1,1,0)),f-vec3(1,1,0)),u.x),u.y),
+                   mix(mix(dot(hash3(i+vec3(0,0,1)),f-vec3(0,0,1)),dot(hash3(i+vec3(1,0,1)),f-vec3(1,0,1)),u.x),mix(dot(hash3(i+vec3(0,1,1)),f-vec3(0,1,1)),dot(hash3(i+vec3(1,1,1)),f-vec3(1,1,1)),u.x),u.y),u.z); }
+      float fbm(vec3 p){ float a=.5,s=0.; for(int i=0;i<5;i++){ s+=a*n3(p); p*=2.03; a*=.5; } return s; }`;
+    const sun = new THREE.Vector3(-1, .35, .55).normalize();
+    const pMat = new THREE.ShaderMaterial({
+      uniforms: { uSun: { value: sun }, uT: { value: 0 } },
+      vertexShader: `varying vec3 vN; varying vec3 vP; void main(){ vN=normalize(normalMatrix*normal); vP=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);} `,
+      fragmentShader: noise + `
+        uniform vec3 uSun; uniform float uT; varying vec3 vN; varying vec3 vP;
+        void main(){
+          vec3 p=normalize(vP);
+          float h=fbm(p*2.2)+.35*fbm(p*6.0);
+          float land=smoothstep(.02,.08,h);
+          vec3 ocean=mix(vec3(.02,.06,.16),vec3(.04,.16,.32),smoothstep(-.4,.05,h));
+          vec3 ground=mix(vec3(.10,.18,.09),vec3(.35,.30,.20),smoothstep(.1,.45,h));
+          float ice=smoothstep(.72,.9,abs(p.y));
+          vec3 col=mix(ocean,ground,land); col=mix(col,vec3(.85,.9,.95),ice);
+          float cl=smoothstep(.15,.55,fbm(p*3.0+vec3(uT*.02,0.,uT*.015)));
+          col=mix(col,vec3(.92),cl*.55);
+          vec3 n=normalize(vN); vec3 sv=normalize((viewMatrix*vec4(uSun,0.)).xyz);
+          float d=dot(n,sv); float lit=smoothstep(-.15,.35,d);
+          float city=land*(1.-lit)*smoothstep(.3,.6,fbm(p*18.0))*(1.-ice);
+          vec3 night=vec3(1.,.62,.3)*city*.9;
+          vec3 c=col*(.05+.95*lit)+night;
+          float spec=pow(max(dot(reflect(-sv,n),vec3(0,0,1)),0.),24.)*(1.-land)*lit*.5;
+          gl_FragColor=vec4(c+spec,1.0);
+        }`
+    });
+    const planet = new THREE.Mesh(new THREE.SphereGeometry(10, 96, 96), pMat);
+    planet.rotation.z = 0.41;
+    scene.add(planet);
+    const atm = new THREE.Mesh(new THREE.SphereGeometry(10.9, 64, 64), new THREE.ShaderMaterial({
+      uniforms: { uSun: { value: sun } }, transparent: true, side: THREE.BackSide, depthWrite: false, blending: THREE.AdditiveBlending,
+      vertexShader: `varying vec3 vN; void main(){ vN=normalize(normalMatrix*normal); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);} `,
+      fragmentShader: `uniform vec3 uSun; varying vec3 vN; void main(){ float f=pow(.72-dot(vN,vec3(0,0,1.)),3.2); vec3 sv=normalize((viewMatrix*vec4(uSun,0.)).xyz); float l=.35+.65*smoothstep(-.4,.6,dot(-vN,sv)); gl_FragColor=vec4(vec3(.35,.6,1.)*f*l*1.6,f); }`
+    }));
+    scene.add(atm);
+
+    // lua
+    const moon = new THREE.Mesh(new THREE.SphereGeometry(2.4, 48, 48), new THREE.ShaderMaterial({
+      uniforms: { uSun: { value: sun } },
+      vertexShader: `varying vec3 vN; varying vec3 vP; void main(){ vN=normalize(normalMatrix*normal); vP=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);} `,
+      fragmentShader: noise + `uniform vec3 uSun; varying vec3 vN; varying vec3 vP; void main(){ vec3 p=normalize(vP); float h=fbm(p*4.)+.5*fbm(p*12.); vec3 c=mix(vec3(.32),vec3(.62),smoothstep(-.3,.4,h)); vec3 sv=normalize((viewMatrix*vec4(uSun,0.)).xyz); float l=smoothstep(-.1,.4,dot(normalize(vN),sv)); gl_FragColor=vec4(c*(.04+.96*l),1.); }`
+    }));
+    scene.add(moon);
+
+    // cinturão de asteroides
+    const rocks = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), new THREE.MeshStandardMaterial({ color: 0x8a7f78, roughness: .95, flatShading: true }), 700);
+    const dummy = new THREE.Object3D(), belt = new THREE.Group(); belt.rotation.x = 1.25; belt.rotation.y = .3;
+    for (let i = 0; i < 700; i++) {
+      const a = Math.random() * Math.PI * 2, r = 19 + Math.random() * 7 + Math.random() * Math.random() * 4;
+      dummy.position.set(Math.cos(a) * r, (Math.random() - .5) * 1.4, Math.sin(a) * r);
+      dummy.rotation.set(Math.random() * 6, Math.random() * 6, Math.random() * 6);
+      const s = .05 + Math.random() ** 3 * .45; dummy.scale.set(s, s * (.6 + Math.random() * .6), s);
+      dummy.updateMatrix(); rocks.setMatrixAt(i, dummy.matrix);
+    }
+    belt.add(rocks); scene.add(belt);
+    const light = new THREE.DirectionalLight(0xfff1e0, 1.4); light.position.copy(sun).multiplyScalar(100); scene.add(light);
+    scene.add(new THREE.AmbientLight(0x223355, .4));
+
+    // sol distante
+    const sunSp = new THREE.Sprite(new THREE.SpriteMaterial({ map: blob("rgba(255,220,170,1)"), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+    sunSp.position.copy(sun).multiplyScalar(420); sunSp.scale.set(90, 90, 1); scene.add(sunSp);
+
+    const goal = { p: new THREE.Vector3(0, 3, 34), t: new THREE.Vector3() };
+    let mx = 0, my = 0, visible = true, last = performance.now(), t = 0;
+    addEventListener("pointermove", e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
+    document.addEventListener("visibilitychange", () => { visible = !document.hidden; if (visible) { last = performance.now(); loop(); } });
+    function size() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); if (STILL) frame(0); }
+    addEventListener("resize", size); size();
+    function frame(dt) {
+      t += dt;
+      pMat.uniforms.uT.value = t;
+      planet.rotation.y += dt * .03; atm.rotation.y = planet.rotation.y;
+      moon.position.set(Math.cos(t * .05) * 30, Math.sin(t * .05) * 4, Math.sin(t * .05) * 30);
+      moon.rotation.y += dt * .02;
+      belt.rotation.z += dt * .004;
+      stars.rotation.y += dt * .002;
+      const k = STILL ? 1 : 1 - Math.pow(.04, dt);
+      const tp = goal.p.clone().add(new THREE.Vector3(mx * 3, -my * 2, 0));
+      camera.position.lerp(tp, k); look.lerp(goal.t, k); camera.lookAt(look);
+      renderer.render(scene, camera);
+    }
+    function loop() {
+      if (!visible || STILL) return;
+      const now = performance.now(), dt = Math.min((now - last) / 1000, .05); last = now;
+      frame(dt); requestAnimationFrame(loop);
+    }
+    if (STILL) frame(0); else requestAnimationFrame(loop);
+    return { go(st) { const c = CAM[st] || CAM.comando; goal.p.set(...c.p); goal.t.set(...c.t); if (STILL) { camera.position.copy(goal.p); look.copy(goal.t); frame(0); } } };
+  }
+  try { three = initSpace(); } catch (e) { three = null; }
+
+  /* =================== UTIL =================== */
+  const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  const fmt = n => new Intl.NumberFormat("pt-BR").format(Math.round(n || 0));
+  const kfmt = n => n >= 1e6 ? (n / 1e6).toFixed(1).replace(".", ",") + " mi" : n >= 1e4 ? Math.round(n / 1e3) + " mil" : n >= 1e3 ? (n / 1e3).toFixed(1).replace(".", ",") + " mil" : fmt(n);
+  const DOW = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+  const parseDay = s => { if (!s) return null; const [y, m, d] = s.split("-").map(Number); return y ? new Date(y, m - 1, d) : null; };
+  const dayLabel = s => { const d = parseDay(s); return d ? `${DOW[d.getDay()]} ${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}` : ""; };
+  const todayStr = () => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date());
+  const addDays = (s, n) => { const d = parseDay(s); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+  function ago(iso) {
+    if (!iso) return ""; const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+    if (m < 1) return "agora"; if (m < 60) return `há ${m} min`; const h = Math.round(m / 60); if (h < 24) return `há ${h} h`; return `há ${Math.round(h / 24)} d`;
+  }
+  const LABEL = { work: "Trabalhando", wait: "Esperando você", idle: "Livre", fail: "Falhou", none: "Sem aviso" };
+  const HALO = { work: "rgba(95,212,255,.5)", wait: "rgba(255,198,92,.5)", idle: "rgba(95,227,161,.35)", fail: "rgba(255,107,125,.5)", none: "transparent" };
+  const ANDARES = ["Direção & Roteiros", "Produção de Vídeo", "Carrosséis"];
+  const pill = st => el("span", "pill s-" + st, LABEL[st] || st);
+  const vTitle = v => ((v.legendas && v.legendas.yt_titulo) || v.nome || "").replace(/\s*#shorts\s*$/i, "");
+
   const clock = document.getElementById("clock");
   const fmtClock = new Intl.DateTimeFormat("pt-BR", { timeZone: "America/Sao_Paulo", weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-  const tick = () => { clock.innerHTML = ""; clock.append("Brasília "); const b = document.createElement("b"); b.textContent = fmtClock.format(new Date()); clock.append(b); };
-  tick(); setInterval(tick, 30000);
+  const tick = () => { clock.textContent = "Brasília · " + fmtClock.format(new Date()); }; tick(); setInterval(tick, 30000);
 
-  /* ---------- estado ---------- */
-  const S = { agentes: [], eventos: [], videos: [], filtro: "todos" };
+  /* =================== ESTADO =================== */
+  const S = { agentes: [], eventos: [], videos: [], pedidos: [], metricas: null, filtro: "todos", st: "comando", ready: false };
   try { S.filtro = localStorage.getItem("obs-filtro") || "todos"; } catch (e) {}
-
-  const LABEL = { work: "Trabalhando", wait: "Esperando você", idle: "Livre", fail: "Falhou", none: "Sem aviso" };
-  const ANDARES = ["Direção & Roteiros", "Produção de Vídeo", "Carrosséis"];
-  const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
-  const pill = (st) => el("span", "pill s-" + st, LABEL[st] || st);
-  const halo = { work: "rgba(95,212,255,.5)", wait: "rgba(255,198,92,.5)", idle: "rgba(95,227,161,.35)", fail: "rgba(255,107,125,.5)", none: "transparent" };
-
-  function ago(iso) {
-    if (!iso) return "";
-    const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
-    if (m < 1) return "agora";
-    if (m < 60) return `há ${m} min`;
-    const h = Math.round(m / 60);
-    if (h < 24) return `há ${h} h`;
-    return `há ${Math.round(h / 24)} d`;
-  }
-  const DOW = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
-  function parseDay(s) { if (!s) return null; const [y, m, d] = s.split("-").map(Number); return y ? new Date(y, m - 1, d) : null; }
-  function dayLabel(s) { const d = parseDay(s); return d ? `${DOW[d.getDay()]} ${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}` : ""; }
-  const todayStr = () => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date());
+  let DB = null, MCP = null;
 
   function lastEventFor(a) {
-    const ids = [a.sessao].concat(a.anteriores || []);
-    let best = null;
+    const ids = [a.sessao].concat(a.anteriores || []); let best = null;
     for (const e of S.eventos) if (ids.includes(e.sessao) && (!best || (e.ts || "") > (best.ts || ""))) best = e;
     return best;
   }
+  const agentState = a => { const ev = lastEventFor(a); return { ev, st: ev ? (ev.estado === "arq" ? "none" : ev.estado) : "none" }; };
+  const sortedAgents = () => [...S.agentes].sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
+  const upcoming = () => S.videos.filter(v => v.status !== "Postado" && v.status !== "Teste" && v.data_pub && v.data_pub >= todayStr()).sort((a, b) => a.data_pub.localeCompare(b.data_pub) || a.ordem - b.ordem);
+  const semData = () => S.videos.filter(v => v.status === "Pronto" && !v.data_pub);
 
-  /* ---------- render ---------- */
-  function renderAgents() {
-    const box = document.getElementById("agents"); box.innerHTML = "";
-    if (!S.agentes.length) { box.append(el("div", "empty glass", "Nenhum agente cadastrado ainda.")); return { work: [], wait: [] }; }
-    const work = [], wait = [];
-    const sorted = [...S.agentes].sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
-    for (const andar of ANDARES.concat([...new Set(sorted.map(a => a.andar))].filter(x => !ANDARES.includes(x)))) {
-      const list = sorted.filter(a => a.andar === andar);
-      if (!list.length) continue;
-      box.append(el("div", "eyebrow floor-label", andar));
-      for (const a of list) {
-        const ev = lastEventFor(a), st = ev ? (ev.estado === "arq" ? "none" : ev.estado) : "none";
-        if (st === "work") work.push(a.nome); if (st === "wait") wait.push(a.nome);
-        const c = el("article", "agent glass"); c.style.setProperty("--halo", halo[st] || "transparent");
-        const top = el("div", "top"); top.append(el("div", "name", a.nome), pill(st)); c.append(top);
-        c.append(el("div", "role", a.papel || ""));
-        c.append(el("div", "doing", ev ? ev.faz : "Ainda não mandou aviso para este painel."));
-        const meta = el("div", "meta"); meta.append(el("span", "", ev ? ago(ev.ts) : ""));
-        if (a.sessao) { const l = el("a", "", "abrir conversa ↗"); l.href = "https://claude.ai/code/" + a.sessao; l.target = "_blank"; l.rel = "noopener"; meta.append(l); }
-        c.append(meta); box.append(c);
-      }
+  /* =================== AÇÕES =================== */
+  async function saveVideo(v, patch, msg) {
+    if (!DB) { if (msg) { msg.className = "msg bad"; msg.textContent = "Abra no claude.ai, com sua conta, para salvar."; } return false; }
+    try { await DB.collection("videos").doc(v.id).update(Object.assign({ atualizado: new Date().toISOString() }, patch)); Object.assign(v, patch); if (msg) { msg.className = "msg ok"; msg.textContent = "Salvo."; } return true; }
+    catch (e) { if (msg) { msg.className = "msg bad"; msg.textContent = "Não deu para salvar. Tente de novo."; } return false; }
+  }
+  async function getMcp() { if (MCP === null && window.claude) MCP = (await window.claude.use("mcp")) || false; return MCP || null; }
+  async function enviarPedido(agente, texto, msg, btn) {
+    texto = (texto || "").trim();
+    if (!texto) { msg.className = "msg warn"; msg.textContent = "Escreva o pedido antes de enviar."; return false; }
+    if (!agente || !agente.sessao) { msg.className = "msg bad"; msg.textContent = "Esse agente está sem conversa registrada."; return false; }
+    btn.disabled = true; msg.className = "msg"; msg.textContent = "Enviando…";
+    const mcp = await getMcp();
+    if (!mcp) { btn.disabled = false; msg.className = "msg bad"; msg.textContent = "Enviar pedido só funciona com o Observatório aberto no claude.ai."; return false; }
+    const corpo = "Pedido do dono (enviado pelo Observatório): " + texto;
+    try {
+      await mcp.callTool("Claude Code Remote", "send_message", { session_id: agente.sessao, message: corpo }, { cache: false });
+      msg.className = "msg ok"; msg.textContent = "Enviado para " + agente.nome + ".";
+      if (DB) DB.collection("pedidos").add({ agente: agente.nome, sessao: agente.sessao, texto, ts: new Date().toISOString(), status: "enviado" }).catch(() => {});
+      btn.disabled = false; return true;
+    } catch (e) {
+      const c = e && e.code; msg.className = "msg bad";
+      msg.textContent =
+        c === "approval_required" ? "Precisa da sua aprovação: clique em Enviar de novo e permita o Claude Code Remote quando o claude.ai pedir." :
+        c === "not_in_manifest" ? "Você não permitiu o Claude Code Remote nesta página. Libere em Permissões do artefato." :
+        c === "server_not_connected" || c === "needs_reauth" ? "Conecte o Claude Code Remote em claude.ai → Configurações → Conectores." :
+        c === "blocked_by_policy" ? "A organização bloqueou o envio de mensagens por esta página." :
+        c === "tool_error" ? "A conversa recusou o pedido: " + (e.message || "erro") + ". Ela pode ter sido arquivada." :
+        c === "server_unavailable" || c === "upstream_error" ? "Sem resposta do servidor. O pedido pode ter chegado; confira na conversa antes de reenviar." :
+        "Não deu para enviar agora (" + (c || "erro") + ").";
+      btn.disabled = false; return false;
     }
-    return { work, wait };
   }
 
-  function visibleVideos() {
-    const v = [...S.videos].sort((a, b) => (b.ordem || 0) - (a.ordem || 0));
-    if (S.filtro === "short" || S.filtro === "longo") return v.filter(x => x.tipo === S.filtro);
-    if (S.filtro === "agenda") return v.filter(x => x.status !== "Postado" && x.data_pub && x.data_pub >= todayStr()).sort((a, b) => a.data_pub.localeCompare(b.data_pub));
-    if (S.filtro === "postado") return v.filter(x => x.status === "Postado");
-    return v;
+  /* =================== ESTAÇÕES =================== */
+  const main = document.getElementById("main");
+  function head(eye, title, sub) {
+    const h = el("div", "st-head"); const d = el("div"); d.append(el("div", "eyebrow", eye), el("h1", "", title)); if (sub) d.append(el("p", "", sub)); h.append(d); return h;
+  }
+  function kpi(n, l, s, cls, spark) {
+    const k = el("div", "kpi glass"); const nn = el("div", "n " + (cls || ""), n); k.append(nn, el("div", "l", l), el("div", "s", s || " "));
+    if (spark && spark.length > 1) k.insertAdjacentHTML("beforeend", sparkSvg(spark));
+    return k;
+  }
+  function sparkSvg(vals) {
+    const W = 120, H = 40, mx = Math.max(...vals) || 1, st = W / (vals.length - 1);
+    const pts = vals.map((v, i) => `${(i * st).toFixed(1)},${(H - 2 - (v / mx) * (H - 6)).toFixed(1)}`).join(" ");
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,${H} ${pts} ${W},${H}" fill="rgba(95,212,255,.18)"/><polyline points="${pts}" fill="none" stroke="#5fd4ff" stroke-width="1.6"/></svg>`;
+  }
+
+  function renderComando() {
+    const s = el("section", "station");
+    s.append(head("Estação 01 · Comando", "Ponte de comando", "Tudo o que precisa da sua decisão agora, e o que sai nos próximos dias."));
+    const M = S.metricas, dia = M ? M.diario : [];
+    const k = el("div", "kpis");
+    const last7 = dia.slice(-7);
+    k.append(
+      kpi(M ? kfmt(M.totais.views) : "–", "Views no canal", M ? "desde 16/10 · até " + dayLabel(M.ate) : "aguardando números", "c-work", dia.map(d => d.v)),
+      kpi(M ? "+" + fmt(M.totais.inscritos_liquidos) : "–", "Inscritos ganhos", M ? "+" + fmt(last7.reduce((a, d) => a + d.g - d.p, 0)) + " nos últimos 7 dias" : "", "c-ok", dia.map(d => d.g - d.p)),
+      kpi(String(semData().length), "Prontos sem data", "precisam de data de publicação", semData().length ? "c-warn" : "", null),
+      kpi(String(upcoming().length), "Programados", upcoming()[0] ? "próximo: " + dayLabel(upcoming()[0].data_pub) : "nada agendado", "c-acc", null)
+    );
+    s.append(k);
+    const g = el("div", "grid2");
+    // precisa de você
+    const p1 = el("div", "panel glass"); p1.append(el("h2", "", "Precisa de você"));
+    const ul = el("ul", "list");
+    sortedAgents().forEach(a => { const { ev, st } = agentState(a); if (st === "wait") { const li = el("li", "row"); li.append(pill("wait")); const d = el("div"); d.append(el("div", "t", a.nome), el("div", "d", ev.faz || "")); const b = el("a", "btn sm", "Responder"); b.href = "#agentes"; li.append(d, b); ul.append(li); } });
+    if (semData().length) { const li = el("li", "row"); li.append(el("span", "pill s-wait", semData().length + " vídeos")); const d = el("div"); d.append(el("div", "t", "Vídeos prontos sem data"), el("div", "d", "Escolha quando publicar na Produção.")); const b = el("a", "btn sm", "Programar"); b.href = "#producao"; li.append(d, b); ul.append(li); }
+    if (!ul.children.length) ul.append(el("li", "empty", "Nada pendente com você agora."));
+    p1.append(ul);
+    // agenda
+    const p2 = el("div", "panel glass"); const h2 = el("h2", "", "Agenda"); h2.append(el("small", "", "próximas publicações")); p2.append(h2);
+    const ag = el("ul", "list"); const up = upcoming().slice(0, 8);
+    if (!up.length) ag.append(el("li", "empty", "Nenhuma publicação marcada."));
+    up.forEach(v => { const d = parseDay(v.data_pub), li = el("li", "row"); const bx = el("div", "datebox"); bx.append(el("b", "", String(d.getDate()).padStart(2, "0")), el("small", "", DOW[d.getDay()])); const w = el("div"); w.append(el("div", "t", vTitle(v)), el("div", "d", (v.tipo === "longo" ? "Longo" : "Short") + " · #" + v.ordem)); const b = el("button", "btn sm", "Abrir"); b.addEventListener("click", () => openVideo(v)); li.append(bx, w, b); ag.append(li); });
+    p2.append(ag);
+    g.append(p1, p2); s.append(g);
+    s.append(feedPanel(8));
+    return s;
+  }
+  function feedPanel(n) {
+    const p = el("div", "panel glass"); const h = el("h2", "", "Atividade dos agentes"); h.append(el("small", "", "últimos avisos")); p.append(h);
+    const names = Object.fromEntries(S.agentes.flatMap(a => [a.sessao].concat(a.anteriores || []).map(s => [s, a.nome])));
+    const ul = el("ul", "list feed");
+    const evs = [...S.eventos].sort((a, b) => (b.ts || "").localeCompare(a.ts || "")).slice(0, n);
+    if (!evs.length) ul.append(el("li", "empty", "Sem avisos ainda."));
+    evs.forEach(e => { const st = e.estado === "arq" ? "none" : e.estado; const li = el("li", "s-" + st); li.append(el("span", "dt")); const c = el("div"); const top = el("div"); top.append(el("span", "who", names[e.sessao] || e.titulo || "Agente"), document.createTextNode(" "), el("span", "ago", ago(e.ts))); c.append(top, el("div", "txt", e.faz || "")); li.append(c); ul.append(li); });
+    p.append(ul); return p;
+  }
+
+  function renderAgentes() {
+    const s = el("section", "station");
+    s.append(head("Estação 02 · Agentes", "Tripulação", "Veja o que cada agente está fazendo e mande pedidos direto para a conversa dele."));
+    const box = el("div", "agents");
+    if (!S.agentes.length) box.append(el("div", "empty glass", S.ready ? "Nenhum agente cadastrado." : "Carregando os agentes…"));
+    sortedAgents().forEach(a => {
+      const { ev, st } = agentState(a);
+      const c = el("article", "agent glass"); c.style.setProperty("--halo", HALO[st] || "transparent");
+      const top = el("div", "top"); top.append(el("div", "name", a.nome), pill(st)); c.append(top, el("div", "role", (a.papel || "") + " · " + (a.andar || "")));
+      c.append(el("div", "doing", ev ? ev.faz : "Ainda não mandou aviso."));
+      const meta = el("div", "meta"); meta.append(el("span", "", ev ? ago(ev.ts) : "")); if (a.sessao) { const l = el("a", "", "abrir conversa ↗"); l.href = "https://claude.ai/code/" + a.sessao; l.target = "_blank"; l.rel = "noopener"; meta.append(l); } c.append(meta);
+      const f = el("form"); const ta = el("textarea"); ta.id = "ped-" + a.id; ta.placeholder = "Pedido para " + a.nome + "… (ex.: aprovado, título A)"; ta.rows = 3;
+      const row = el("div", "acts"); row.style.display = "flex"; row.style.gap = "8px"; row.style.alignItems = "center";
+      const b = el("button", "btn primary sm", "Enviar pedido"); b.type = "submit"; const m = el("div", "msg");
+      row.append(b); f.append(ta, row, m);
+      f.addEventListener("submit", async e => { e.preventDefault(); if (await enviarPedido(a, ta.value, m, b)) ta.value = ""; });
+      c.append(f); box.append(c);
+    });
+    s.append(box);
+    const g = el("div", "grid2"); g.append(feedPanel(14), pedidosPanel()); s.append(g);
+    return s;
+  }
+  function pedidosPanel() {
+    const p = el("div", "panel glass"); const h = el("h2", "", "Seus pedidos"); h.append(el("small", "", "enviados por aqui")); p.append(h);
+    const ul = el("ul", "list feed"); const ps = [...S.pedidos].sort((a, b) => (b.ts || "").localeCompare(a.ts || "")).slice(0, 12);
+    if (!ps.length) ul.append(el("li", "empty", "Nenhum pedido enviado pelo Observatório ainda."));
+    ps.forEach(x => { const li = el("li", "s-work"); li.append(el("span", "dt")); const c = el("div"); const t = el("div"); t.append(el("span", "who", x.agente), document.createTextNode(" "), el("span", "ago", ago(x.ts))); c.append(t, el("div", "txt", x.texto)); li.append(c); ul.append(li); });
+    p.append(ul); return p;
+  }
+
+  function renderProducao() {
+    const s = el("section", "station");
+    s.append(head("Estação 03 · Produção", "Linha de montagem", "Peça vídeos novos, programe datas e marque o que já foi ao ar."));
+    // novo vídeo
+    const nf = el("div", "panel glass"); nf.append(el("h2", "", "Pedir vídeo novo"));
+    const form = el("form", "newform");
+    const fT = el("label", "f full"); fT.append("Tema ou ideia"); const iT = el("input"); iT.id = "nv-tema"; iT.placeholder = "Ex.: e se Betelgeuse explodisse amanhã?"; fT.append(iT);
+    const fF = el("label", "f"); fF.append("Formato"); const sF = el("select"); sF.id = "nv-fmt"; ["Short", "Longo POV", "Lote de Shorts"].forEach(o => sF.append(new Option(o, o))); fF.append(sF);
+    const fP = el("label", "f"); fP.append("Enviar para"); const sP = el("select"); sP.id = "nv-para";
+    const alvos = () => sortedAgents().filter(a => /pesquis|roteir/i.test(a.nome));
+    (alvos().length ? alvos() : sortedAgents()).forEach(a => sP.append(new Option(a.nome, a.id)));
+    fP.append(sP);
+    const fN = el("label", "f"); fN.append("Observações (opcional)"); const iN = el("input"); iN.id = "nv-obs"; iN.placeholder = "Data, ângulo, referência…"; fN.append(iN);
+    const act = el("div", "full"); act.style.display = "flex"; act.style.gap = "10px"; act.style.alignItems = "center"; act.style.flexWrap = "wrap";
+    const bN = el("button", "btn primary", "Enviar pedido de vídeo"); bN.type = "submit"; const mN = el("div", "msg"); act.append(bN, mN);
+    form.append(fT, fF, fP, fN, act);
+    form.addEventListener("submit", async e => {
+      e.preventDefault(); const a = S.agentes.find(x => x.id === sP.value);
+      const txt = `Novo vídeo — formato: ${sF.value}. Tema: ${iT.value.trim()}.` + (iN.value.trim() ? ` Observações: ${iN.value.trim()}.` : "") + " Siga as DIRETRIZES e o fluxo normal (pesquisa checada → roteiro → minha aprovação → Gerador).";
+      if (!iT.value.trim()) { mN.className = "msg warn"; mN.textContent = "Escreva o tema."; return; }
+      if (await enviarPedido(a, txt, mN, bN)) { iT.value = ""; iN.value = ""; }
+    });
+    nf.append(form); s.append(nf);
+    // quadro
+    const board = el("div", "board");
+    const cols = [
+      ["Prontos sem data", semData(), "warn"],
+      ["Programados", upcoming(), "acc"],
+      ["Postados", S.videos.filter(v => v.status === "Postado").sort((a, b) => (b.postado_em || "").localeCompare(a.postado_em || "")).slice(0, 12), "ok"],
+      ["Testes", S.videos.filter(v => v.status === "Teste"), ""]
+    ];
+    cols.forEach(([nome, list]) => {
+      const c = el("div", "col glass"); const h = el("h3"); h.append(document.createTextNode(nome), el("b", "", String(list.length))); c.append(h);
+      if (!list.length) c.append(el("div", "empty", "Vazio"));
+      list.forEach(v => c.append(pcard(v)));
+      board.append(c);
+    });
+    s.append(board);
+    return s;
+  }
+  function pcard(v) {
+    const c = el("div", "pcard");
+    const t = el("div", "t", vTitle(v)); t.tabIndex = 0; t.addEventListener("click", () => openVideo(v)); t.addEventListener("keydown", e => { if (e.key === "Enter") openVideo(v); });
+    const m = el("div", "m"); m.append(el("span", "", (v.tipo === "longo" ? "Longo" : "Short") + " · #" + v.ordem), el("span", "st-" + (v.status || "").toLowerCase(), v.data_pub ? dayLabel(v.data_pub) : (v.status || "")));
+    const acts = el("div", "acts"); const msg = el("div", "msg");
+    if (v.status !== "Postado") {
+      const d = el("input"); d.type = "date"; d.id = "dt-" + v.id; d.value = v.data_pub || ""; d.setAttribute("aria-label", "Data de publicação");
+      d.addEventListener("change", async () => { await saveVideo(v, { data_pub: d.value, status: d.value ? (v.status === "Teste" ? "Teste" : "Programado") : "Pronto" }, msg); render(); });
+      acts.append(d);
+      if (!v.data_pub && v.status !== "Teste") { const b = el("button", "btn sm", "Amanhã"); b.addEventListener("click", async () => { await saveVideo(v, { data_pub: addDays(todayStr(), 1), status: "Programado" }, msg); render(); }); acts.append(b); }
+      const bp = el("button", "btn sm", "✓ Postado"); bp.addEventListener("click", async () => { await saveVideo(v, { status: "Postado", postado_em: new Date().toISOString() }, msg); render(); }); acts.append(bp);
+    } else {
+      const bv = el("button", "btn sm", "Desfazer"); bv.addEventListener("click", async () => { await saveVideo(v, { status: v.data_pub ? "Programado" : "Pronto" }, msg); render(); }); acts.append(bv);
+    }
+    c.append(t, m, acts, msg); return c;
   }
 
   function renderVideos() {
-    const box = document.getElementById("videos"); box.innerHTML = "";
-    document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.f === S.filtro)));
-    const list = visibleVideos();
-    if (!list.length) { box.append(el("div", "empty glass", S.videos.length ? "Nenhum vídeo neste filtro." : "Nenhum vídeo salvo ainda.")); return; }
-    for (const v of list) {
-      const b = el("button", "vcard glass " + (v.tipo === "longo" ? "longo" : "short") + (v.status === "Postado" ? " is-postado" : ""));
-      b.setAttribute("aria-label", "Abrir " + v.nome);
+    const s = el("section", "station");
+    const h = head("Estação 04 · Vídeos", "Acervo", "Assista, baixe e copie as legendas de cada vídeo.");
+    const fl = el("div", "filters"); fl.setAttribute("role", "group"); fl.setAttribute("aria-label", "Filtrar vídeos");
+    [["todos", "Todos"], ["short", "Shorts"], ["longo", "Longos"], ["agenda", "Agendados"], ["postado", "Postados"]].forEach(([k, l]) => { const b = el("button", "chip", l); b.id = "f-" + k; b.setAttribute("aria-pressed", String(S.filtro === k)); b.addEventListener("click", () => { S.filtro = k; try { localStorage.setItem("obs-filtro", k); } catch (e) {} render(); }); fl.append(b); });
+    h.append(fl); s.append(h);
+    const box = el("div", "videos");
+    let v = [...S.videos].sort((a, b) => (b.ordem || 0) - (a.ordem || 0));
+    if (S.filtro === "short" || S.filtro === "longo") v = v.filter(x => x.tipo === S.filtro);
+    if (S.filtro === "agenda") v = upcoming();
+    if (S.filtro === "postado") v = v.filter(x => x.status === "Postado");
+    if (!v.length) box.append(el("div", "empty glass", S.ready ? "Nenhum vídeo neste filtro." : "Carregando os vídeos…"));
+    const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
+    v.forEach(x => {
+      const b = el("button", "vcard glass " + (x.tipo === "longo" ? "longo" : "short") + (x.status === "Postado" ? " is-postado" : ""));
+      b.setAttribute("aria-label", "Abrir " + (x.nome || ""));
       const fr = el("div", "frame");
-      if (v.thumb_url) { const im = el("img"); im.src = v.thumb_url; im.alt = ""; im.loading = "lazy"; fr.append(im); }
-      else if (v.video_url && FINE) { const vd = el("video"); vd.src = v.video_url + "#t=2"; vd.muted = true; vd.preload = "metadata"; vd.playsInline = true; fr.append(vd); }
-      else { const ph = el("div", "ph"); ph.append(el("span", "ph-play", "▶"), el("span", "ph-t", v.nome)); fr.append(ph); }
-      const bd = el("div", "badge"); bd.append(el("span", "tag", v.tipo === "longo" ? "Longo" : "Short")); fr.append(bd);
-      fr.append(el("span", "num", "#" + String(v.ordem).padStart(2, "0")));
-      b.append(fr);
-      const body = el("div", "body");
-      body.append(el("div", "t", (v.legendas && v.legendas.yt_titulo || v.nome).replace(/\s*#shorts\s*$/i, "")));
-      const d = el("div", "d"); d.append(el("span", "st-" + (v.status || "").toLowerCase(), (v.status === "Postado" ? "✓ " : "") + (v.status || ""))); d.append(el("span", "when", v.data_pub ? dayLabel(v.data_pub) : "sem data"));
-      body.append(d); b.append(body);
-      b.addEventListener("click", () => openVideo(v));
-      box.append(b);
-    }
+      if (x.thumb_url) { const im = el("img"); im.src = x.thumb_url; im.alt = ""; im.loading = "lazy"; fr.append(im); }
+      else if (x.video_url && FINE) { const vd = el("video"); vd.src = x.video_url + "#t=2"; vd.muted = true; vd.preload = "metadata"; vd.playsInline = true; fr.append(vd); }
+      else { const ph = el("div", "ph"); ph.append(el("span", "ph-play", "▶"), el("span", "ph-t", x.nome || "")); fr.append(ph); }
+      const bd = el("div", "badge"); bd.append(el("span", "tag", x.tipo === "longo" ? "Longo" : "Short")); fr.append(bd, el("span", "num", "#" + String(x.ordem).padStart(2, "0")));
+      const body = el("div", "body"); body.append(el("div", "t", vTitle(x)));
+      const d = el("div", "d"); d.append(el("span", "st-" + (x.status || "").toLowerCase(), (x.status === "Postado" ? "✓ " : "") + (x.status || "")), el("span", "when", x.data_pub ? dayLabel(x.data_pub) : "sem data")); body.append(d);
+      b.append(fr, body); b.addEventListener("click", () => openVideo(x)); box.append(b);
+    });
+    s.append(box); return s;
   }
 
-  function renderSide() {
-    const ag = document.getElementById("agenda"); ag.innerHTML = "";
-    const up = S.videos.filter(v => v.status !== "Postado" && v.data_pub && v.data_pub >= todayStr()).sort((a, b) => a.data_pub.localeCompare(b.data_pub) || a.ordem - b.ordem);
-    if (!up.length) ag.append(el("li", "empty", "Nenhuma publicação marcada."));
-    for (const v of up) {
-      const d = parseDay(v.data_pub), li = el("li");
-      const box = el("div", "date"); box.append(el("b", "", String(d.getDate()).padStart(2, "0")), el("small", "", DOW[d.getDay()]));
-      const w = el("div", "what", v.nome); w.append(el("small", "", (v.tipo === "longo" ? "Longo" : "Short") + " · #" + v.ordem + (v.status === "Programado" ? " · programado" : "")));
-      li.append(box, w); ag.append(li);
-    }
-    const fd = document.getElementById("feed"); fd.innerHTML = "";
-    const names = Object.fromEntries(S.agentes.flatMap(a => [a.sessao].concat(a.anteriores || []).map(s => [s, a.nome])));
-    const evs = [...S.eventos].sort((a, b) => (b.ts || "").localeCompare(a.ts || "")).slice(0, 10);
-    if (!evs.length) fd.append(el("li", "empty", "Sem avisos ainda."));
-    for (const e of evs) {
-      const st = e.estado === "arq" ? "none" : e.estado;
-      const li = el("li", "s-" + st); li.append(el("span", "dot"));
-      const c = el("div"); const top = el("div"); top.append(el("span", "who", names[e.sessao] || e.titulo || "Agente"), document.createTextNode(" "), el("span", "ago", ago(e.ts)));
-      c.append(top, el("div", "txt", e.faz || "")); li.append(c); fd.append(li);
-    }
-    return up;
+  function renderInsights() {
+    const s = el("section", "station");
+    const M = S.metricas;
+    s.append(head("Estação 05 · Insights", "Telemetria do canal", M ? "Números do YouTube até " + dayLabel(M.ate) + "." : "Os números aparecem quando a direção gravar a primeira leitura."));
+    if (!M) { s.append(el("div", "empty glass", S.ready ? "Ainda não há números salvos. Peça à direção (LadoSombrio) para atualizar." : "Carregando…")); return s; }
+    const dia = M.diario || [], vids = M.videos || [];
+    const l7 = dia.slice(-7), p7 = dia.slice(-14, -7);
+    const sum = (a, f) => a.reduce((x, d) => x + f(d), 0);
+    const v7 = sum(l7, d => d.v), vp7 = sum(p7, d => d.v), g7 = sum(l7, d => d.g - d.p);
+    const delta = vp7 ? Math.round((v7 / vp7 - 1) * 100) : 0;
+    const k = el("div", "kpis");
+    k.append(
+      kpi(kfmt(M.totais.views), "Views totais", "desde 16/10", "c-work", dia.map(d => d.v)),
+      kpi(kfmt(v7), "Views em 7 dias", (delta >= 0 ? "+" : "") + delta + "% vs 7 dias antes", delta >= 0 ? "c-ok" : "c-warn", l7.map(d => d.v)),
+      kpi("+" + fmt(g7), "Inscritos em 7 dias", "+" + fmt(M.totais.inscritos_liquidos) + " desde 16/10", "c-ok", l7.map(d => d.g - d.p)),
+      kpi(fmt(M.totais.horas) + " h", "Horas assistidas", "Shorts + longos, desde 16/10", "c-acc", dia.map(d => d.m))
+    );
+    s.append(k);
+    // gráfico de views/dia + inscritos
+    const pc = el("div", "panel glass"); const hc = el("h2", "", "Views e inscritos por dia"); hc.append(el("small", "", dayLabel(dia[0].d) + " → " + dayLabel(dia[dia.length - 1].d))); pc.append(hc);
+    const cw = el("div", "chart-wrap"); cw.insertAdjacentHTML("beforeend", chartSvg(dia)); pc.append(cw);
+    const lg = el("div", "legend"); const a1 = el("span", "", "Views"); a1.style.setProperty("--c", "#5fd4ff"); const a2 = el("span", "", "Inscritos ganhos (barras)"); a2.style.setProperty("--c", "#9d8cff"); lg.append(a1, a2); pc.append(lg);
+    s.append(pc);
+    const g = el("div", "grid2");
+    // top vídeos
+    const pt = el("div", "panel glass"); const ht = el("h2", "", "Vídeos que mais performaram"); ht.append(el("small", "", "views de " + (M.periodo_videos || ""))); pt.append(ht);
+    const wrap = el("div", "tbl-wrap"); const tb = el("table"); tb.innerHTML = "<thead><tr><th>Vídeo</th><th>Tipo</th><th style='text-align:right'>Views</th><th>Retenção</th><th style='text-align:right'>Inscr.</th></tr></thead>";
+    const tbody = el("tbody");
+    vids.slice(0, 14).forEach(v => {
+      const tr = el("tr"); const td1 = el("td", "", v.t); td1.style.minWidth = "200px";
+      const pct = Math.round(v.ret * 100), rb = el("div", "retbar" + (pct < (v.tipo === "longo" ? 35 : 65) ? " low" : "")); const bar = el("i"); bar.style.width = Math.min(100, pct) * 0.7 + "px"; rb.append(bar, el("span", "", pct + "%"));
+      const td4 = el("td"); td4.append(rb);
+      tr.append(td1, el("td", "", v.tipo === "longo" ? "Longo" : "Short"), el("td", "num", fmt(v.v)), td4, el("td", "num", "+" + fmt(v.s)));
+      tbody.append(tr);
+    });
+    tb.append(tbody); wrap.append(tb); pt.append(wrap);
+    // lado: insights + divisão
+    const side = el("div"); side.style.display = "grid"; side.style.gap = "20px";
+    const pi = el("div", "panel glass"); pi.append(el("h2", "", "Leitura da direção"));
+    const ul = el("ul", "ins"); (M.insights || []).forEach(t => ul.append(el("li", "", t))); pi.append(ul);
+    const ps = el("div", "panel glass"); ps.append(el("h2", "", "Shorts × longos"));
+    const sv = sum(vids.filter(v => v.tipo === "short"), v => v.v), lv = sum(vids.filter(v => v.tipo === "longo"), v => v.v);
+    const sm = sum(vids.filter(v => v.tipo === "short"), v => v.m), lm = sum(vids.filter(v => v.tipo === "longo"), v => v.m);
+    const sp = el("div", "split"); const i1 = el("i"); i1.style.width = (sv / (sv + lv) * 100) + "%"; i1.style.background = "#5fd4ff"; const i2 = el("i"); i2.style.width = (lv / (sv + lv) * 100) + "%"; i2.style.background = "#ff8a4c"; sp.append(i1, i2);
+    const lg2 = el("div", "legend"); const b1 = el("span", "", "Shorts · " + kfmt(sv) + " views · " + fmt(sm / 60) + " h"); b1.style.setProperty("--c", "#5fd4ff"); const b2 = el("span", "", "Longos · " + kfmt(lv) + " views · " + fmt(lm / 60) + " h"); b2.style.setProperty("--c", "#ff8a4c"); lg2.append(b1, b2);
+    ps.append(el("div", "notes", "Views e horas de " + (M.periodo_videos || "")), sp, lg2, el("div", "notes", "Para monetizar, o YouTube conta horas de vídeos longos (meta: 4.000 h em 12 meses)."));
+    side.append(pi, ps);
+    g.append(pt, side); s.append(g);
+    s.append(el("div", "fresh", "Fonte: " + (M.fonte || "YouTube") + " · leitura gravada " + ago(M.atualizado)));
+    return s;
+  }
+  function chartSvg(dia) {
+    const W = 900, H = 220, L = 46, R = 10, T = 12, B = 26, iw = W - L - R, ih = H - T - B;
+    const mv = Math.max(...dia.map(d => d.v)) * 1.08, mg = Math.max(...dia.map(d => d.g - d.p), 1) * 1.15;
+    const x = i => L + (i / (dia.length - 1)) * iw, y = v => T + ih - (v / mv) * ih, yg = v => T + ih - (v / mg) * ih * .55;
+    const step = Math.pow(10, Math.floor(Math.log10(mv / 4))); const tick = Math.ceil(mv / 4 / step) * step;
+    let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Views e inscritos por dia">`;
+    for (let v = 0; v <= mv; v += tick) s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="rgba(190,200,255,.08)"/><text x="${L - 6}" y="${y(v) + 3}" text-anchor="end">${kfmt(v)}</text>`;
+    const bw = Math.max(3, iw / dia.length * .5);
+    dia.forEach((d, i) => { const gv = d.g - d.p; s += `<rect x="${x(i) - bw / 2}" y="${yg(gv)}" width="${bw}" height="${T + ih - yg(gv)}" fill="rgba(157,140,255,.45)" rx="1.5"><title>${dayLabel(d.d)}: +${gv} inscritos</title></rect>`; });
+    const pts = dia.map((d, i) => `${x(i).toFixed(1)},${y(d.v).toFixed(1)}`).join(" ");
+    s += `<polygon points="${L},${T + ih} ${pts} ${x(dia.length - 1)},${T + ih}" fill="rgba(95,212,255,.12)"/><polyline points="${pts}" fill="none" stroke="#5fd4ff" stroke-width="2.2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
+    dia.forEach((d, i) => { s += `<circle cx="${x(i)}" cy="${y(d.v)}" r="${i === dia.length - 1 ? 4 : 2.2}" fill="#5fd4ff"><title>${dayLabel(d.d)}: ${fmt(d.v)} views</title></circle>`; if (i % Math.ceil(dia.length / 8) === 0 || i === dia.length - 1) s += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle">${d.d.slice(8, 10)}/${d.d.slice(5, 7)}</text>`; });
+    const peak = dia.reduce((a, d, i) => d.v > dia[a].v ? i : a, 0);
+    s += `<text x="${x(peak)}" y="${y(dia[peak].v) - 8}" text-anchor="middle" style="fill:#eaedff">pico ${kfmt(dia[peak].v)}</text></svg>`;
+    return s;
   }
 
-  function renderAll() {
-    const { work, wait } = renderAgents(); renderVideos(); const up = renderSide();
-    const set = (id, v) => { document.getElementById(id).textContent = v; };
-    set("st-work", work.length); set("st-work-sub", work.join(", ") || "ninguém agora");
-    set("st-wait", wait.length); set("st-wait-sub", wait.join(", ") || "nada pendente");
-    const ready = S.videos.filter(v => v.status === "Pronto");
-    set("st-ready", ready.length); set("st-ready-sub", `${S.videos.filter(v => v.status === "Programado").length} programados · ${S.videos.filter(v => v.status === "Postado").length} postados`);
-    if (up.length) { set("st-next", dayLabel(up[0].data_pub)); set("st-next-sub", up.filter(v => v.data_pub === up[0].data_pub).map(v => v.nome).join(" · ")); }
-    else { set("st-next", "—"); set("st-next-sub", "nada agendado"); }
-  }
-
-  /* ---------- modal do vídeo ---------- */
+  /* =================== MODAL DO VÍDEO =================== */
   const dlg = document.getElementById("dlg"), modal = document.getElementById("modal");
   function copyBlock(label, text) {
     const w = el("div", "copy"), l = el("div", "lbl"); l.append(el("span", "eyebrow", label));
-    const btn = el("button", "btn", "Copiar"); const pre = el("pre", "", text);
+    const btn = el("button", "btn sm", "Copiar"), pre = el("pre", "", text);
     btn.addEventListener("click", () => {
       const done = () => { btn.textContent = "Copiado"; setTimeout(() => btn.textContent = "Copiar", 1600); };
       const sel = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selecionado"; };
@@ -424,130 +731,106 @@ dialog::backdrop { background: rgba(3, 4, 10, 0.72); backdrop-filter: blur(6px);
     });
     l.append(btn); w.append(l, pre); return w;
   }
-  const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches, COARSE = !FINE;
   let downloadsP = null;
   function saveButton(label, url, base, ext, msg, primary) {
-    const b = el("button", "btn" + (primary ? " primary" : ""), label);
+    const b = el("button", "btn sm" + (primary ? " primary" : ""), label);
     b.addEventListener("click", async () => {
       downloadsP = downloadsP || (window.claude ? window.claude.use("downloads") : Promise.resolve(null));
       const downloads = await downloadsP;
-      if (!downloads) { msg.textContent = "Download indisponível nesta visualização. Abra o Observatório no claude.ai."; return; }
+      if (!downloads) { msg.textContent = "Download indisponível nesta visualização. Abra no claude.ai."; return; }
       b.disabled = true; const old = b.textContent; b.textContent = "Preparando…"; msg.textContent = "";
       try {
-        const res = await fetch(url); if (!res.ok) throw new Error("http " + res.status);
-        const blob = await res.blob();
+        const res = await fetch(url); if (!res.ok) throw new Error("http"); const blob = await res.blob();
         const e = ext || ((blob.type.split("/")[1] || "jpg").replace("jpeg", "jpg"));
-        await downloads.save({ filename: base + "." + e, data: blob });
-        msg.textContent = "Arquivo enviado para download.";
-      } catch (err) {
-        const c = err && err.code;
-        msg.textContent = c === "declined" ? "Download cancelado." : c === "rate_limited" ? "Já tem um download aberto. Tente de novo em instantes." : "Não deu para baixar agora. Tente de novo.";
-      } finally { b.disabled = false; b.textContent = old; }
+        await downloads.save({ filename: base + "." + e, data: blob }); msg.textContent = "Arquivo enviado para download.";
+      } catch (err) { const c = err && err.code; msg.textContent = c === "declined" ? "Download cancelado." : c === "rate_limited" ? "Já tem um download aberto. Tente de novo em instantes." : "Não deu para baixar agora. Tente de novo."; }
+      finally { b.disabled = false; b.textContent = old; }
     });
     return b;
   }
-  let DB = null;
-  async function saveVideo(v, patch, msg) {
-    if (!DB) { msg.textContent = "Entre no claude.ai para salvar."; return false; }
-    try { await DB.collection("videos").doc(v.id).update(Object.assign({ atualizado: new Date().toISOString() }, patch)); Object.assign(v, patch); msg.textContent = "Salvo."; return true; }
-    catch (e) { msg.textContent = "Não deu para salvar. Tente de novo."; return false; }
-  }
   function statusControls(v) {
-    const wrap = el("div", "info-st"); wrap.style.display = "grid"; wrap.style.gap = "8px";
-    const seg = el("div", "seg"); seg.setAttribute("role", "group"); seg.setAttribute("aria-label", "Situação do vídeo");
-    const msg = el("div", "dl-msg");
-    const opts = [["Pronto", "Pronto"], ["Programado", "Programado"], ["Postado", "✓ Postado"]];
-    const btns = opts.map(([val, label]) => {
-      const b = el("button", "v-" + val.toLowerCase(), label); b.id = "st-btn-" + val.toLowerCase();
-      b.setAttribute("aria-pressed", String((v.status || "Pronto") === val));
-      b.addEventListener("click", async () => {
-        if (v.status === val) return;
-        btns.forEach(x => x.disabled = true);
-        const patch = { status: val };
-        if (val === "Postado") patch.postado_em = new Date().toISOString();
-        if (val === "Programado" && !v.data_pub) patch.data_pub = todayStr();
-        if (await saveVideo(v, patch, msg)) { btns.forEach(x => x.setAttribute("aria-pressed", String(x === b))); date.value = v.data_pub || ""; }
-        btns.forEach(x => x.disabled = false);
-      });
+    const wrap = el("div"); wrap.style.display = "grid"; wrap.style.gap = "8px";
+    const seg = el("div", "seg"); seg.setAttribute("role", "group"); seg.setAttribute("aria-label", "Situação do vídeo"); const msg = el("div", "msg");
+    const date = el("input"); date.type = "date"; date.id = "pub-date"; date.value = v.data_pub || ""; date.style.width = "auto";
+    const btns = [["Pronto", "Pronto"], ["Programado", "Programado"], ["Postado", "✓ Postado"]].map(([val, label]) => {
+      const b = el("button", "v-" + val.toLowerCase(), label); b.id = "st-btn-" + val.toLowerCase(); b.setAttribute("aria-pressed", String((v.status || "Pronto") === val));
+      b.addEventListener("click", async () => { if (v.status === val) return; btns.forEach(x => x.disabled = true); const patch = { status: val }; if (val === "Postado") patch.postado_em = new Date().toISOString(); if (val === "Programado" && !v.data_pub) patch.data_pub = todayStr(); if (await saveVideo(v, patch, msg)) { btns.forEach(x => x.setAttribute("aria-pressed", String(x === b))); date.value = v.data_pub || ""; } btns.forEach(x => x.disabled = false); });
       seg.append(b); return b;
     });
-    const pub = el("label", "pub"); pub.append("Data de publicação");
-    const date = el("input"); date.type = "date"; date.id = "pub-date"; date.value = v.data_pub || "";
+    const pub = el("label", "f"); pub.style.display = "flex"; pub.style.alignItems = "center"; pub.style.gap = "8px"; pub.append("Data de publicação", date);
     date.addEventListener("change", () => saveVideo(v, { data_pub: date.value }, msg));
-    pub.append(date);
-    if (v.postado_em) pub.append(el("span", "", "· postado " + ago(v.postado_em)));
-    wrap.append(seg, pub, msg);
-    return wrap;
+    wrap.append(seg, pub, msg); return wrap;
   }
   function openVideo(v) {
     modal.innerHTML = ""; modal.className = "modal glass " + (v.tipo === "longo" ? "longo" : "short");
-    const close = el("button", "btn close", "Fechar"); close.addEventListener("click", () => dlg.close()); modal.append(close);
+    const close = el("button", "btn sm close", "Fechar"); close.addEventListener("click", () => dlg.close()); modal.append(close);
     const pl = el("div", "player");
     if (v.video_url) {
-      const vd = el("video"); vd.controls = true; vd.playsInline = true; vd.setAttribute("playsinline", ""); vd.setAttribute("webkit-playsinline", ""); vd.preload = "auto"; if (v.thumb_url) vd.poster = v.thumb_url;
+      const vd = el("video"); vd.controls = true; vd.playsInline = true; vd.setAttribute("playsinline", ""); vd.preload = "auto"; if (v.thumb_url) vd.poster = v.thumb_url;
       const st = el("div", "vload", "Carregando vídeo…"); pl.append(vd, st);
-      let ok = false, fell = false;
-      vd.addEventListener("loadeddata", () => { ok = true; st.hidden = true; });
+      let ok = false, fell = false; vd.addEventListener("loadeddata", () => { ok = true; st.hidden = true; });
+      const COARSE = !matchMedia("(hover: hover) and (pointer: fine)").matches;
       const fallback = async () => {
         if (ok || fell) return; fell = true; st.hidden = false;
         try {
           const res = await fetch(v.video_url); if (!res.ok) throw 0;
-          const total = +res.headers.get("content-length") || 0, reader = res.body && res.body.getReader();
-          let blob;
+          const total = +res.headers.get("content-length") || 0, reader = res.body && res.body.getReader(); let blob;
           if (reader) { const parts = []; let got = 0; for (;;) { const { done, value } = await reader.read(); if (done) break; parts.push(value); got += value.length; st.textContent = "Carregando vídeo… " + (total ? Math.round(got / total * 100) + "%" : Math.round(got / 1048576) + " MB"); } blob = new Blob(parts, { type: "video/mp4" }); }
           else blob = new Blob([await res.arrayBuffer()], { type: "video/mp4" });
-          if (!dlg.open) return;
-          const u = URL.createObjectURL(blob); vd.src = u; vd.load();
-          dlg.addEventListener("close", () => URL.revokeObjectURL(u), { once: true });
+          if (!dlg.open) return; const u = URL.createObjectURL(blob); vd.src = u; vd.load(); dlg.addEventListener("close", () => URL.revokeObjectURL(u), { once: true });
         } catch (e) { st.textContent = "Não deu para carregar o vídeo. Feche e abra de novo."; }
       };
-      vd.addEventListener("error", fallback);
-      setTimeout(fallback, COARSE ? 2500 : 6000);
-      vd.src = v.video_url;
-    }
-    else pl.append(el("div", "empty", "Arquivo de vídeo não salvo aqui."));
+      vd.addEventListener("error", fallback); setTimeout(fallback, COARSE ? 2500 : 6000); vd.src = v.video_url;
+    } else pl.append(el("div", "empty", "Arquivo de vídeo não salvo aqui."));
     modal.append(pl);
     const info = el("div", "info");
-    info.append(el("div", "eyebrow", (v.tipo === "longo" ? "Longo" : "Short") + " · #" + v.ordem));
-    info.append(el("h3", "", v.nome));
-    info.append(statusControls(v));
-    const dl = el("div", "dl-row"), msg = el("div", "dl-msg");
+    info.append(el("div", "eyebrow", (v.tipo === "longo" ? "Longo" : "Short") + " · #" + v.ordem), el("h3", "", v.nome || ""), statusControls(v));
+    const dl = el("div", "dl-row"), msg = el("div", "msg");
     const base = ("lado-" + v.ordem + " " + (v.nome || "video")).replace(/[\\/:*?"<>|#]+/g, "").replace(/\s+/g, " ").trim();
     if (v.video_url) dl.append(saveButton("Baixar vídeo", v.video_url, base, "mp4", msg, true));
     if (v.thumb_url) dl.append(saveButton("Baixar thumb", v.thumb_url, base + " thumb", null, msg, false));
     info.append(dl, msg);
     const L = v.legendas || {};
-    [["Título do YouTube", L.yt_titulo], ["Descrição do YouTube", L.yt_desc], ["TikTok", L.tiktok], ["Reels", L.reels], ["Tags", L.tags], ["Comentário fixado", L.comentario]]
-      .forEach(([k, t]) => { if (t) info.append(copyBlock(k, t)); });
+    [["Título do YouTube", L.yt_titulo], ["Descrição do YouTube", L.yt_desc], ["TikTok", L.tiktok], ["Reels", L.reels], ["Tags", L.tags], ["Comentário fixado", L.comentario]].forEach(([k, t]) => { if (t) info.append(copyBlock(k, t)); });
     if (v.notas) info.append(el("div", "notes", v.notas));
-    modal.append(info);
-    dlg.showModal(); dlg.scrollTop = 0;
+    modal.append(info); dlg.showModal(); dlg.scrollTop = 0;
   }
-  dlg.addEventListener("close", () => { const vd = modal.querySelector("video"); if (vd) vd.pause(); });
-  dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener("close", () => { const vd = modal.querySelector("video"); if (vd) vd.pause(); render(); });
+  dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
 
-  document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
-    S.filtro = c.dataset.f; try { localStorage.setItem("obs-filtro", S.filtro); } catch (e) {}
-    renderVideos();
-  }));
+  /* =================== ROTEAMENTO =================== */
+  const STATIONS = { comando: renderComando, agentes: renderAgentes, producao: renderProducao, videos: renderVideos, insights: renderInsights };
+  function render() {
+    if (dlg.open) return;
+    const active = document.activeElement && document.activeElement.id;
+    const keep = {}; main.querySelectorAll("textarea, input").forEach(i => { if (i.id && i.value) keep[i.id] = i.value; });
+    main.innerHTML = ""; main.append(STATIONS[S.st]());
+    Object.entries(keep).forEach(([id, val]) => { const i = document.getElementById(id); if (i && !i.value && i.type !== "date") i.value = val; });
+    if (active) { const a = document.getElementById(active); if (a) a.focus({ preventScroll: true }); }
+    document.querySelectorAll("nav a").forEach(a => { if (a.dataset.st === S.st) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    const w = sortedAgents().filter(a => agentState(a).st === "wait").length;
+    document.getElementById("b-wait").textContent = w ? String(w) : "";
+    document.getElementById("b-sem").textContent = semData().length ? String(semData().length) : "";
+  }
+  let renderQ = 0;
+  const schedule = () => { if (renderQ) return; renderQ = requestAnimationFrame(() => { renderQ = 0; const typing = document.activeElement && /TEXTAREA|INPUT|SELECT/.test(document.activeElement.tagName) && main.contains(document.activeElement); if (typing) { setTimeout(schedule, 1500); return; } render(); }); };
+  function route() {
+    const h = (location.hash || "").replace("#", ""); S.st = STATIONS[h] ? h : "comando";
+    if (three) three.go(S.st); render(); scrollTo({ top: 0, behavior: STILL ? "auto" : "smooth" });
+  }
+  addEventListener("hashchange", route);
+  route();
+  setInterval(() => { if (!dlg.open) schedule(); }, 60000);
 
-  /* ---------- dados ---------- */
-  renderAll();
-  setInterval(() => { renderAgents(); renderSide(); }, 60000);
+  /* =================== DADOS =================== */
   (async () => {
     const db = window.claude && await window.claude.use("db");
+    if (!db) { S.ready = true; main.innerHTML = ""; const s = el("section", "station"); s.append(head("Observatório", "Entre no claude.ai", "Os agentes, os vídeos e os números aparecem quando você abre o Observatório com sua conta.")); main.append(s); return; }
     DB = db;
-    if (!db) {
-      document.getElementById("agents").innerHTML = "";
-      document.getElementById("agents").append(el("div", "empty glass", "Entre no claude.ai para ver os agentes e os vídeos."));
-      document.getElementById("videos").innerHTML = "";
-      return;
-    }
-    const sub = (name, key) => db.collection(name).onSnapshot(
-      (snap) => { S[key] = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); renderAll(); },
-      () => {}
-    );
-    sub("agentes", "agentes"); sub("eventos", "eventos"); sub("videos", "videos");
+    let pend = 4; const done = () => { if (--pend <= 0) S.ready = true; };
+    const sub = (name, key) => db.collection(name).onSnapshot(snap => { S[key] = snap.docs.map(d => Object.assign({ id: d.id }, d.data())); done(); schedule(); }, () => { done(); schedule(); });
+    sub("agentes", "agentes"); sub("eventos", "eventos"); sub("videos", "videos"); sub("pedidos", "pedidos");
+    db.doc("metricas/youtube").onSnapshot(snap => { S.metricas = snap.exists ? snap.data() : null; schedule(); }, () => {});
   })();
 })();
 </script>
