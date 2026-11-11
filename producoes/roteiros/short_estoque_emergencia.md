@@ -15,7 +15,7 @@
 ---
 
 ## SE A GUERRA VIER: 33 PAÍSES JÁ MANDARAM VOCÊ GUARDAR COMIDA
-**Status:** aguardando aprovação (v2: mais tenso e sombrio, a pedido do dono; a v1 calma foi substituída)
+**Status:** APROVADO pelo dono (11/11/2026, v2 tensa), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: o gancho é uma frase real e assustadora, o título oficial do folheto sueco. A escada sobe de país em país até chegar no Brasil, e é notícia quente. Ponto mais fraco: o tema é fora do espaço, e a linha entre tensão e fake news é fina. Por isso a virada é obrigatória.
 
