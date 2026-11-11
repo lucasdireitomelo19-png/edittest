@@ -25,7 +25,7 @@ O Apophis é um objeto real, então não invento ameaça atual.
 ---
 
 ## E SE o APOPHIS BATESSE na TERRA? Hora a hora, ONDE ele CAIRIA
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (11/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte:
 - é o longo que mais cresceu no nicho (5,6 mi em 3 semanas);
