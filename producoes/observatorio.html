@@ -462,34 +462,38 @@ dialog::backdrop { background: rgba(3,4,10,.85); }
     try { await DB.collection("videos").doc(v.id).update(Object.assign({ atualizado: new Date().toISOString() }, patch)); Object.assign(v, patch); if (msg) { msg.className = "msg ok"; msg.textContent = "Salvo."; } return true; }
     catch (e) { if (msg) { msg.className = "msg bad"; msg.textContent = "Não deu para salvar. Tente de novo."; } return false; }
   }
-  async function getMcp() { if (MCP === null && window.claude) MCP = (await window.claude.use("mcp")) || false; return MCP || null; }
-  // Envio direto pela conexão "Claude Code Remote" quando ela existe para quem está vendo;
-  // senão o pedido fica salvo como "pendente" e a direção repassa (verificação de hora em hora).
-  async function podeEnviarDireto(mcp) {
-    try { const r = await mcp.listTools("Claude Code Remote"); const s = (r.servers || [])[0]; return !!(s && (s.tools || []).some(t => t.name === "send_message")); }
-    catch (e) { return false; }
-  }
-  // Todo pedido é salvo primeiro como "pendente"; depois tenta o envio direto.
-  // Se o envio direto não confirmar, a direção entrega na verificação de hora em hora.
+  // Pedido aos agentes: vai como comentário "enviado ao Claude" (acorda a direção na hora)
+  // e fica salvo em "pedidos" como pendente; a direção entrega e marca "entregue".
+  // Se o comentário não puder ser enviado, a verificação de hora em hora entrega.
+  let COMMENTS = null;
+  (async () => { try { if (window.claude) COMMENTS = await window.claude.use("comments"); } catch (e) {} })();
   async function enviarPedido(agente, texto, msg, btn) {
     texto = (texto || "").trim();
     if (!texto) { msg.className = "msg warn"; msg.textContent = "Escreva o pedido antes de enviar."; return false; }
     if (!agente) { msg.className = "msg bad"; msg.textContent = "Escolha um agente."; return false; }
     if (!DB) { msg.className = "msg bad"; msg.textContent = "Abra o Observatório no claude.ai, com sua conta, para pedir."; return false; }
-    btn.disabled = true; msg.className = "msg"; msg.textContent = "Salvando…";
-    let ref;
-    try { ref = await DB.collection("pedidos").add({ agente: agente.nome, agente_id: agente.id, sessao: agente.sessao || "", texto, ts: new Date().toISOString(), status: "pendente" }); }
-    catch (e) { btn.disabled = false; msg.className = "msg bad"; msg.textContent = "Não deu para salvar o pedido. Tente de novo."; return false; }
-    const salvo = "Pedido salvo. A direção entrega para " + agente.nome + " na próxima verificação (de hora em hora, das 9h às 23h).";
-    msg.className = "msg ok"; msg.textContent = salvo + " Tentando entregar agora…";
+    btn.disabled = true; msg.className = "msg"; msg.textContent = "Enviando…";
+    const id = "p-" + Date.now();
+    let viaComentario = false;
+    if (COMMENTS) {
+      try {
+        const pode = await COMMENTS.canSendToClaude();
+        if (pode === "available") {
+          const anchor = await COMMENTS.anchorFor(btn);
+          await COMMENTS.sendToClaude({ anchor, text: "[Pedido do Observatório " + id + "] Para: " + agente.nome + " (agente_id " + agente.id + "). Pedido do dono: " + texto });
+          viaComentario = true;
+        }
+      } catch (e) { viaComentario = false; }
+    }
     try {
-      const mcp = await getMcp();
-      if (mcp && agente.sessao && await podeEnviarDireto(mcp)) {
-        await mcp.callTool("Claude Code Remote", "send_message", { session_id: agente.sessao, message: "Pedido do dono (enviado pelo Observatório): " + texto }, { cache: false });
-        await ref.update({ status: "entregue", entregue_em: new Date().toISOString(), via: "direto" }).catch(() => {});
-        msg.textContent = "Entregue agora para " + agente.nome + ".";
-      } else msg.textContent = salvo;
-    } catch (e) { msg.className = "msg ok"; msg.textContent = salvo; }
+      await DB.collection("pedidos").doc(id).set({ agente: agente.nome, agente_id: agente.id, sessao: agente.sessao || "", texto, ts: new Date().toISOString(), status: "pendente", via: viaComentario ? "comentario" : "fila" });
+    } catch (e) {
+      if (!viaComentario) { btn.disabled = false; msg.className = "msg bad"; msg.textContent = "Não deu para salvar o pedido. Tente de novo."; return false; }
+    }
+    msg.className = "msg ok";
+    msg.textContent = viaComentario
+      ? "Enviado. A direção recebe agora e repassa para " + agente.nome + " em instantes."
+      : "Pedido salvo. A direção entrega para " + agente.nome + " na próxima verificação (de hora em hora, das 9h às 23h).";
     btn.disabled = false; return true;
   }
 

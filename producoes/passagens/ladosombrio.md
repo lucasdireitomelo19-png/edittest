@@ -63,3 +63,5 @@ Direção do canal "Lado Sombrio do Universo", em pt-BR: estratégia e métricas
 - A tarefa agendada "Repassar pedidos do Observatório" (`trig_01J2QKPFXbPn8APXnjkG3SgU`) dispara nesta conversa de hora em hora, das 9h às 23h de Brasília. Ela entrega os pendentes por `send_message` e marca "entregue".
 - Se a direção trocar de conversa, atualize o `persistent_session_id` da tarefa com `update_trigger`.
 - Números do YouTube ficam em `metricas/youtube` (estação Insights). Supermetrics no plano grátis só traz dados desde 28/10, até 100 linhas por consulta e uma consulta por dia.
+
+- Desde 11/11 o pedido também vai como comentário "enviado ao Claude" no Observatório (`[Pedido do Observatório p-…]`). Ele acorda a direção, que vigia o artefato com ArtifactComments watch; ela entrega por send_message, marca `pedidos/<id>` como entregue, responde e resolve o thread.
