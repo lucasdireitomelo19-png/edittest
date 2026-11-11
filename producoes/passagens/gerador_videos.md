@@ -50,7 +50,8 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
   7. doc `producoes/NN_*.md`;
   8. commit e push;
   9. aviso ao LadoSombrio.
-- Thumbs apelativas, com texto curto e forte. Títulos de longo curtos e de impacto.
+- **Short NÃO tem thumb (dono, 11/11): só vídeo longo.** Na entrega de Short, vá sem `thumb_url` e sem enviar thumb no chat.
+- Thumbs de longo apelativas, com texto curto e forte. Títulos de longo curtos e de impacto.
 - Não publicar em redes. Apagar qualquer coisa só com o OK do dono.
 
 ## Ferramentas (como usei)

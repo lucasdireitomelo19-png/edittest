@@ -7,7 +7,7 @@
 - **Formato:** 1080x1920, ~49 s, 19 cenas em Remotion 3D, nenhuma repetida.
 - **Narração:** voz Brian (`--vel 1.2 --pausa 0.12`), 46,4 s. Fica em `public/gelo/`.
 - **Saída:** `out/lado103_gelo.mp4`.
-- **Thumb:** "MAR +66 M", com a América do Sul alagada e a Amazônia circulada. A cena é o Still `ThumbGelo`, e o texto entra depois com PIL.
+- **Thumb:** não tem. O dono definiu em 11/11 que Short não precisa de thumb.
 
 ## Texto na tela
 O roteiro aprovado pede estes quatro, e nenhum selo:
