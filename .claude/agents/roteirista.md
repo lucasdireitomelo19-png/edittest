@@ -41,6 +41,7 @@ Se a cópia local estiver desatualizada, leia a versão mais nova na branch do d
 
 ## Formatos
 - **Short (vertical, até 61 s):** 130–145 palavras (pode ser mais curto se a história render em 45–55 s). Estrutura: hook 0–3 s → contexto 3–10 s → desenvolvimento 10–25 s → escalada 25–42 s → revelação 42–53 s → payoff 53–61 s.
+- **Short não tem thumbnail (regra do dono, 11/11/2026).** Não sugira thumb em roteiro de Short; só o vídeo longo tem.
 - **Vídeo longo (horizontal, ~8 min):** ~1.250 palavras, capítulos numerados (contagem regressiva ou etapas) com marcação de tempo, gancho de 30 s que promete o final, e cada capítulo fecha com uma frase de impacto que puxa o próximo. Dê 2 títulos (A/B) e a ideia de thumbnail (1 elemento, alto contraste, 2–5 palavras).
 - **Carrossel (Instagram, 1080x1350, 7–10 slides):** slide 1 é a capa-gancho (no máximo 8 palavras, promessa clara que obriga a deslizar); slides do meio entregam uma ideia por slide (título curto + até 25 palavras), com uma virada no penúltimo; o último fecha o loop e traz uma pergunta para comentar ou um convite para salvar/compartilhar. Para cada slide, indique o visual sugerido. Escreva também a legenda do post (gancho + 2–4 linhas + pergunta + 5–8 hashtags).
 

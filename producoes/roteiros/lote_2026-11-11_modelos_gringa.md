@@ -47,7 +47,6 @@
 Escolhido: **o 3 seguido do 1**. A pergunta abre como título grande, e o "olha o que some" puxa a escada.
 
 **Título:** `E SE TODO o GELO da Terra DERRETESSE? O MAPA que NINGUÉM quer ver 🌊`
-**Thumb:** "MAR +66 METROS"
 
 > E se todo o gelo da Terra derretesse agora?
 > O mar subiria uns sessenta e seis metros. Olha o que some do mapa.
@@ -116,7 +115,6 @@ Escolhido: **o 3 seguido do 1**. A pergunta abre como título grande, e o "olha 
 Escolhido: **o 2 seguido de uma versão curta do 1**. A pergunta abre como título, e a lista do 1 já promete toda a escada.
 
 **Título:** `O QUE ESCONDEM 4 KM de GELO na ANTÁRTIDA? (florestas, vulcões e LAGOS) 🧊`
-**Thumb:** "ANTÁRTIDA SEM GELO"
 
 > O que tem embaixo do gelo da Antártida?
 > Montanhas, vulcões, lagos e rios que ninguém vê há milhões de anos.
@@ -177,7 +175,6 @@ Escolhido: **o 2 seguido de uma versão curta do 1**. A pergunta abre como títu
 Escolhido: **o 2**, com a imagem do globo virando cubo no 1º segundo. A ladeira do gancho 1 entra logo depois, como a primeira surpresa.
 
 **Título:** `E SE a TERRA fosse um CUBO? Você NÃO ia aguentar o CANTO 🧊🌍`
-**Thumb:** "TERRA CÚBICA?"
 
 > E se a Terra fosse um cubo?
 > Com o mesmo tamanho de hoje, cada lado teria uns dez mil quilômetros.
@@ -235,7 +232,6 @@ Escolhido: **o 2**, com a imagem do globo virando cubo no 1º segundo. A ladeira
 Escolhido: **o 2**, como título no 1º segundo, com o risco de luz vindo em direção ao globo. A promessa do 1 é entregue no meio do vídeo.
 
 **Título:** `E SE um GRÃO de AREIA BATESSE na TERRA a QUASE a VELOCIDADE da LUZ? ⏳💥`
-**Thumb:** "UM GRÃO. HIROSHIMA."
 
 > E se um grão de areia batesse na Terra a quase a velocidade da luz?
 > Um grão grande, de um miligrama.
