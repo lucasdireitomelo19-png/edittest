@@ -50,7 +50,7 @@ const carregar = () => {
   return prom;
 };
 const ATM = atmM();
-const GloboMar: React.FC<{n: number; d?: number; giro?: number}> = ({n, d = 0, giro = 0}) => {
+export const GloboMar: React.FC<{n: number; d?: number; giro?: number}> = ({n, d = 0, giro = 0}) => {
   if (!MAT) return null;
   MAT.uniforms.uN.value = n; MAT.uniforms.uD.value = d;
   return <group rotation={[0, giro, 0]}>
@@ -59,7 +59,7 @@ const GloboMar: React.FC<{n: number; d?: number; giro?: number}> = ({n, d = 0, g
   </group>;
 };
 // cena com as texturas carregadas + rótulos por cima
-const CG: React.FC<{children: (f: number) => React.ReactNode; rot?: (f: number) => React.ReactNode}> = ({children, rot}) => {
+export const CG: React.FC<{children: (f: number) => React.ReactNode; rot?: (f: number) => React.ReactNode}> = ({children, rot}) => {
   const [ok, setOk] = useState(false);
   const [h] = useState(() => delayRender('texturas gelo'));
   useEffect(() => { carregar().then(() => { setOk(true); continueRender(h); }); }, [h]);
@@ -203,7 +203,7 @@ const PLANO: K.Plano = [
 ];
 
 // ---------- por cima: título do 1º segundo e contador no canto ----------
-const NEON = '0 0 10px #39d8ff, 0 0 26px #1fb6ff, 0 0 52px #0a8cff, 0 4px 8px rgba(0,0,0,.8)';
+export const NEON = '0 0 10px #39d8ff, 0 0 26px #1fb6ff, 0 0 52px #0a8cff, 0 4px 8px rgba(0,0,0,.8)';
 const Titulo: React.FC = () => {
   const f = useCurrentFrame();
   const o = interpolate(f, [0, 3, 52, 62], [0, 1, 1, 0], cl);
