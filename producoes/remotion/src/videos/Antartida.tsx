@@ -39,12 +39,13 @@ const Terreno: React.FC<TOpt> = ({gelo = 0, verde = 0, noite = 0, lagos = 0, rio
   const rocha = new THREE.Color('#6e6258').lerp(new THREE.Color('#3f6a34'), verde);
   const ceu = new THREE.Color('#0a1a2c').lerp(new THREE.Color('#04060f'), noite);
   return <>
-    <color attach="background" args={[ceu.getStyle()]} /><fog attach="fog" args={[ceu.getStyle(), 5, 17]} />
+    <color attach="background" args={[ceu.getStyle()]} /><fog attach="fog" args={[ceu.getStyle(), 9, 30]} />
     <Luzes sol={[3, 5, 2]} i={2.2 * (1 - noite * 0.75)} amb={0.45 - noite * 0.2} />
     <mesh geometry={RELEVO}><meshStandardMaterial color={rocha} roughness={1} flatShading /></mesh>
     {[0, 1, 2].map((i) => { const k = Math.min(1, Math.max(0, gelo - i)); if (k <= 0) return null;
-      return <mesh key={i} position={[0, 0.65 + i * 0.55 + (1 - k) * 3.5, 0]}><boxGeometry args={[9, 0.54, 9]} /><meshPhysicalMaterial color="#e6f3ff" transparent opacity={0.8 * k} roughness={0.25} /></mesh>; })}
-    {gelo > 0 && <mesh position={[0, 0.02, 0]}><boxGeometry args={[9, 0.72, 9]} /><meshPhysicalMaterial color="#dcecff" transparent opacity={0.5 * Math.min(1, gelo)} roughness={0.3} /></mesh>}
+      return <group key={i} position={[0, 0.65 + i * 0.55 + (1 - k) * 3.5, 0]}><mesh><boxGeometry args={[9, 0.54, 9]} /><meshStandardMaterial color={['#9fc8ee', '#b8d8f4', '#d4e8fa'][i]} transparent opacity={0.62 * k} roughness={0.3} depthWrite={false} /></mesh>
+        <mesh position={[0, -0.27, 0]}><boxGeometry args={[9.02, 0.012, 9.02]} /><meshBasicMaterial color="#3a6a9a" transparent opacity={0.8 * k} /></mesh></group>; })}
+    {gelo > 0 && <mesh position={[0, 0.02, 0]}><boxGeometry args={[9, 0.72, 9]} /><meshStandardMaterial color="#8ab8e6" transparent opacity={0.4 * Math.min(1, gelo)} roughness={0.3} depthWrite={false} /></mesh>}
     {lagos > 0 && LAGOS.map((l, i) => <Brilho key={i} pos={[l.x, l.y + 0.03, l.z]} s={l.r * 3.4} cor="#35b6ff" o={pr(lagos * LAGOS.length, i, i + 6)} />)}
     {lagos > 0 && <mesh position={[VOSTOK[0], alt(VOSTOK[0], VOSTOK[2]) + 0.03, VOSTOK[2]]} rotation={[-Math.PI / 2, 0, 0.5]} scale={[1, 0.22, 1]}><circleGeometry args={[0.85, 48]} /><meshStandardMaterial color="#1c8ef0" emissive="#0a5ad0" emissiveIntensity={0.9 * lagos} roughness={0.1} /></mesh>}
     {rios > 0 && RIOS.map((_, k) => Array.from({length: 60}, (_, i) => { const x = -3.8 + i * 0.1; if (i / 60 > rios) return null; const z = rioZ(k, x); return <Brilho key={k + '_' + i} pos={[x, alt(x, z) + 0.03, z]} s={0.11} cor="#9fe4ff" o={0.8} />; }))}
@@ -74,7 +75,7 @@ const S3: React.FC = () => <CG>{(f) => <>
   <Terreno f={f} gelo={3}><Regua h={pr(f, 4, 50) * 2.5} /></Terreno><Pos bloom={0.7} /></>}</CG>;
 // 4 · num cânion passa de 4.700 m: a câmera desce pela parede do vale fundo, ainda cheio de gelo
 const S4: React.FC = () => <CG>{(f) => <>
-  <Cam pos={[3.2, 2.4 - f * 0.03, 5.6 - f * 0.02]} alvo={[3.2, -0.9, 1.2]} />
+  <Cam pos={[7.2 - f * 0.008, 3.6 - f * 0.012, 6.4]} alvo={[3.2, -0.4, 1.4]} />
   <Terreno f={f} gelo={3}><Regua h={pr(f, 0, 55) * 4.2} x={3.9} /></Terreno>
   <Brilho pos={[3.2, -1.3, 1.2]} s={1.4} cor="#5ac8ff" o={0.35} /><Pos bloom={0.8} /></>}</CG>;
 // 5 · tira a primeira camada: a placa de cima sobe e some (câmera alta)
@@ -94,13 +95,13 @@ const S7: React.FC = () => <CG>{(f) => <>
   <Terreno f={f} gelo={2 - pr(f, 0, 20) * 1.4} /><Pos bloom={0.7} /></>}</CG>;
 // 8 · a cordilheira enterrada: sobrevoo dos picos da Gamburtsev, com o resto do gelo sumindo
 const S8: React.FC = () => { const cam = (f: number): V3 => [-2.6 + f * 0.022, 1.75, 1.1 - f * 0.004]; const alvo = (f: number): V3 => [0.4 + f * 0.012, 0.7, -0.8];
-  return <CG rot={(f) => <R3 cam={cam(f)} alvo={alvo(f)} p={new THREE.Vector3(1.0, 1.2, -0.8)} txt="GAMBURTSEV" o={pr(f, 150, 160)} dy={-200} tam={70} />}>{(f) => <>
+  return <CG rot={(f) => <Rotulo x={540} y={560} txt="GAMBURTSEV" o={pr(f, 150, 160)} tam={76} />}>{(f) => <>
     <Cam pos={cam(f)} alvo={alvo(f)} />
     <Terreno f={f} gelo={0.6 - pr(f, 0, 60) * 0.6} /><Pos bloom={0.7} /></>}</CG>; };
 // 9 · tem lago: pontos azuis acendendo por todo o continente (câmera de cima)
 const S9: React.FC = () => <CG>{(f) => <>
   <Cam pos={[0, 9.5 - f * 0.01, 2.2]} alvo={[0, 0, 0]} />
-  <Terreno f={f} gelo={0.35} lagos={pr(f, 0, 70)} /><Pos bloom={1.1} /></>}</CG>;
+  <Terreno f={f} lagos={pr(f, 0, 70)} noite={0.4} /><Pos bloom={1.1} /></>}</CG>;
 // 10 · o Vostok em close (câmera rasante ao longo do lago)
 const S10: React.FC = () => { const cam = (f: number): V3 => [-2.4 + f * 0.008, 0.55, 2.1 - f * 0.004]; const alvo: V3 = [-0.4, 0.05, 0.8];
   return <CG rot={(f) => <R3 cam={cam(f)} alvo={alvo} p={yT(-0.6, 0.9, 0.1)} txt="VOSTOK" o={pr(f, 12, 22)} dy={-170} tam={78} />}>{(f) => <>
@@ -168,7 +169,7 @@ const Extra: React.FC = () => {
   if (f >= a && f < b) txt = '⬇ ' + mil(interpolate(f, [a, a + 50], [0, 1900], cl)) + ' M';
   else if (f >= b && f < c) txt = '⬇ ' + mil(interpolate(f, [b, b + 50], [1900, 4757], cl)) + ' M';
   else if (f >= c && f < d) txt = '⬇ 4.757 M';
-  else if (f >= d && f < e) txt = '−' + mil(interpolate(f, [d + 60, d + 130], [0, 3500], cl)) + ' M';
+  else if (f >= d + 50 && f < e) txt = '−' + mil(interpolate(f, [d + 50, d + 130], [100, 3500], cl)) + ' M';
   else if (f >= e && f < g) txt = '⬇ ' + mil(interpolate(f, [e + 20, e + 130], [0, 3000], cl)) + ' M';
   const o = interpolate(f, [0, 3, 50, 60], [0, 1, 1, 0], cl);
   return <AbsoluteFill>
@@ -181,4 +182,4 @@ const Extra: React.FC = () => {
 const S = K.criarShort(W, PLANO, 'antartida/narracao.mp3', 'e a gente ainda', Extra, {legenda: 56});
 const TEMPO = S.tempo;
 export const Video = S.Video; export const DURACAO = S.DURACAO;
-void Rotulo; void Easing;
+void Easing;
