@@ -39,8 +39,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
   padding-block: 12px;
-  background: linear-gradient(180deg, rgba(4,5,12,.85), rgba(4,5,12,.35));
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: linear-gradient(180deg, rgba(4,5,12,.94), rgba(4,5,12,.78));
   border-bottom: 1px solid var(--edge);
 }
 .bar-in { max-width: 1240px; margin: 0 auto; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -65,16 +64,15 @@ main {
   padding-block: 26px 70px;
 }
 .station { display: grid; gap: 20px; animation: rise .55s cubic-bezier(.2,.7,.2,1) both; }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 .st-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
 .st-head h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(26px, 4.2vw, 44px); line-height: 1.05; margin: 0; text-wrap: balance; text-shadow: 0 2px 30px rgba(0,0,0,.6); }
 .st-head p { margin: 6px 0 0; color: var(--ink-dim); max-width: 60ch; }
 .eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-2); }
 .glass {
-  background: linear-gradient(160deg, var(--glass-hi), var(--glass) 55%), var(--glass-solid);
+  background: linear-gradient(160deg, rgba(170,185,255,.12), rgba(140,155,255,.05) 55%), rgba(9,11,26,.82);
   border: 1px solid var(--edge); border-radius: var(--r);
-  backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%);
-  box-shadow: 0 10px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.07);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07);
 }
 .panel { padding: 18px; min-width: 0; }
 .panel h2 { font-family: var(--f-display); font-weight: 600; font-size: 16px; margin: 0 0 12px; letter-spacing: .01em; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -192,7 +190,7 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var
 
 /* modal */
 dialog { padding: 0; border: none; background: transparent; color: var(--ink); max-width: min(980px, calc(100vw - 24px)); width: 100%; max-height: calc(100dvh - 24px); overflow-y: auto; overscroll-behavior: contain; }
-dialog::backdrop { background: rgba(3,4,10,.75); backdrop-filter: blur(6px); }
+dialog::backdrop { background: rgba(3,4,10,.85); }
 .modal { position: relative; display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr); overflow: hidden; align-items: start; }
 .modal .player { background: #000; display: flex; align-items: center; justify-content: center; position: relative; min-height: 200px; }
 .modal video { display: block; max-height: 80vh; max-width: 100%; }
@@ -276,8 +274,9 @@ dialog::backdrop { background: rgba(3,4,10,.75); backdrop-filter: blur(6px); }
     if (!window.THREE) return null;
     const cv = document.getElementById("space");
     let renderer;
-    try { renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true }); } catch (e) { return null; }
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
+    try { renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: false, powerPreference: "high-performance" }); } catch (e) { return null; }
+    let PR = Math.min(devicePixelRatio || 1, 1);
+    renderer.setPixelRatio(PR);
     renderer.setClearColor(0x04050c, 1);
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 3000);
@@ -285,7 +284,7 @@ dialog::backdrop { background: rgba(3,4,10,.75); backdrop-filter: blur(6px); }
     const look = new THREE.Vector3();
 
     // estrelas
-    const N = 5000, pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
+    const N = 2500, pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
     for (let i = 0; i < N; i++) {
       const r = 350 + Math.random() * 650, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
       pos[i*3] = r * Math.sin(ph) * Math.cos(th); pos[i*3+1] = r * Math.cos(ph) * 0.7; pos[i*3+2] = r * Math.sin(ph) * Math.sin(th);
@@ -316,7 +315,7 @@ dialog::backdrop { background: rgba(3,4,10,.75); backdrop-filter: blur(6px); }
       float n3(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); vec3 u=f*f*(3.0-2.0*f);
         return mix(mix(mix(dot(hash3(i),f),dot(hash3(i+vec3(1,0,0)),f-vec3(1,0,0)),u.x),mix(dot(hash3(i+vec3(0,1,0)),f-vec3(0,1,0)),dot(hash3(i+vec3(1,1,0)),f-vec3(1,1,0)),u.x),u.y),
                    mix(mix(dot(hash3(i+vec3(0,0,1)),f-vec3(0,0,1)),dot(hash3(i+vec3(1,0,1)),f-vec3(1,0,1)),u.x),mix(dot(hash3(i+vec3(0,1,1)),f-vec3(0,1,1)),dot(hash3(i+vec3(1,1,1)),f-vec3(1,1,1)),u.x),u.y),u.z); }
-      float fbm(vec3 p){ float a=.5,s=0.; for(int i=0;i<5;i++){ s+=a*n3(p); p*=2.03; a*=.5; } return s; }`;
+      float fbm(vec3 p){ float a=.5,s=0.; for(int i=0;i<4;i++){ s+=a*n3(p); p*=2.03; a*=.5; } return s; }`;
     const sun = new THREE.Vector3(-1, .35, .55).normalize();
     const pMat = new THREE.ShaderMaterial({
       uniforms: { uSun: { value: sun }, uT: { value: 0 } },
@@ -325,7 +324,7 @@ dialog::backdrop { background: rgba(3,4,10,.75); backdrop-filter: blur(6px); }
         uniform vec3 uSun; uniform float uT; varying vec3 vN; varying vec3 vP;
         void main(){
           vec3 p=normalize(vP);
-          float h=fbm(p*2.2)+.35*fbm(p*6.0);
+          float h=fbm(p*2.2)+.25*n3(p*7.0);
           float land=smoothstep(.02,.08,h);
           vec3 ocean=mix(vec3(.02,.06,.16),vec3(.04,.16,.32),smoothstep(-.4,.05,h));
           vec3 ground=mix(vec3(.10,.18,.09),vec3(.35,.30,.20),smoothstep(.1,.45,h));
@@ -335,14 +334,14 @@ dialog::backdrop { background: rgba(3,4,10,.75); backdrop-filter: blur(6px); }
           col=mix(col,vec3(.92),cl*.55);
           vec3 n=normalize(vN); vec3 sv=normalize((viewMatrix*vec4(uSun,0.)).xyz);
           float d=dot(n,sv); float lit=smoothstep(-.15,.35,d);
-          float city=land*(1.-lit)*smoothstep(.3,.6,fbm(p*18.0))*(1.-ice);
+          float city=land*(1.-lit)*smoothstep(.25,.6,n3(p*22.0))*(1.-ice);
           vec3 night=vec3(1.,.62,.3)*city*.9;
           vec3 c=col*(.05+.95*lit)+night;
           float spec=pow(max(dot(reflect(-sv,n),vec3(0,0,1)),0.),24.)*(1.-land)*lit*.5;
           gl_FragColor=vec4(c+spec,1.0);
         }`
     });
-    const planet = new THREE.Mesh(new THREE.SphereGeometry(10, 96, 96), pMat);
+    const planet = new THREE.Mesh(new THREE.SphereGeometry(10, 64, 64), pMat);
     planet.rotation.z = 0.41;
     scene.add(planet);
     const atm = new THREE.Mesh(new THREE.SphereGeometry(10.9, 64, 64), new THREE.ShaderMaterial({
@@ -356,14 +355,14 @@ dialog::backdrop { background: rgba(3,4,10,.75); backdrop-filter: blur(6px); }
     const moon = new THREE.Mesh(new THREE.SphereGeometry(2.4, 48, 48), new THREE.ShaderMaterial({
       uniforms: { uSun: { value: sun } },
       vertexShader: `varying vec3 vN; varying vec3 vP; void main(){ vN=normalize(normalMatrix*normal); vP=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);} `,
-      fragmentShader: noise + `uniform vec3 uSun; varying vec3 vN; varying vec3 vP; void main(){ vec3 p=normalize(vP); float h=fbm(p*4.)+.5*fbm(p*12.); vec3 c=mix(vec3(.32),vec3(.62),smoothstep(-.3,.4,h)); vec3 sv=normalize((viewMatrix*vec4(uSun,0.)).xyz); float l=smoothstep(-.1,.4,dot(normalize(vN),sv)); gl_FragColor=vec4(c*(.04+.96*l),1.); }`
+      fragmentShader: noise + `uniform vec3 uSun; varying vec3 vN; varying vec3 vP; void main(){ vec3 p=normalize(vP); float h=fbm(p*4.); vec3 c=mix(vec3(.32),vec3(.62),smoothstep(-.3,.4,h)); vec3 sv=normalize((viewMatrix*vec4(uSun,0.)).xyz); float l=smoothstep(-.1,.4,dot(normalize(vN),sv)); gl_FragColor=vec4(c*(.04+.96*l),1.); }`
     }));
     scene.add(moon);
 
     // cinturão de asteroides
-    const rocks = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), new THREE.MeshStandardMaterial({ color: 0x8a7f78, roughness: .95, flatShading: true }), 700);
+    const rocks = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), new THREE.MeshLambertMaterial({ color: 0x8a7f78, flatShading: true }), 450);
     const dummy = new THREE.Object3D(), belt = new THREE.Group(); belt.rotation.x = 1.25; belt.rotation.y = .3;
-    for (let i = 0; i < 700; i++) {
+    for (let i = 0; i < 450; i++) {
       const a = Math.random() * Math.PI * 2, r = 19 + Math.random() * 7 + Math.random() * Math.random() * 4;
       dummy.position.set(Math.cos(a) * r, (Math.random() - .5) * 1.4, Math.sin(a) * r);
       dummy.rotation.set(Math.random() * 6, Math.random() * 6, Math.random() * 6);
@@ -397,13 +396,25 @@ dialog::backdrop { background: rgba(3,4,10,.75); backdrop-filter: blur(6px); }
       camera.position.lerp(tp, k); look.lerp(goal.t, k); camera.lookAt(look);
       renderer.render(scene, camera);
     }
-    function loop() {
+    let acc = 0, frames = 0, slow = 0, FPS = 30, moving = 0;
+    function loop(now) {
       if (!visible || STILL) return;
-      const now = performance.now(), dt = Math.min((now - last) / 1000, .05); last = now;
-      frame(dt); requestAnimationFrame(loop);
+      requestAnimationFrame(loop);
+      now = now || performance.now();
+      if (cv.style.visibility === "hidden" || (document.getElementById("dlg") || {}).open) { last = now; return; }
+      const el = now - last;
+      const target = moving > 0 ? 1000 / 50 : 1000 / FPS;
+      if (el < target - 2) return;
+      const dt = Math.min(el / 1000, .1); last = now; if (moving > 0) moving -= el;
+      const t0 = performance.now(); frame(dt); const cost = performance.now() - t0;
+      acc += cost; frames++;
+      if (frames === 40) { const avg = acc / frames; acc = 0; frames = 0;
+        if (avg > 22 && PR > .55) { PR = Math.max(.5, PR - .2); renderer.setPixelRatio(PR); size(); }
+        else if (avg > 22) { FPS = 20; } }
     }
+    document.addEventListener("scroll", () => { cv.style.visibility = scrollY > innerHeight * 1.2 ? "hidden" : "visible"; }, { passive: true });
     if (STILL) frame(0); else requestAnimationFrame(loop);
-    return { go(st) { const c = CAM[st] || CAM.comando; goal.p.set(...c.p); goal.t.set(...c.t); if (STILL) { camera.position.copy(goal.p); look.copy(goal.t); frame(0); } } };
+    return { go(st) { moving = 2500; const c = CAM[st] || CAM.comando; goal.p.set(...c.p); goal.t.set(...c.t); if (STILL) { camera.position.copy(goal.p); look.copy(goal.t); frame(0); } } };
   }
   try { three = initSpace(); } catch (e) { three = null; }
 
