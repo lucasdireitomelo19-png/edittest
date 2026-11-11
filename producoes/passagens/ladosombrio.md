@@ -56,3 +56,10 @@ Direção do canal "Lado Sombrio do Universo", em pt-BR: estratégia e métricas
 3. Roteirista e Pesquisas acima de 50% de contexto: oferecido trocar as duas para a branch principal; o dono não respondeu.
 4. Carrosséis estava esperando o dono confirmar os avisos no Observatório.
 5. Segundo canal: sugeridos Oceano/Terra sombria, Lado Sombrio em inglês ou religioso (arqueologia bíblica). O dono não decidiu.
+
+## Pedidos pelo Observatório (11/11)
+- O dono pede trabalho aos agentes pelo Observatório (estações Agentes e Produção).
+- O envio direto pela conexão "Claude Code Remote" pode não estar disponível para ele. Nesse caso, o pedido fica na coleção `pedidos` com `status: "pendente"`.
+- A tarefa agendada "Repassar pedidos do Observatório" (`trig_01J2QKPFXbPn8APXnjkG3SgU`) dispara nesta conversa de hora em hora, das 9h às 23h de Brasília. Ela entrega os pendentes por `send_message` e marca "entregue".
+- Se a direção trocar de conversa, atualize o `persistent_session_id` da tarefa com `update_trigger`.
+- Números do YouTube ficam em `metricas/youtube` (estação Insights). Supermetrics no plano grátis só traz dados desde 28/10, até 100 linhas por consulta e uma consulta por dia.
