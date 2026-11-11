@@ -8,7 +8,7 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 
 ## Links e ids
 - **Central:** https://claude.ai/artifact/UZ3YFHzLpBjiJj3Mskzj1q
-  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-102 (longo da Pangeia, 08/11; lado-101 é o Short da Pangeia e lado-100 BnSala, o primeiro no formato novo) (só no Observatório; lado-94 e 95 são os testes 3D).
+  - Coleção `videos`, linhas `lado-NN`; a última entregue é lado-103 (Short do gelo, 11/11, doc 59; lado-102 é o longo da Pangeia, 08/11; lado-101 é o Short da Pangeia e lado-100 BnSala, o primeiro no formato novo) (só no Observatório; lado-94 e 95 são os testes 3D).
   - **Armazenamento CHEIO (1 GB) desde 31/10.** O lado-79 ficou sem vídeo na Central. Liberar espaço só com OK do dono. Por enquanto, suba o vídeo direto no Observatório. Reels entram com `tipo: "short"` e "Reel" no nome/notas.
   - O arquivo vai como asset (< 19,5 MB). Há ~270 MB livres.
 - **Avisos de status:** desde 31/10 vão para o Observatório (coleção `eventos`), não mais para o Painel (ver `CLAUDE.md`).
@@ -173,3 +173,4 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
 - **Short da Pangeia entregue (lado-101, 08/11).** O próximo é o longo POV `longo_pangeia_volta.md` (~7 min, 9 capítulos, roteiro aprovado). Ele reaproveita o globo, as máscaras e os supercontinentes do Short (doc 57). Comece quando o dono der o OK.
 - **Longo da Pangeia entregue (lado-102, 08/11, doc 58).** Longos 3D passam do limite de 2 h de uma tarefa em segundo plano: renderize em 4 partes (`--frames=a-b --muted`), passe `pipeline/tapa_preto.py` em cada uma, junte com concat e misture o áudio com ffmpeg. O config força crf, então o render só de áudio falha. O Observatório recebe cópia em 540p (< 19,5 MB).
 - **Teste de modelo (pedido do dono em 11/11):** o próximo vídeo é feito com o modelo novo e mais barato, que o dono já selecionou nesta conversa, para comparar com os anteriores. Mantenha o mesmo processo (revisão em baixa resolução, checagem de repetição e de quadros pretos) e, na entrega, diga ao dono como o resultado se compara: qualidade, retrabalho e tempo.
+- **Lote 11/11 (4 Shorts, `roteiros/lote_2026-11-11_modelos_gringa.md` na branch do Roteirista):** 1 gelo derrete = lado-103, ENTREGUE. Faltam, nesta ordem: 2 Antártida sem gelo, 3 Terra cubo, 4 grão de areia. Na tela vão o título do 1º segundo, os nomes em neon, o contador no canto e a legenda; sem selos e sem thumb. Para o mapa, reaproveite `GloboMar` e a fábrica `M` de `Gelo.tsx`. Vídeo de Short para o Observatório: crf 24 para ficar abaixo de 19,5 MB.
