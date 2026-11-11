@@ -32,3 +32,4 @@ Roteiro: `short_estoque_emergencia.md` (branch `claude/practical-cannon-ly7fw1`,
 ## Lições
 - Num Short vertical, um globo com câmera a menos de 2,4 de distância vira tela preta (lado noturno). Use d ≥ 2,4 e luz ambiente.
 - Uma calota grande (ang > 0,25) perto da câmera vira um disco que cobre a tela.
+- `tapa_preto.py` descartava o áudio. Aconteceu no Short, que foi entregue mudo na primeira vez. Corrigido em 11/11: agora ele copia o áudio (`-map 0:a?`). Confira sempre com `ffprobe` se o arquivo final tem a faixa de áudio.

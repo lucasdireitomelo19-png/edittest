@@ -19,5 +19,5 @@ else:
         partes.append(f'[v{k - 1}][r{k}]freezeframes=first={i}:last={j}:replace={j + 1}[v{k}]')
     partes.append(f'[v{n}]null[o]')
     filt = ';'.join(partes)
-subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', ent, '-filter_complex', filt, '-map', '[o]', '-c:v', 'libx264', '-crf', '16', '-preset', 'medium', '-pix_fmt', 'yuv420p', sai], check=True)
+subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', ent, '-filter_complex', filt, '-map', '[o]', '-map', '0:a?', '-c:a', 'copy', '-c:v', 'libx264', '-crf', '16', '-preset', 'medium', '-pix_fmt', 'yuv420p', sai], check=True)
 print(len(fr), 'piscadas tapadas')
