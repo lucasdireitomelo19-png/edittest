@@ -10,7 +10,7 @@
 
 | # | Formato | Título | Potencial |
 |---|---|---|---|
-| 1 | Short (~5 s, 194 palavras) | POR QUE 33 PAÍSES PEDEM COMIDA GUARDADA EM CASA? | 🔥🔥 8/10 |
+| 1 | Short (~52 s, 194 palavras) | POR QUE 33 PAÍSES PEDEM COMIDA GUARDADA EM CASA? | 🔥🔥 8/10 |
 
 ---
 
