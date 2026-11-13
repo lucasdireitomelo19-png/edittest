@@ -23,7 +23,7 @@ Não repete cenas do longo: o plano visual abaixo usa objetos e ângulos própri
 ---
 
 ## E SE a TERRA GIRASSE cada vez MAIS RÁPIDO?
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (13/11/2026), enviado ao Gerador de Vídeos (fazer antes do longo)
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: um fato real no 2º segundo (o recorde de 2024) e um contador que encolhe até o momento em que tudo flutua. Ponto mais fraco: o longo conta a mesma história, então o Short pula direto para os degraus mais visuais e funciona como trailer.
 
