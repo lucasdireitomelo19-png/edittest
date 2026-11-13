@@ -17,7 +17,7 @@ Toda a honestidade fica na narração: fato, estimativa, hipótese e "pelas noss
 ---
 
 ## E SE A TERRA GIRASSE CADA VEZ MAIS RÁPIDO E NÃO PARASSE?
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (13/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: parte de um fato real e recente (o dia mais curto já medido) e vira uma escalada com um contador que se entende em 2 segundos. O "você" pesa cada vez menos, até flutuar no equador. Ponto mais fraco: muito número em sequência. Por isso cada capítulo tem uma consequência física e visível (furacão, oceano migrando, gente leve, anel), e não só a conta.
 
