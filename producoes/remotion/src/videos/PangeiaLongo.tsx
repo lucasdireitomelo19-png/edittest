@@ -53,13 +53,13 @@ const SS = (o: SOpt): React.FC => () => {
 
 // ---------- peças ----------
 const unhaGeo = (() => { const g = new THREE.SphereGeometry(1, 48, 24, 0, Math.PI * 2, 0, Math.PI / 2); g.scale(0.32, 0.07, 0.42); return g; })();
-const Dedo: React.FC<{f: number; pos?: V3}> = ({f, pos = [0, 0, 0]}) => (
+export const Dedo: React.FC<{f: number; pos?: V3}> = ({f, pos = [0, 0, 0]}) => (
   <group position={pos}>
     <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, -0.45]}><capsuleGeometry args={[0.38, 1.3, 12, 24]} /><meshStandardMaterial color="#c48a68" roughness={0.6} /></mesh>
     <mesh geometry={unhaGeo} position={[0, 0.3, 0.1 + f * 0.0012]} scale={[1, 1, 1 + f * 0.005]}><meshStandardMaterial color="#f3d6cc" roughness={0.22} /></mesh>
   </group>
 );
-const Boneco: React.FC<{pos?: V3; s?: number; cor?: string; anda?: number; rot?: number}> = ({pos = [0, 0, 0], s = 1, cor = '#14181f', anda = 0, rot = 0}) => (
+export const Boneco: React.FC<{pos?: V3; s?: number; cor?: string; anda?: number; rot?: number}> = ({pos = [0, 0, 0], s = 1, cor = '#14181f', anda = 0, rot = 0}) => (
   <group position={pos} scale={s} rotation={[0, rot, 0]}>
     <mesh position={[0, 0.62, 0]}><capsuleGeometry args={[0.11, 0.34, 8, 16]} /><meshStandardMaterial color={cor} /></mesh>
     <mesh position={[0, 0.95, 0]}><sphereGeometry args={[0.1, 20, 20]} /><meshStandardMaterial color={cor} /></mesh>
@@ -67,7 +67,7 @@ const Boneco: React.FC<{pos?: V3; s?: number; cor?: string; anda?: number; rot?:
     {[-1, 1].map((l) => <mesh key={'b' + l} position={[l * 0.15, 0.65, 0]} rotation={[-Math.sin(anda) * 0.7 * l, 0, l * 0.15]}><capsuleGeometry args={[0.035, 0.3, 6, 10]} /><meshStandardMaterial color={cor} /></mesh>)}
   </group>
 );
-const Palmeira: React.FC<{pos: V3; s?: number; f: number}> = ({pos, s = 1, f}) => (
+export const Palmeira: React.FC<{pos: V3; s?: number; f: number}> = ({pos, s = 1, f}) => (
   <group position={pos} scale={s}>
     <mesh position={[0.05, 0.6, 0]} rotation={[0, 0, -0.12]}><cylinderGeometry args={[0.035, 0.06, 1.2, 8]} /><meshStandardMaterial color="#5a4030" /></mesh>
     {Array.from({length: 7}, (_, i) => <mesh key={i} position={[0.12, 1.2, 0]} rotation={[0.9 + Math.sin(f * 0.05 + i) * 0.05, i / 7 * Math.PI * 2, 0]}><boxGeometry args={[0.06, 0.008, 0.6]} /><meshStandardMaterial color="#2f5a2a" /></mesh>)}

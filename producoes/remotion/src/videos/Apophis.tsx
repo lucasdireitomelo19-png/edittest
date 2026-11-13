@@ -22,8 +22,8 @@ const NEON = '#39d8ff';
 const VERM = '#ff2a1a';
 
 // ---------- canvas helpers ----------
-const canvasTex = (w: number, h: number, draw: (g: CanvasRenderingContext2D) => void) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d')!); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; };
-const GRAD = canvasTex(4, 128, (g) => { const gr = g.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, '#fff'); gr.addColorStop(0.55, '#fff'); gr.addColorStop(1, '#000'); g.fillStyle = gr; g.fillRect(0, 0, 4, 128); });
+export const canvasTex = (w: number, h: number, draw: (g: CanvasRenderingContext2D) => void) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d')!); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; };
+export const GRAD = canvasTex(4, 128, (g) => { const gr = g.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, '#fff'); gr.addColorStop(0.55, '#fff'); gr.addColorStop(1, '#000'); g.fillStyle = gr; g.fillRect(0, 0, 4, 128); });
 GRAD.colorSpace = THREE.NoColorSpace;
 const REP: Record<string, THREE.Texture> = {};
 const mapaTex = (t: THREE.Texture, off: number) => { const k = t.uuid + off; if (!REP[k]) { const c = t.clone(); c.wrapS = THREE.RepeatWrapping; c.offset.set(off, 0); c.needsUpdate = true; REP[k] = c; } return REP[k]; };
@@ -51,49 +51,49 @@ const calTex = (mes: number) => canvasTex(512, 512, (g) => {
 const CAL = [0, 1, 2, 3, 4].map((m) => calTex(m));
 
 // ---------- geometrias ----------
-const geoApo = (() => { const g = new THREE.IcosahedronGeometry(1, 6); const p = g.attributes.position as THREE.BufferAttribute; const q = new THREE.Vector3();
+export const geoApo = (() => { const g = new THREE.IcosahedronGeometry(1, 6); const p = g.attributes.position as THREE.BufferAttribute; const q = new THREE.Vector3();
   for (let i = 0; i < p.count; i++) { q.fromBufferAttribute(p, i); const x = q.x; let r = 1 - 0.2 * Math.exp(-(x * x) / 0.08) + 0.08 * Math.sin(q.y * 6 + q.z * 4) + 0.05 * Math.sin(q.x * 11 + q.z * 9) + 0.025 * Math.sin(q.y * 23 + q.x * 17);
     for (let c = 0; c < 9; c++) { const cx = new THREE.Vector3(random('cx' + c) - 0.5, random('cy' + c) - 0.5, random('cz' + c) - 0.5).normalize(); const dd = q.clone().normalize().distanceTo(cx); const rr = 0.16 + random('cr' + c) * 0.2; if (dd < rr) r -= 0.07 * (1 - (dd / rr) ** 2); }
     q.multiplyScalar(r); p.setXYZ(i, q.x * 1.38, q.y * 0.86, q.z * 0.78); }
   g.computeVertexNormals(); return g; })();
-const relevo = (n: number, amp: (x: number, z: number, i: number) => number, tam = 8) => { const g = new THREE.PlaneGeometry(tam, tam, n, n); g.rotateX(-Math.PI / 2); const p = g.attributes.position as THREE.BufferAttribute;
+export const relevo = (n: number, amp: (x: number, z: number, i: number) => number, tam = 8) => { const g = new THREE.PlaneGeometry(tam, tam, n, n); g.rotateX(-Math.PI / 2); const p = g.attributes.position as THREE.BufferAttribute;
   for (let i = 0; i < p.count; i++) p.setY(i, amp(p.getX(i), p.getZ(i), i)); g.computeVertexNormals(); return g; };
 const DESERTO = relevo(120, (x, z, i) => Math.sin(x * 0.5 + z * 0.3) * 0.25 + Math.max(0, -z - 6) * 0.35 * (1 + Math.sin(x * 0.7)) + (random('ds' + i) - 0.5) * 0.04, 30);
-const PLANICIE = relevo(120, (x, z, i) => Math.sin(x * 0.3) * Math.cos(z * 0.25) * 0.3 + (random('pl' + i) - 0.5) * 0.05, 40);
+export const PLANICIE = relevo(120, (x, z, i) => Math.sin(x * 0.3) * Math.cos(z * 0.25) * 0.3 + (random('pl' + i) - 0.5) * 0.05, 40);
 const ROCHA = relevo(160, (x, z, i) => Math.sin(x * 1.7) * 0.12 + Math.cos(z * 1.3 + x) * 0.1 + (random('rk' + i) - 0.5) * 0.06 - Math.max(0, 0.5 - Math.hypot(x - 1.5, z + 1) ) * 0.5, 12);
-const LAT = (n: number) => Array.from({length: n}, (_, i) => i);
+export const LAT = (n: number) => Array.from({length: n}, (_, i) => i);
 
 // superfície viva (água, cratera, onda): a altura muda a cada quadro
-const Viva: React.FC<{n: number; tam: number; h: (x: number, z: number) => number; mat: React.ReactNode; pos?: V3}> = ({n, tam, h, mat, pos}) => {
+export const Viva: React.FC<{n: number; tam: number; h: (x: number, z: number) => number; mat: React.ReactNode; pos?: V3}> = ({n, tam, h, mat, pos}) => {
   const g = useMemo(() => { const x = new THREE.PlaneGeometry(tam, tam, n, n); x.rotateX(-Math.PI / 2); return x; }, [n, tam]);
   const p = g.attributes.position as THREE.BufferAttribute; for (let i = 0; i < p.count; i++) p.setY(i, h(p.getX(i), p.getZ(i))); p.needsUpdate = true; g.computeVertexNormals();
   return <mesh geometry={g} position={pos}>{mat}</mesh>;
 };
 // tubo por uma lista de pontos, desenhado até a fração k
-const Tubo: React.FC<{pts: V3[]; r?: number; cor?: string; k?: number; o?: number; brilho?: number}> = ({pts, r = 0.01, cor = VERM, k = 1, o = 1, brilho = 1.5}) => {
+export const Tubo: React.FC<{pts: V3[]; r?: number; cor?: string; k?: number; o?: number; brilho?: number}> = ({pts, r = 0.01, cor = VERM, k = 1, o = 1, brilho = 1.5}) => {
   const key = pts.map((p) => p.map((x) => x.toFixed(3)).join(',')).join(';');
   const g = useMemo(() => new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map((p) => new THREE.Vector3(...p))), Math.max(60, pts.length * 8), r, 8, false), [key, r]); // eslint-disable-line react-hooks/exhaustive-deps
   g.setDrawRange(0, Math.floor((g.index!.count / 6) * Math.max(0, Math.min(1, k))) * 6);
   return <mesh geometry={g}><meshBasicMaterial color={new THREE.Color(cor).multiplyScalar(brilho)} transparent opacity={o} toneMapped={false} /></mesh>;
 };
-const elipse = (a: number, b: number, n = 120, rot = 0, c: [number, number] = [0, 0]): V3[] => LAT(n + 1).map((i) => { const t = i / n * Math.PI * 2; const x = Math.cos(t) * a, z = Math.sin(t) * b; return [c[0] + x * Math.cos(rot) - z * Math.sin(rot), 0, c[1] + x * Math.sin(rot) + z * Math.cos(rot)]; });
+export const elipse = (a: number, b: number, n = 120, rot = 0, c: [number, number] = [0, 0]): V3[] => LAT(n + 1).map((i) => { const t = i / n * Math.PI * 2; const x = Math.cos(t) * a, z = Math.sin(t) * b; return [c[0] + x * Math.cos(rot) - z * Math.sin(rot), 0, c[1] + x * Math.sin(rot) + z * Math.cos(rot)]; });
 // calota esférica (mancha, alvo, região) centrada em lat/lon
-const Calota: React.FC<{la: number; lo: number; ang: number; cor: string; o: number; r?: number; add?: boolean}> = ({la, lo, ang, cor, o, r = 1.006, add}) => {
+export const Calota: React.FC<{la: number; lo: number; ang: number; cor: string; o: number; r?: number; add?: boolean}> = ({la, lo, ang, cor, o, r = 1.006, add}) => {
   const q = useMemo(() => new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), v(la, lo)), [la, lo]);
   return <mesh quaternion={q}><sphereGeometry args={[r, 64, 24, 0, Math.PI * 2, 0, ang]} /><meshBasicMaterial color={cor} alphaMap={GRAD} transparent opacity={o} depthWrite={false} blending={add ? THREE.AdditiveBlending : THREE.NormalBlending} toneMapped={false} /></mesh>;
 };
 
 // ---------- peças ----------
-const Apo: React.FC<{tex: Tex; pos?: V3; s?: number; rot?: V3; brasa?: number; cor?: string}> = ({tex, pos = [0, 0, 0], s = 1, rot = [0, 0, 0], brasa = 0, cor = '#a89c8e'}) => (
+export const Apo: React.FC<{tex: Tex; pos?: V3; s?: number; rot?: V3; brasa?: number; cor?: string}> = ({tex, pos = [0, 0, 0], s = 1, rot = [0, 0, 0], brasa = 0, cor = '#a89c8e'}) => (
   <mesh geometry={geoApo} position={pos} scale={s} rotation={rot}><meshStandardMaterial map={tex.lua} bumpMap={tex.lua} bumpScale={0.05} color={cor} roughness={1} emissive="#ff4a10" emissiveIntensity={brasa} /></mesh>
 );
-const TerraN: React.FC<{tex: Tex; luz?: number; giro?: number; nuvens?: boolean}> = ({tex, luz = 1, giro = 0, nuvens = true}) => (
+export const TerraN: React.FC<{tex: Tex; luz?: number; giro?: number; nuvens?: boolean}> = ({tex, luz = 1, giro = 0, nuvens = true}) => (
   <group rotation={[0, giro, 0]}>
     <Terra tex={tex} rot={[0, 0, 0]} nuvens={nuvens} />
     <mesh><sphereGeometry args={[1.003, 128, 128]} /><meshBasicMaterial map={luzesTex(tex)} transparent opacity={luz} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} /></mesh>
   </group>
 );
-const Sat: React.FC<{pos: V3; s?: number; rot?: number}> = ({pos, s = 0.12, rot = 0}) => (
+export const Sat: React.FC<{pos: V3; s?: number; rot?: number}> = ({pos, s = 0.12, rot = 0}) => (
   <group position={pos} scale={s} rotation={[0, rot, 0]}>
     <mesh><boxGeometry args={[0.5, 0.5, 0.7]} /><meshStandardMaterial color="#d8b04a" metalness={0.7} roughness={0.3} /></mesh>
     {[-1, 1].map((l) => <mesh key={l} position={[l * 1.05, 0, 0]}><boxGeometry args={[1.5, 0.03, 0.55]} /><meshStandardMaterial color="#1c3a7a" metalness={0.5} roughness={0.25} emissive="#0a1a40" /></mesh>)}
@@ -101,7 +101,7 @@ const Sat: React.FC<{pos: V3; s?: number; rot?: number}> = ({pos, s = 0.12, rot 
   </group>
 );
 const GEO_R = 6.6;
-const AnelSat: React.FC<{n?: number; r?: number; f: number; s?: number; linha?: number}> = ({n = 48, r = GEO_R, f, s = 0.12, linha = 0.35}) => <>
+export const AnelSat: React.FC<{n?: number; r?: number; f: number; s?: number; linha?: number}> = ({n = 48, r = GEO_R, f, s = 0.12, linha = 0.35}) => <>
   {LAT(n).map((i) => { const a = i / n * Math.PI * 2 + f * 0.0015; return <Sat key={i} pos={[Math.cos(a) * r, 0, Math.sin(a) * r]} s={s} rot={-a} />; })}
   <mesh rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[r, 0.012, 8, 200]} /><meshBasicMaterial color={NEON} transparent opacity={linha} toneMapped={false} /></mesh>
 </>;
@@ -129,7 +129,7 @@ const Navio: React.FC<{pos?: V3; s?: number}> = ({pos = [0, 0, 0], s = 1}) => (
     <mesh position={[0.9, 1.05, 0]}><cylinderGeometry args={[0.07, 0.09, 0.3, 16]} /><meshStandardMaterial color="#c8261a" /></mesh>
   </group>
 );
-const Aviao: React.FC<{pos: V3; s?: number; rot?: V3; cor?: string}> = ({pos, s = 1, rot = [0, 0, 0], cor = '#d8dde4'}) => (
+export const Aviao: React.FC<{pos: V3; s?: number; rot?: V3; cor?: string}> = ({pos, s = 1, rot = [0, 0, 0], cor = '#d8dde4'}) => (
   <group position={pos} scale={s} rotation={rot}>
     <mesh rotation={[0, 0, Math.PI / 2]}><capsuleGeometry args={[0.12, 1.4, 8, 16]} /><meshStandardMaterial color={cor} metalness={0.4} roughness={0.4} /></mesh>
     <mesh position={[0.05, 0, 0]}><boxGeometry args={[0.32, 0.03, 1.8]} /><meshStandardMaterial color={cor} metalness={0.4} roughness={0.4} /></mesh>
@@ -146,7 +146,7 @@ const Nave: React.FC<{pos?: V3; s?: number; rot?: V3; abre?: number; tipo?: 'ram
     <mesh position={[0, 0.42, 0]} rotation={[Math.PI, 0, 0]}><coneGeometry args={[0.32, 0.16, 24, 1, true]} /><meshStandardMaterial color="#f0f0f0" side={THREE.DoubleSide} /></mesh>
   </group>
 );
-const Antena: React.FC<{pos: V3; dir: [number, number]; s?: number}> = ({pos, dir, s = 1}) => (
+export const Antena: React.FC<{pos: V3; dir: [number, number]; s?: number}> = ({pos, dir, s = 1}) => (
   <group position={pos} scale={s}>
     <mesh position={[0, 0.5, 0]}><cylinderGeometry args={[0.08, 0.14, 1, 12]} /><meshStandardMaterial color="#c8ccd2" /></mesh>
     <group position={[0, 1.05, 0]} rotation={[0, dir[0], 0]}><group rotation={[dir[1], 0, 0]}>
@@ -155,23 +155,23 @@ const Antena: React.FC<{pos: V3; dir: [number, number]; s?: number}> = ({pos, di
     </group></group>
   </group>
 );
-const Casa: React.FC<{pos: V3; s?: number; luz?: number; i: number}> = ({pos, s = 1, luz = 0.4, i}) => (
+export const Casa: React.FC<{pos: V3; s?: number; luz?: number; i: number}> = ({pos, s = 1, luz = 0.4, i}) => (
   <group position={pos} scale={s} rotation={[0, random('cr' + i) * 0.3, 0]}>
     <mesh position={[0, 0.25, 0]}><boxGeometry args={[0.6, 0.5, 0.5]} /><meshStandardMaterial color={['#c8b8a0', '#a8b4c0', '#d0a890', '#b8c0a0'][i % 4]} emissive="#ffc070" emissiveIntensity={random('cl' + i) < 0.5 ? luz : 0} /></mesh>
     <mesh position={[0, 0.62, 0]} rotation={[0, Math.PI / 4, 0]}><coneGeometry args={[0.48, 0.26, 4]} /><meshStandardMaterial color="#7a3a2a" /></mesh>
   </group>
 );
-const Arvore: React.FC<{pos: V3; inc?: number; dir?: number; s?: number}> = ({pos, inc = 0, dir = 0, s = 1}) => (
+export const Arvore: React.FC<{pos: V3; inc?: number; dir?: number; s?: number}> = ({pos, inc = 0, dir = 0, s = 1}) => (
   <group position={pos} rotation={[0, dir, 0]} scale={s}><group rotation={[0, 0, -inc]}>
     <mesh position={[0, 0.15, 0]}><cylinderGeometry args={[0.03, 0.04, 0.3, 6]} /><meshStandardMaterial color="#4a3020" /></mesh>
     <mesh position={[0, 0.5, 0]}><coneGeometry args={[0.18, 0.55, 8]} /><meshStandardMaterial color="#2a5a2a" /></mesh>
   </group></group>
 );
-const Predios: React.FC<{n: number; sem: string; z?: number; larg?: number; alt?: number; janelas?: number; cor?: string}> = ({n, sem, z = 0, larg = 20, alt = 2, janelas = 0.6, cor = '#0a0e16'}) => <>
+export const Predios: React.FC<{n: number; sem: string; z?: number; larg?: number; alt?: number; janelas?: number; cor?: string}> = ({n, sem, z = 0, larg = 20, alt = 2, janelas = 0.6, cor = '#0a0e16'}) => <>
   {LAT(n).map((i) => { const h = 0.3 + random(sem + 'h' + i) ** 2 * alt; const w = 0.25 + random(sem + 'w' + i) * 0.4; const x = (i / n - 0.5) * larg + (random(sem + 'x' + i) - 0.5) * 0.3;
     return <mesh key={i} position={[x, h / 2, z + (random(sem + 'z' + i) - 0.5) * 1.2]}><boxGeometry args={[w, h, w]} /><meshStandardMaterial color={cor} emissive="#ffcf80" emissiveIntensity={random(sem + 'j' + i) < janelas ? 0.08 + random(sem + 'e' + i) * 0.12 : 0} /></mesh>; })}
 </>;
-const Ceu: React.FC<{cima: string; baixo: string}> = ({cima, baixo}) => {
+export const Ceu: React.FC<{cima: string; baixo: string}> = ({cima, baixo}) => {
   const t = useMemo(() => canvasTex(4, 256, (g) => { const gr = g.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, cima); gr.addColorStop(1, baixo); g.fillStyle = gr; g.fillRect(0, 0, 4, 256); }), [cima, baixo]);
   return <mesh><sphereGeometry args={[150, 32, 16]} /><meshBasicMaterial map={t} side={THREE.BackSide} depthWrite={false} toneMapped={false} /></mesh>;
 };
