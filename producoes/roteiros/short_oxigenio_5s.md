@@ -17,7 +17,7 @@
 ---
 
 ## E SE O OXIGÊNIO SUMISSE POR 5 SEGUNDOS?
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (13/11/2026), enviado ao Gerador de Vídeos. O dono decidiu: "faz no estilo gringo", então o Modelo C usa **fundos REAIS**, liberados para este vídeo.
 
 **Potencial viral:** 🔥🔥 8/10. Ponto mais forte: um relógio de 5 s que segura o vídeo, um "você" no centro e uma virada de escala no nível 2 (o chão e a água somem). Ponto mais fraco: o tema não é de espaço, e o nível 1 é tranquilo para o "você". Por isso o nível 2 chega rápido, como a grande virada.
 
@@ -54,7 +54,7 @@ Alternativo: `VOCÊ TERIA 5 SEGUNDOS SEM OXIGÊNIO. O QUE ACONTECE?`
 - **Legenda** grande no meio, 1 palavra por vez.
 - **Nenhum selo:** a honestidade está na voz ("pelas nossas contas", "se fosse assim").
 
-**Visual (Modelo C: bonequinho desenhado de rosto exagerado sobre fundos 3D realistas; uma cena por frase, nenhuma repetida):**
+**Visual (Modelo C, estilo gringo aprovado: bonequinho desenhado de rosto exagerado sobre fundos REAIS; onde abaixo diz "3D" para o fundo, vale o fundo real equivalente; uma cena por frase, nenhuma repetida):**
 1. Bonequinho de olhos arregalados numa rua 3D, com o relógio aparecendo (câmera frontal).
 2. O ar 3D em volta dele ficando ralo, como neblina se abrindo, e o relógio em 5.
 3. O bonequinho tapando os ouvidos, com ondas 3D de estalo saindo da cabeça (câmera em close).
