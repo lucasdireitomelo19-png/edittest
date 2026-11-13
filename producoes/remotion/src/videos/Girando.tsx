@@ -23,7 +23,7 @@ const OURO = '#ffc83a';
 void GRAD; void Calota;
 
 // ---------- peças ----------
-const calTex = canvasTex(512, 512, (g) => { // julho de 2024: 1º é segunda-feira; o 5 circulado
+export const calTex = canvasTex(512, 512, (g) => { // julho de 2024: 1º é segunda-feira; o 5 circulado
   g.fillStyle = '#f2ede2'; g.fillRect(0, 0, 512, 512); g.fillStyle = '#2a6aa8'; g.fillRect(0, 0, 512, 110); g.fillStyle = '#20242c'; g.font = 'bold 34px sans-serif'; g.textAlign = 'center';
   for (let d = 1; d <= 31; d++) { const c = d % 7, l = Math.floor(d / 7); const x = 44 + c * 70, y = 170 + l * 66; g.fillStyle = c === 0 ? '#c8261a' : '#20242c'; g.fillText(String(d), x, y);
     if (d === 5) { g.strokeStyle = '#e0180c'; g.lineWidth = 7; g.beginPath(); g.arc(x, y - 12, 34, 0, 7); g.stroke(); } }
@@ -38,7 +38,7 @@ const Mostrador: React.FC<{n?: number; h: number; m?: number; cor?: string; r?: 
   <mesh position={[0, 0, 0.12]}><cylinderGeometry args={[0.05, 0.05, 0.03, 20]} /><meshStandardMaterial color="#ff3a2a" /></mesh>
 </group>;
 // balança de banheiro com mostrador (kg)
-const Balanca: React.FC<{kg: number; pos?: V3; s?: number}> = ({kg, pos = [0, 0, 0], s = 1}) => <group position={pos} scale={s}>
+export const Balanca: React.FC<{kg: number; pos?: V3; s?: number}> = ({kg, pos = [0, 0, 0], s = 1}) => <group position={pos} scale={s}>
   <mesh position={[0, 0.08, 0]}><boxGeometry args={[1.2, 0.16, 1.3]} /><meshStandardMaterial color="#e8eaee" roughness={0.3} /></mesh>
   <mesh position={[0, 0.161, -0.35]} rotation={[-Math.PI / 2, 0, 0]}><circleGeometry args={[0.24, 48]} /><meshStandardMaterial color="#0e1218" /></mesh>
   {LAT(9).map((i) => { const a = (i / 8 - 0.5) * Math.PI * 1.2; return <mesh key={i} position={[Math.sin(a) * 0.19, 0.163, -0.35 - Math.cos(a) * 0.19]} rotation={[-Math.PI / 2, 0, -a]}><planeGeometry args={[0.012, 0.05]} /><meshBasicMaterial color={NEON} toneMapped={false} /></mesh>; })}
@@ -55,7 +55,7 @@ const Pesagem = (o: {de: number; para: number; chao: string; fundo: string; cam:
   {o.extra && o.extra(f)}
   <Pos bloom={0.7} /></>; }}</CP>; };
 // Terra que gira: velocidade angular w (rad/quadro); rastros fantasma quando gira rápido
-const TerraGira: React.FC<{tex: Tex; ang: number; achata?: number; estica?: number; rastro?: number; nuvens?: boolean}> = ({tex, ang, achata = 0, estica = 0, rastro = 0, nuvens = true}) => <group scale={[1 + achata + estica, 1 - achata, 1 + achata - estica * 0.5]}>
+export const TerraGira: React.FC<{tex: Tex; ang: number; achata?: number; estica?: number; rastro?: number; nuvens?: boolean}> = ({tex, ang, achata = 0, estica = 0, rastro = 0, nuvens = true}) => <group scale={[1 + achata + estica, 1 - achata, 1 + achata - estica * 0.5]}>
   <group rotation={[0, ang, 0]}><Terra tex={tex} rot={[0, 0, 0]} nuvens={nuvens} /></group>
   {rastro > 0 && LAT(4).map((i) => <group key={i} rotation={[0, ang - (i + 1) * rastro, 0]}><mesh scale={1.004 + i * 0.001}><sphereGeometry args={[1, 64, 64]} /><meshBasicMaterial map={tex.dia} transparent opacity={0.22 - i * 0.05} depthWrite={false} /></mesh></group>)}
 </group>;
@@ -70,16 +70,16 @@ const Faixa: React.FC<{k: number; r?: number}> = ({k, r = 1.004}) => <>
 </>;
 const furacaoTex = canvasTex(256, 256, (g) => { g.translate(128, 128); for (let i = 0; i < 1400; i++) { const t = i / 1400 * 14; const r = 6 + t * 8; const a = t * 1.1; g.fillStyle = `rgba(255,255,255,${0.05 + (1 - t / 14) * 0.08})`; g.beginPath(); g.arc(Math.cos(a) * r, Math.sin(a) * r, 6 + t * 1.2, 0, 7); g.fill(); g.beginPath(); g.arc(-Math.cos(a) * r, -Math.sin(a) * r, 6 + t * 1.2, 0, 7); g.fill(); } g.fillStyle = 'rgba(0,0,0,.6)'; g.beginPath(); g.arc(0, 0, 6, 0, 7); g.fill(); });
 furacaoTex.colorSpace = THREE.NoColorSpace;
-const Furacao: React.FC<{pos?: V3; s?: number; giro: number; rot?: V3; o?: number}> = ({pos = [0, 0, 0], s = 1, giro, rot = [-Math.PI / 2, 0, 0], o = 0.95}) => <mesh position={pos} rotation={[rot[0], rot[1], rot[2] + giro]} scale={s}><circleGeometry args={[1, 64]} /><meshBasicMaterial map={furacaoTex} transparent opacity={o} depthWrite={false} /></mesh>;
+export const Furacao: React.FC<{pos?: V3; s?: number; giro: number; rot?: V3; o?: number}> = ({pos = [0, 0, 0], s = 1, giro, rot = [-Math.PI / 2, 0, 0], o = 0.95}) => <mesh position={pos} rotation={[rot[0], rot[1], rot[2] + giro]} scale={s}><circleGeometry args={[1, 64]} /><meshBasicMaterial map={furacaoTex} transparent opacity={o} depthWrite={false} /></mesh>;
 const FuracaoG: React.FC<{pos?: V3; s?: number; giro: number; rot?: V3; o?: number}> = ({pos = [0, 0, 0], s = 1, giro, rot = [-Math.PI / 2, 0, 0], o}) => <group position={pos} rotation={rot}><group rotation={[0, 0, giro]}><Furacao s={s} giro={0} rot={[0, 0, 0]} o={o} /></group></group>;
 const TERRENO = relevo(140, (x, z, i) => Math.sin(x * 0.4) * Math.cos(z * 0.3) * 0.25 + (random('tr' + i) - 0.5) * 0.04, 60);
 const FUNDO = relevo(140, (x, z, i) => Math.sin(x * 0.9) * 0.15 + Math.cos(z * 0.7 + x) * 0.12 + (random('fd' + i) - 0.5) * 0.08 - 0.4, 20);
-const Ovo: React.FC<{ang: number; s?: number; pos?: V3}> = ({ang, s = 1, pos = [0, 0, 0]}) => <group position={pos} scale={s} rotation={[0.3, ang, 0.1]}>
+export const Ovo: React.FC<{ang: number; s?: number; pos?: V3}> = ({ang, s = 1, pos = [0, 0, 0]}) => <group position={pos} scale={s} rotation={[0.3, ang, 0.1]}>
   <mesh scale={[1.6, 0.8, 1.0]}><sphereGeometry args={[1, 96, 48]} /><meshStandardMaterial color="#d8d8e0" roughness={0.6} /></mesh>
   <mesh position={[0.9, 0.2, 0.55]} scale={[0.35, 0.25, 0.2]}><sphereGeometry args={[1, 32, 16]} /><meshStandardMaterial color="#8a3a3a" roughness={0.8} /></mesh>
   <mesh rotation={[Math.PI / 2, 0, 0]}><ringGeometry args={[2.3, 2.45, 160]} /><meshBasicMaterial color="#c8d0e0" transparent opacity={0.6} side={THREE.DoubleSide} /></mesh>
 </group>;
-const Copo: React.FC<{pos: V3; rot?: V3; s?: number}> = ({pos, rot = [0, 0, 0], s = 1}) => <mesh position={pos} rotation={rot} scale={s}><cylinderGeometry args={[0.12, 0.09, 0.3, 24, 1, true]} /><meshPhysicalMaterial color="#e8f4ff" roughness={0.05} transparent opacity={0.45} side={THREE.DoubleSide} /></mesh>;
+export const Copo: React.FC<{pos: V3; rot?: V3; s?: number}> = ({pos, rot = [0, 0, 0], s = 1}) => <mesh position={pos} rotation={rot} scale={s}><cylinderGeometry args={[0.12, 0.09, 0.3, 24, 1, true]} /><meshPhysicalMaterial color="#e8f4ff" roughness={0.05} transparent opacity={0.45} side={THREE.DoubleSide} /></mesh>;
 const ISS: React.FC<{pos: V3; s?: number; rot?: V3}> = ({pos, s = 1, rot = [0, 0, 0]}) => <group position={pos} scale={s} rotation={rot}>
   <mesh rotation={[0, 0, Math.PI / 2]}><cylinderGeometry args={[0.04, 0.04, 2.4, 8]} /><meshStandardMaterial color="#c8ccd0" metalness={0.7} /></mesh>
   {[-1.1, -0.7, 0.7, 1.1].map((x) => <mesh key={x} position={[x, 0, 0]}><boxGeometry args={[0.28, 0.01, 1.4]} /><meshStandardMaterial color="#c89a30" metalness={0.8} roughness={0.3} emissive="#3a2a08" /></mesh>)}
