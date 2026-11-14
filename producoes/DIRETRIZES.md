@@ -59,6 +59,7 @@ Base: YouTube de 16 a 25/10 (82 mil views, +280 inscritos). Revisar a cada ~2 se
 - **Título:** curiosidade sem mentira. Longo: curto, em 2ª pessoa e com "!" (ver "Estratégia de conteúdo"). Short: escala cósmica + algo concreto (data, objeto real, número).
 - **Thumbnail:** 1 elemento principal, alto contraste e 2–5 palavras que complementem o título.
 - **Short não tem thumbnail (regra do dono, 11/11/2026): "Shorts não precisa de thumb, apenas vídeos longos."** Não faça thumb para Short, nem a que o roteiro sugerir. Thumb é só para vídeo longo.
+- **Sem "estilo gringo" de bonequinho (dono, 14/11/2026): "não quero isso de bonequinho que nem o último".** O lado-111 (oxigênio) foi exceção. Os próximos vídeos voltam ao padrão Remotion 3D, mesmo que o roteiro peça bonequinho ou "estilo gringo". Se o roteiro pedir, avise o Roteirista e faça em 3D.
 
 ## Padrão de vídeo longo (aprovado pelo dono em 21/10/2026, "5 maneiras de o mundo acabar")
 - **Formato:** 1920x1080, ~8 min, capítulos numerados (contagem regressiva ou etapas) com cartão de capítulo próprio para cada um.

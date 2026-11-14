@@ -191,4 +191,5 @@ Leia este arquivo, o `CLAUDE.md` e as seções de `producoes/DIRETRIZES.md` que 
     - wipe 3D na troca de capítulo.
   - **Ignorar:** os efeitos de texto e a paleta das skills.
 - **Render destacado:** `setsid nohup script.sh &` escapa do limite de 2 h das tarefas. Um longo de ~13 mil quadros leva ~2h30 em 4 partes.
+- **Sem bonequinho (dono, 14/11):** o estilo gringo do lado-111 não se repete; os próximos vídeos voltam ao Remotion 3D (regra nas DIRETRIZES).
 - **Economia (dono, 11/11):** o dono reclamou do gasto de tokens. Revise com 1 folha de contato e stills pontuais, sem repetir renders de revisão à toa, e troque de conversa ao fechar cada lote.
