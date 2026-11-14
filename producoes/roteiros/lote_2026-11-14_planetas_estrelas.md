@@ -18,7 +18,7 @@
 ---
 
 ## 1 · QUANTO TEMPO VOCÊ SOBREVIVERIA EM CADA PLANETA?
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (14/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥 8/10. Ponto mais forte: um modelo provado (1,1 mi), um contador de tempo por mundo e casos reais que dão credibilidade (o técnico de 1966, a Venera 13, a Galileo). Ponto mais fraco: quase todos os mundos dão "segundos". Por isso cada cena traz um detalhe diferente (pressão, calor, sem chão, o Sol), e não só o tempo.
 
@@ -80,7 +80,7 @@ Escolhido: **o 1**, falado sobre o astronauta 3D andando num solo alienígena no
 ---
 
 ## 2 · E SE TROCÁSSEMOS O SOL POR OUTRAS ESTRELAS?
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (14/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: um modelo muito provado (3,7 mi, 1,5 mi e vários vídeos neste mês), um choque visual que cresce a cada cena (o disco no céu) e um final em que a Terra fica dentro da estrela. Ponto mais fraco: é um tema muito repetido na gringa. Os nossos diferenciais são o horizonte fixo, a escala pelas nossas contas e o fecho do "Sol perfeito".
 
