@@ -17,7 +17,7 @@ As ressalvas ("em raios gama", "dezenas de milhares de anos-luz") estão na narr
 ---
 
 ## UMA ESTRELA MORTA ATINGIU A TERRA. 6 ANOS DEPOIS, OUTRA.
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (15/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: dois fatos reais com data, uma imagem impossível e verdadeira ("a noite virou dia") e um fim em aberto que é verdade (ninguém sabe de onde vem a próxima). Ponto mais fraco: "magnetar" é palavra difícil, então o vídeo explica em uma frase, logo no começo.
 
