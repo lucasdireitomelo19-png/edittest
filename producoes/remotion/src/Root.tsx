@@ -58,6 +58,7 @@ import {Video as GiroShort, DURACAO as DUR_GS} from './videos/GiroShort';
 import {Video as Oxigenio, DURACAO as DUR_OX} from './videos/Oxigenio';
 import {Video as Planetas, DURACAO as DUR_PLA} from './videos/Planetas';
 import {Video as TrocaSol, DURACAO as DUR_TS} from './videos/TrocaSol';
+import {Video as MagAtinge, DURACAO as DUR_MA} from './videos/MagAtinge';
 import {Teste3D, DURACAO_3D} from './videos/Teste3D';
 import {Video as BnPerto, Thumb as ThumbBnPerto, DURACAO as DUR_BNPERTO} from './videos/BnPerto';
 // Cada vídeo novo vira um arquivo em src/videos/ e uma <Composition> aqui.
@@ -112,6 +113,7 @@ export const Root = () => (
     <Composition id="Oxigenio" component={Oxigenio} durationInFrames={DUR_OX} fps={30} width={1080} height={1920} />
     <Composition id="Planetas" component={Planetas} durationInFrames={DUR_PLA} fps={30} width={1080} height={1920} />
     <Composition id="TrocaSol" component={TrocaSol} durationInFrames={DUR_TS} fps={30} width={1080} height={1920} />
+    <Composition id="MagAtinge" component={MagAtinge} durationInFrames={DUR_MA} fps={30} width={1080} height={1920} />
     <Composition id="Teste3D" component={Teste3D} durationInFrames={DURACAO_3D} fps={30} width={1080} height={1920} />
     <Composition id="BnPerto" component={BnPerto} durationInFrames={DUR_BNPERTO} fps={30} width={1080} height={1920} />
     <Still id="ThumbBnPerto" component={ThumbBnPerto} width={1080} height={1920} />
