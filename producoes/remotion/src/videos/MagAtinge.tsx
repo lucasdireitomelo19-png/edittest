@@ -33,7 +33,7 @@ const CAL98 = calTex(27, 6, 31, '#3a2a6a'); // agosto/1998 começa no sábado
 const CAL04 = calTex(27, 3, 31, '#1a3a6a'); // dezembro/2004 começa na quarta
 const RX = canvasTex(512, 384, (g) => { g.fillStyle = '#0a0e14'; g.fillRect(0, 0, 512, 384); g.fillStyle = 'rgba(200,230,255,.85)'; g.beginPath(); g.moveTo(180, 70); g.bezierCurveTo(140, 90, 150, 200, 190, 230); g.lineTo(205, 330); g.lineTo(235, 240); g.lineTo(260, 330); g.lineTo(285, 240); g.bezierCurveTo(330, 220, 340, 90, 300, 70); g.bezierCurveTo(270, 55, 250, 85, 240, 80); g.bezierCurveTo(225, 60, 200, 60, 180, 70); g.fill(); });
 const GAL = (() => { const n = 3000; const p = new Float32Array(n * 3); const c = new Float32Array(n * 3); for (let i = 0; i < n; i++) { const braco = i % 4; const t = random('gt' + i); const r = 0.3 + t * 5; const a = braco * Math.PI / 2 + t * 4.2 + (random('ga' + i) - 0.5) * 0.5; p.set([Math.cos(a) * r, (random('gy' + i) - 0.5) * 0.15, Math.sin(a) * r], i * 3); const k = 1 - t; c.set([0.7 + k * 0.3, 0.75 + k * 0.2, 1], i * 3); } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p, 3)); g.setAttribute('color', new THREE.BufferAttribute(c, 3)); return g; })();
-const Galaxia: React.FC<{f: number}> = ({f}) => <group rotation={[0, f * 0.002, 0]}>
+export const Galaxia: React.FC<{f: number}> = ({f}) => <group rotation={[0, f * 0.002, 0]}>
   <points geometry={GAL}><pointsMaterial size={0.06} vertexColors transparent opacity={0.85} depthWrite={false} /></points>
   <Brilho pos={[0, 0, 0]} s={3} cor="#ffe8c0" o={0.8} />
 </group>;

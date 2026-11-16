@@ -29,7 +29,7 @@ export const calTex = canvasTex(512, 512, (g) => { // julho de 2024: 1º é segu
     if (d === 5) { g.strokeStyle = '#e0180c'; g.lineWidth = 7; g.beginPath(); g.arc(x, y - 12, 34, 0, 7); g.stroke(); } }
   for (let k = 0; k < 8; k++) { g.fillStyle = '#d8d0c0'; g.beginPath(); g.arc(60 + k * 56, 26, 9, 0, 7); g.fill(); } });
 // mostrador genérico: n marcas, ponteiros
-const Mostrador: React.FC<{n?: number; h: number; m?: number; cor?: string; r?: number; fundo?: string; aro?: string}> = ({n = 60, h, m, cor = NEON, r = 1, fundo = '#0b0e14', aro = '#20242c'}) => <group scale={r}>
+export const Mostrador: React.FC<{n?: number; h: number; m?: number; cor?: string; r?: number; fundo?: string; aro?: string}> = ({n = 60, h, m, cor = NEON, r = 1, fundo = '#0b0e14', aro = '#20242c'}) => <group scale={r}>
   <mesh rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[1.05, 1.05, 0.12, 64]} /><meshStandardMaterial color={aro} metalness={0.8} roughness={0.25} /></mesh>
   <mesh position={[0, 0, 0.065]}><circleGeometry args={[0.98, 64]} /><meshStandardMaterial color={fundo} /></mesh>
   {LAT(n).map((i) => { const a = i / n * Math.PI * 2; const big = i % 5 === 0; return <mesh key={i} position={[Math.sin(a) * 0.86, Math.cos(a) * 0.86, 0.07]} rotation={[0, 0, -a]}><boxGeometry args={[big ? 0.03 : 0.012, big ? 0.12 : 0.05, 0.01]} /><meshBasicMaterial color={big ? cor : '#557'} toneMapped={false} /></mesh>; })}
