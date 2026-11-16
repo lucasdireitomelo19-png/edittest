@@ -22,7 +22,7 @@
 ---
 
 ## VOCÊ SOBREVIVEU A UMA GUERRA NUCLEAR: DO DIA 1 AO DIA 365
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (16/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: o POV de sobrevivência concreta, o mesmo formato do campeão "Última pessoa". O marcador de tempo prende, e a virada dói ("sobreviver à bomba é a parte fácil"). O vídeo também ensina coisas reais e úteis, como não olhar o clarão, a regra 7-10 e o banho. Ponto mais fraco: o tema é pesado e pode afastar quem foge de notícia ruim. Por isso o fecho tem esperança (as ilhas) e não há nada gráfico.
 

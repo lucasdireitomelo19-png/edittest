@@ -17,7 +17,7 @@
 ---
 
 ## QUAL O TAMANHO REAL DO UNIVERSO?
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (16/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: um modelo com dezenas de milhões de views, um zoom-out contínuo e uma pergunta que todo mundo faz ("se tem 13,8 bilhões de anos, como pode ter 93?"). A virada final também prende ("você só viu um sétimo"). Ponto mais fraco: é um tema muito batido, então o diferencial é a pergunta do meio e o fecho do "no máximo 1/7".
 
