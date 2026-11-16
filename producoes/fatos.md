@@ -60,3 +60,6 @@ Pesquise na internet só o que **não** estiver aqui ou o que pode ter mudado (m
 
 ## Apophis: descoberta e escala de Torino (checagem do Roteirista, 11/11/2026)
 - Descoberto em **19/06/2004** no Kitt Peak National Observatory (Arizona) por **Roy Tucker, David Tholen e Fabrizio Bernardi** (Astronomy.com, "June 19, 2004: Asteroid Apophis is discovered"; Wikipedia só como guia). Em **dez/2004** chegou ao **nível 4 da escala de Torino**, o maior já atribuído a um objeto, com 2,7% para 2029 em 27/12/2004; o risco de 2029 foi eliminado no mesmo fim de dezembro com imagens de pré-descoberta de março/2004. Risco de 2036 rebaixado a 0 na escala em ago/2006.
+
+## Guerra nuclear regional e fome: número de bombas (checagem do Roteirista, 16/11/2026)
+- Xia et al., *Nature Food* 3, 586–596 (2022): >2 bilhões de mortes por fome numa guerra Índia–Paquistão e >5 bilhões numa guerra EUA–Rússia (resumo). Na tabela de cenários reproduzida pela IPPNW ("Nuclear Famine 2022"), 100 armas de 15 kt dão ~5 Tg de fuligem e ~260 milhões de mortes; 250 armas de 100 kt dão ~37 Tg e ~2,1 bilhões; 500 armas de 100 kt dão ~47 Tg e ~2,5 bilhões (fim do ano 2). Logo, "100 bombas → 2 bilhões" está ERRADO: os 2 bilhões pedem algumas centenas de bombas de 100 kt. Fonte secundária para a tabela; conferir no artigo.
