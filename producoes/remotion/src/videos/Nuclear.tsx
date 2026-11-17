@@ -540,3 +540,20 @@ export const ThumbCena: React.FC = () => <CP>{() => <>
   <Pessoa pos={[1.6, 0, 1.2]} rot={Math.PI} s={1.6} />
   <Pos bloom={1} /></>}</CP>;
 void Easing; void ease; void Aviao;
+
+// thumb v2 (dono, 17/11: "a capa ta uma merda"): nuvem em cogumelo gigante e incandescente sobre a cidade apagada, céu vermelho, silhueta de costas
+export const ThumbCena2: React.FC = () => <CP>{() => <>
+  <Cam pos={[-1.2, 1.1, 7]} alvo={[1.2, 3.4, -10]} /><ambientLight intensity={0.35} /><directionalLight position={[3, 4, -10]} intensity={2.5} color="#ff8a40" />
+  <Ceu cima="#2a0a08" baixo="#ff6a20" />
+  <mesh rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[120, 120]} /><meshStandardMaterial color="#120806" /></mesh>
+  <group position={[3.5, 0, -22]}>
+    <mesh position={[0, 4, 0]}><cylinderGeometry args={[0.9, 1.8, 8, 32]} /><meshStandardMaterial color="#5a3020" emissive="#ff5a10" emissiveIntensity={0.9} /></mesh>
+    <mesh position={[0, 9, 0]} scale={[1.8, 1, 1.8]}><sphereGeometry args={[3, 48, 32]} /><meshStandardMaterial color="#6a3a28" emissive="#ff7a20" emissiveIntensity={0.7} roughness={1} /></mesh>
+    <mesh position={[0, 8.2, 0]} rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[4.6, 1.4, 24, 64]} /><meshStandardMaterial color="#4a2a1c" emissive="#ff4a10" emissiveIntensity={0.8} roughness={1} /></mesh>
+    <Brilho pos={[0, 8.5, 2]} s={22} cor="#ffb050" o={0.75} /><Brilho pos={[0, 2, 2]} s={14} cor="#fff0c0" o={0.8} />
+    <Nuvem n={900} sem="thN2" origem={new THREE.Vector3(0, 9, 0)} t={300} raio={8} cor="#ffb070" tam={1.6} o={0.35} dir={new THREE.Vector3(0, 0.3, 0)} />
+    <mesh position={[0, 0.3, 0]} rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[5, 9, 64]} /><meshBasicMaterial color="#ffd8a0" transparent opacity={0.5} toneMapped={false} /></mesh>
+  </group>
+  <Predios n={70} sem="thN2" z={-12} larg={40} alt={3.5} janelas={0} cor="#080404" />
+  <Pessoa pos={[-1.5, 0, 2.2]} rot={Math.PI - 0.3} s={1.9} />
+  <Pos bloom={1.4} /></>}</CP>;
