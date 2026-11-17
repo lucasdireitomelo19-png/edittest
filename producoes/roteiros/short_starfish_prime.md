@@ -16,7 +16,7 @@
 ---
 
 ## OS EUA EXPLODIRAM UMA BOMBA NUCLEAR NO ESPAÇO
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (17/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: um fato real que parece mentira, uma imagem linda e assustadora (o céu vermelho sobre o Havaí) e uma virada com um personagem (o Telstar, lançado no dia seguinte). Ponto mais fraco: é história de 1962. Por isso o fecho traz o assunto para hoje (as 12 mil ogivas).
 
