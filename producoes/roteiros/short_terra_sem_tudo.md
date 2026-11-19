@@ -20,7 +20,7 @@
 ---
 
 ## A TERRA SEM ATMOSFERA, SEM GRAVIDADE, SEM LUA E SEM HUMANOS
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (19/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: um modelo com 7,4 mi em um mês, quatro mini-histórias com um "e aí…" que segura a pessoa, e o final mais forte (sem humanos), com exemplos reais (Chernobyl e Nova York). Ponto mais fraco: cada cena tem só ~10 s, então cada uma traz uma única imagem forte.
 
