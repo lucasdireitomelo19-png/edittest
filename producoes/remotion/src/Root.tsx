@@ -62,6 +62,7 @@ import {Video as MagAtinge, DURACAO as DUR_MA} from './videos/MagAtinge';
 import {Video as Universo, DURACAO as DUR_UNI} from './videos/Universo';
 import {Video as Nuclear, ThumbCena as ThumbNuclear, ThumbCena2 as ThumbNuclear2, DURACAO as DUR_NUC} from './videos/Nuclear';
 import {Video as Starfish, DURACAO as DUR_SF} from './videos/Starfish';
+import {Video as SemTudo, DURACAO as DUR_ST} from './videos/SemTudo';
 import {Teste3D, DURACAO_3D} from './videos/Teste3D';
 import {Video as BnPerto, Thumb as ThumbBnPerto, DURACAO as DUR_BNPERTO} from './videos/BnPerto';
 // Cada vídeo novo vira um arquivo em src/videos/ e uma <Composition> aqui.
@@ -122,6 +123,7 @@ export const Root = () => (
     <Still id="ThumbNuclear" component={ThumbNuclear} width={1920} height={1080} />
     <Still id="ThumbNuclear2" component={ThumbNuclear2} width={1920} height={1080} />
     <Composition id="Starfish" component={Starfish} durationInFrames={DUR_SF} fps={30} width={1080} height={1920} />
+    <Composition id="SemTudo" component={SemTudo} durationInFrames={DUR_ST} fps={30} width={1080} height={1920} />
     <Composition id="Teste3D" component={Teste3D} durationInFrames={DURACAO_3D} fps={30} width={1080} height={1920} />
     <Composition id="BnPerto" component={BnPerto} durationInFrames={DUR_BNPERTO} fps={30} width={1080} height={1920} />
     <Still id="ThumbBnPerto" component={ThumbBnPerto} width={1080} height={1920} />
