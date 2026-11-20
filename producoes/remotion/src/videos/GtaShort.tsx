@@ -17,9 +17,9 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const ROSA = '#ff3fa4', CIANO = '#22e4f0', LARANJA = '#ffa53a', ROXO = '#7b3ff7', AMAR = '#ffe23a', VERDE = '#3aff8a';
 
 // ---------- peças ----------
-export const Controle: React.FC<{pos?: V3; rot?: V3; s?: number; cor?: string}> = ({pos = [0, 0, 0], rot = [0, 0, 0], s = 1, cor = '#1c1f2a'}) => (
+export const Controle: React.FC<{pos?: V3; rot?: V3; s?: number; cor?: string; largo?: boolean}> = ({pos = [0, 0, 0], rot = [0, 0, 0], s = 1, cor = '#1c1f2a', largo = false}) => (
   <group position={pos} rotation={rot} scale={s}>
-    <mesh scale={[1, 0.42, 0.62]} rotation={[0, 0, Math.PI / 2]}><capsuleGeometry args={[0.36, 0.55, 12, 24]} /><meshStandardMaterial color={cor} roughness={0.35} metalness={0.1} /></mesh>
+    <mesh scale={largo ? [0.5, 0.95, 0.5] : [1, 0.42, 0.62]} rotation={[0, 0, Math.PI / 2]}><capsuleGeometry args={[0.36, 0.55, 12, 24]} /><meshStandardMaterial color={cor} roughness={0.35} metalness={0.1} /></mesh>
     {[-1, 1].map((l) => <mesh key={l} position={[l * 0.52, -0.2, 0.02]} rotation={[0.35, 0, l * 0.5]}><capsuleGeometry args={[0.17, 0.32, 10, 18]} /><meshStandardMaterial color={cor} roughness={0.35} /></mesh>)}
     {[[-0.2, -0.08], [0.2, -0.08]].map(([x, y], i) => <group key={i} position={[x, y, 0.13]}><mesh rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[0.07, 0.08, 0.06, 20]} /><meshStandardMaterial color="#0b0c10" /></mesh><mesh position={[0, 0, 0.05]}><sphereGeometry args={[0.075, 16, 12]} /><meshStandardMaterial color="#2a2e3a" roughness={0.8} /></mesh></group>)}
     {[[0.42, 0.14, AMAR], [0.52, 0.04, ROSA], [0.32, 0.04, CIANO], [0.42, -0.06, VERDE]].map(([x, y, c], i) => <mesh key={i} position={[x as number, y as number, 0.17]}><sphereGeometry args={[0.042, 14, 10]} /><meshStandardMaterial color={c as string} emissive={c as string} emissiveIntensity={0.5} /></mesh>)}

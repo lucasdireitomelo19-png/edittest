@@ -30,7 +30,7 @@ const Calendario: React.FC<{pos?: V3; rot?: V3; s?: number; dia: string; mes: st
 };
 const Folha: React.FC<{pos: V3; rot?: V3; s?: number; cor?: string}> = ({pos, rot = [0, 0, 0], s = 1, cor = '#fbfbf6'}) => <mesh position={pos} rotation={rot} scale={s}><planeGeometry args={[1.62, 1.92]} /><meshStandardMaterial color={cor} side={THREE.DoubleSide} /></mesh>;
 const Placar: React.FC<{pos?: V3; s?: number; a: string; b: string}> = ({pos = [0, 0, 0], s = 1, a, b}) => {
-  const t = useTxt(1024, 400, (g) => { g.fillStyle = '#0a0c14'; g.fillRect(0, 0, 1024, 400); g.font = 'bold 260px monospace'; g.textAlign = 'center'; g.fillStyle = '#ffb020'; g.fillText(a, 300, 300); g.fillText(b, 724, 300); g.fillStyle = '#fff'; g.fillText('×', 512, 290); }, a + b);
+  const t = useTxt(1024, 400, (g) => { g.fillStyle = '#0a0c14'; g.fillRect(0, 0, 1024, 400); g.font = 'bold 260px monospace'; g.textAlign = 'center'; g.fillStyle = '#ffb020'; if (b) { g.fillText(a, 300, 300); g.fillText(b, 724, 300); g.fillStyle = '#fff'; g.fillText('×', 512, 290); } else g.fillText(a, 512, 300); }, a + b);
   return <group position={pos} scale={s}><mesh><boxGeometry args={[4.4, 1.9, 0.3]} /><meshStandardMaterial color="#20232e" metalness={0.5} /></mesh><mesh position={[0, 0, 0.16]}><planeGeometry args={[4.1, 1.6]} /><meshBasicMaterial map={t} toneMapped={false} /></mesh>
     {[-1, 1].map((l) => <mesh key={l} position={[l * 1.6, -1.8, 0]}><boxGeometry args={[0.15, 1.8, 0.15]} /><meshStandardMaterial color="#555" /></mesh>)}</group>;
 };
@@ -63,7 +63,7 @@ const Interrog: React.FC<{pos?: V3; rot?: V3; s?: number; cor?: string}> = ({pos
     <mesh position={[0, -0.65, 0]}><sphereGeometry args={[0.15, 20, 16]} /><meshStandardMaterial color={cor} emissive={cor} emissiveIntensity={0.3} /></mesh>
   </group>
 );
-const Moeda: React.FC<{pos: V3; rot?: V3; s?: number}> = ({pos, rot = [0, 0, 0], s = 1}) => <mesh position={pos} rotation={rot} scale={s}><cylinderGeometry args={[0.3, 0.3, 0.06, 28]} /><meshStandardMaterial color="#ffc83a" metalness={0.9} roughness={0.25} /></mesh>;
+const Moeda: React.FC<{pos: V3; rot?: V3; s?: number}> = ({pos, rot = [0, 0, 0], s = 1}) => <mesh position={pos} rotation={rot} scale={s}><cylinderGeometry args={[0.3, 0.3, 0.06, 28]} /><meshStandardMaterial color="#ffc83a" metalness={0.3} roughness={0.35} emissive="#a87a10" emissiveIntensity={0.35} /></mesh>;
 const Nota: React.FC<{pos: V3; rot?: V3; s?: number}> = ({pos, rot = [0, 0, 0], s = 1}) => <group position={pos} rotation={rot} scale={s}><mesh><boxGeometry args={[0.9, 0.08, 0.42]} /><meshStandardMaterial color="#5ad86a" /></mesh><mesh position={[0, 0, 0]}><boxGeometry args={[0.12, 0.085, 0.43]} /><meshStandardMaterial color="#f4f0d8" /></mesh></group>;
 const Raio: React.FC<{pos: V3; s?: number; rot?: number; cor?: string}> = ({pos, s = 1, rot = 0, cor = AMAR}) => {
   const g = useMemo(() => { const sh = new THREE.Shape(); sh.moveTo(0.1, 0.6); sh.lineTo(-0.25, -0.05); sh.lineTo(0, -0.05); sh.lineTo(-0.12, -0.6); sh.lineTo(0.28, 0.12); sh.lineTo(0.02, 0.12); sh.lineTo(0.2, 0.6); return new THREE.ExtrudeGeometry(sh, {depth: 0.12, bevelEnabled: false}); }, []);
@@ -84,7 +84,7 @@ const Cartao: React.FC<{k: number}> = ({k}) => { const d = useD(); return <C3>{(
 
 // ---------- cap. 0 · gancho ----------
 const G1: React.FC = () => <C3>{(f, tex) => <>
-  <Cam pos={[Math.sin(f * 0.01) * 4.6, 1.4, Math.cos(f * 0.01) * 4.6]} alvo={[0, 0.5, 0]} /><Luzes sol={[-3, 3, 4]} i={2.6} amb={0.25} /><Estrelas sem="l1" />
+  <Cam pos={[Math.sin(f * 0.01) * 6, 1.6, Math.cos(f * 0.01) * 6]} alvo={[0, 0.9, 0]} /><Luzes sol={[-3, 3, 4]} i={2.6} amb={0.25} /><Estrelas sem="l1" />
   <Terra tex={tex} rot={[0.3, f * 0.004, 0]} />
   <Controle pos={[0, 1.75, 0]} rot={[0.2, f * 0.01, 0]} s={1.6} cor={ROXO} />
   <Tubo pts={[[0, 1.45, 0.25], [0, 1.25, 0.5], [0, 1.0, 0.2]]} r={0.04} cor="#14161c" brilho={1} />
@@ -106,7 +106,7 @@ const G4: React.FC = () => <C3>{(f) => { const s = interpolate(f, [0, 10], [0.3,
   <Gramado y={-1.6} /><Confete f={f} n={80} sem="g4" area={12} />
   <Pos bloom={0.8} /></>; }}</C3>;
 const G5: React.FC = () => { const d = useD(); return <C3>{(f) => <>
-  <Cam pos={[0, lerp(2.5, 1.6, f / d), lerp(7, 5.5, f / d)]} alvo={[0, 0, 0]} /><Luzes sol={[-4, 2, 3]} i={1.4} amb={0.3} /><Ceu cima="#04081a" baixo="#1a2a4a" /><Estrelas sem="l5" />
+  <Cam pos={[0, lerp(2.5, 1.6, f / d), lerp(7, 5.5, f / d)]} alvo={[0, 0, 0]} /><Luzes sol={[-4, 4, 3]} i={2.2} amb={0.6} /><Ceu cima="#04081a" baixo="#2a3a6a" /><Estrelas sem="l5" />
   <mesh geometry={Ilha} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]}><meshStandardMaterial color="#5a6a5a" roughness={1} /></mesh>
   <mesh geometry={Ilha} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.06, 0]} scale={[0.6, 0.6, 1]}><meshStandardMaterial color="#f0f4f8" roughness={1} /></mesh>
   <Chao cor="#0a2a4a" y={-0.08} tam={60} />
@@ -165,7 +165,7 @@ const C1i: React.FC = () => <C3>{(f) => <>
   <Cam pos={[Math.sin(f * 0.01) * 4, 2.4, Math.cos(f * 0.01) * 4]} alvo={[0, 0.3, 0]} /><Luzes sol={[2, 6, 5]} i={1.6} amb={0.5} /><color attach="background" args={['#a8e0ff']} />
   <Chao cor="#ffe0a0" />
   <CaixaConsole i={1} pos={[0, 0.4, 0]} s={1} />
-  {LAT(32).map((i) => { const a = i / 32 * Math.PI * 2; const r = 1.6 + (i % 2) * 0.3; return <Silhueta key={i} pos={[Math.cos(a) * r, Math.abs(Math.sin(f * 0.3 + i)) * 0.08, Math.sin(a) * r]} s={0.55} cor={CORES[i % 6]} />; })}
+  {LAT(32).map((i) => { const a = i / 32 * Math.PI * 2; const r = 1.6 + (i % 2) * 0.3; return <Silhueta key={i} pos={[Math.cos(a) * r, Math.abs(Math.sin(f * 0.3 + i)) * 0.08, Math.sin(a) * r]} s={0.55} cor={['#2a1f3a', '#3a2030', '#1f2a3a'][i % 3]} />; })}
   <Pos bloom={0.3} /></>}</C3>;
 const C1j: React.FC = () => { const d = useD(); return <C3>{(f, tex) => { const k = pr(f, 0, d * 0.8); return <>
   <Cam pos={[0, 1.6, 3.6]} /><Luzes sol={[-3, 3, 4]} i={2.4} amb={0.2} /><Estrelas sem="c1j" />
@@ -240,7 +240,7 @@ const C2f: React.FC = () => <C3>{(f) => <>
 const C2g: React.FC = () => { const d = useD(); return <C3>{(f) => { const n = Math.floor(pr(f, 6, d * 0.9) * 26); return <>
   <Cam pos={[0, 0.4, 5]} alvo={[0, 0.4, 0]} /><Luzes sol={[2, 4, 5]} i={1.8} amb={0.5} /><color attach="background" args={[LARANJA]} />
   <Calendario dia={String(Math.min(26, n + 1))} mes="DIA" ano="" s={1.3} cor={ROXO} />
-  {LAT(n).map((i) => { const t = (f - (6 + i * (d * 0.84 - 6) / 26)) / 20; return <Folha key={i} pos={[t * 3 + Math.sin(i) * t, t * 2 - t * t * 2.5, 0.2 + t]} rot={[t * 3, t * 4 + i, t * 2]} s={1.3} />; })}
+  {LAT(n).map((i) => { const t = (f - (6 + i * (d * 0.84 - 6) / 26)) / 12; return <Folha key={i} pos={[t * 5 + Math.sin(i) * t, 0.3 + t * 2.2 - t * t * 1.5, 0.2 + t * 0.2]} rot={[t * 3, t * 4 + i, t * 2]} s={1.1} />; })}
   <Pos bloom={0.3} /></>; }}</C3>; };
 const C2h: React.FC = () => { const d = useD(); return <C3>{(f) => { const k = pr(f, 0, d * 0.7); return <>
   <Cam pos={[0, 1.6, 6]} alvo={[0, 1, 0]} /><Luzes sol={[2, 4, 5]} i={1.8} amb={0.5} /><color attach="background" args={['#1a8a8a']} />
@@ -328,8 +328,7 @@ const C3e: React.FC = () => <C3>{(f) => { const pao = f > 56; return <>
     : LAT(5).map((i) => <mesh key={i} position={[-1.5 + i * 0.6, 0.95, 0.62]} scale={[1, 0.6, 0.6]}><capsuleGeometry args={[0.14, 0.2, 6, 12]} /><meshStandardMaterial color="#d8963a" /></mesh>)}
   {LAT(4).map((i) => <group key={'g' + i} position={[1.8 + (i % 2) * 0.3, 0, 1.2 + Math.floor(i / 2) * 0.3]}>{pao ? <mesh position={[0, 0.08, 0]} scale={[1, 0.6, 0.6]}><capsuleGeometry args={[0.1, 0.18, 6, 12]} /><meshStandardMaterial color="#d8963a" /></mesh>
     : <><mesh position={[0, 0.15, 0]}><cylinderGeometry args={[0.08, 0.09, 0.3, 16]} /><meshStandardMaterial color="#ffffff" /></mesh><mesh position={[0, 0.33, 0]}><cylinderGeometry args={[0.04, 0.07, 0.08, 16]} /><meshStandardMaterial color="#3a8ae8" /></mesh></>}</group>)}
-  <mesh position={[0, 2.3 + Math.sin(f * 0.2) * 0.05, 0]}><sphereGeometry args={[0.25, 16, 12]} /><meshBasicMaterial color={VERM} toneMapped={false} /></mesh>
-  <Pos bloom={0.4} /></>; }}</C3>;
+    <Pos bloom={0.4} /></>; }}</C3>;
 const Prateleira: React.FC<{pos: V3; rot?: number; k: number; sem: string}> = ({pos, rot = 0, k, sem}) => <group position={pos} rotation={[0, rot, 0]}>
   <mesh position={[0, 1, 0]}><boxGeometry args={[0.6, 2, 6]} /><meshStandardMaterial color="#e8ecf2" /></mesh>
   {LAT(4).map((r) => LAT(12).map((c) => { const i = r * 12 + c; return random(sem + i) > k ? <mesh key={i} position={[0.35, 0.25 + r * 0.5, -2.7 + c * 0.48]}><boxGeometry args={[0.15, 0.32, 0.36]} /><meshStandardMaterial color={CORES[Math.floor(random(sem + 'c' + i) * 6)]} /></mesh> : null; }))}
@@ -348,7 +347,7 @@ const C3g: React.FC = () => { const d = useD(); return <C3>{(f) => { const k = p
   <Pos bloom={0.3} /></>; }}</C3>; };
 const Garrafa: React.FC<{pos: V3; cor: string; s?: number; rot?: V3}> = ({pos, cor, s = 1, rot = [0, 0, 0]}) => <group position={pos} scale={s} rotation={rot}><mesh position={[0, 0.3, 0]}><cylinderGeometry args={[0.12, 0.12, 0.5, 16]} /><meshPhysicalMaterial color={cor} roughness={0.1} transparent opacity={0.85} /></mesh><mesh position={[0, 0.62, 0]}><cylinderGeometry args={[0.04, 0.11, 0.18, 16]} /><meshPhysicalMaterial color={cor} roughness={0.1} transparent opacity={0.85} /></mesh><mesh position={[0, 0.73, 0]}><cylinderGeometry args={[0.045, 0.045, 0.05, 12]} /><meshStandardMaterial color={VERM} /></mesh><mesh position={[0, 0.3, 0]}><cylinderGeometry args={[0.125, 0.125, 0.15, 16]} /><meshStandardMaterial color="#ffffff" /></mesh></group>;
 const C3h: React.FC = () => { const d = useD(); return <C3>{(f) => { const k = pr(f, 0, d * 0.9); return <>
-  <Cam pos={[0, 1.6, 4.6]} alvo={[0, 1.1, 0]} /><Luzes sol={[2, 6, 5]} i={1.6} amb={0.6} /><color attach="background" args={['#ff6a8a']} />
+  <Cam pos={[0, 1.3, 3.2]} alvo={[0, 1.2, 0]} /><Luzes sol={[2, 6, 5]} i={1.6} amb={0.6} /><color attach="background" args={['#ff6a8a']} />
   {LAT(6).map((r) => LAT(6 - r).map((c) => { const i = r * 6 + c; const sai = 1 - (r + 1) / 7 + random('gz' + i) * 0.1; const t = Math.max(0, (k - sai) * 8); return <Garrafa key={i} pos={[(c - (5 - r) / 2) * 0.32, r * 0.8 + t * 2, -t * 2]} rot={[t * 2, 0, t]} cor={[ '#5a2a1a', '#2a8a3a', '#e8c040'][i % 3]} s={0.55 * (1 - Math.min(1, t * 0.3))} />; }))}
   <Chao cor="#c84a6a" />
   <Pos bloom={0.3} /></>; }}</C3>; };
@@ -480,7 +479,7 @@ const C5a: React.FC = () => <C3>{(f) => <>
   <Bola pos={[0, 0.3, 2]} rot={[0, f * 0.02, 0]} />
   <Pos bloom={0.5} /></>}</C3>;
 const C5b: React.FC = () => <C3>{(f) => <>
-  <Cam pos={[0, 1.3, 1.6]} alvo={[0, 1.2, -1]} /><ambientLight intensity={0.5} /><directionalLight position={[0, 3, -4]} intensity={1.6} /><Ceu cima="#5aa8ff" baixo="#e8f4ff" />
+  <Cam pos={[0, 1.3, 1.6]} alvo={[0, 1.2, -1]} /><ambientLight intensity={1.1} /><pointLight position={[0, 2, 1.2]} intensity={5} distance={5} /><directionalLight position={[0, 3, -4]} intensity={1.6} /><Ceu cima="#5aa8ff" baixo="#e8f4ff" />
   <mesh position={[0, 0.9, -1.1]}><boxGeometry args={[2.6, 0.4, 0.6]} /><meshStandardMaterial color="#2a2e3a" /></mesh>
   {LAT(10).map((i) => <mesh key={i} position={[-1.1 + i * 0.24, 1.12, -0.95]}><circleGeometry args={[0.07, 16]} /><meshBasicMaterial color={(i + Math.floor(f / 10)) % 3 ? '#0a0a10' : CIANO} toneMapped={false} /></mesh>)}
   {[-0.6, 0.6].map((x) => <group key={x} position={[x, 0, 0]}><mesh position={[0, 0.55, 0]}><boxGeometry args={[0.6, 0.15, 0.6]} /><meshStandardMaterial color="#3a3e4a" /></mesh><mesh position={[0, 0.95, 0.27]}><boxGeometry args={[0.6, 0.75, 0.1]} /><meshStandardMaterial color="#3a3e4a" /></mesh></group>)}
@@ -560,7 +559,7 @@ const C5l: React.FC = () => { const d = useD(); return <C3>{(f) => { const k = p
   <Chao cor="#2a0a1a" />
   <Pos bloom={0.4} /></>; }}</C3>; };
 const C5m: React.FC = () => <C3>{(f) => <>
-  <Cam pos={[Math.sin(f * 0.015) * 2.5, 1.6, 4]} alvo={[0, 1.2, 0]} /><ambientLight intensity={0.2} /><spotLight position={[0, 5, 1]} angle={0.3} intensity={60} color="#fff4e0" /><color attach="background" args={['#0a0610']} />
+  <Cam pos={[Math.sin(f * 0.015) * 2.5, 1.6, 4]} alvo={[0, 1.2, 0]} /><ambientLight intensity={0.6} /><pointLight position={[1, 2.5, 2]} intensity={5} color="#fff0d0" /><spotLight position={[0, 5, 1]} angle={0.3} intensity={60} color="#fff4e0" /><color attach="background" args={['#0a0610']} />
   <mesh position={[0, 0.4, 0]}><cylinderGeometry args={[0.6, 0.7, 0.8, 32]} /><meshStandardMaterial color="#c8a040" metalness={0.8} roughness={0.25} /></mesh>
   <Barra pos={[0, 1.2, 0]} larg={1.4} k={0.03} s={0.6} />
   {LAT(3).map((i) => <mesh key={i} position={[(i - 1) * 0.6, 0.8 + Math.max(0, Math.sin(f * 0.2 - i)) * 0.05, 0.62]}><boxGeometry args={[0.4, 0.06, 0.02]} /><meshStandardMaterial color="#e8e0c0" /></mesh>)}
@@ -571,7 +570,7 @@ const C5m: React.FC = () => <C3>{(f) => <>
 const C6a: React.FC = () => <C3>{(f) => <>
   <Cam pos={[0, 1.6, 4]} alvo={[0, 1.6, 0]} /><ambientLight intensity={0.5} color="#ffd0a0" /><directionalLight position={[3, 1, 2]} intensity={1.6} color="#ff8a4a" /><color attach="background" args={['#3a1a2a']} />
   <mesh position={[0, 1.5, -0.2]}><planeGeometry args={[8, 5]} /><meshStandardMaterial color="#e8a070" /></mesh>
-  <group position={[-1.1, 1.8, 0]}><Mostrador n={12} h={Math.PI + f * 0.002} m={f * 0.02} cor={ROSA} r={0.7} fundo="#f8f4e8" aro="#5a3a2a" /></group>
+  <group position={[-1.1, 1.8, 0]}><Mostrador n={12} h={Math.PI + f * 0.002} m={f * 0.02} cor={ROSA} r={0.7} fundo="#2a1a3a" aro="#5a3a2a" /></group>
   <group position={[1.4, 1.6, -0.1]}><mesh><planeGeometry args={[1.6, 1.8]} /><meshBasicMaterial color="#ff8a5a" toneMapped={false} /></mesh><mesh position={[0, -0.3, 0.01]}><circleGeometry args={[0.35, 32]} /><meshBasicMaterial color="#ffe080" toneMapped={false} /></mesh>
     {[[0, 0, 1.6, 0.06], [0, 0, 0.06, 1.8]].map(([x, y, w, h], i) => <mesh key={i} position={[x, y, 0.02]}><planeGeometry args={[w, h]} /><meshStandardMaterial color="#5a3a2a" /></mesh>)}</group>
   <Pos bloom={0.6} /></>}</C3>;
@@ -592,7 +591,7 @@ const C6d: React.FC = () => <C3>{(f) => { const aperta = Math.abs(Math.sin(f * 0
   <Nuvem n={60} sem="c6d" origem={new THREE.Vector3(0.5, 1.2, 0.35)} t={20 + f} raio={0.6} cor="#c8c8d8" tam={0.08} o={0.5} dir={new THREE.Vector3(0, 1, 0)} />
   <Pos bloom={0.7} /></>; }}</C3>;
 const C6e: React.FC = () => { const d = useD(); return <C3>{(f) => { const k = pr(f, d * 0.55, d * 0.6); return <>
-  <Cam pos={[-0.6, 0.2, 2.4]} alvo={[-0.6, 0, 0]} /><ambientLight intensity={0.6} /><pointLight position={[0, 1, 2]} intensity={3} /><color attach="background" args={['#0a1a2a']} />
+  <Cam pos={[-0.6, 0.2, 2.4]} alvo={[-0.6, 0, 0]} /><ambientLight intensity={1.2} /><pointLight position={[0, 1, 2]} intensity={3} /><color attach="background" args={['#0a1a2a']} />
   <Barra pos={[0, 0, 0]} larg={4} k={0.038 + 0.004 * k} s={1} />
   <group position={[-1.75 + Math.sin(f * 0.05) * 0.1, 0.05, 0.6]}><mesh rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[0.45, 0.06, 12, 40]} /><meshStandardMaterial color="#2a2a30" metalness={0.6} /></mesh>
     <mesh rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[0.42, 0.42, 0.02, 40]} /><meshPhysicalMaterial color="#e8f8ff" transparent opacity={0.15} /></mesh>
@@ -729,7 +728,7 @@ const C8g: React.FC = () => { const d = useD(); return <C3>{(f) => { const k = p
   <mesh position={[0, 0.6, 0]}><boxGeometry args={[1.4, 1.2, 1.2]} /><meshPhysicalMaterial color="#e8f4ff" transparent opacity={0.35} roughness={0.05} /></mesh>
   <mesh position={[0, 1.22, 0]}><boxGeometry args={[1.45, 0.05, 1.25]} /><meshStandardMaterial color="#1a3a6a" /></mesh><mesh position={[0, 1.25, 0]}><boxGeometry args={[0.6, 0.02, 0.06]} /><meshStandardMaterial color="#000" /></mesh>
   {LAT(10).map((i) => { const t = ((f + i * 9) % 40) / 40; return <mesh key={i} position={[0, 2.6 - t * 2.2, 0]} rotation={[0, i, 0]}><boxGeometry args={[0.45, 0.6, 0.01]} /><meshStandardMaterial color="#fbfbf6" /></mesh>; })}
-  <group position={[0, 2.9, -0.5]} scale={k}><Placar a="19" b="80" s={0.5} /></group>
+  <group position={[1.9, 2.2, -0.5]} scale={k}><Placar a="1980" b="" s={0.4} /></group>
   <Chao cor="#2a3a5a" />
   <Pos bloom={0.4} /></>; }}</C3>; };
 const C8h: React.FC = () => { const d = useD(); return <C3>{(f) => { const k = pr(f, 0, d * 0.8); return <>
@@ -809,10 +808,10 @@ export const DURACAO = L.DURACAO;
 
 // thumb "24H DE GTA 6": globo com um controle gigante encaixado e cidades apagando em volta (texto entra no PIL)
 export const ThumbGta: React.FC = () => <C3>{(_, tex) => <>
-  <Cam pos={[0, 0.5, 4.2]} alvo={[0, 0.35, 0]} /><Luzes sol={[-3, 3, 4]} i={2.8} amb={0.25} /><Estrelas sem="tg" />
+  <Cam pos={[0, 0.7, 4.6]} alvo={[0, 0.35, 0]} /><Luzes sol={[-3, 3, 4]} i={2.8} amb={0.25} /><Estrelas sem="tg" />
   <group position={[0, -0.25, 0]}><Terra tex={tex} rot={[0.35, 1.8, 0]} />
     {LAT(260).map((i) => { const y = 1 - 2 * (i + 0.5) / 260; const r = Math.sqrt(1 - y * y); const a = i * 2.39996; const p = new THREE.Vector3(Math.cos(a) * r, y, Math.sin(a) * r).multiplyScalar(1.012); return p.z > 0.2 ? <mesh key={i} position={p.toArray()}><sphereGeometry args={[0.011, 6, 6]} /><meshBasicMaterial color={random('tga' + i) < 0.5 ? new THREE.Color('#ffcf60').multiplyScalar(2) : '#202020'} toneMapped={false} /></mesh> : null; })}</group>
-  <Controle pos={[0, 1.05, 0.2]} rot={[0.45, 0, -0.08]} s={1.45} cor={ROXO} />
+  <Controle pos={[0, 0.95, 0.75]} rot={[0.25, 0, -0.1]} s={1.2} cor={ROXO} largo />
   {LAT(10).map((i) => { const a = i / 10 * Math.PI * 2; return <Raio key={i} pos={[Math.cos(a) * 1.5, -0.25 + Math.sin(a) * 1.25, 0.4]} s={0.16} rot={a} cor={AMAR} />; })}
   <Brilho pos={[0, 1.05, -0.4]} s={2.8} cor={ROSA} o={0.55} />
   <Pos bloom={1} /></>}</C3>;
