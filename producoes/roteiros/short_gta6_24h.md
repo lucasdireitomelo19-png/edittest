@@ -15,12 +15,12 @@
 
 | # | Formato | Título | Potencial |
 |---|---|---|---|
-| 1 | Short (~50 s pronto, 179 palavras) | E SE TODOS OS HOMENS DO MUNDO JOGASSEM GTA 6 POR 24 HORAS? | 🔥🔥🔥 9/10 |
+| 1 | Short (~50 s pronto, 183 palavras) | E SE TODOS OS HOMENS DO MUNDO JOGASSEM GTA 6 POR 24 HORAS? | 🔥🔥🔥 9/10 |
 
 ---
 
 ## E SE TODOS OS HOMENS DO MUNDO JOGASSEM GTA 6 POR 24 HORAS?
-**Status:** aguardando aprovação (v1)
+**Status:** aguardando aprovação (v2: premissa "cada homem ganhou um console", pedido do dono via Pesquisas em 20/11)
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: um assunto quentíssimo (o jogo saiu ontem, 19/11), um formato com 7–8 mi de views lá fora, humor com números absurdos e uma virada real que gera debate (a Islândia em 1975). Ponto mais fraco: foge do espaço, então pode atrair um público que não fica no canal. Por isso é um teste.
 
@@ -39,11 +39,11 @@ Escolhido: **o 1**, com o relógio "HORA 0" acendendo e um controle vibrando no 
 Alternativo: `O MUNDO PAROU POR CAUSA DO GTA 6`
 
 > E se todos os homens do mundo jogassem GTA 6 por vinte e quatro horas?
-> Hora zero! Quatro bilhões de homens… e só cento e trinta milhões de consoles. Pelas nossas contas, um pra cada trinta e dois. A maior fila da história!
-> Hora um! Duzentos e dez gigas. Pelas nossas contas, cem milhões baixando juntos é mais da metade da internet do mundo num dia!
-> Hora três! Nos Estados Unidos, noventa e dois por cento de quem dirige caminhão é homem. O supermercado começa a esvaziar!
-> Hora seis! O problema nem é a energia. É que quem cuida da rede elétrica, quase tudo homem, tá jogando!
-> Hora doze! Pilotos, bombeiros, policiais. O mundo perde algo perto de duzentos bilhões de dólares num dia!
+> Hora zero! A gente deu um console pra cada homem do planeta. Quatro bilhões!
+> Hora um! Pelas nossas contas, pra todo mundo baixar o jogo, a internet do planeta inteiro levaria vinte e seis dias. O dia acaba e o download não chegou nem em quatro por cento! Ninguém joga… mas todo mundo fica olhando a barrinha!
+> Hora três! Os caminhões param, e o supermercado esvazia!
+> Hora seis! Pelas nossas contas, esses consoles puxam um quarto da eletricidade do mundo. A rede leva um baque. E quem cuida dela tá… olhando a barrinha!
+> Hora doze! Sem pilotos, sem bombeiros, o mundo perde algo perto de duzentos bilhões de dólares!
 > Hora dezoito! Um dia inteiro acordado deixa seus reflexos de quem bebeu. Bêbado sem beber! Levanta e bebe água!
 > Hora vinte e quatro. E isso já aconteceu… ao contrário. Em mil novecentos e setenta e cinco, noventa por cento das mulheres da Islândia pararam por um dia. E o país travou.
 > Largava o controle ou deixava o mundo acabar?
@@ -69,14 +69,11 @@ Alternativo: `O MUNDO PAROU POR CAUSA DO GTA 6`
 
 **Fatos usados (parte 2 da Pesquisas, contas conferidas aqui):**
 - **Lançamento:** 19/11/2026, só para PS5 e Xbox Series (fato). As vendas do 1º dia ficam de fora, porque só há estimativas de terceiros.
-- **Hora 0:**
-  - são ~4,17 bilhões de homens (ONU 2026) e ~130 milhões de PS5 e Xbox Series. O PS5 tem mais de 93 mi confirmados pela Sony, e o resto é estimativa;
-  - a conta 4,17 bi ÷ 130 mi ≈ 32 é nossa, e a fala diz "pelas nossas contas".
-- **Hora 1:** o jogo tem ~210 GB (Rockstar: até 212 GB). 100 mi × 210 GB ≈ 21 EB, ~64% do tráfego diário da internet, que é de ~33 EB/dia (Sandvine 2024).
-  - É ordem de grandeza, e a fala diz "imagina", sem afirmar que a internet cai.
-- **Hora 3:** 92% dos motoristas de caminhão e entrega são homens nos EUA (BLS 2025). A fala diz "nos Estados Unidos".
+- **Hora 0 (v2, premissa do dono):** existem ~130 milhões de PS5 e Xbox Series, e o vídeo dá um para cada um dos ~4,17 bilhões de homens (ONU 2026), cerca de 32× o que existe. O preço dos consoles não foi checado e não entra.
+- **Hora 1 (v2):** 4,17 bi × ~210 GB ≈ 876 EB. A internet carrega ~33 EB por dia (Sandvine 2024), então seriam ~26,5 dias, e 1 dia é ~3,8% do total. É conta nossa, conferida aqui. A piada "ninguém joga, todo mundo olha a barrinha" segue a própria conta.
+- **Hora 3:** 92% dos motoristas de caminhão e entrega são homens nos EUA (BLS 2025). Na v2, a porcentagem saiu da fala por tempo; fica só "os caminhões param".
 - **Hora 6:**
-  - um PS5 gasta ~215 W, então mesmo 1 bilhão de consoles daria ~6% da eletricidade do dia, que é de ~87 TWh (Ember), por isso a fala diz "nem pesam tanto";
+  - **v2:** 4,17 bi × ~215 W ≈ 897 GW, ~25% da média mundial (~3,6 TW; Ember 2025), conferido aqui. A fala diz "um quarto" e "a rede leva um baque", sem afirmar que cai;
   - 96% de quem cuida da rede nos EUA é homem (BLS), e a fala diz "quase tudo homem".
 - **Hora 12:**
   - pilotos (93%), bombeiros (95%) e policiais (84%) são, na maioria, homens nos EUA (BLS). A fala só lista as profissões, sem porcentagem;
