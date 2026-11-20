@@ -15,7 +15,7 @@
 
 | # | Formato | Título | Potencial |
 |---|---|---|---|
-| 1 | Short (~55 s pronto, 201 palavras) | E SE TODOS OS HOMENS DO MUNDO JOGASSEM GTA 6 POR 24 HORAS? | 🔥🔥🔥 9/10 |
+| 1 | Short (~50 s pronto, 189 palavras) | E SE TODOS OS HOMENS DO MUNDO JOGASSEM GTA 6 POR 24 HORAS? | 🔥🔥🔥 9/10 |
 
 ---
 
@@ -40,11 +40,11 @@ Alternativo: `O MUNDO PAROU POR CAUSA DO GTA 6`
 
 > E se todos os homens do mundo jogassem GTA 6 por vinte e quatro horas?
 > Hora zero! Quatro bilhões de homens correm pro controle… e só existem uns cento e trinta milhões de consoles. Pelas nossas contas, um pra cada trinta e dois. A maior fila da história!
-> Hora um! O jogo tem uns duzentos e dez gigas. Cem milhões baixando juntos? Mais da metade da internet do mundo num dia. Imagina a barrinha de carregamento!
+> Hora um! Duzentos e dez gigas. Pelas nossas contas, cem milhões baixando juntos é mais da metade da internet do mundo num dia!
 > Hora três! Nos Estados Unidos, noventa e dois por cento de quem dirige caminhão é homem. O supermercado começa a esvaziar!
-> Hora seis! Os consoles nem pesam tanto na rede elétrica. O problema? Quem cuida dela é quase tudo homem. E tá todo mundo jogando!
-> Hora doze! Pilotos, bombeiros, policiais. O mundo perde algo perto de duzentos bilhões de dólares num dia só!
-> Hora dezoito! Vinte e quatro horas acordado deixa seus reflexos como os de quem bebeu. Bêbado sem beber! Levanta, bebe uma água!
+> Hora seis! O problema nem é a energia. É que quem cuida da rede elétrica, quase tudo homem, tá jogando!
+> Hora doze! Pilotos, bombeiros, policiais. O mundo perde algo perto de duzentos bilhões de dólares num dia!
+> Hora dezoito! Vinte e quatro horas acordado deixa seus reflexos como os de quem bebeu. Bêbado sem beber! Levanta e bebe água!
 > Hora vinte e quatro. E isso já aconteceu… ao contrário. Em mil novecentos e setenta e cinco, noventa por cento das mulheres da Islândia pararam por um dia. E o país travou.
 > E você? Largava o controle ou deixava o mundo acabar?
 
@@ -74,7 +74,6 @@ Alternativo: `O MUNDO PAROU POR CAUSA DO GTA 6`
   - a conta 4,17 bi ÷ 130 mi ≈ 32 é nossa, e a fala diz "pelas nossas contas".
 - **Hora 1:** o jogo tem ~210 GB (Rockstar: até 212 GB). 100 mi × 210 GB ≈ 21 EB, ~64% do tráfego diário da internet, que é de ~33 EB/dia (Sandvine 2024).
   - É ordem de grandeza, e a fala diz "imagina", sem afirmar que a internet cai.
-  - ⚠️ A frase "mais da metade da internet do mundo num dia" não repete "pelas nossas contas" para caber no tempo. Já é a segunda conta seguida, então posso acrescentar a ressalva se o dono quiser.
 - **Hora 3:** 92% dos motoristas de caminhão e entrega são homens nos EUA (BLS 2025). A fala diz "nos Estados Unidos".
 - **Hora 6:**
   - um PS5 gasta ~215 W, então mesmo 1 bilhão de consoles daria ~6% da eletricidade do dia, que é de ~87 TWh (Ember), por isso a fala diz "nem pesam tanto";
