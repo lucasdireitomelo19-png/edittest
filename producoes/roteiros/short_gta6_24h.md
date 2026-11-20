@@ -20,7 +20,7 @@
 ---
 
 ## E SE TODOS OS HOMENS DO MUNDO JOGASSEM GTA 6 POR 24 HORAS?
-**Status:** aguardando aprovação (v2: premissa "cada homem ganhou um console", pedido do dono via Pesquisas em 20/11)
+**Status:** APROVADO pelo dono (20/11/2026, v2), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥🔥 9/10. Ponto mais forte: um assunto quentíssimo (o jogo saiu ontem, 19/11), um formato com 7–8 mi de views lá fora, humor com números absurdos e uma virada real que gera debate (a Islândia em 1975). Ponto mais fraco: foge do espaço, então pode atrair um público que não fica no canal. Por isso é um teste.
 

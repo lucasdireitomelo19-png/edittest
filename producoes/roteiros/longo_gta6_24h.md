@@ -18,7 +18,7 @@
 ---
 
 ## E SE TODOS OS HOMENS DO MUNDO JOGASSEM GTA 6 POR 24 HORAS?
-**Status:** aguardando aprovação (v1)
+**Status:** APROVADO pelo dono (20/11/2026), enviado ao Gerador de Vídeos
 
 **Potencial viral:** 🔥🔥 8/10. Ponto mais forte: um assunto quentíssimo (o jogo saiu em 19/11), um formato com 7–8 mi de views em Shorts lá fora, humor com números absurdos e uma virada histórica real que gera debate. Ponto mais fraco: foge do espaço e é um teste de nicho. Além disso, sete minutos de comédia pedem ritmo forte, então cada capítulo tem a sua piada e o seu "e piora".
 
