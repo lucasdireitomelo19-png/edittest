@@ -15,7 +15,7 @@
 
 | # | Formato | Título | Potencial |
 |---|---|---|---|
-| 1 | Short (~50 s pronto, 189 palavras) | E SE TODOS OS HOMENS DO MUNDO JOGASSEM GTA 6 POR 24 HORAS? | 🔥🔥🔥 9/10 |
+| 1 | Short (~50 s pronto, 179 palavras) | E SE TODOS OS HOMENS DO MUNDO JOGASSEM GTA 6 POR 24 HORAS? | 🔥🔥🔥 9/10 |
 
 ---
 
@@ -39,14 +39,14 @@ Escolhido: **o 1**, com o relógio "HORA 0" acendendo e um controle vibrando no 
 Alternativo: `O MUNDO PAROU POR CAUSA DO GTA 6`
 
 > E se todos os homens do mundo jogassem GTA 6 por vinte e quatro horas?
-> Hora zero! Quatro bilhões de homens correm pro controle… e só existem uns cento e trinta milhões de consoles. Pelas nossas contas, um pra cada trinta e dois. A maior fila da história!
+> Hora zero! Quatro bilhões de homens… e só cento e trinta milhões de consoles. Pelas nossas contas, um pra cada trinta e dois. A maior fila da história!
 > Hora um! Duzentos e dez gigas. Pelas nossas contas, cem milhões baixando juntos é mais da metade da internet do mundo num dia!
 > Hora três! Nos Estados Unidos, noventa e dois por cento de quem dirige caminhão é homem. O supermercado começa a esvaziar!
 > Hora seis! O problema nem é a energia. É que quem cuida da rede elétrica, quase tudo homem, tá jogando!
 > Hora doze! Pilotos, bombeiros, policiais. O mundo perde algo perto de duzentos bilhões de dólares num dia!
-> Hora dezoito! Vinte e quatro horas acordado deixa seus reflexos como os de quem bebeu. Bêbado sem beber! Levanta e bebe água!
+> Hora dezoito! Um dia inteiro acordado deixa seus reflexos de quem bebeu. Bêbado sem beber! Levanta e bebe água!
 > Hora vinte e quatro. E isso já aconteceu… ao contrário. Em mil novecentos e setenta e cinco, noventa por cento das mulheres da Islândia pararam por um dia. E o país travou.
-> E você? Largava o controle ou deixava o mundo acabar?
+> Largava o controle ou deixava o mundo acabar?
 
 **Tela:**
 - **Relógio fixo no canto:** "HORA 0 → HORA 24", pulando a cada bloco.
