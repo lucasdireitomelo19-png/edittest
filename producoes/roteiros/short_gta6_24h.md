@@ -55,10 +55,10 @@ Alternativo: `O MUNDO PAROU POR CAUSA DO GTA 6`
 
 **Visual (Remotion 3D colorido e cômico, uma cena por frase, nenhuma repetida; onde houver material oficial do GTA 6 liberado, ele entra em trechos curtos e sem música):**
 1. Um controle 3D vibrando sobre um sofá, e uma TV acendendo com uma tela genérica de "carregando…" ou um trecho oficial curto do jogo (câmera em close).
-2. Uma fila 3D gigante e cômica de silhuetas segurando controles, dobrando o quarteirão e cruzando o horizonte, até um único console no fim (câmera aérea).
-3. Uma barrinha de download 3D enorme, travada em 1%, sobre um globo com cabos de internet piscando (câmera recuando).
+2. Uma chuva 3D cômica de caixas de console genérico caindo do céu sobre o globo inteiro, uma em cada telhado (câmera aérea).
+3. Uma barrinha de download 3D enorme, rastejando até 3,8% enquanto um relógio de 24 h termina, sobre um globo com cabos de internet piscando, e milhões de silhuetas sentadas encarando a barra (câmera recuando).
 4. Uma estrada 3D estilo Miami com caminhões parados no acostamento, e uma prateleira de supermercado esvaziando (câmera rasante).
-5. Uma subestação elétrica 3D com uma cadeira vazia na sala de controle e luzes de alerta piscando sem ninguém olhando (câmera em close).
+5. Um medidor 3D da eletricidade do mundo subindo até um quarto, e uma sala de controle com a cadeira vazia e alertas piscando (câmera em close).
 6. Um aeroporto 3D com o painel de voos todo em "cancelado" (sem texto legível além de ícones vermelhos), e um caminhão de bombeiro estacionado (câmera passando).
 7. Um gráfico 3D de dinheiro despencando como montanha-russa (câmera seguindo a queda).
 8. Um copo d'água 3D gigante caindo do céu ao lado de um sofá, como piada (câmera de cima).
